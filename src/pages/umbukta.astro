@@ -164,17 +164,33 @@ const faq = [
       <h2 class="h2" style="font-size:clamp(22px,2.8vw,32px); margin-bottom:22px;" data-i18n="umbukta_gallery_title">
         Bildegalleri
       </h2>
-      <div class="gallery">
+      <div class="gallery" id="galleri">
         {bilder.map(b => (
-          <img
-            src={`${base}/images/umbukta/${b.src}`}
-            alt={b.alt}
-            width="480"
-            height="360"
-            loading="lazy"
-          />
+          <button
+            class="galleri-btn"
+            aria-label={`Forstørr bilde: ${b.alt}`}
+            data-src={`${base}/images/umbukta/${b.src}`}
+            data-alt={b.alt}
+          >
+            <img
+              src={`${base}/images/umbukta/${b.src}`}
+              alt={b.alt}
+              width="480"
+              height="360"
+              loading="lazy"
+            />
+          </button>
         ))}
       </div>
+    </div>
+
+    <!-- LIGHTBOX -->
+    <div id="lightbox" role="dialog" aria-modal="true" aria-label="Bildevisning" style="display:none; position:fixed; inset:0; z-index:1000; background:rgba(0,0,0,0.92); align-items:center; justify-content:center; padding:20px;">
+      <button id="lb-prev" aria-label="Forrige bilde" style="position:absolute; left:16px; top:50%; transform:translateY(-50%); background:rgba(255,255,255,0.12); border:none; color:#fff; font-size:28px; width:48px; height:48px; border-radius:50%; cursor:pointer; display:flex; align-items:center; justify-content:center;">‹</button>
+      <button id="lb-next" aria-label="Neste bilde" style="position:absolute; right:16px; top:50%; transform:translateY(-50%); background:rgba(255,255,255,0.12); border:none; color:#fff; font-size:28px; width:48px; height:48px; border-radius:50%; cursor:pointer; display:flex; align-items:center; justify-content:center;">›</button>
+      <button id="lb-close" aria-label="Lukk" style="position:absolute; top:16px; right:16px; background:rgba(255,255,255,0.12); border:none; color:#fff; font-size:22px; width:44px; height:44px; border-radius:50%; cursor:pointer; display:flex; align-items:center; justify-content:center;">✕</button>
+      <img id="lb-img" src="" alt="" style="max-width:min(90vw,1200px); max-height:85vh; object-fit:contain; border-radius:8px; display:block;" />
+      <p id="lb-caption" style="position:absolute; bottom:20px; left:50%; transform:translateX(-50%); color:#ccc; font-size:14px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:80vw;"></p>
     </div>
 
     <!-- FASILITETER -->
@@ -229,8 +245,8 @@ const faq = [
           </span>
         </div>
       </div>
-      <div class="card card-pad" data-i18n="umbukta_location_title">
-        <h2 class="h2" style="font-size:24px; margin-bottom:18px;">Beliggenhet</h2>
+      <div class="card card-pad">
+        <h2 class="h2" style="font-size:24px; margin-bottom:18px;" data-i18n="umbukta_location_title">Beliggenhet</h2>
         <div style="display:flex; flex-direction:column; gap:20px;">
           <div>
             <b style="font-size:15px;">Veibeskrivelse</b>
@@ -392,4 +408,68 @@ const faq = [
       grid-template-columns: 1fr !important;
     }
   }
+  .galleri-btn {
+    display: block;
+    padding: 0;
+    border: none;
+    background: none;
+    cursor: zoom-in;
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+  }
+  .galleri-btn img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.25s ease;
+  }
+  .galleri-btn:hover img { transform: scale(1.04); }
+  .galleri-btn::after {
+    content: '⤢';
+    position: absolute;
+    bottom: 8px;
+    right: 10px;
+    color: #fff;
+    font-size: 18px;
+    opacity: 0;
+    transition: opacity 0.2s;
+    text-shadow: 0 1px 4px rgba(0,0,0,0.6);
+  }
+  .galleri-btn:hover::after { opacity: 1; }
 </style>
+
+<script>
+  const btns = Array.from(document.querySelectorAll('.galleri-btn'));
+  const lb    = document.getElementById('lightbox');
+  const lbImg = document.getElementById('lb-img');
+  const lbCap = document.getElementById('lb-caption');
+  let cur = 0;
+
+  function show(i) {
+    cur = (i + btns.length) % btns.length;
+    const btn = btns[cur];
+    lbImg.src = btn.dataset.src;
+    lbImg.alt = btn.dataset.alt;
+    lbCap.textContent = btn.dataset.alt;
+    lb.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+  }
+  function close() {
+    lb.style.display = 'none';
+    document.body.style.overflow = '';
+  }
+
+  btns.forEach((btn, i) => btn.addEventListener('click', () => show(i)));
+  document.getElementById('lb-close').addEventListener('click', close);
+  document.getElementById('lb-prev').addEventListener('click', () => show(cur - 1));
+  document.getElementById('lb-next').addEventListener('click', () => show(cur + 1));
+  lb.addEventListener('click', e => { if (e.target === lb) close(); });
+  document.addEventListener('keydown', e => {
+    if (lb.style.display === 'none') return;
+    if (e.key === 'Escape') close();
+    if (e.key === 'ArrowLeft') show(cur - 1);
+    if (e.key === 'ArrowRight') show(cur + 1);
+  });
+</script>
