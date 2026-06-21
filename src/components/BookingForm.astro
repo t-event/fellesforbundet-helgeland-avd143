@@ -82,6 +82,13 @@ const WEB3FORMS_KEY = import.meta.env.PUBLIC_WEB3FORMS_KEY ?? '';
       <div class="field-error" id="err-forbund" style="display:none;"></div>
     </div>
 
+    <!-- Melding (valgfritt) -->
+    <div class="field">
+      <label for="booking-melding" data-i18n="form_message">Melding til avdelingen (valgfritt)</label>
+      <textarea class="input" id="booking-melding" name="melding" rows="3"
+        placeholder="Spørsmål, antall gjester, hund, ankomsttid …" data-i18n-placeholder="form_message_ph"></textarea>
+    </div>
+
     <!-- Prisoppsummering -->
     <div class="price-summary" id="pris-summary" style="display:none;">
       <div>
@@ -222,6 +229,7 @@ form?.addEventListener('submit', async (e) => {
   const telefon = telefonInput?.value?.trim() ?? '';
   const gruppe  = prisGruppeEl?.value ?? 'FFH';
   const forbund = forbundEl?.value ?? '';
+  const melding = (document.getElementById('booking-melding'))?.value?.trim() ?? '';
 
   if (!fra) { setFeil('err-fra', erEn() ? 'Choose a start date.' : 'Velg fra-dato.'); ok = false; }
   if (!til) { setFeil('err-til', erEn() ? 'Choose an end date.' : 'Velg til-dato.'); ok = false; }
@@ -256,6 +264,7 @@ form?.addEventListener('submit', async (e) => {
     'Antall døgn': String(dager),
     Prisgruppe: prisLabel[gruppe],
     Totalpris: `${sum.toLocaleString('nb-NO')} kr`,
+    Melding: melding || '—',
     Betalingsreferanse: ref,
     Kontonummer: KONTONUMMER,
   };
