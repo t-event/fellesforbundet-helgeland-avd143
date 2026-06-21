@@ -299,8 +299,10 @@ Etter at siden er oppe og domenet er satt:
 
 ## Kontakt og support
 
-**Kontoret:** avd143@fellesforbundet.org · 75 15 12 28  
+**Kontoret (booking, drift):** avd143@fellesforbundet.org · 75 15 12 28  
 **Adresse:** Søndre gate 13, 8624 Mo i Rana  
 **Åpningstider:** 08:00–15:30
 
-Tekniske spørsmål om nettsiden: ta kontakt med den som satte opp siden.
+**Tekniske spørsmål om nettsiden:** T-Event v/ Mathias — [mathias@t-event.no](mailto:mathias@t-event.no) · 929 63 907
+
+Alt som gjelder selve nettsiden (feil, endringer, utvikling, domene, GitHub, secrets) håndteres av T-Event. Kontoret håndterer booking og hyttedrift.

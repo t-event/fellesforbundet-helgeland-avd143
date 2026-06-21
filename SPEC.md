@@ -73,7 +73,7 @@ Statisk nettside for utleie av Fellesforbundet Helgeland (avd. 143) sine to hytt
 ### Integrasjon 2 — Web3Forms (bookingforespørsel + kontaktskjema)
 
 **Endepunkt:** `https://api.web3forms.com/submit`  
-**Key:** `VITE_WEB3FORMS_KEY` i `.env` (offentlig, trygg i frontend)
+**Key:** `PUBLIC_WEB3FORMS_KEY` (Astro-env) — injiseres ved bygging fra GitHub-secret `WEB3FORMS_KEY`. Offentlig/trygg i frontend. Form-navn hos Web3Forms: «Hyttebooking Umbukta».
 
 **Booking-skjema sender:**
 - Datoer (fra/til), antall døgn
@@ -113,7 +113,7 @@ export const PRISER = { FFH: 700, FF: 1050, ANNET_LO: 1200 } as const;
 2. **Om hytta** — inntil 14 sengeplasser, 3 soverom + hems, 3,5 mil fra Mo i Rana, 3 km fra Sverige
 3. **Bildegalleri** — bilder fra Facebook-mappa (ute, inne, omgivelser)
 4. **Fasiliteter** — SVG-ikoner: innlagt vann + strøm, varmepumpe, vedovn, dusj, fullt kjøkken, mobildekning, WiFi, TV, parkering (4–5 biler), naust med aluminiumsbåt
-5. **Beliggenhet** — innebygd Google Maps-lenke + veibeskrivelse, parkering, vinteradkomst
+5. **Beliggenhet** — innebygd **OpenStreetMap**-kart + «Åpne i Google Maps»-lenke, veibeskrivelse, parkering, vinteradkomst (vei brøytes — bilvei helt fram hele året). *Merk: Google Maps-embed ble droppet pga. API-nøkkel; OSM krever ingen nøkkel.*
 6. **Vær & webkamera** — MET API + Vegvesen-kamera (side ved side)
 7. **Priser** — tre prisskort (FFH 700 / FF 1050 / Annet LO 1200 kr/døgn)
 8. **Ledighetskalender + bookingskjema** — side ved side (stakkede på mobil)
@@ -132,6 +132,8 @@ Ingen manuell oppdatering nødvendig.
 **Perioder:**
 - P1: Fredag i palmehelga (Påskedag − 9) → Onsdag i stille uke kl. 12 (Påskedag − 4)
 - P2: Onsdag i stille uke kl. 16 (Påskedag − 4) → 2. påskedag (Påskedag + 1)
+- Påmelding: man kan velge **begge** perioder, men kan vinne **maks én** (trekkes manuelt av kontoret).
+- Test/forhåndsvisning: legg til `?paske=test` i URL-en for å tvinge seksjonen + skjemaet synlig uavhengig av dato.
 
 **Eksempel 2026:** Påskedag 5. april  
 - P1: 27. mars → 1. april (kl. 12)  
@@ -176,8 +178,9 @@ Ingen manuell oppdatering nødvendig.
 
 ## 8. Turtips (6 stk.)
 
-Fra spec: Sauvasshytta, Kvitstindalstunet, Virvasshytta, Kjenvasshytta, Oksskolten, Uman.  
-Korte beskrivelser fylles inn — placeholder-tekst brukes til reelt innhold er klart.
+Sauvasshytta, Kvitstindalstunet, Virvasshytta, Kjenvasshytta, Oksskolten, **Årestue Umbukta** (erstattet Uman).  
+Hvert kort lenker til turens side på **UT.no**.  
+Bilder mangler foreløpig — «Bilder kommer»-plassholder vises til reelle bilder er klare.
 
 ---
 
@@ -227,8 +230,8 @@ export const LO_FORBUND = [
 ## 10. Språk (NO/EN, JS-basert)
 
 - `lang="no"` på `<html>`
-- Oversettelser i `src/i18n/translations.ts` med `{ nb: {...}, en: {...} }`
-- Alle brukertekster tagges med `data-i18n="nøkkel"`
+- Delte/korte strenger (nav, overskrifter, skjemaetiketter) i `src/i18n/translations.ts` med `{ nb, en }`, tagget `data-i18n="nøkkel"`
+- Lengre brødtekst/lister tagges inline med `data-en="..."` (engelsk ved siden av norsk i HTML-en); språkskriptet bytter `innerHTML`. `data-en-ph` bytter placeholder på input/textarea.
 - Valg lagres i `localStorage('lang')`
 - Init-skript kjører på `DOMContentLoaded`, bytter alle tekster
 - Språkvelger i header (NO / EN)
@@ -267,6 +270,7 @@ Vises tydelig på Umbukta-siden og kvitteringssiden:
 - GDPR: Nettsiden lagrer ingenting — data finnes kun hos avdelingen og Web3Forms
 - Samtykketekst vises i booking- og kontaktskjema
 - Dørkode: håndteres utelukkende av avdelingen, ALDRI i kode, e-poster eller nettsted
+- **Google Maps API-nøkkel** (fra tidlig versjon) er fjernet fra koden (byttet til OpenStreetMap), men finnes fortsatt i git-historikk på offentlig repo → **må deaktiveres/regenereres i Google Cloud Console**. Dagens kart- og skjemaløsning krever ingen hemmelig nøkkel.
 
 ---
 

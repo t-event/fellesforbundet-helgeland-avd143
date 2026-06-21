@@ -75,19 +75,19 @@ export const TURTIPS = [
     navn: 'Sauvasshytta',
     vanskelighet: 'Middels',
     vanskelighet_en: 'Moderate',
-    distanse: 'ca. 12 km',
-    distanse_en: 'approx. 12 km',
+    distanse: '8,5–11,5 km',
+    distanse_en: '8.5–11.5 km',
     tid: 'ca. 4 t',
     tid_en: 'approx. 4 h',
     beskrivelse:
-      'Fin dagstur til Sauvasshytta med vakker utsikt over fjellheimen på Helgeland.',
+      'DNT-hytte sørvest for Umbukta. Korteste innmarsj er merket sti fra Plurdalen (8,5 km), eller langs Nordlandsruta fra Umbukta fjellstue (11,5 km).',
     beskrivelse_en:
-      'A nice day trip to Sauvasshytta with beautiful views over the Helgeland mountains.',
+      'DNT cabin southwest of Umbukta. The shortest approach is the marked trail from Plurdalen (8.5 km), or along the Nordland route from Umbukta mountain lodge (11.5 km).',
     lenke: 'https://ut.no/hytte/1093/sauvasshytta',
   },
   {
-    id: 'kvitstindalstunet',
-    navn: 'Kvitstindalstunet',
+    id: 'kvitsteindalstunet',
+    navn: 'Kvitsteindalstunet',
     vanskelighet: 'Krevende',
     vanskelighet_en: 'Demanding',
     distanse: 'ca. 15 km',
@@ -95,9 +95,9 @@ export const TURTIPS = [
     tid: 'ca. 6 t',
     tid_en: 'approx. 6 h',
     beskrivelse:
-      'Topptur til Kvitstindalstunet med panoramautsikt mot Sverige og innover i Rana.',
+      'Avsidesliggende hytte ved Kallvatnet. Sommerstid via anleggsvei til Østerdal og merket rute over Gammalgardsfjellet, eller med båt over vatnet. Fin på skitur via Sauvasshytta og Virvasshytta.',
     beskrivelse_en:
-      'A summit hike to Kvitstindalstunet with panoramic views towards Sweden and inland Rana.',
+      'Remote cabin by Kallvatnet. In summer via the access road to Østerdal and a marked route over Gammalgardsfjellet, or by boat across the lake. Great on a ski tour via Sauvasshytta and Virvasshytta.',
     lenke: 'https://ut.no/hytte/10561/kvitsteindalstunet',
   },
   {
@@ -110,24 +110,24 @@ export const TURTIPS = [
     tid: 'ca. 3 t',
     tid_en: 'approx. 3 h',
     beskrivelse:
-      'Rolig fjelltur til Virvasshytta — passer godt for familier og nybegynnere.',
+      'Hytte i vestenden av Virvatnet. Om sommeren fra E6 ved Krokstrand: 16 km anleggsvei til demningen, deretter sti til hytta. Anleggsveien er ikke vinterbrøytet.',
     beskrivelse_en:
-      'A calm mountain walk to Virvasshytta — well suited for families and beginners.',
+      'Cabin at the western end of Virvatnet. In summer from the E6 at Krokstrand: 16 km of access road to the dam, then a trail to the cabin. The access road is not ploughed in winter.',
     lenke: 'https://ut.no/hytte/10571/virvasshytta',
   },
   {
-    id: 'kjenvasshytta',
-    navn: 'Kjenvasshytta',
-    vanskelighet: 'Middels',
-    vanskelighet_en: 'Moderate',
-    distanse: 'ca. 10 km',
-    distanse_en: 'approx. 10 km',
-    tid: 'ca. 3,5 t',
-    tid_en: 'approx. 3.5 h',
+    id: 'kjennsvasshytta',
+    navn: 'Kjennsvasshytta',
+    vanskelighet: 'Lett',
+    vanskelighet_en: 'Easy',
+    distanse: 'Bilvei om sommeren',
+    distanse_en: 'Road in summer',
+    tid: '',
+    tid_en: '',
     beskrivelse:
-      'Tur til Kjenvasshytta langs stien mot riksgrensen, med stopp ved fiskevatn underveis.',
+      'Sommerstid er det bilvei helt fram: kjør til Umbukta, ta av mot Umskaret etter tunnelen og følg Akersvass-/Kjennsvassveien (ca. 40 km grusvei). Til fots på merket rute over Tverråskardet eller gjennom Leirbotnet.',
     beskrivelse_en:
-      'A hike to Kjenvasshytta along the trail towards the national border, with a stop by a fishing lake on the way.',
+      'In summer there is a road all the way: drive to Umbukta, turn off towards Umskaret after the tunnel and follow the Akersvass/Kjennsvass road (about 40 km of gravel road). On foot via the marked route over Tverråskardet or through Leirbotnet.',
     lenke: 'https://ut.no/hytte/1079/kjennsvasshytta',
   },
   {
@@ -140,9 +140,9 @@ export const TURTIPS = [
     tid: 'ca. 7 t',
     tid_en: 'approx. 7 h',
     beskrivelse:
-      'Norges nordligste brebre — et eventyrlignende fjellmassiv med Oksskolten som høyeste topp (1916 moh.).',
+      'Nord-Norges høyeste fjell (1916 moh). Vanlig utgangspunkt er Kjennsvasshytta — fra E12 ved Umbukta til Umskaret og ca. 40 km anleggsvei (sommer). Krevende høgfjellstur; bre og ising krever erfaring og utstyr.',
     beskrivelse_en:
-      "Norway's northernmost glacier — a fairytale-like massif with Oksskolten as the highest peak (1916 m a.s.l.).",
+      "Northern Norway's highest mountain (1916 m). The usual starting point is Kjennsvasshytta — from the E12 at Umbukta to Umskaret and about 40 km of access road (summer). A demanding high-mountain trip; glacier and ice require experience and equipment.",
     lenke: 'https://ut.no/turforslag/117249/oksskolten-1916-moh-hyest-i-nord-norge',
   },
   {
@@ -150,14 +150,14 @@ export const TURTIPS = [
     navn: 'Årestue Umbukta',
     vanskelighet: 'Lett',
     vanskelighet_en: 'Easy',
-    distanse: 'Kort tur ved hytta',
-    distanse_en: 'Short walk by the cabin',
+    distanse: 'Ved E12, ca. 1 km',
+    distanse_en: 'By the E12, approx. 1 km',
     tid: '',
     tid_en: '',
     beskrivelse:
-      'Gammel årestue ved Umbukta — et stemningsfullt kulturminne med åpent ildsted. Se UT.no for detaljer.',
+      'Gammel årestue ved Uman, ca. 1 km øst for Umbukta langs E12. Ligger ved en opparbeidet parkeringsplass på en tange ut i vatnet — bilvei hele året.',
     beskrivelse_en:
-      'An old open-hearth hut (årestue) at Umbukta — an atmospheric cultural heritage site. See UT.no for details.',
+      'Old open-hearth hut by Uman, about 1 km east of Umbukta along the E12. By a prepared car park on a point reaching into the lake — road access all year.',
     lenke: 'https://ut.no/hytte/10172351/arestue-umbukta',
   },
 ] as const;
