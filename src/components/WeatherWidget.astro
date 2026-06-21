@@ -78,8 +78,7 @@ function symbolLabel(code) {
 async function fetchWeather() {
   try {
     const res = await fetch(
-      `https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=${LAT}&lon=${LON}`,
-      { headers: { 'User-Agent': 'FFH-Hytteutleie/1.0 avd143@fellesforbundet.org' } }
+      `https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=${LAT}&lon=${LON}`
     );
     if (!res.ok) throw new Error('MET API feil');
     const data = await res.json();
