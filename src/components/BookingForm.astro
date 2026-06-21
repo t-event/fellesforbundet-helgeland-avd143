@@ -1,5 +1,9 @@
 ---
 import { PRISER, KONTONUMMER, LO_FORBUND } from '../config.ts';
+// VIKTIG: import.meta.env virker IKKE inne i et define:vars-script (det blir et
+// klassisk inline-script). Les byggetids-env her i frontmatter og send inn via define:vars.
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const WEB3FORMS_KEY = import.meta.env.PUBLIC_WEB3FORMS_KEY ?? '';
 ---
 
 <div class="card card-pad" id="booking">
@@ -104,9 +108,7 @@ import { PRISER, KONTONUMMER, LO_FORBUND } from '../config.ts';
   </form>
 </div>
 
-<script define:vars={{ PRISER, KONTONUMMER }}>
-const base = import.meta.env.BASE_URL?.replace(/\/$/, '') ?? '';
-
+<script define:vars={{ PRISER, KONTONUMMER, base, WEB3FORMS_KEY }}>
 const fraInput      = document.getElementById('booking-fra');
 const tilInput      = document.getElementById('booking-til');
 const navnInput     = document.getElementById('booking-navn');
@@ -235,7 +237,7 @@ form?.addEventListener('submit', async (e) => {
   const rate    = RATE_MAP[gruppe] ?? PRISER.FFH;
   const sum     = dager * rate;
   const ref     = lagReferanse(navn, fra);
-  const key     = import.meta.env.PUBLIC_WEB3FORMS_KEY ?? '';
+  const key     = WEB3FORMS_KEY;
 
   const prisLabel = { FFH: 'Fellesforbundet Helgeland (700 kr/d)', FF: 'Fellesforbundet annen avd. (1050 kr/d)', ANNET_LO: `${forbund} — annet LO-forbund (1200 kr/d)` };
 
