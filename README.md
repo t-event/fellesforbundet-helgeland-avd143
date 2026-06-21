@@ -75,9 +75,8 @@ Nettsiden bruker [Web3Forms](https://web3forms.com) som skjematjeneste — grati
 
 ### Hva Web3Forms gjør
 
-- Tar imot bookingskjemaet og sender e-post til `avd143@fellesforbundet.org`
-- Sender automatisk kvitteringse-post til den som booker
-- Tar imot påske-loddtrekningsskjemaet og sender e-post til kontoret
+- Tar imot booking-, kontakt- og påskeskjemaet og sender e-post til kontorets innboks (Web3Forms-kontoens e-post)
+- Den som booker ser betalingsinfo på kvitteringssiden (`/takk`) umiddelbart. Det sendes **ingen automatisk** e-postkvittering — Web3Forms' autosvar er en betalt funksjon. Kontoret følger opp manuelt på e-post.
 
 Gratis-planen tillater **250 skjemainnsendinger per måned** — mer enn nok for hyttetrafikken.
 
@@ -169,7 +168,7 @@ Kontoret mottar en e-post fra `noreply@web3forms.com` med:
 - Beregnet pris og betalingsreferanse (f.eks. `UMB-2026 0712-JNH`)
 - Kontonummer `451635821274`
 
-Den som booker mottar også automatisk en kvitterings-e-post med samme info.
+Den som booker ser samme info på kvitteringssiden (`/takk`) umiddelbart. (Automatisk e-postkvittering krever Web3Forms' betalte autosvar og er ikke aktivert.)
 
 ### Kontorets oppgave etter mottak
 

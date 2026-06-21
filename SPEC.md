@@ -82,11 +82,12 @@ Statisk nettside for utleie av Fellesforbundet Helgeland (avd. 143) sine to hytt
 - Beregnet totalpris
 - `replyto` = bestillers e-post → avdelingen kan svare direkte
 
-**Auto Respond (Web3Forms):** Bestiller får automatisk kvitterings-e-post med:
+**Kvittering til bestiller:** Vises umiddelbart på `/takk`-siden (ikke e-post — Web3Forms' autosvar er en betalt funksjon som ikke er aktivert):
 - Valgte datoer, antall døgn, prisgruppe, totalpris
 - Kontonummer `451635821274`
-- Betalingsreferanse (`UMB-ÅÅÅÅ-MÅNEDDAG-FORNAVN`, f.eks. `UMB-2026-0718-OLA`)
+- Betalingsreferanse (`UMB-ÅÅÅÅMMDD-INITIALER`, f.eks. `UMB-20260718-ON`)
 - «Datoen er ikke reservert før avdelingen bekrefter. Dørkoden sendes på SMS/e-post fra avdelingen når betalingen er registrert.»
+- Web3Forms-skjemaene sender `email`-feltet (bestillerens adresse) slik at kontoret kan svare direkte (Reply-To).
 
 **Kontaktskjema (Hjelpesenter):** Samme key, emne-tag skiller de to.
 
