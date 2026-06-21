@@ -221,13 +221,13 @@ form?.addEventListener('submit', async (e) => {
   const gruppe  = prisGruppeEl?.value ?? 'FFH';
   const forbund = forbundEl?.value ?? '';
 
-  if (!fra) { setFeil('err-fra', 'Velg fra-dato.'); ok = false; }
-  if (!til) { setFeil('err-til', 'Velg til-dato.'); ok = false; }
-  else if (til <= fra) { setFeil('err-til', 'Til-dato må være etter fra-dato.'); ok = false; }
-  if (!navn) { setFeil('err-navn', 'Oppgi navn.'); ok = false; }
-  if (!epost || !epost.includes('@')) { setFeil('err-epost', 'Oppgi gyldig e-postadresse.'); ok = false; }
-  if (!telefon) { setFeil('err-telefon', 'Oppgi telefonnummer.'); ok = false; }
-  if (gruppe === 'ANNET_LO' && !forbund) { setFeil('err-forbund', 'Velg LO-forbund.'); ok = false; }
+  if (!fra) { setFeil('err-fra', erEn() ? 'Choose a start date.' : 'Velg fra-dato.'); ok = false; }
+  if (!til) { setFeil('err-til', erEn() ? 'Choose an end date.' : 'Velg til-dato.'); ok = false; }
+  else if (til <= fra) { setFeil('err-til', erEn() ? 'End date must be after start date.' : 'Til-dato må være etter fra-dato.'); ok = false; }
+  if (!navn) { setFeil('err-navn', erEn() ? 'Enter your name.' : 'Oppgi navn.'); ok = false; }
+  if (!epost || !epost.includes('@')) { setFeil('err-epost', erEn() ? 'Enter a valid email address.' : 'Oppgi gyldig e-postadresse.'); ok = false; }
+  if (!telefon) { setFeil('err-telefon', erEn() ? 'Enter a phone number.' : 'Oppgi telefonnummer.'); ok = false; }
+  if (gruppe === 'ANNET_LO' && !forbund) { setFeil('err-forbund', erEn() ? 'Select an LO union.' : 'Velg LO-forbund.'); ok = false; }
 
   if (!ok) return;
 
@@ -307,7 +307,7 @@ form?.addEventListener('submit', async (e) => {
     submitBtn.disabled = false;
     submitTekst.style.display = '';
     submitSpinner.style.display = 'none';
-    feilTekst.textContent = 'Det oppstod en feil. Prøv igjen eller kontakt avdelingen direkte.';
+    feilTekst.textContent = erEn() ? 'Something went wrong. Please try again or contact the office directly.' : 'Det oppstod en feil. Prøv igjen eller kontakt avdelingen direkte.';
     feilBoks.style.display = 'flex';
   }
 });

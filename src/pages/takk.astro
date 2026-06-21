@@ -20,7 +20,8 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
         <h1 class="h1" style="font-size:clamp(28px,4vw,40px); margin-bottom:12px;" data-i18n="takk_title">
           Takk for din forespørsel!
         </h1>
-        <p class="lead" style="margin:0 auto;" id="takk-lead-tekst">
+        <p class="lead" style="margin:0 auto;" id="takk-lead-tekst"
+           data-en="We have received your request for the <strong>Umbukta cabin</strong>. The office will review it and contact you by email.">
           Vi har mottatt forespørselen din om <strong>Hytte i Umbukta</strong>.
           Avdelingen ser over og tar kontakt på e-post.
         </p>
@@ -36,11 +37,11 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
           <span class="v">{KONTONUMMER}</span>
         </div>
         <div class="kv-row" id="takk-row-datoer" style="display:none;">
-          <span class="k">Leieperiode</span>
+          <span class="k" data-en="Rental period">Leieperiode</span>
           <span class="v" id="takk-datoer">–</span>
         </div>
         <div class="kv-row" id="takk-row-dager" style="display:none;">
-          <span class="k">Antall døgn</span>
+          <span class="k" data-en="Nights">Antall døgn</span>
           <span class="v" id="takk-dager">–</span>
         </div>
         <div class="kv-row" id="takk-row-ref" style="display:none;">
@@ -65,7 +66,8 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       <div style="text-align:center; margin-bottom:16px;">
         <div class="alert alert-green" style="max-width:680px; margin:0 auto 22px; text-align:left;">
           <span class="ic">✓</span>
-          <p style="font-size:14.5px; line-height:1.6;">
+          <p style="font-size:14.5px; line-height:1.6;"
+             data-en="An email with payment information has been sent to the address you provided. Check your spam folder if you can't find it.">
             En e-post med betalingsinformasjon er sendt til e-postadressen du oppga.
             Sjekk evt. søppelpost-mappa om du ikke finner den.
           </p>
@@ -99,20 +101,29 @@ function vis(id, tekst) {
   }
 }
 
-if (fra && til) {
-  const fmtFra = new Date(fra).toLocaleDateString('nb-NO', { day:'numeric', month:'long', year:'numeric' });
-  const fmtTil = new Date(til).toLocaleDateString('nb-NO', { day:'numeric', month:'long', year:'numeric' });
-  vis('datoer', `${fmtFra} – ${fmtTil}`);
-}
-if (dager) vis('dager', `${dager} døgn`);
-if (ref)   vis('ref',   ref);
-if (sum)   vis('sum',   `${parseInt(sum).toLocaleString('nb-NO')} kr`);
+const erEn = () => localStorage.getItem('lang') === 'en';
 
-// Oppdater lead-tekst
-if (fra && til && navn) {
-  const fmtFra = new Date(fra).toLocaleDateString('nb-NO', { day:'numeric', month:'long' });
-  const fmtTil = new Date(til).toLocaleDateString('nb-NO', { day:'numeric', month:'long', year:'numeric' });
-  document.getElementById('takk-lead-tekst').innerHTML =
-    `Vi har mottatt forespørselen din om <strong>Hytte i Umbukta</strong> for <strong>${fmtFra}–${fmtTil}</strong>, ${navn}. Avdelingen ser over og tar kontakt på e-post.`;
+function fyll() {
+  const loc = erEn() ? 'en-GB' : 'nb-NO';
+  if (fra && til) {
+    const fmtFra = new Date(fra).toLocaleDateString(loc, { day:'numeric', month:'long', year:'numeric' });
+    const fmtTil = new Date(til).toLocaleDateString(loc, { day:'numeric', month:'long', year:'numeric' });
+    vis('datoer', `${fmtFra} – ${fmtTil}`);
+  }
+  if (dager) vis('dager', erEn() ? `${dager} ${dager === '1' ? 'night' : 'nights'}` : `${dager} døgn`);
+  if (ref)   vis('ref',   ref);
+  if (sum)   vis('sum',   erEn() ? `NOK ${parseInt(sum).toLocaleString('en-US')}` : `${parseInt(sum).toLocaleString('nb-NO')} kr`);
+
+  if (fra && til && navn) {
+    const fmtFra = new Date(fra).toLocaleDateString(loc, { day:'numeric', month:'long' });
+    const fmtTil = new Date(til).toLocaleDateString(loc, { day:'numeric', month:'long', year:'numeric' });
+    const lead = document.getElementById('takk-lead-tekst');
+    if (lead) lead.innerHTML = erEn()
+      ? `We have received your request for the <strong>Umbukta cabin</strong> for <strong>${fmtFra}–${fmtTil}</strong>, ${navn}. The office will review it and contact you by email.`
+      : `Vi har mottatt forespørselen din om <strong>Hytte i Umbukta</strong> for <strong>${fmtFra}–${fmtTil}</strong>, ${navn}. Avdelingen ser over og tar kontakt på e-post.`;
+  }
 }
+fyll();
+document.querySelectorAll('.lang button').forEach(b =>
+  b.addEventListener('click', () => setTimeout(fyll, 0)));
 </script>

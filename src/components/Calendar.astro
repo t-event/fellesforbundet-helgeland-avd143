@@ -5,15 +5,15 @@
 
 <div class="cal" id="cal" aria-label="Ledighetskalender for Umbukta">
   <div class="cal-head">
-    <b id="cal-title">Laster kalender…</b>
+    <b id="cal-title" data-en="Loading calendar…">Laster kalender…</b>
     <div class="cal-nav">
       <button id="cal-prev" aria-label="Forrige måned">‹</button>
       <button id="cal-next" aria-label="Neste måned">›</button>
     </div>
   </div>
   <div class="cal-weekdays" aria-hidden="true">
-    <span>Man</span><span>Tir</span><span>Ons</span>
-    <span>Tor</span><span>Fre</span><span>Lør</span><span>Søn</span>
+    <span data-en="Mon">Man</span><span data-en="Tue">Tir</span><span data-en="Wed">Ons</span>
+    <span data-en="Thu">Tor</span><span data-en="Fri">Fre</span><span data-en="Sat">Lør</span><span data-en="Sun">Søn</span>
   </div>
   <div class="cal-grid" id="cal-grid" role="grid" aria-label="Dager"></div>
   <div class="cal-legend" aria-label="Tegnforklaring">
@@ -55,6 +55,9 @@ const btnNext = document.getElementById('cal-next')!;
 
 const MÅNEDER = ['Januar','Februar','Mars','April','Mai','Juni',
                  'Juli','August','September','Oktober','November','Desember'];
+const MONTHS_EN = ['January','February','March','April','May','June',
+                   'July','August','September','October','November','December'];
+const erEn = () => localStorage.getItem('lang') === 'en';
 
 function isoDate(y: number, m: number, d: number): string {
   return `${y}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
@@ -74,7 +77,7 @@ function renderCalendar() {
   let startDow = firstDay.getDay(); // 0=søn..6=lør
   startDow = startDow === 0 ? 6 : startDow - 1; // Gjør man=0
 
-  title.textContent = `${MÅNEDER[viewMonth]} ${viewYear}`;
+  title.textContent = `${(erEn() ? MONTHS_EN : MÅNEDER)[viewMonth]} ${viewYear}`;
 
   let html = '';
 
@@ -225,4 +228,8 @@ async function init() {
 }
 
 init();
+
+// Tegn kalenderen på nytt ved språkbytte (månedsnavn)
+document.querySelectorAll('.lang button').forEach(b =>
+  b.addEventListener('click', () => setTimeout(renderCalendar, 0)));
 </script>
