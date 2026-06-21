@@ -181,7 +181,7 @@ Ingen manuell oppdatering nødvendig.
 
 Sauvasshytta, Kvitstindalstunet, Virvasshytta, Kjenvasshytta, Oksskolten, **Årestue Umbukta** (erstattet Uman).  
 Hvert kort lenker til turens side på **UT.no**.  
-Bilder mangler foreløpig — «Bilder kommer»-plassholder vises til reelle bilder er klare.
+Turkortene er tekstbaserte (ingen bilder — avdelingen har ikke bilderettigheter til turene). Bilder finnes via UT.no-lenken.
 
 ---
 
