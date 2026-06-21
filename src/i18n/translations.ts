@@ -14,8 +14,8 @@ export const translations = {
     home_pill: 'Fjellhytter på Helgeland',
     home_h1: 'Leie hytte hos Fellesforbundet Helgeland',
     home_lead: 'Medlemmer i Fellesforbundet og LO kan leie våre to hytter til hyggelig pris. Naturskjønt, enkelt og trygt.',
-    home_cta_umbukta: 'Se hytta i Umbukta →',
-    home_cta_all: 'Begge hyttene',
+    home_cta_umbukta: 'Hytte i Umbukta →',
+    home_cta_elsvatn: 'Hytte i Øvre Elsvatn ↗',
     home_section_title: 'Ønsker du å leie en av våre hytter?',
     home_section_lead: 'Vi har to hytter. Velg den du vil leie.',
 
@@ -121,8 +121,8 @@ export const translations = {
     home_pill: 'Mountain cabins in Helgeland',
     home_h1: 'Rent a cabin from Fellesforbundet Helgeland',
     home_lead: 'Members of Fellesforbundet and LO can rent our two cabins at a great price. Scenic, simple and safe.',
-    home_cta_umbukta: 'See the Umbukta cabin →',
-    home_cta_all: 'Both cabins',
+    home_cta_umbukta: 'Umbukta cabin →',
+    home_cta_elsvatn: 'Øvre Elsvatn cabin ↗',
     home_section_title: 'Would you like to rent one of our cabins?',
     home_section_lead: 'We have two cabins. Choose the one you want to rent.',
 

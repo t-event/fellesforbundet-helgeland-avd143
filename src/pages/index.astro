@@ -22,9 +22,17 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
           </p>
           <div class="hero-actions">
             <a href={`${base}/umbukta`} class="btn btn-primary" data-i18n="home_cta_umbukta">
-              Se hytta i Umbukta →
+              Hytte i Umbukta →
             </a>
-            <a href="#hytter" class="btn btn-ghost" data-i18n="home_cta_all">Begge hyttene</a>
+            <a
+              href={ELSVATN_INATUR_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn btn-ghost"
+              data-i18n="home_cta_elsvatn"
+            >
+              Hytte i Øvre Elsvatn ↗
+            </a>
           </div>
         </div>
         <div class="hero-img">
@@ -150,6 +158,14 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
               <li style="display:flex; gap:9px; align-items:center; font-size:14.5px;">
                 <span style="width:7px; height:7px; border-radius:50%; background:var(--rod); flex:none;"></span>
                 Fullt kjøkken, WiFi og TV
+              </li>
+              <li style="display:flex; gap:9px; align-items:center; font-size:14.5px;">
+                <span style="width:7px; height:7px; border-radius:50%; background:var(--rod); flex:none;"></span>
+                Aluminiumsbåt med motor i naust
+              </li>
+              <li style="display:flex; gap:9px; align-items:center; font-size:14.5px;">
+                <span style="width:7px; height:7px; border-radius:50%; background:var(--rod); flex:none;"></span>
+                Bilvei helt fram — parkering rett ved hytta
               </li>
               <li style="display:flex; gap:9px; align-items:center; font-size:14.5px;">
                 <span style="width:7px; height:7px; border-radius:50%; background:var(--rod); flex:none;"></span>
