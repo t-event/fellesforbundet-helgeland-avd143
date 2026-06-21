@@ -126,6 +126,7 @@ const feilTekst     = document.getElementById('booking-feil-tekst');
 const form          = document.getElementById('booking-form');
 
 const RATE_MAP = { FFH: PRISER.FFH, FF: PRISER.FF, ANNET_LO: PRISER.ANNET_LO };
+const erEn = () => localStorage.getItem('lang') === 'en';
 
 // Beregn antall døgn mellom to ISO-datoer
 function antallDøgn(fra, til) {
@@ -133,23 +134,30 @@ function antallDøgn(fra, til) {
   return Math.round((t - f) / 86400000);
 }
 
+// Vis alltid prisboksen: sats per døgn før datoer er valgt, totalpris når begge er satt.
 function oppdaterPris() {
   const fra = fraInput?.value;
   const til = tilInput?.value;
   const gruppe = prisGruppeEl?.value ?? 'FFH';
   const rate = RATE_MAP[gruppe] ?? PRISER.FFH;
+  prisSummary.style.display = 'flex';
 
-  if (!fra || !til || til <= fra) {
-    prisSummary.style.display = 'none';
+  const dager = (fra && til && til > fra) ? antallDøgn(fra, til) : 0;
+  if (dager < 1) {
+    prisDetalj.textContent = erEn()
+      ? `Select dates · NOK ${rate.toLocaleString('en-US')}/night`
+      : `Velg datoer · ${rate.toLocaleString('nb-NO')} kr/døgn`;
+    prisTotal.textContent = '—';
     return;
   }
-  const dager = antallDøgn(fra, til);
-  if (dager < 1) { prisSummary.style.display = 'none'; return; }
 
   const sum = dager * rate;
-  prisDetalj.textContent = `${dager} døgn × ${rate.toLocaleString('nb-NO')} kr`;
-  prisTotal.textContent  = `${sum.toLocaleString('nb-NO')} kr`;
-  prisSummary.style.display = 'flex';
+  prisDetalj.textContent = erEn()
+    ? `${dager} ${dager === 1 ? 'night' : 'nights'} × NOK ${rate.toLocaleString('en-US')}`
+    : `${dager} døgn × ${rate.toLocaleString('nb-NO')} kr`;
+  prisTotal.textContent = erEn()
+    ? `NOK ${sum.toLocaleString('en-US')}`
+    : `${sum.toLocaleString('nb-NO')} kr`;
 }
 
 // Vis/skjul LO-forbund-felt
@@ -169,6 +177,11 @@ fraInput?.addEventListener('change', () => {
   oppdaterPris();
 });
 tilInput?.addEventListener('change', oppdaterPris);
+
+// Vis pris med en gang, og oppdater tekst ved språkbytte
+oppdaterPris();
+document.querySelectorAll('.lang button').forEach(b =>
+  b.addEventListener('click', () => setTimeout(oppdaterPris, 0)));
 
 // Feilvisning
 function setFeil(id, tekst) {

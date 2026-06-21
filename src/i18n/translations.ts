@@ -6,6 +6,7 @@ export const translations = {
     // Navigasjon
     nav_home: 'Forside',
     nav_umbukta: 'Umbukta',
+    nav_elsvatn: 'Øvre Elsvatn ↗',
     nav_turtips: 'Turtips',
     nav_hjelp: 'Hjelpesenter',
     nav_book: 'Book hytte',
@@ -45,7 +46,7 @@ export const translations = {
     umbukta_booking_title: 'Send forespørsel',
     umbukta_booking_lead: 'Uforpliktende — avdelingen bekrefter bookingen.',
     umbukta_rules_title: 'Husregler & praktisk info',
-    umbukta_faq_title: 'Ofte stilte spørsmål',
+    umbukta_faq_title: 'Ofte stilte spørsmål — Umbukta',
 
     // Skjema
     form_from: 'Fra dato',
@@ -86,7 +87,7 @@ export const translations = {
     paske_p1: 'Periode 1',
     paske_p2: 'Periode 2',
     paske_period_label: 'Ønsket periode',
-    paske_period_note: '(velg én eller begge)',
+    paske_period_note: '(velg én eller begge — du kan vinne maks én)',
     paske_submit: 'Meld på loddtrekning',
     paske_closed: 'Påmeldingsfristen er passert. Trekning er gjennomført — alle påmeldte fikk svar på e-post.',
 
@@ -114,6 +115,7 @@ export const translations = {
   en: {
     nav_home: 'Home',
     nav_umbukta: 'Umbukta cabin',
+    nav_elsvatn: 'Øvre Elsvatn ↗',
     nav_turtips: 'Hiking tips',
     nav_hjelp: 'Help',
     nav_book: 'Book cabin',
@@ -150,7 +152,7 @@ export const translations = {
     umbukta_booking_title: 'Send a request',
     umbukta_booking_lead: 'Non-binding — the office confirms the booking.',
     umbukta_rules_title: 'House rules & practical info',
-    umbukta_faq_title: 'Frequently asked questions',
+    umbukta_faq_title: 'Frequently asked questions — Umbukta',
 
     form_from: 'Check-in date',
     form_to: 'Check-out date',
@@ -187,7 +189,7 @@ export const translations = {
     paske_p1: 'Period 1',
     paske_p2: 'Period 2',
     paske_period_label: 'Preferred period',
-    paske_period_note: '(choose one or both)',
+    paske_period_note: '(choose one or both — you can win at most one)',
     paske_submit: 'Apply for lottery',
     paske_closed: 'The application deadline has passed. The lottery has been drawn — all applicants received a response by email.',
 

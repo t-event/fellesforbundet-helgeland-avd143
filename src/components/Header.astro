@@ -1,10 +1,12 @@
 ---
+import { ELSVATN_INATUR_URL } from '../config.ts';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const navLinks = [
-  { href: '/',         label: 'Forside',     key: 'nav_home'     },
-  { href: '/umbukta',  label: 'Umbukta',     key: 'nav_umbukta'  },
-  { href: '/turtips',  label: 'Turtips',     key: 'nav_turtips'  },
-  { href: '/hjelp',    label: 'Hjelpesenter',key: 'nav_hjelp'    },
+  { href: '/',                label: 'Forside',        key: 'nav_home'    },
+  { href: '/umbukta',         label: 'Umbukta',        key: 'nav_umbukta' },
+  { href: ELSVATN_INATUR_URL, label: 'Øvre Elsvatn ↗', key: 'nav_elsvatn', external: true },
+  { href: '/turtips',         label: 'Turtips',        key: 'nav_turtips' },
+  { href: '/hjelp',           label: 'Hjelpesenter',   key: 'nav_hjelp'   },
 ];
 
 const currentPath = Astro.url.pathname.replace(base, '').replace(/\/$/, '') || '/';
@@ -28,9 +30,11 @@ const currentPath = Astro.url.pathname.replace(base, '').replace(/\/$/, '') || '
       <nav class="nav" aria-label="Hovedmeny">
         {navLinks.map(link => (
           <a
-            href={`${base}${link.href}`}
-            class={currentPath === link.href || (link.href !== '/' && currentPath.startsWith(link.href)) ? 'active' : ''}
+            href={link.external ? link.href : `${base}${link.href}`}
+            class={!link.external && (currentPath === link.href || (link.href !== '/' && currentPath.startsWith(link.href))) ? 'active' : ''}
             data-i18n={link.key}
+            target={link.external ? '_blank' : undefined}
+            rel={link.external ? 'noopener noreferrer' : undefined}
           >
             {link.label}
           </a>
@@ -65,14 +69,16 @@ const currentPath = Astro.url.pathname.replace(base, '').replace(/\/$/, '') || '
 <nav class="nav-mobile" id="nav-mobile" aria-label="Mobilmeny" role="navigation">
   {navLinks.map(link => (
     <a
-      href={`${base}${link.href}`}
-      class={currentPath === link.href ? 'active' : ''}
+      href={link.external ? link.href : `${base}${link.href}`}
+      class={!link.external && currentPath === link.href ? 'active' : ''}
       data-i18n={link.key}
+      target={link.external ? '_blank' : undefined}
+      rel={link.external ? 'noopener noreferrer' : undefined}
     >
       {link.label}
     </a>
   ))}
-  <a href={`${base}/umbukta#booking`} class="btn btn-primary" style="margin-top:16px; display:inline-flex;" data-i18n="nav_book">
+  <a href={`${base}/umbukta#ledige-datoer`} class="btn btn-primary" data-i18n="nav_book">
     Book hytte
   </a>
 </nav>

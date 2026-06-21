@@ -115,6 +115,8 @@ ul { margin: 0; padding: 0; list-style: none; }
 .nav-mobile a { display: block; color: #cfd0e0; font-weight: 600; font-size: 18px; padding: 16px 0; border-bottom: 1px solid rgba(255,255,255,.1); text-decoration: none; }
 .nav-mobile a:last-child { border: none; }
 .nav-mobile a.active { color: var(--rod); }
+/* Book-knappen i mobilmenyen: full primærknapp, skal ikke arve nav-lenke-stil */
+.nav-mobile a.btn { display: flex; justify-content: center; margin-top: 20px; padding: 14px 20px; color: #fff; border: none; font-size: 16px; }
 
 /* ── Hero ────────────────────────────────────────────────────── */
 .hero-dark { background: linear-gradient(180deg, var(--morkbla) 0%, #221f43 100%); color: #fff; }

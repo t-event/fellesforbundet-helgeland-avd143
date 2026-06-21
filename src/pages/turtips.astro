@@ -20,10 +20,12 @@ const vanskelighetFarge = {
   <div class="hero-dark">
     <div class="container section">
       <span class="hero-pill" data-i18n="nav_turtips">Turtips</span>
-      <h1 class="h1" style="font-size:clamp(28px,3.8vw,46px); margin-bottom:12px;">
+      <h1 class="h1" style="font-size:clamp(28px,3.8vw,46px); margin-bottom:12px;"
+          data-en="Hiking tips from Umbukta">
         Turtips fra Umbukta
       </h1>
-      <p class="lead" style="max-width:54ch;">
+      <p class="lead" style="max-width:54ch;"
+         data-en="Mountains, lakes and an old trail right outside the cabin door. Here are some favourites in the area around Umbukta in Helgeland.">
         Fjell, vatn og gammel ferdselsvei rett utenfor hyttedøra. Her er noen favoritter
         i området rundt Umbukta på Helgeland.
       </p>
@@ -31,6 +33,11 @@ const vanskelighetFarge = {
   </div>
 
   <div class="container section">
+
+    <p class="muted" style="font-size:15px; margin-bottom:24px; max-width:60ch;"
+       data-en="These hiking tips are based around the cabin in Umbukta. Tips for the Øvre Elsvatn cabin will be added later.">
+      Disse turtipsene tar utgangspunkt i hytta i Umbukta. Turtips for hytta i Øvre Elsvatn kommer senere.
+    </p>
 
     <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:22px;">
       {TURTIPS.map(tur => (

@@ -93,8 +93,13 @@ const ogImageUrl = siteUrl + base + ogImage;
 
     type Lang = 'nb' | 'en';
 
+    // Cache for original (norsk) innhold, slik at vi kan bytte tilbake fra engelsk.
+    const noHtml = new WeakMap<HTMLElement, string>();
+    const noPh   = new WeakMap<HTMLInputElement | HTMLTextAreaElement, string>();
+
     function applyLang(lang: Lang) {
       const t = translations[lang];
+      // 1) Delte strenger via translations.ts (nav, overskrifter, skjemaetiketter)
       document.querySelectorAll<HTMLElement>('[data-i18n]').forEach(el => {
         const key = el.getAttribute('data-i18n') as keyof typeof t;
         if (key && key in t) el.textContent = t[key];
@@ -104,6 +109,16 @@ const ogImageUrl = siteUrl + base + ogImage;
         if (key && key in t && el instanceof HTMLInputElement || el instanceof HTMLTextAreaElement) {
           (el as HTMLInputElement).placeholder = t[key];
         }
+      });
+      // 2) Inline engelsk: data-en bytter innerHTML, data-en-ph bytter placeholder.
+      //    Engelsk ligger ved siden av norsk i HTML-en; norsk caches ved første kjøring.
+      document.querySelectorAll<HTMLElement>('[data-en]').forEach(el => {
+        if (!noHtml.has(el)) noHtml.set(el, el.innerHTML);
+        el.innerHTML = lang === 'en' ? (el.getAttribute('data-en') ?? '') : (noHtml.get(el) ?? '');
+      });
+      document.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>('[data-en-ph]').forEach(el => {
+        if (!noPh.has(el)) noPh.set(el, el.placeholder);
+        el.placeholder = lang === 'en' ? (el.getAttribute('data-en-ph') ?? '') : (noPh.get(el) ?? '');
       });
       document.documentElement.lang = lang === 'nb' ? 'no' : 'en';
       document.querySelectorAll<HTMLElement>('.lang button').forEach(btn => {

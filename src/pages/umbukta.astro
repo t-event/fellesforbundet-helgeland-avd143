@@ -20,46 +20,60 @@ const bilder = [
 ];
 
 const fasiliteter = [
-  { ikon: '🛏', tittel: 'Inntil 14 sengeplasser', beskrivelse: '3 soverom + hems. Dyner og puter medfølger.' },
-  { ikon: '🍳', tittel: 'Fullt kjøkken', beskrivelse: 'Komfyr, kjøleskap med fryser og kokeutstyr.' },
-  { ikon: '⚡', tittel: 'Innlagt strøm', beskrivelse: '230V i hele hytta.' },
-  { ikon: '💧', tittel: 'Innlagt vann', beskrivelse: 'Kaldt og varmt vann, dusj og toalett.' },
-  { ikon: '🔥', tittel: 'Oppvarming', beskrivelse: 'Varmepumpe og vedovn.' },
-  { ikon: '📺', tittel: 'WiFi og TV', beskrivelse: 'Mobildekning og internettilgang.' },
-  { ikon: '🚗', tittel: 'Parkering', beskrivelse: 'Gratis — plass til 4–5 biler.' },
-  { ikon: '🚤', tittel: 'Naust med båt', beskrivelse: 'Aluminiumsbåt med liten motor — ta med eget drivstoff.' },
-  { ikon: '🐕', tittel: 'Hunder tillatt', beskrivelse: 'Hunder er velkomne — men ikke i sofa eller senger.' },
-  { ikon: '🃏', tittel: 'Spill og fritid', beskrivelse: 'Kortstokk og yatzy finnes på hytta.' },
+  { ikon: '🛏', tittel: 'Inntil 14 sengeplasser', tittel_en: 'Up to 14 beds', beskrivelse: '3 soverom + hems. Dyner og puter medfølger.', beskrivelse_en: '3 bedrooms + loft. Duvets and pillows included.' },
+  { ikon: '🍳', tittel: 'Fullt kjøkken', tittel_en: 'Full kitchen', beskrivelse: 'Komfyr, kjøleskap med fryser og kokeutstyr.', beskrivelse_en: 'Stove, fridge with freezer and cookware.' },
+  { ikon: '⚡', tittel: 'Innlagt strøm', tittel_en: 'Electricity', beskrivelse: '230V i hele hytta.', beskrivelse_en: '230V throughout the cabin.' },
+  { ikon: '💧', tittel: 'Innlagt vann', tittel_en: 'Running water', beskrivelse: 'Kaldt og varmt vann, dusj og toalett.', beskrivelse_en: 'Cold and hot water, shower and toilet.' },
+  { ikon: '🔥', tittel: 'Oppvarming', tittel_en: 'Heating', beskrivelse: 'Varmepumpe og vedovn.', beskrivelse_en: 'Heat pump and wood stove.' },
+  { ikon: '📺', tittel: 'WiFi og TV', tittel_en: 'WiFi and TV', beskrivelse: 'Mobildekning og internettilgang.', beskrivelse_en: 'Mobile coverage and internet access.' },
+  { ikon: '🚗', tittel: 'Parkering', tittel_en: 'Parking', beskrivelse: 'Gratis — plass til 4–5 biler.', beskrivelse_en: 'Free — space for 4–5 cars.' },
+  { ikon: '🚤', tittel: 'Naust med båt', tittel_en: 'Boathouse with boat', beskrivelse: 'Aluminiumsbåt med liten motor — ta med eget drivstoff.', beskrivelse_en: 'Aluminium boat with small motor — bring your own fuel.' },
+  { ikon: '🐕', tittel: 'Hunder tillatt', tittel_en: 'Dogs allowed', beskrivelse: 'Hunder er velkomne — men ikke i sofa eller senger.', beskrivelse_en: 'Dogs are welcome — but not on the sofa or beds.' },
+  { ikon: '🃏', tittel: 'Spill og fritid', tittel_en: 'Games & leisure', beskrivelse: 'Kortstokk og yatzy finnes på hytta.', beskrivelse_en: 'Playing cards and Yahtzee are available at the cabin.' },
 ];
 
 const faq = [
   {
     spm: 'Hva må jeg ta med?',
-    svar: 'Du må ha med eget sengetøy og laken, håndklær, toalettpapir, kjøkkenhåndkle og øvrige forbruksvarer. Madrasser, dyner og puter finnes på hytta.'
+    spm_en: 'What do I need to bring?',
+    svar: 'Du må ha med eget sengetøy og laken, håndklær, toalettpapir, kjøkkenhåndkle og øvrige forbruksvarer. Madrasser, dyner og puter finnes på hytta.',
+    svar_en: 'You need to bring your own bed linen and sheets, towels, toilet paper, a dish towel and other consumables. Mattresses, duvets and pillows are at the cabin.'
   },
   {
     spm: 'Hvordan får jeg dørkoden?',
-    svar: 'Avdelingen sender dørkoden til deg på SMS eller e-post etter at betalingen er registrert. Nøkkelen til hytta ligger i en nøkkelboks.'
+    spm_en: 'How do I get the door code?',
+    svar: 'Avdelingen sender dørkoden til deg på SMS eller e-post etter at betalingen er registrert. Nøkkelen til hytta ligger i en nøkkelboks.',
+    svar_en: 'The office sends the door code to you by SMS or email once payment has been registered. The key to the cabin is in a key box.'
   },
   {
     spm: 'Kan jeg avbestille og få refusjon?',
-    svar: 'Avbestilt leie refunderes ikke. Ta kontakt med avdelingen for endring av dato. Vi anbefaler at du har reise-/avbestillingsforsikring i orden.'
+    spm_en: 'Can I cancel and get a refund?',
+    svar: 'Avbestilt leie refunderes ikke. Ta kontakt med avdelingen for endring av dato. Vi anbefaler at du har reise-/avbestillingsforsikring i orden.',
+    svar_en: 'Cancelled bookings are not refunded. Contact the office to change the date. We recommend having travel/cancellation insurance in place.'
   },
   {
     spm: 'Kan jeg ta med hund?',
-    svar: 'Ja, hunder er tillatt. Men hunder skal ikke ligge i sofa eller senger. Gi gjerne beskjed i forespørselen din.'
+    spm_en: 'Can I bring a dog?',
+    svar: 'Ja, hunder er tillatt. Men hunder skal ikke ligge i sofa eller senger. Gi gjerne beskjed i forespørselen din.',
+    svar_en: 'Yes, dogs are allowed. But dogs must not lie on the sofa or beds. Please mention it in your request.'
   },
   {
     spm: 'Hvor langt fram i tid kan jeg booke?',
-    svar: 'Kalenderen er som regel åpen. Unntak: påskeperioden fordeles ved loddtrekning (se seksjon over). Kontakt avdelingen hvis du er usikker.'
+    spm_en: 'How far ahead can I book?',
+    svar: 'Kalenderen er som regel åpen. Unntak: påskeperioden fordeles ved loddtrekning (se seksjon over). Kontakt avdelingen hvis du er usikker.',
+    svar_en: 'The calendar is usually open. Exception: the Easter period is allocated by lottery (see the section above). Contact the office if you are unsure.'
   },
   {
     spm: 'Hva skjer med bookingen min hvis to sender forespørsel på samme dato?',
-    svar: 'Datoen er ikke reservert før avdelingen bekrefter og legger den inn i kalenderen. Avdelingen avgjør ved kollisjon — det er lav trafikk, så dette skjer sjelden.'
+    spm_en: 'What happens to my booking if two people request the same date?',
+    svar: 'Datoen er ikke reservert før avdelingen bekrefter og legger den inn i kalenderen. Avdelingen avgjør ved kollisjon — det er lav trafikk, så dette skjer sjelden.',
+    svar_en: 'The date is not reserved until the office confirms it and enters it into the calendar. The office decides in case of a clash — traffic is low, so this rarely happens.'
   },
   {
     spm: 'Er det elbillader?',
-    svar: 'Nei, hytta har ikke elbillader. Det er heller ikke buss-/togadkomst eller handikaptilpasset innredning.'
+    spm_en: 'Is there an EV charger?',
+    svar: 'Nei, hytta har ikke elbillader. Det er heller ikke buss-/togadkomst eller handikaptilpasset innredning.',
+    svar_en: 'No, the cabin does not have an EV charger. There is also no bus/train access or wheelchair-accessible facilities.'
   },
 ];
 ---
@@ -122,6 +136,9 @@ const faq = [
         <p class="lead" style="color:#e2e2ee; margin-top:10px; max-width:50ch;" data-i18n="umbukta_hero_lead">
           Ved Umbukta fjellstue, ca. 3,5 mil fra Mo i Rana langs E12 — like ved riksgrensen til Sverige.
         </p>
+        <div style="margin-top:22px; display:flex; flex-wrap:wrap; gap:12px;">
+          <a href="#ledige-datoer" class="btn btn-primary" data-en="Check availability and book →">Sjekk ledige datoer og book →</a>
+        </div>
       </div>
     </div>
   </div>
@@ -132,16 +149,19 @@ const faq = [
     <div class="section grid" style="grid-template-columns:1fr 1fr; align-items:center; gap:clamp(32px,5vw,56px);">
       <div>
         <h2 class="h2" style="margin-bottom:16px;" data-i18n="umbukta_about_title">Om hytta</h2>
-        <p class="muted" style="font-size:16.5px; line-height:1.7; margin-bottom:16px;">
+        <p class="muted" style="font-size:16.5px; line-height:1.7; margin-bottom:16px;"
+           data-en="The Umbukta cabin sits freely in the mountains, approx. 35 km from Mo i Rana along the E12, about 3 km from the Swedish border. The cabin sleeps <strong>up to 14 people</strong> across 3 bedrooms and a spacious loft, with a living room and a fully equipped kitchen.">
           Umbukta-hytta ligger fritt til i fjellet, ca. 3,5 mil fra Mo i Rana langs E12, ca. 3 km fra grensen til Sverige.
           Hytta har plass til <strong>inntil 14 personer</strong> fordelt på 3 soverom og en romslig hems, med stue og fullt utstyrt kjøkken.
         </p>
-        <p class="muted" style="font-size:16.5px; line-height:1.7; margin-bottom:16px;">
+        <p class="muted" style="font-size:16.5px; line-height:1.7; margin-bottom:16px;"
+           data-en="Summer and winter alike, this is an excellent base for outdoor life in Helgeland — fishing, mountain hikes and skiing in winter. Right by the cabin there is a boathouse with an aluminium boat and a small motor that can be borrowed.">
           Sommer som vinter er dette et utmerket utgangspunkt for friluftsliv på Helgeland —
           fiske, turer i fjellet og skiturer om vinteren. Like ved hytta finnes et naust med
           aluminiumsbåt og liten motor som kan lånes.
         </p>
-        <p class="muted" style="font-size:15px; line-height:1.7;">
+        <p class="muted" style="font-size:15px; line-height:1.7;"
+           data-en="<strong>Distance from the road: 0 km</strong> — free parking for 4–5 cars right by the cabin. The road to the cabin is ploughed in winter, so you can drive all the way year-round.">
           <strong>Avstand fra vei: 0 km</strong> — gratis parkering til 4–5 biler rett ved hytta.
           Veien inn til hytta brøytes om vinteren, så du kan kjøre helt fram hele året.
         </p>
@@ -202,8 +222,8 @@ const faq = [
           <div class="facility">
             <span class="facility-ic" aria-hidden="true">{f.ikon}</span>
             <div>
-              <b>{f.tittel}</b>
-              <span>{f.beskrivelse}</span>
+              <b data-en={f.tittel_en}>{f.tittel}</b>
+              <span data-en={f.beskrivelse_en}>{f.beskrivelse}</span>
             </div>
           </div>
         ))}
@@ -321,7 +341,7 @@ const faq = [
     </div>
 
     <!-- KALENDER + BOOKINGSKJEMA -->
-    <div class="section grid" style="padding-top:0; grid-template-columns:1fr 1fr; align-items:start; gap:clamp(20px,4vw,36px);">
+    <div id="ledige-datoer" class="section grid" style="scroll-margin-top:90px; padding-top:0; grid-template-columns:1fr 1fr; align-items:start; gap:clamp(20px,4vw,36px);">
       <div>
         <h2 class="h2" style="font-size:clamp(22px,2.6vw,28px); margin-bottom:18px;" data-i18n="umbukta_calendar_title">
           Ledige datoer
@@ -354,11 +374,14 @@ const faq = [
         <div class="rule-row"><span class="k">Hunder</span><span class="v">Tillatt (ikke i seng/sofa)</span></div>
         <div class="rule-row"><span class="k">Røyking</span><span class="v">Ikke tillatt innendørs</span></div>
         <div class="rule-row"><span class="k">Elbillader</span><span class="v">Ikke tilgjengelig</span></div>
-        <p class="note">
+        <p class="note" data-en="The cabin must be left tidy and cleaned by the renter after use. The key is collected from a key box at the cabin — the code is sent by the office after confirmed payment.">
           Hytta skal forlates ryddig og rengjort av leietaker etter bruk.
           Nøkkel hentes i nøkkelboks på hytta — kode sendes av avdelingen etter bekreftet betaling.
         </p>
-        <p class="note" style="margin-top:8px;">
+        <p class="note" style="margin-top:8px;" data-en="The keys to the boathouse, woodshed and old cabin hang in the key box just inside the front door of the main cabin.">
+          Nøkkel til naust, vedbod og gammel hytte henger i nøkkelboksen innenfor ytterdøra på hovedhytta.
+        </p>
+        <p class="note" style="margin-top:8px;" data-en="<strong>Associations</strong> and similar may borrow the cabin on weekdays without an overnight stay — contact the office.">
           <strong>Foreninger</strong> og lignende kan låne hytta på hverdager uten overnatting —
           ta kontakt med avdelingen.
         </p>
@@ -372,10 +395,10 @@ const faq = [
           {faq.map((f, i) => (
             <div class={`acc-item${i === 0 ? ' open' : ''}`}>
               <button class="acc-head">
-                <b>{f.spm}</b>
+                <b data-en={f.spm_en}>{f.spm}</b>
                 <span class="acc-icon" aria-hidden="true">+</span>
               </button>
-              <div class="acc-body">{f.svar}</div>
+              <div class="acc-body" data-en={f.svar_en}>{f.svar}</div>
             </div>
           ))}
         </div>

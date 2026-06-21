@@ -22,7 +22,7 @@
         </div>
       </div>
       <div style="margin-top:18px;">
-        <div style="font-size:15px; font-weight:700; color:#5a4218; margin-bottom:8px;">Periodene:</div>
+        <div style="font-size:15px; font-weight:700; color:#5a4218; margin-bottom:8px;" data-en="The periods:">Periodene:</div>
         <p id="paske-p1-info" style="font-size:14px; color:#5a4218; margin-bottom:6px;"></p>
         <p id="paske-p2-info" style="font-size:14px; color:#5a4218;"></p>
       </div>
@@ -42,25 +42,25 @@
         </div>
         <div id="paske-suksess" class="alert alert-green" style="display:none; margin-bottom:14px;">
           <span class="ic">✓</span>
-          <p style="font-size:14.5px;">Takk! Vi har registrert påmeldingen din. Du får svar etter trekningen.</p>
+          <p style="font-size:14.5px;" data-en="Thank you! Your entry has been registered. You will receive a reply after the draw.">Takk! Vi har registrert påmeldingen din. Du får svar etter trekningen.</p>
         </div>
         <form class="form-stack" id="paske-form" novalidate>
           <input type="text" name="botcheck" tabindex="-1" autocomplete="off" aria-hidden="true"
             style="position:absolute; left:-9999px; width:1px; height:1px; opacity:0;" />
           <div class="field">
-            <label for="paske-navn">Navn</label>
+            <label for="paske-navn" data-i18n="form_name">Navn</label>
             <input class="input" type="text" id="paske-navn" name="navn"
               placeholder="Ola Nordmann" required aria-required="true" autocomplete="name" />
             <div class="field-error" id="paske-err-navn" style="display:none;"></div>
           </div>
           <div class="field">
-            <label for="paske-epost">E-post</label>
+            <label for="paske-epost" data-i18n="form_email">E-post</label>
             <input class="input" type="email" id="paske-epost" name="epost"
               placeholder="ola@epost.no" required aria-required="true" autocomplete="email" />
             <div class="field-error" id="paske-err-epost" style="display:none;"></div>
           </div>
           <div class="field">
-            <label for="paske-telefon">Telefon</label>
+            <label for="paske-telefon" data-i18n="form_phone">Telefon</label>
             <input class="input" type="tel" id="paske-telefon" name="telefon"
               placeholder="900 00 000" required aria-required="true" autocomplete="tel" />
           </div>
@@ -130,16 +130,20 @@ if (p2InfoEl) p2InfoEl.textContent = `Periode 2: ${fmtKort(ep.p2Start)} (innsjek
 if (p1LblEl)  p1LblEl.textContent = `${fmtKort(ep.p1Start)} – ${fmtKort(ep.p1End)}`;
 if (p2LblEl)  p2LblEl.textContent = `${fmtKort(ep.p2Start)} – ${fmtKort(ep.p2End)}`;
 
+// Testmodus: ?paske=test i URL-en tvinger seksjonen + skjemaet synlig for forhåndsvisning.
+// Påvirker ikke vanlige besøkende (de ser seksjonen kun i det faktiske påskevinduet).
+const testMode = new URLSearchParams(location.search).has('paske');
+
 // Vis/skjul seksjonen
 const seksjonEl = document.getElementById('paske-seksjon');
-if (seksjonEl && isEasterSectionVisible(now)) {
+if (seksjonEl && (testMode || isEasterSectionVisible(now))) {
   seksjonEl.style.display = '';
 }
 
 // Vis skjema eller «frist passert»
 const skjemaEl  = document.getElementById('paske-skjema');
 const fristPEl  = document.getElementById('paske-frist-passert');
-if (isEasterRegistrationOpen(now)) {
+if (testMode || isEasterRegistrationOpen(now)) {
   skjemaEl?.removeAttribute('style');
   if (fristPEl) fristPEl.style.display = 'none';
 } else {
