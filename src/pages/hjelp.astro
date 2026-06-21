@@ -222,6 +222,7 @@ form?.addEventListener('submit', async (e) => {
         access_key: key,
         subject: `Kontakthenvendelse — ${gjelder} — ${navn}`,
         from_name: navn,
+        email: epost,
         replyto: epost,
         message: `Fra: ${navn}\nE-post: ${epost}\nTelefon: ${telefon || '–'}\nGjelder: ${gjelder}\n\n${melding}`,
       }),

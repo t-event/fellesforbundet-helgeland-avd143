@@ -26,18 +26,19 @@ const year = new Date().getFullYear();
       <div>
         <h4 data-i18n="footer_hytter">Hyttene</h4>
         <ul>
-          <li><a href={`${base}/umbukta`}>Hytte i Umbukta</a></li>
+          <li><a href={`${base}/umbukta`} data-en="Umbukta cabin">Hytte i Umbukta</a></li>
           <li>
             <a
               href="https://www.inatur.no/hytte/670e2bd422a51709667760cd/hytte-i-ovre-elsvatn-hattfjelldal"
               target="_blank"
               rel="noopener noreferrer"
+              data-en="Øvre Elsvatn cabin ↗"
             >
               Hytte i Øvre Elsvatn ↗
             </a>
           </li>
-          <li><a href={`${base}/turtips`}>Turtips</a></li>
-          <li><a href={`${base}/hjelp`}>Hjelpesenter</a></li>
+          <li><a href={`${base}/turtips`} data-en="Hiking tips">Turtips</a></li>
+          <li><a href={`${base}/hjelp`} data-en="Help centre">Hjelpesenter</a></li>
         </ul>
       </div>
 
@@ -73,7 +74,7 @@ const year = new Date().getFullYear();
             <a href={`mailto:${KONTAKT.epost}`}>{KONTAKT.epost}</a>
           </li>
           <li>{KONTAKT.adresse}, {KONTAKT.poststed}</li>
-          <li>Åpent {KONTAKT.apningstider}</li>
+          <li><span data-en="Open">Åpent</span> {KONTAKT.apningstider}</li>
         </ul>
       </div>
     </div>

@@ -209,6 +209,7 @@ form?.addEventListener('submit', async (e) => {
         access_key: key,
         subject: `Loddtrekning påske ${ep.year} — ${navn}`,
         from_name: navn,
+        email: epost,
         replyto: epost,
         message: `PÅMELDING LODDTREKNING PÅSKE ${ep.year}\n\nNavn: ${navn}\nE-post: ${epost}\nTelefon: ${telefon || '–'}\nPeriode(r): ${perioder}`,
       }),

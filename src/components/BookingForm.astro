@@ -241,49 +241,23 @@ form?.addEventListener('submit', async (e) => {
 
   const prisLabel = { FFH: 'Fellesforbundet Helgeland (700 kr/d)', FF: 'Fellesforbundet annen avd. (1050 kr/d)', ANNET_LO: `${forbund} — annet LO-forbund (1200 kr/d)` };
 
+  // Web3Forms: autosvaret til bestilleren konfigureres i dashbordet og sendes til
+  // adressen i feltet «email». Egne, tydelige felt vises både i kontorets e-post
+  // og i autosvarets «kopi av innsending» (inkl. betalingsreferanse + kontonr).
   const payload = {
     access_key: key,
     subject: `Bookingforespørsel Umbukta — ${fra} til ${til} — ${navn}`,
     from_name: navn,
-    replyto: epost,
-    // Auto-respond til bestiller
-    autorespond: 'true',
-    autorespond_subject: 'Takk for forespørselen din — Umbukta, Fellesforbundet Helgeland',
-    autorespond_message: [
-      `Hei ${navn}!\n`,
-      `Vi har mottatt forespørselen din om leie av Hytta i Umbukta.\n`,
-      `--- DETALJER ---`,
-      `Innsjekk:          ${fra}`,
-      `Utsjekk:           ${til}`,
-      `Antall døgn:       ${dager}`,
-      `Prisgruppe:        ${prisLabel[gruppe]}`,
-      `Totalpris:         ${sum.toLocaleString('nb-NO')} kr`,
-      `Kontonummer:       ${KONTONUMMER}`,
-      `Betalingsreferanse: ${ref}`,
-      ``,
-      `OBS: Datoen er ikke reservert før avdelingen bekrefter. Du får en bekreftelse på e-post fra oss.`,
-      `Dørkoden sendes til deg på SMS/e-post fra avdelingen etter at betalingen er registrert.`,
-      ``,
-      `Avbestilt leie refunderes ikke. Vi anbefaler at du har reise-/avbestillingsforsikring i orden.`,
-      ``,
-      `Med vennlig hilsen`,
-      `Fellesforbundet Helgeland avd. 143`,
-      `Tlf. 75 15 12 28 | avd143@fellesforbundet.org`,
-    ].join('\n'),
-    // Melding til avdelingen
-    message: [
-      `NY BOOKINGFORESPØRSEL — Umbukta`,
-      ``,
-      `Navn:        ${navn}`,
-      `E-post:      ${epost}`,
-      `Telefon:     ${telefon}`,
-      `Fra:         ${fra}`,
-      `Til:         ${til}`,
-      `Antall døgn: ${dager}`,
-      `Prisgruppe:  ${prisLabel[gruppe]}`,
-      `Totalpris:   ${sum.toLocaleString('nb-NO')} kr`,
-      `Referanse:   ${ref}`,
-    ].join('\n'),
+    name: navn,
+    email: epost,
+    Telefon: telefon,
+    Innsjekk: fra,
+    Utsjekk: til,
+    'Antall døgn': String(dager),
+    Prisgruppe: prisLabel[gruppe],
+    Totalpris: `${sum.toLocaleString('nb-NO')} kr`,
+    Betalingsreferanse: ref,
+    Kontonummer: KONTONUMMER,
   };
 
   // Vis spinner
