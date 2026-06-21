@@ -96,12 +96,9 @@ ul { margin: 0; padding: 0; list-style: none; }
 /* ── Header / Nav ────────────────────────────────────────────── */
 .site-header { position: sticky; top: 0; z-index: 50; background: var(--morkbla); color: var(--hvit); border-bottom: 3px solid var(--rod); }
 .site-header .container { display: flex; align-items: center; justify-content: space-between; gap: 24px; min-height: 74px; }
-.brand { display: flex; align-items: center; gap: 12px; background: none; border: none; cursor: pointer; padding: 0; color: inherit; text-decoration: none; }
-.brand-mark { display: flex; align-items: center; justify-content: center; width: 46px; height: 46px; background: var(--hvit); border-radius: 10px; overflow: hidden; flex: none; }
-.brand-mark img { width: 36px; height: 36px; object-fit: contain; }
-.brand-name { text-align: left; line-height: 1.1; }
-.brand-name b { display: block; font-weight: 800; font-size: 15px; }
-.brand-name span { display: block; color: var(--lysbla); font-weight: 600; font-size: 12.5px; }
+.brand { display: flex; align-items: center; gap: 10px; background: none; border: none; cursor: pointer; padding: 0; color: inherit; text-decoration: none; }
+.brand-logo { height: 40px; width: auto; display: block; }
+.brand-sub { font-size: 12px; font-weight: 600; color: var(--lysbla); letter-spacing: 0.04em; text-transform: uppercase; white-space: nowrap; }
 .nav-right { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; justify-content: flex-end; }
 .nav { display: flex; align-items: center; gap: 4px; flex-wrap: wrap; }
 .nav a { background: transparent; color: #cfd0e0; font-weight: 600; font-size: 14px; padding: 9px 15px; border: none; border-radius: 9px; cursor: pointer; white-space: nowrap; text-decoration: none; }

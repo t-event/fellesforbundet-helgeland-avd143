@@ -9,14 +9,14 @@ import { PRISER, KONTAKT, UMBUKTA } from '../config.ts';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
 const bilder = [
-  { src: '509354136_23863110613338869_2291899816583064935_n.jpg', alt: 'Hytte i Umbukta — eksteriør' },
-  { src: '509359693_23863110636672200_8069005190491835382_n.jpg', alt: 'Umbukta — naturomgivelser' },
-  { src: '509360428_23863111016672162_2775771386801520296_n.jpg', alt: 'Umbukta — utsikt' },
-  { src: '509364318_23863110756672188_7034588925113761005_n.jpg', alt: 'Umbukta — inne i hytta' },
-  { src: '509413152_23863110600005537_4089812885910828954_n.jpg', alt: 'Umbukta — kjøkken og stue' },
-  { src: '509516086_23863110906672173_4310947696842304937_n.jpg', alt: 'Umbukta — soverom' },
-  { src: '510147927_23863110696672194_1716070958571014737_n.jpg', alt: 'Umbukta — naust og båt' },
-  { src: '510195868_23863110700005527_2172912030040116231_n.jpg', alt: 'Umbukta — fjell og vatn' },
+  { src: '159843138_3797277120348848_4595777890852669872_n.jpg',  alt: 'Hytte i Umbukta — eksteriør, solskinn og blå himmel' },
+  { src: '480561933_1031634398995139_7564633413902508_n.jpg',     alt: 'Terrasse med utsikt over Umbukta og snødekte fjell' },
+  { src: '509413152_23863110600005537_4089812885910828954_n.jpg', alt: 'Fullt utstyrt kjøkken med komfyr og kjøleskap' },
+  { src: '510447695_23863110660005531_1894319381280647852_n.jpg', alt: 'Stor spisestue med langt bord — plass til alle' },
+  { src: '509516086_23863110906672173_4310947696842304937_n.jpg', alt: 'Koselig stue med hjørnesofagruppe og store vinduer' },
+  { src: '510195868_23863110700005527_2172912030040116231_n.jpg', alt: 'Kosehjørnet på hemsen — lenestoler og levende lys' },
+  { src: '510147927_23863110696672194_1716070958571014737_n.jpg', alt: 'Soverom med køyeseng' },
+  { src: '509364318_23863110756672188_7034588925113761005_n.jpg', alt: 'Bad med dusj og servant' },
 ];
 
 const fasiliteter = [
@@ -67,7 +67,7 @@ const faq = [
 <Layout
   title="Hytte i Umbukta — Leie fjellhytte ved Rana | Fellesforbundet Helgeland"
   description="Lei hytta i Umbukta nær Mo i Rana og Sveriges grense. Inntil 14 sengeplasser, fullt utstyrt, sjekk ledige datoer og book her. Kun for LO-medlemmer — fra 700 kr/døgn."
-  ogImage="/images/umbukta/509359693_23863110636672200_8069005190491835382_n.jpg"
+  ogImage="/images/umbukta/159843138_3797277120348848_4595777890852669872_n.jpg"
   ogType="website"
 >
 
@@ -79,7 +79,7 @@ const faq = [
     "description": "Fjellhytte i Umbukta, Rana, eid av Fellesforbundet Helgeland avd. 143. Inntil 14 sengeplasser, fullt utstyrt. Kun for LO-medlemmer.",
     "url": Astro.site?.toString().replace(/\/$/, '') + base + '/umbukta',
     "image": [
-      Astro.site?.toString().replace(/\/$/, '') + base + '/images/umbukta/509359693_23863110636672200_8069005190491835382_n.jpg',
+      Astro.site?.toString().replace(/\/$/, '') + base + '/images/umbukta/159843138_3797277120348848_4595777890852669872_n.jpg',
     ],
     "geo": { "@type": "GeoCoordinates", "latitude": UMBUKTA.lat, "longitude": UMBUKTA.lon },
     "address": {
@@ -106,7 +106,7 @@ const faq = [
   <!-- HERO -->
   <div class="media-hero">
     <img
-      src={`${base}/images/umbukta/509359693_23863110636672200_8069005190491835382_n.jpg`}
+      src={`${base}/images/umbukta/159843138_3797277120348848_4595777890852669872_n.jpg`}
       alt="Hytte i Umbukta — fjellhytte i vakker natur ved Rana og Sveriges grense"
       width="1440"
       height="460"
