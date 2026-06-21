@@ -151,7 +151,8 @@ async function fetchWeather() {
       windSpeed != null ? String(Math.round(windSpeed)) : '–';
 
     if (windDir != null) {
-      document.getElementById('weather-vindpil').style.transform = `rotate(${windDir}deg)`;
+      // Pilen peker dit vinden blåser (FROM + 180°)
+      document.getElementById('weather-vindpil').style.transform = `rotate(${windDir + 180}deg)`;
       document.getElementById('weather-vindretning').textContent = toCompass(windDir) + ' ';
     }
 
@@ -168,14 +169,18 @@ async function fetchWeather() {
     document.getElementById('weather-dato').textContent =
       now.toLocaleDateString('nb-NO', { weekday:'long', hour:'2-digit', minute:'2-digit' });
 
-    // 5-dagers prognose
+    // 5-dagers prognose — finn oppføring nærmest kl. 12 UTC for hver fremtidig dato
     const dagMap = {};
     for (const t of ts) {
       const d2 = new Date(t.time);
       if (d2 <= now) continue;
-      if (d2.getHours() !== 12) continue;
       const key = d2.toISOString().split('T')[0];
-      if (!dagMap[key]) dagMap[key] = { date: d2, data: t.data };
+      const utcH = d2.getUTCHours();
+      if (!dagMap[key]) {
+        dagMap[key] = { date: d2, data: t.data, dist: Math.abs(utcH - 12) };
+      } else if (Math.abs(utcH - 12) < dagMap[key].dist) {
+        dagMap[key] = { date: d2, data: t.data, dist: Math.abs(utcH - 12) };
+      }
     }
     const dager5 = Object.values(dagMap).slice(0, 5);
     document.getElementById('weather-days').innerHTML = dager5.map(({ date, data }) => {
