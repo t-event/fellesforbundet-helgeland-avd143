@@ -9,7 +9,7 @@ import { UMBUKTA, YR_URL, VEGVESEN_KAMERA_URL } from '../config.ts';
     <div class="weather-top">
       <div>
         <b style="font-size:15px;">Umbukta</b>
-        <div style="font-size:13px; color:var(--lysbla);" id="weather-dato">Laster vær…</div>
+        <div style="font-size:13px; color:var(--lysbla);" id="weather-dato" data-en="Loading weather…">Laster vær…</div>
       </div>
       <a href={YR_URL} target="_blank" rel="noopener noreferrer"
         style="font-size:13px; color:#cfd0e0; text-decoration:none;">
@@ -27,7 +27,7 @@ import { UMBUKTA, YR_URL, VEGVESEN_KAMERA_URL } from '../config.ts';
 
     <div class="weather-stats">
       <div class="weather-stat">
-        <div class="k">Vind</div>
+        <div class="k" data-en="Wind">Vind</div>
         <div class="v" style="display:flex; align-items:center; gap:5px;">
           <svg id="weather-vindpil" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"
             aria-hidden="true" style="opacity:0.85; transition:transform 0.4s ease; flex:none;">
@@ -38,12 +38,12 @@ import { UMBUKTA, YR_URL, VEGVESEN_KAMERA_URL } from '../config.ts';
         <div class="u"><span id="weather-vindretning" style="font-size:11px; opacity:0.7;"></span> m/s</div>
       </div>
       <div class="weather-stat">
-        <div class="k">Nedbør</div>
+        <div class="k" data-en="Precip.">Nedbør</div>
         <div class="v" id="weather-nedbor">–</div>
-        <div class="u">mm/t</div>
+        <div class="u" data-en="mm/h">mm/t</div>
       </div>
       <div class="weather-stat">
-        <div class="k">Trykk</div>
+        <div class="k" data-en="Pressure">Trykk</div>
         <div class="v" id="weather-trykk">–</div>
         <div class="u">hPa</div>
       </div>
@@ -62,7 +62,7 @@ import { UMBUKTA, YR_URL, VEGVESEN_KAMERA_URL } from '../config.ts';
         style="width:100%; height:100%; object-fit:cover;"
         loading="lazy"
       />
-      <span class="live" title="Oppdateres hvert 5. min">DIREKTE</span>
+      <span class="live" title="Oppdateres hvert 5. min" data-en="LIVE">DIREKTE</span>
     </div>
     <div class="meta">
       <span style="font-size:14px; font-weight:600;">E12 — Umbukta (Statens vegvesen)</span>
@@ -74,6 +74,8 @@ import { UMBUKTA, YR_URL, VEGVESEN_KAMERA_URL } from '../config.ts';
 
 <script define:vars={{ LAT: UMBUKTA.lat, LON: UMBUKTA.lon, KAMERA_URL: VEGVESEN_KAMERA_URL }}>
 const DAGER_NB = ['søn','man','tir','ons','tor','fre','lør'];
+const DAYS_EN  = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+const erEn = () => localStorage.getItem('lang') === 'en';
 
 const ICON_MAP = {
   clearsky:            '☀️',
@@ -105,6 +107,14 @@ const SYMBOL_MAP = {
   sleet: 'Sludd', lightsleet: 'Lett sludd', heavysleet: 'Kraftig sludd',
 };
 
+const SYMBOL_MAP_EN = {
+  clearsky: 'Clear', fair: 'Fair', partlycloudy: 'Partly cloudy',
+  cloudy: 'Cloudy', fog: 'Fog', rainandthunder: 'Thunderstorm',
+  rain: 'Rain', lightrain: 'Light rain', heavyrain: 'Heavy rain',
+  snow: 'Snow', lightsnow: 'Light snow', heavysnow: 'Heavy snow',
+  sleet: 'Sleet', lightsleet: 'Light sleet', heavysleet: 'Heavy sleet',
+};
+
 function symbolBase(code) {
   return code ? code.replace(/_day|_night|_polartwilight/,'') : '';
 }
@@ -114,12 +124,13 @@ function symbolIcon(code) {
 }
 function symbolLabel(code) {
   const b = symbolBase(code);
-  return SYMBOL_MAP[b] ?? b.replace(/_/g,' ');
+  return (erEn() ? SYMBOL_MAP_EN : SYMBOL_MAP)[b] ?? b.replace(/_/g,' ');
 }
 
 const COMPASS = ['N','NNØ','NØ','ØNØ','Ø','ØSØ','SØ','SSØ','S','SSV','SV','VSV','V','VNV','NV','NNV'];
+const COMPASS_EN = ['N','NNE','NE','ENE','E','ESE','SE','SSE','S','SSW','SW','WSW','W','WNW','NW','NNW'];
 function toCompass(deg) {
-  return COMPASS[Math.round(deg / 22.5) % 16];
+  return (erEn() ? COMPASS_EN : COMPASS)[Math.round(deg / 22.5) % 16];
 }
 
 async function fetchWeather() {
@@ -167,7 +178,7 @@ async function fetchWeather() {
     document.getElementById('weather-icon').textContent = symbolIcon(sym);
     document.getElementById('weather-cond').textContent = sym ? symbolLabel(sym) : '–';
     document.getElementById('weather-dato').textContent =
-      now.toLocaleDateString('nb-NO', { weekday:'long', hour:'2-digit', minute:'2-digit' });
+      now.toLocaleDateString(erEn() ? 'en-GB' : 'nb-NO', { weekday:'long', hour:'2-digit', minute:'2-digit' });
 
     // 5-dagers prognose — finn oppføring nærmest kl. 12 UTC for hver fremtidig dato
     const dagMap = {};
@@ -188,14 +199,14 @@ async function fetchWeather() {
       const prec  = data?.next_6_hours?.details?.precipitation_amount ?? 0;
       const sym2  = data?.next_6_hours?.summary?.symbol_code ?? data?.next_1_hours?.summary?.symbol_code;
       return `<div class="weather-day">
-        <div class="wd-dag">${DAGER_NB[date.getDay()]}</div>
+        <div class="wd-dag">${(erEn() ? DAYS_EN : DAGER_NB)[date.getDay()]}</div>
         <div style="font-size:22px; line-height:1.2;" aria-hidden="true">${symbolIcon(sym2)}</div>
         <div class="wd-temp">${t2 != null ? Math.round(t2) + '°' : '–'}</div>
         <div class="wd-prec">${prec > 0 ? prec + ' mm' : ''}</div>
       </div>`;
     }).join('');
   } catch {
-    document.getElementById('weather-dato').textContent = 'Vær ikke tilgjengelig';
+    document.getElementById('weather-dato').textContent = erEn() ? 'Weather unavailable' : 'Vær ikke tilgjengelig';
   }
 }
 
@@ -203,10 +214,14 @@ function oppdaterKamera() {
   const img = document.getElementById('webcam-img');
   const tid = document.getElementById('webcam-tid');
   if (img) img.src = `${KAMERA_URL}?t=${Date.now()}`;
-  if (tid) tid.textContent = `Oppdatert ${new Date().toLocaleTimeString('nb-NO', { hour:'2-digit', minute:'2-digit' })}`;
+  if (tid) tid.textContent = `${erEn() ? 'Updated' : 'Oppdatert'} ${new Date().toLocaleTimeString(erEn() ? 'en-GB' : 'nb-NO', { hour:'2-digit', minute:'2-digit' })}`;
 }
 
 fetchWeather();
 oppdaterKamera();
 setInterval(oppdaterKamera, 5 * 60 * 1000);
+
+// Oppdater værtekst og kameratid ved språkbytte
+document.querySelectorAll('.lang button').forEach(b =>
+  b.addEventListener('click', () => setTimeout(() => { fetchWeather(); oppdaterKamera(); }, 0)));
 </script>
