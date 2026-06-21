@@ -1,0 +1,37 @@
+name: Oppdater ledige datoer
+
+on:
+  schedule:
+    # Kjøres hvert hele time (UTC)
+    - cron: '0 * * * *'
+  workflow_dispatch:  # Kan også kjøres manuelt fra GitHub UI
+
+permissions:
+  contents: write  # Nødvendig for å committe availability.json
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Sjekk ut kode
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Sett opp Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Hent kalender og oppdater availability.json
+        env:
+          CALENDAR_ICS_URL: ${{ secrets.CALENDAR_ICS_URL }}
+        run: node scripts/update-availability.js
+
+      - name: Commit og push (kun hvis endret)
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add public/availability.json
+          git diff --staged --quiet || git commit -m "chore: oppdater availability.json [$(date -u +'%Y-%m-%d %H:%M UTC')]"
+          git diff HEAD~1 HEAD --quiet 2>/dev/null || git push

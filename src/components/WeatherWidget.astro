@@ -1,0 +1,151 @@
+---
+import { UMBUKTA, YR_URL, VEGVESEN_KAMERA_URL } from '../config.ts';
+---
+
+<div class="grid" style="grid-template-columns:1fr 1fr; align-items:stretch;">
+
+  <!-- Vær fra MET -->
+  <div class="weather" id="weather-widget">
+    <div class="weather-top">
+      <div>
+        <b style="font-size:15px;">Umbukta</b>
+        <div style="font-size:13px; color:var(--lysbla);" id="weather-dato">Laster vær…</div>
+      </div>
+      <a href={YR_URL} target="_blank" rel="noopener noreferrer"
+        style="font-size:13px; color:#cfd0e0; text-decoration:none;">
+        yr.no ↗
+      </a>
+    </div>
+    <div class="weather-temp">
+      <div class="deg" id="weather-temp">–</div>
+      <div class="cond" id="weather-cond">–</div>
+    </div>
+    <div class="weather-stats">
+      <div class="weather-stat">
+        <div class="k">Vind</div>
+        <div class="v" id="weather-vind">–</div>
+        <div class="u">m/s</div>
+      </div>
+      <div class="weather-stat">
+        <div class="k">Nedbør</div>
+        <div class="v" id="weather-nedbor">–</div>
+        <div class="u">mm/t</div>
+      </div>
+      <div class="weather-stat">
+        <div class="k">Trykk</div>
+        <div class="v" id="weather-trykk">–</div>
+        <div class="u">hPa</div>
+      </div>
+    </div>
+    <div class="weather-days" id="weather-days"></div>
+  </div>
+
+  <!-- Webkamera fra Statens vegvesen -->
+  <div class="webcam">
+    <div class="frame">
+      <img
+        id="webcam-img"
+        src={`${VEGVESEN_KAMERA_URL}?t=${Date.now()}`}
+        alt="Webkamera E12 ved Umbukta (Statens vegvesen)"
+        style="width:100%; height:100%; object-fit:cover;"
+        loading="lazy"
+      />
+      <span class="live" title="Oppdateres hvert 5. min">DIREKTE</span>
+    </div>
+    <div class="meta">
+      <span style="font-size:14px; font-weight:600;">E12 — Umbukta (Statens vegvesen)</span>
+      <span class="muted" style="font-size:13px;" id="webcam-tid">–</span>
+    </div>
+  </div>
+
+</div>
+
+<script define:vars={{ LAT: UMBUKTA.lat, LON: UMBUKTA.lon, KAMERA_URL: VEGVESEN_KAMERA_URL }}>
+const DAGER_NB = ['søn','man','tir','ons','tor','fre','lør'];
+const SYMBOL_MAP = {
+  clearsky: 'Sol', fair: 'Lettskyet', partlycloudy: 'Delvis skyet',
+  cloudy: 'Skyet', fog: 'Tåke', rainandthunder: 'Tordenvær',
+  rain: 'Regn', lightrain: 'Lett regn', heavyrain: 'Kraftig regn',
+  snow: 'Snø', lightsnow: 'Lett snø', sleet: 'Sludd',
+};
+
+function symbolLabel(code) {
+  if (!code) return '–';
+  const base = code.replace(/_day|_night|_polartwilight/,'');
+  return SYMBOL_MAP[base] ?? code.replace(/_/g,' ');
+}
+
+async function fetchWeather() {
+  try {
+    const res = await fetch(
+      `https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=${LAT}&lon=${LON}`,
+      { headers: { 'User-Agent': 'FFH-Hytteutleie/1.0 avd143@fellesforbundet.org' } }
+    );
+    if (!res.ok) throw new Error('MET API feil');
+    const data = await res.json();
+    const ts = data?.properties?.timeseries ?? [];
+    if (!ts.length) return;
+
+    // Finn nærmeste tidspunkt
+    const now = new Date();
+    let nearest = ts[0];
+    for (const t of ts) {
+      if (new Date(t.time) <= now) nearest = t;
+      else break;
+    }
+    const d = nearest?.data;
+    const inst = d?.instant?.details;
+
+    document.getElementById('weather-temp').textContent =
+      inst?.air_temperature != null ? `${Math.round(inst.air_temperature)}°` : '–';
+    document.getElementById('weather-vind').textContent =
+      inst?.wind_speed != null ? String(Math.round(inst.wind_speed)) : '–';
+    document.getElementById('weather-nedbor').textContent =
+      d?.next_1_hours?.details?.precipitation_amount != null
+        ? String(d.next_1_hours.details.precipitation_amount) : '0';
+    document.getElementById('weather-trykk').textContent =
+      inst?.air_pressure_at_sea_level != null
+        ? String(Math.round(inst.air_pressure_at_sea_level)) : '–';
+
+    const sym = d?.next_1_hours?.summary?.symbol_code ?? d?.next_6_hours?.summary?.symbol_code;
+    document.getElementById('weather-cond').textContent = symbolLabel(sym);
+    document.getElementById('weather-dato').textContent =
+      now.toLocaleDateString('nb-NO', { weekday:'long', hour:'2-digit', minute:'2-digit' });
+
+    // Daglig oversikt (neste 5 dager, kl. 12:00)
+    const dagMap = {};
+    for (const t of ts) {
+      const d2 = new Date(t.time);
+      if (d2 <= now) continue;
+      if (d2.getHours() !== 12) continue;
+      const key = d2.toISOString().split('T')[0];
+      if (!dagMap[key]) dagMap[key] = { date: d2, data: t.data };
+    }
+    const dager5 = Object.values(dagMap).slice(0, 5);
+    const daysEl = document.getElementById('weather-days');
+    daysEl.innerHTML = dager5.map(({ date, data }) => {
+      const temp  = data?.instant?.details?.air_temperature;
+      const prec  = data?.next_6_hours?.details?.precipitation_amount ?? 0;
+      return `<div class="weather-day">
+        <div class="wd-dag">${DAGER_NB[date.getDay()]}</div>
+        <div class="wd-temp">${temp != null ? Math.round(temp) + '°' : '–'}</div>
+        <div class="wd-prec">${prec > 0 ? prec + ' mm' : ''}</div>
+      </div>`;
+    }).join('');
+  } catch (e) {
+    document.getElementById('weather-dato').textContent = 'Vær ikke tilgjengelig';
+  }
+}
+
+// Oppdater webkamera hvert 5. min
+function oppdaterKamera() {
+  const img = document.getElementById('webcam-img');
+  const tid = document.getElementById('webcam-tid');
+  if (img) img.src = `${KAMERA_URL}?t=${Date.now()}`;
+  if (tid) tid.textContent = `Oppdatert ${new Date().toLocaleTimeString('nb-NO', { hour:'2-digit', minute:'2-digit' })}`;
+}
+
+fetchWeather();
+oppdaterKamera();
+setInterval(oppdaterKamera, 5 * 60 * 1000);
+</script>

@@ -1,0 +1,228 @@
+---
+// Kalenderkomponent — viser ledig/opptatt/loddtrekning.
+// Faktisk data og rendring skjer client-side via calendar.ts.
+---
+
+<div class="cal" id="cal" aria-label="Ledighetskalender for Umbukta">
+  <div class="cal-head">
+    <b id="cal-title">Laster kalender…</b>
+    <div class="cal-nav">
+      <button id="cal-prev" aria-label="Forrige måned">‹</button>
+      <button id="cal-next" aria-label="Neste måned">›</button>
+    </div>
+  </div>
+  <div class="cal-weekdays" aria-hidden="true">
+    <span>Man</span><span>Tir</span><span>Ons</span>
+    <span>Tor</span><span>Fre</span><span>Lør</span><span>Søn</span>
+  </div>
+  <div class="cal-grid" id="cal-grid" role="grid" aria-label="Dager"></div>
+  <div class="cal-legend" aria-label="Tegnforklaring">
+    <span><span class="swatch" style="background:#fff; border:1px solid var(--kantlinje);"></span><span data-i18n="cal_ledig">Ledig</span></span>
+    <span><span class="swatch" style="background:var(--rosa);"></span><span data-i18n="cal_opptatt">Opptatt</span></span>
+    <span><span class="swatch" style="background:var(--rod);"></span><span data-i18n="cal_valgt">Valgt</span></span>
+    <span><span class="swatch" style="background:var(--gul);"></span><span data-i18n="cal_lodd">Loddtrekning</span></span>
+  </div>
+  <p class="cal-note" data-i18n="cal_note">
+    Gule dager = påske (loddtrekning). Kalender oppdateres ca. én gang i timen.
+  </p>
+</div>
+
+<script>
+import { getRelevantEaster } from '../utils/easter.ts';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+interface Availability {
+  lastUpdated: string;
+  bookedDates: string[];
+}
+
+let availability: Availability = { lastUpdated: '', bookedDates: [] };
+let easterDates: Set<string> = new Set();
+
+// Datoer valgt av bruker (for booking-skjema)
+let selectedFrom: string | null = null;
+let selectedTo:   string | null = null;
+
+// Vis inneværende måned ved oppstart
+let viewYear  = new Date().getFullYear();
+let viewMonth = new Date().getMonth(); // 0-indexed
+
+const grid   = document.getElementById('cal-grid')!;
+const title  = document.getElementById('cal-title')!;
+const btnPrev = document.getElementById('cal-prev')!;
+const btnNext = document.getElementById('cal-next')!;
+
+const MÅNEDER = ['Januar','Februar','Mars','April','Mai','Juni',
+                 'Juli','August','September','Oktober','November','Desember'];
+
+function isoDate(y: number, m: number, d: number): string {
+  return `${y}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+}
+
+function parseIso(s: string): Date {
+  const [y,m,d] = s.split('-').map(Number);
+  return new Date(y, m-1, d);
+}
+
+function renderCalendar() {
+  const today = new Date(); today.setHours(0,0,0,0);
+  const firstDay = new Date(viewYear, viewMonth, 1);
+  const lastDay  = new Date(viewYear, viewMonth + 1, 0);
+
+  // Ukedag for 1. i måneden: mandag=0
+  let startDow = firstDay.getDay(); // 0=søn..6=lør
+  startDow = startDow === 0 ? 6 : startDow - 1; // Gjør man=0
+
+  title.textContent = `${MÅNEDER[viewMonth]} ${viewYear}`;
+
+  let html = '';
+
+  // Tomme celler for å justere første dag
+  for (let i = 0; i < startDow; i++) {
+    html += '<div class="day tom" aria-hidden="true"></div>';
+  }
+
+  for (let d = 1; d <= lastDay.getDate(); d++) {
+    const iso = isoDate(viewYear, viewMonth, d);
+    const date = parseIso(iso);
+    const isToday = date.getTime() === today.getTime();
+    const isPast  = date < today;
+
+    let cls = 'day';
+    let label = String(d);
+    let role  = 'gridcell';
+    let ariaLabel = `${d}. ${MÅNEDER[viewMonth]} ${viewYear}`;
+    let clickable = false;
+    let tabIndex = '-1';
+
+    if (isPast) {
+      cls += ' fortid';
+      ariaLabel += ' (fortid)';
+    } else if (easterDates.has(iso)) {
+      cls += ' lodd';
+      ariaLabel += ' (loddtrekning — påske)';
+      clickable = true;
+    } else if (availability.bookedDates.includes(iso)) {
+      cls += ' opptatt';
+      ariaLabel += ' (opptatt)';
+    } else {
+      // Ledig
+      if (selectedFrom && selectedTo) {
+        const f = parseIso(selectedFrom);
+        const t = parseIso(selectedTo);
+        if (iso === selectedFrom || iso === selectedTo) {
+          cls += ' valgt';
+        } else if (date > f && date < t) {
+          cls += ' rekkevidde';
+        } else {
+          cls += ' ledig';
+          clickable = true;
+        }
+      } else if (selectedFrom && !selectedTo) {
+        if (iso === selectedFrom) {
+          cls += ' valgt';
+        } else if (date > parseIso(selectedFrom)) {
+          cls += ' ledig';
+          clickable = true;
+        } else {
+          cls += ' ledig';
+          clickable = true;
+        }
+      } else {
+        cls += ' ledig';
+        clickable = true;
+      }
+      tabIndex = '0';
+    }
+
+    if (isToday) ariaLabel += ' (i dag)';
+
+    html += `<div
+      class="${cls}"
+      role="${role}"
+      data-date="${iso}"
+      aria-label="${ariaLabel}"
+      ${clickable ? `tabindex="${tabIndex}"` : ''}
+    >${label}</div>`;
+  }
+
+  grid.innerHTML = html;
+
+  // Klikkhåndtering
+  grid.querySelectorAll<HTMLElement>('.day.ledig, .day.lodd').forEach(el => {
+    el.addEventListener('click', () => handleDayClick(el.dataset.date!));
+    el.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        handleDayClick(el.dataset.date!);
+      }
+    });
+  });
+}
+
+function handleDayClick(iso: string) {
+  if (easterDates.has(iso)) {
+    // Scroll til påskeregistreringsskjema
+    document.getElementById('paske-seksjon')?.scrollIntoView({ behavior: 'smooth' });
+    return;
+  }
+
+  if (!selectedFrom || (selectedFrom && selectedTo)) {
+    // Start ny valg
+    selectedFrom = iso;
+    selectedTo   = null;
+  } else {
+    // Andre klikk = til-dato
+    if (iso <= selectedFrom) {
+      selectedFrom = iso;
+      selectedTo   = null;
+    } else {
+      selectedTo = iso;
+    }
+  }
+  renderCalendar();
+  updateBookingForm();
+}
+
+function updateBookingForm() {
+  const fromInput = document.getElementById('booking-fra') as HTMLInputElement | null;
+  const toInput   = document.getElementById('booking-til') as HTMLInputElement | null;
+  if (fromInput && selectedFrom) fromInput.value = selectedFrom;
+  if (toInput   && selectedTo)   toInput.value   = selectedTo;
+  // Utløs change-event for prisberegning
+  fromInput?.dispatchEvent(new Event('change'));
+  toInput?.dispatchEvent(new Event('change'));
+}
+
+// Eksporter valgte datoer for bruk av BookingForm
+(window as typeof window & { getCalSelection: () => {from:string|null; to:string|null} })
+  .getCalSelection = () => ({ from: selectedFrom, to: selectedTo });
+
+// Nav-knapper
+btnPrev.addEventListener('click', () => {
+  viewMonth--;
+  if (viewMonth < 0) { viewMonth = 11; viewYear--; }
+  renderCalendar();
+});
+btnNext.addEventListener('click', () => {
+  viewMonth++;
+  if (viewMonth > 11) { viewMonth = 0; viewYear++; }
+  renderCalendar();
+});
+
+// Hent availability.json og easter-datoer, render
+async function init() {
+  try {
+    const res = await fetch(`${base}/availability.json`);
+    if (res.ok) availability = await res.json();
+  } catch { /* Faller tilbake til tom liste */ }
+
+  const ep = getRelevantEaster(new Date());
+  easterDates = new Set(ep.allDates);
+
+  renderCalendar();
+}
+
+init();
+</script>

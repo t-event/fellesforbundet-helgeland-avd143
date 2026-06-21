@@ -1,0 +1,83 @@
+---
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const navLinks = [
+  { href: '/',         label: 'Forside',     key: 'nav_home'     },
+  { href: '/umbukta',  label: 'Umbukta',     key: 'nav_umbukta'  },
+  { href: '/turtips',  label: 'Turtips',     key: 'nav_turtips'  },
+  { href: '/hjelp',    label: 'Hjelpesenter',key: 'nav_hjelp'    },
+];
+
+const currentPath = Astro.url.pathname.replace(base, '').replace(/\/$/, '') || '/';
+---
+
+<header class="site-header" role="banner">
+  <div class="container">
+    <a href={`${base}/`} class="brand" aria-label="Fellesforbundet Helgeland Hytteutleie – til forsiden">
+      <span class="brand-mark">
+        <img
+          src={`${base}/images/logo/ff_logo_hvit_rgb-01.png`}
+          alt="Fellesforbundet-logo"
+          width="36"
+          height="36"
+          loading="eager"
+        />
+      </span>
+      <span class="brand-name">
+        <b>Fellesforbundet</b>
+        <span>Helgeland — hytteutleie</span>
+      </span>
+    </a>
+
+    <div class="nav-right">
+      <!-- Desktop-nav -->
+      <nav class="nav" aria-label="Hovedmeny">
+        {navLinks.map(link => (
+          <a
+            href={`${base}${link.href}`}
+            class={currentPath === link.href || (link.href !== '/' && currentPath.startsWith(link.href)) ? 'active' : ''}
+            data-i18n={link.key}
+          >
+            {link.label}
+          </a>
+        ))}
+      </nav>
+
+      <!-- Språkvelger -->
+      <div class="lang" role="group" aria-label="Velg språk">
+        <button data-lang="nb" class="active" aria-label="Norsk">NO</button>
+        <button data-lang="en" aria-label="English">EN</button>
+      </div>
+
+      <!-- Hamburger (mobil) -->
+      <button
+        class="nav-toggle"
+        id="nav-toggle"
+        aria-label="Åpne meny"
+        aria-expanded="false"
+        aria-controls="nav-mobile"
+      >
+        <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <line x1="3" y1="6"  x2="21" y2="6"  />
+          <line x1="3" y1="12" x2="21" y2="12" />
+          <line x1="3" y1="18" x2="21" y2="18" />
+        </svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- Mobilmeny (vises ved hamburger-klikk) -->
+<nav class="nav-mobile" id="nav-mobile" aria-label="Mobilmeny" role="navigation">
+  {navLinks.map(link => (
+    <a
+      href={`${base}${link.href}`}
+      class={currentPath === link.href ? 'active' : ''}
+      data-i18n={link.key}
+    >
+      {link.label}
+    </a>
+  ))}
+  <a href={`${base}/umbukta#booking`} class="btn btn-primary" style="margin-top:16px; display:inline-flex;" data-i18n="nav_book">
+    Book hytte
+  </a>
+</nav>

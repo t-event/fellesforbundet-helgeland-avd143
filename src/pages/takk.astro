@@ -1,0 +1,118 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { KONTONUMMER } from '../config.ts';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<Layout
+  title="Takk for forespørselen — Fellesforbundet Helgeland Hytteutleie"
+  description="Vi har mottatt din bookingforespørsel for Hytta i Umbukta. Her finner du betalingsinstruksen."
+>
+  <div style="background:var(--flate); min-height:70vh;">
+    <div class="container section">
+
+      <div class="receipt">
+        <span class="receipt-check">
+          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M5 12.5l4.5 4.5L19 7.5"/>
+          </svg>
+        </span>
+        <h1 class="h1" style="font-size:clamp(28px,4vw,40px); margin-bottom:12px;" data-i18n="takk_title">
+          Takk for din forespørsel!
+        </h1>
+        <p class="lead" style="margin:0 auto;" id="takk-lead-tekst">
+          Vi har mottatt forespørselen din om <strong>Hytte i Umbukta</strong>.
+          Avdelingen ser over og tar kontakt på e-post.
+        </p>
+      </div>
+
+      <!-- Betalingsinfo-kortet (fylles inn fra URL-params) -->
+      <div class="card card-pad" style="max-width:680px; margin:36px auto 22px; padding:30px;" id="takk-detaljer">
+        <h2 class="h2" style="font-size:20px; margin-bottom:20px;" data-i18n="takk_payment_title">
+          Betalingsinstruks
+        </h2>
+        <div class="kv-row">
+          <span class="k" data-i18n="takk_konto">Kontonummer</span>
+          <span class="v">{KONTONUMMER}</span>
+        </div>
+        <div class="kv-row" id="takk-row-datoer" style="display:none;">
+          <span class="k">Leieperiode</span>
+          <span class="v" id="takk-datoer">–</span>
+        </div>
+        <div class="kv-row" id="takk-row-dager" style="display:none;">
+          <span class="k">Antall døgn</span>
+          <span class="v" id="takk-dager">–</span>
+        </div>
+        <div class="kv-row" id="takk-row-ref" style="display:none;">
+          <span class="k" data-i18n="takk_ref">Betalingsreferanse</span>
+          <span class="v" id="takk-ref">–</span>
+        </div>
+        <div class="kv-row" id="takk-row-sum" style="display:none;">
+          <span class="k" data-i18n="takk_belop">Beløp</span>
+          <span class="v big" id="takk-sum">–</span>
+        </div>
+      </div>
+
+      <!-- Viktig varsel -->
+      <div class="alert alert-warn" style="max-width:680px; margin:0 auto 30px;">
+        <span class="ic">!</span>
+        <p style="font-size:14.5px; line-height:1.6;" data-i18n="takk_warning">
+          <strong>Datoen er ikke reservert før avdelingen bekrefter.</strong>
+          Du får dørkoden på SMS/e-post fra avdelingen når betalingen er registrert.
+        </p>
+      </div>
+
+      <div style="text-align:center; margin-bottom:16px;">
+        <div class="alert alert-green" style="max-width:680px; margin:0 auto 22px; text-align:left;">
+          <span class="ic">✓</span>
+          <p style="font-size:14.5px; line-height:1.6;">
+            En e-post med betalingsinformasjon er sendt til e-postadressen du oppga.
+            Sjekk evt. søppelpost-mappa om du ikke finner den.
+          </p>
+        </div>
+      </div>
+
+      <div style="text-align:center;">
+        <a href={`${base}/`} class="btn btn-secondary" data-i18n="takk_back">← Tilbake til forsiden</a>
+      </div>
+
+    </div>
+  </div>
+</Layout>
+
+<script define:vars={{ KONTONUMMER }}>
+// Les detaljer fra URL-params (satt av BookingForm.astro)
+const p = new URLSearchParams(window.location.search);
+const fra   = p.get('fra')   ?? '';
+const til   = p.get('til')   ?? '';
+const dager = p.get('dager') ?? '';
+const sum   = p.get('sum')   ?? '';
+const ref   = p.get('ref')   ?? '';
+const navn  = p.get('navn')  ?? '';
+
+function vis(id, tekst) {
+  const row = document.getElementById(`takk-row-${id}`);
+  const val = document.getElementById(`takk-${id}`);
+  if (row && val && tekst) {
+    val.textContent = tekst;
+    row.style.display = '';
+  }
+}
+
+if (fra && til) {
+  const fmtFra = new Date(fra).toLocaleDateString('nb-NO', { day:'numeric', month:'long', year:'numeric' });
+  const fmtTil = new Date(til).toLocaleDateString('nb-NO', { day:'numeric', month:'long', year:'numeric' });
+  vis('datoer', `${fmtFra} – ${fmtTil}`);
+}
+if (dager) vis('dager', `${dager} døgn`);
+if (ref)   vis('ref',   ref);
+if (sum)   vis('sum',   `${parseInt(sum).toLocaleString('nb-NO')} kr`);
+
+// Oppdater lead-tekst
+if (fra && til && navn) {
+  const fmtFra = new Date(fra).toLocaleDateString('nb-NO', { day:'numeric', month:'long' });
+  const fmtTil = new Date(til).toLocaleDateString('nb-NO', { day:'numeric', month:'long', year:'numeric' });
+  document.getElementById('takk-lead-tekst').innerHTML =
+    `Vi har mottatt forespørselen din om <strong>Hytte i Umbukta</strong> for <strong>${fmtFra}–${fmtTil}</strong>, ${navn}. Avdelingen ser over og tar kontakt på e-post.`;
+}
+</script>

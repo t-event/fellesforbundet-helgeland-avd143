@@ -1,0 +1,27 @@
+# ── Internt kildemateriell (aldri i repo) ────────────────────────────────────
+# Bilder, design-HTML, prompter, håndbøker og interne rutiner
+# (inkl. sensitiv info som dørkode og Outlook-lenke)
+Bilder, Håndbøker, Ressurser, Promts, Interne rutiner/
+
+# ── Avledede filer ────────────────────────────────────────────────────────────
+node_modules/
+dist/
+.astro/
+
+# ── Miljøvariabler ────────────────────────────────────────────────────────────
+.env
+.env.local
+.env.*.local
+
+# ── Operativsystem ────────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+
+# ── Editor ────────────────────────────────────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+
+# ── Logg og midlertidige filer ────────────────────────────────────────────────
+*.log
+npm-debug.log*

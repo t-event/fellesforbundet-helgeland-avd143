@@ -1,0 +1,299 @@
+---
+import { PRISER, KONTONUMMER, LO_FORBUND } from '../config.ts';
+---
+
+<div class="card card-pad" id="booking">
+  <h2 class="h2" style="font-size:clamp(22px,2.6vw,28px); margin-bottom:6px;" data-i18n="umbukta_booking_title">
+    Send forespørsel
+  </h2>
+  <p class="muted" style="font-size:14.5px; margin-bottom:22px;" data-i18n="umbukta_booking_lead">
+    Uforpliktende — avdelingen bekrefter bookingen.
+  </p>
+
+  <div id="booking-feil" class="alert alert-error" style="display:none; margin-bottom:16px;">
+    <span class="ic">×</span>
+    <p id="booking-feil-tekst" style="font-size:14.5px;"></p>
+  </div>
+
+  <form class="form-stack" id="booking-form" novalidate>
+    <!-- Honeypot mot spam (skjult) -->
+    <input type="text" name="botcheck" tabindex="-1" autocomplete="off" aria-hidden="true"
+      style="position:absolute; left:-9999px; width:1px; height:1px; opacity:0;" />
+
+    <!-- Datoer -->
+    <div class="field-row">
+      <div class="field">
+        <label for="booking-fra" data-i18n="form_from">Fra dato</label>
+        <input class="input" type="date" id="booking-fra" name="fra_dato" required
+          aria-required="true" min={new Date().toISOString().split('T')[0]} />
+        <div class="field-error" id="err-fra" style="display:none;"></div>
+      </div>
+      <div class="field">
+        <label for="booking-til" data-i18n="form_to">Til dato</label>
+        <input class="input" type="date" id="booking-til" name="til_dato" required
+          aria-required="true" min={new Date().toISOString().split('T')[0]} />
+        <div class="field-error" id="err-til" style="display:none;"></div>
+      </div>
+    </div>
+
+    <!-- Kontaktinfo -->
+    <div class="field">
+      <label for="booking-navn" data-i18n="form_name">Navn</label>
+      <input class="input" type="text" id="booking-navn" name="navn"
+        placeholder="Ola Nordmann" required aria-required="true" autocomplete="name" />
+      <div class="field-error" id="err-navn" style="display:none;"></div>
+    </div>
+    <div class="field-row">
+      <div class="field">
+        <label for="booking-epost" data-i18n="form_email">E-post</label>
+        <input class="input" type="email" id="booking-epost" name="epost"
+          placeholder="ola@epost.no" required aria-required="true" autocomplete="email" />
+        <div class="field-error" id="err-epost" style="display:none;"></div>
+      </div>
+      <div class="field">
+        <label for="booking-telefon" data-i18n="form_phone">Telefon</label>
+        <input class="input" type="tel" id="booking-telefon" name="telefon"
+          placeholder="900 00 000" required aria-required="true" autocomplete="tel" />
+        <div class="field-error" id="err-telefon" style="display:none;"></div>
+      </div>
+    </div>
+
+    <!-- Prisgruppe -->
+    <div class="field">
+      <label for="booking-prisgruppe" data-i18n="form_prisgruppe">Prisgruppe</label>
+      <select class="input" id="booking-prisgruppe" name="prisgruppe" required aria-required="true">
+        <option value="FFH">Medlem Fellesforbundet Helgeland — {PRISER.FFH} kr/døgn</option>
+        <option value="FF">Medlem Fellesforbundet (annen avd.) — {PRISER.FF} kr/døgn</option>
+        <option value="ANNET_LO">Medlem annet LO-forbund — {PRISER.ANNET_LO} kr/døgn</option>
+      </select>
+    </div>
+
+    <!-- Betinget: Hvilket LO-forbund -->
+    <div class="field" id="lo-forbund-felt" style="display:none;" aria-hidden="true">
+      <label for="booking-forbund" data-i18n="form_forbund">Hvilket LO-forbund?</label>
+      <select class="input" id="booking-forbund" name="lo_forbund">
+        <option value="">Velg forbund…</option>
+        {LO_FORBUND.map(f => <option value={f}>{f}</option>)}
+      </select>
+      <div class="field-error" id="err-forbund" style="display:none;"></div>
+    </div>
+
+    <!-- Prisoppsummering -->
+    <div class="price-summary" id="pris-summary" style="display:none;">
+      <div>
+        <div style="font-size:13px; color:var(--tekst-dempet); font-weight:600;" data-i18n="form_total">
+          Beregnet totalpris
+        </div>
+        <div style="font-size:12.5px; color:var(--tekst-svak);" id="pris-detalj"></div>
+      </div>
+      <div class="total" id="pris-total"></div>
+    </div>
+
+    <!-- Send-knapp -->
+    <button class="btn btn-primary btn-block" type="submit" id="booking-submit">
+      <span id="booking-submit-tekst" data-i18n="form_submit">Send forespørsel</span>
+      <span id="booking-spinner" class="spinner" style="display:none;"></span>
+    </button>
+
+    <p class="muted" style="font-size:12.5px; text-align:center;" data-i18n="form_disclaimer">
+      Du blir ikke belastet nå. Avdelingen tar kontakt for bekreftelse.
+    </p>
+    <p class="muted" style="font-size:12px; text-align:center;" data-i18n="form_privacy">
+      Opplysningene dine sendes til Fellesforbundet Helgeland avd. 143 for å behandle forespørselen din.
+    </p>
+  </form>
+</div>
+
+<script define:vars={{ PRISER, KONTONUMMER }}>
+const base = import.meta.env.BASE_URL?.replace(/\/$/, '') ?? '';
+
+const fraInput      = document.getElementById('booking-fra');
+const tilInput      = document.getElementById('booking-til');
+const navnInput     = document.getElementById('booking-navn');
+const epostInput    = document.getElementById('booking-epost');
+const telefonInput  = document.getElementById('booking-telefon');
+const prisGruppeEl  = document.getElementById('booking-prisgruppe');
+const forbundFelt   = document.getElementById('lo-forbund-felt');
+const forbundEl     = document.getElementById('booking-forbund');
+const prisSummary   = document.getElementById('pris-summary');
+const prisDetalj    = document.getElementById('pris-detalj');
+const prisTotal     = document.getElementById('pris-total');
+const submitBtn     = document.getElementById('booking-submit');
+const submitTekst   = document.getElementById('booking-submit-tekst');
+const submitSpinner = document.getElementById('booking-spinner');
+const feilBoks      = document.getElementById('booking-feil');
+const feilTekst     = document.getElementById('booking-feil-tekst');
+const form          = document.getElementById('booking-form');
+
+const RATE_MAP = { FFH: PRISER.FFH, FF: PRISER.FF, ANNET_LO: PRISER.ANNET_LO };
+
+// Beregn antall døgn mellom to ISO-datoer
+function antallDøgn(fra, til) {
+  const f = new Date(fra), t = new Date(til);
+  return Math.round((t - f) / 86400000);
+}
+
+function oppdaterPris() {
+  const fra = fraInput?.value;
+  const til = tilInput?.value;
+  const gruppe = prisGruppeEl?.value ?? 'FFH';
+  const rate = RATE_MAP[gruppe] ?? PRISER.FFH;
+
+  if (!fra || !til || til <= fra) {
+    prisSummary.style.display = 'none';
+    return;
+  }
+  const dager = antallDøgn(fra, til);
+  if (dager < 1) { prisSummary.style.display = 'none'; return; }
+
+  const sum = dager * rate;
+  prisDetalj.textContent = `${dager} døgn × ${rate.toLocaleString('nb-NO')} kr`;
+  prisTotal.textContent  = `${sum.toLocaleString('nb-NO')} kr`;
+  prisSummary.style.display = 'flex';
+}
+
+// Vis/skjul LO-forbund-felt
+prisGruppeEl?.addEventListener('change', () => {
+  const visLO = prisGruppeEl.value === 'ANNET_LO';
+  forbundFelt.style.display = visLO ? '' : 'none';
+  forbundFelt.setAttribute('aria-hidden', String(!visLO));
+  if (!visLO) forbundEl.value = '';
+  oppdaterPris();
+});
+
+fraInput?.addEventListener('change', () => {
+  if (tilInput?.value && tilInput.value <= fraInput.value) {
+    tilInput.value = '';
+  }
+  tilInput?.setAttribute('min', fraInput.value);
+  oppdaterPris();
+});
+tilInput?.addEventListener('change', oppdaterPris);
+
+// Feilvisning
+function setFeil(id, tekst) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.textContent = tekst;
+  el.style.display = tekst ? '' : 'none';
+  const input = el.previousElementSibling;
+  if (input) input.classList.toggle('error', !!tekst);
+}
+function clearFeil() {
+  ['err-fra','err-til','err-navn','err-epost','err-telefon','err-forbund'].forEach(id => setFeil(id, ''));
+  feilBoks.style.display = 'none';
+}
+
+// Generer betalingsreferanse
+function lagReferanse(navn, fra) {
+  const del1 = 'UMB';
+  const del2 = fra ? fra.replace(/-/g, '') : 'DATO';
+  const initialer = (navn || 'XX').split(' ').map(n => n[0]?.toUpperCase() ?? '').join('').slice(0, 3);
+  return `${del1}-${del2}-${initialer}`;
+}
+
+// Skjemainnsending
+form?.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  clearFeil();
+
+  let ok = true;
+  const fra     = fraInput?.value ?? '';
+  const til     = tilInput?.value ?? '';
+  const navn    = navnInput?.value?.trim() ?? '';
+  const epost   = epostInput?.value?.trim() ?? '';
+  const telefon = telefonInput?.value?.trim() ?? '';
+  const gruppe  = prisGruppeEl?.value ?? 'FFH';
+  const forbund = forbundEl?.value ?? '';
+
+  if (!fra) { setFeil('err-fra', 'Velg fra-dato.'); ok = false; }
+  if (!til) { setFeil('err-til', 'Velg til-dato.'); ok = false; }
+  else if (til <= fra) { setFeil('err-til', 'Til-dato må være etter fra-dato.'); ok = false; }
+  if (!navn) { setFeil('err-navn', 'Oppgi navn.'); ok = false; }
+  if (!epost || !epost.includes('@')) { setFeil('err-epost', 'Oppgi gyldig e-postadresse.'); ok = false; }
+  if (!telefon) { setFeil('err-telefon', 'Oppgi telefonnummer.'); ok = false; }
+  if (gruppe === 'ANNET_LO' && !forbund) { setFeil('err-forbund', 'Velg LO-forbund.'); ok = false; }
+
+  if (!ok) return;
+
+  const dager   = antallDøgn(fra, til);
+  const rate    = RATE_MAP[gruppe] ?? PRISER.FFH;
+  const sum     = dager * rate;
+  const ref     = lagReferanse(navn, fra);
+  const key     = import.meta.env.PUBLIC_WEB3FORMS_KEY ?? '';
+
+  const prisLabel = { FFH: 'Fellesforbundet Helgeland (700 kr/d)', FF: 'Fellesforbundet annen avd. (1050 kr/d)', ANNET_LO: `${forbund} — annet LO-forbund (1200 kr/d)` };
+
+  const payload = {
+    access_key: key,
+    subject: `Bookingforespørsel Umbukta — ${fra} til ${til} — ${navn}`,
+    from_name: navn,
+    replyto: epost,
+    // Auto-respond til bestiller
+    autorespond: 'true',
+    autorespond_subject: 'Takk for forespørselen din — Umbukta, Fellesforbundet Helgeland',
+    autorespond_message: [
+      `Hei ${navn}!\n`,
+      `Vi har mottatt forespørselen din om leie av Hytta i Umbukta.\n`,
+      `--- DETALJER ---`,
+      `Innsjekk:          ${fra}`,
+      `Utsjekk:           ${til}`,
+      `Antall døgn:       ${dager}`,
+      `Prisgruppe:        ${prisLabel[gruppe]}`,
+      `Totalpris:         ${sum.toLocaleString('nb-NO')} kr`,
+      `Kontonummer:       ${KONTONUMMER}`,
+      `Betalingsreferanse: ${ref}`,
+      ``,
+      `OBS: Datoen er ikke reservert før avdelingen bekrefter. Du får en bekreftelse på e-post fra oss.`,
+      `Dørkoden sendes til deg på SMS/e-post fra avdelingen etter at betalingen er registrert.`,
+      ``,
+      `Avbestilt leie refunderes ikke. Vi anbefaler at du har reise-/avbestillingsforsikring i orden.`,
+      ``,
+      `Med vennlig hilsen`,
+      `Fellesforbundet Helgeland avd. 143`,
+      `Tlf. 75 15 12 28 | avd143@fellesforbundet.org`,
+    ].join('\n'),
+    // Melding til avdelingen
+    message: [
+      `NY BOOKINGFORESPØRSEL — Umbukta`,
+      ``,
+      `Navn:        ${navn}`,
+      `E-post:      ${epost}`,
+      `Telefon:     ${telefon}`,
+      `Fra:         ${fra}`,
+      `Til:         ${til}`,
+      `Antall døgn: ${dager}`,
+      `Prisgruppe:  ${prisLabel[gruppe]}`,
+      `Totalpris:   ${sum.toLocaleString('nb-NO')} kr`,
+      `Referanse:   ${ref}`,
+    ].join('\n'),
+  };
+
+  // Vis spinner
+  submitBtn.disabled = true;
+  submitTekst.style.display = 'none';
+  submitSpinner.style.display = '';
+
+  try {
+    const resp = await fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+      body: JSON.stringify(payload),
+    });
+    const data = await resp.json();
+    if (data.success) {
+      // Redirect til kvittering med detaljer i URL
+      const params = new URLSearchParams({ fra, til, dager: String(dager), gruppe, sum: String(sum), ref, navn });
+      window.location.href = `${base}/takk?${params.toString()}`;
+    } else {
+      throw new Error(data.message ?? 'Innsending feilet');
+    }
+  } catch (err) {
+    submitBtn.disabled = false;
+    submitTekst.style.display = '';
+    submitSpinner.style.display = 'none';
+    feilTekst.textContent = 'Det oppstod en feil. Prøv igjen eller kontakt avdelingen direkte.';
+    feilBoks.style.display = 'flex';
+  }
+});
+</script>

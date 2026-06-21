@@ -1,0 +1,44 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+<Layout
+  title="Cookies — Fellesforbundet Helgeland Hytteutleie"
+  description="Informasjon om bruk av informasjonskapsler (cookies) på hytteutleie-nettsiden til Fellesforbundet Helgeland."
+>
+  <div class="container section" style="max-width:720px; margin:0 auto;">
+    <h1 class="h1" style="font-size:clamp(26px,3.6vw,38px); margin-bottom:32px;">
+      Informasjonskapsler (cookies)
+    </h1>
+    <div style="display:flex; flex-direction:column; gap:24px; font-size:16px; line-height:1.75; color:var(--tekst-dempet);">
+      <p>
+        Denne nettsiden bruker svært få informasjonskapsler — og ingen sporing eller reklame.
+      </p>
+      <div class="card card-pad">
+        <table style="width:100%; border-collapse:collapse; font-size:14.5px;">
+          <thead>
+            <tr style="border-bottom:2px solid var(--kantlinje);">
+              <th style="text-align:left; padding:10px 8px; font-weight:700; color:var(--tekst);">Navn</th>
+              <th style="text-align:left; padding:10px 8px; font-weight:700; color:var(--tekst);">Formål</th>
+              <th style="text-align:left; padding:10px 8px; font-weight:700; color:var(--tekst);">Varighet</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom:1px solid var(--kantlinje);">
+              <td style="padding:12px 8px;"><code>lang</code></td>
+              <td style="padding:12px 8px;">Lagrer valgt språk (NO/EN)</td>
+              <td style="padding:12px 8px;">Inntil du sletter den / nettleseren lukkes</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p>
+        Ingen tredjeparts analyse, Facebook Pixel, Google Analytics eller lignende. Siden er statisk og samler
+        ikke inn data uten at du aktivt fyller ut et skjema.
+      </p>
+      <p>
+        Du kan slette cookies i nettleserinnstillingene dine når som helst.
+        Les mer i vår <a href="/personvern" class="btn-link">personvernerklæring</a>.
+      </p>
+    </div>
+  </div>
+</Layout>

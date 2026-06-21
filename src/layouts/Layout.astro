@@ -1,0 +1,148 @@
+---
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  ogImage?: string;
+  ogType?: string;
+  canonical?: string;
+  lang?: string;
+}
+
+const {
+  title,
+  description,
+  ogImage = '/images/og-default.jpg',
+  ogType = 'website',
+  lang = 'no',
+} = Astro.props;
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const siteUrl = Astro.site?.toString().replace(/\/$/, '') ?? '';
+const canonicalUrl = siteUrl + Astro.url.pathname;
+const ogImageUrl = siteUrl + base + ogImage;
+---
+<!doctype html>
+<html lang={lang}>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Tittel og meta -->
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  <link rel="canonical" href={canonicalUrl} />
+
+  <!-- Open Graph -->
+  <meta property="og:type"        content={ogType} />
+  <meta property="og:title"       content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:url"         content={canonicalUrl} />
+  <meta property="og:image"       content={ogImageUrl} />
+  <meta property="og:image:width"  content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:locale"      content="nb_NO" />
+  <meta property="og:site_name"   content="Fellesforbundet Helgeland — Hytteutleie" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card"        content="summary_large_image" />
+  <meta name="twitter:title"       content={title} />
+  <meta name="twitter:description" content={description} />
+  <meta name="twitter:image"       content={ogImageUrl} />
+
+  <!-- Schema.org Organisation -->
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Fellesforbundet Helgeland avd. 143",
+    "url": siteUrl,
+    "logo": siteUrl + base + "/images/logo/ff_logo_hvit_rgb-01.png",
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "telephone": "+47-75151228",
+      "contactType": "customer service",
+      "availableLanguage": ["Norwegian", "English"]
+    },
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Søndre gate 13",
+      "addressLocality": "Mo i Rana",
+      "postalCode": "8624",
+      "addressCountry": "NO"
+    }
+  })} />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href={`${base}/favicon.svg`} />
+  <link rel="icon" type="image/png"     href={`${base}/images/logo/ff_logo_hvit_rgb-01.png`} />
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Hopp til innhold</a>
+  <Header />
+  <main id="main-content">
+    <slot />
+  </main>
+  <Footer />
+
+  <!-- Språkbytte-skript (initialiseres fra lagret localStorage-preferanse) -->
+  <script>
+    import { translations } from '../i18n/translations.ts';
+
+    type Lang = 'nb' | 'en';
+
+    function applyLang(lang: Lang) {
+      const t = translations[lang];
+      document.querySelectorAll<HTMLElement>('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n') as keyof typeof t;
+        if (key && key in t) el.textContent = t[key];
+      });
+      document.querySelectorAll<HTMLElement>('[data-i18n-placeholder]').forEach(el => {
+        const key = el.getAttribute('data-i18n-placeholder') as keyof typeof t;
+        if (key && key in t && el instanceof HTMLInputElement || el instanceof HTMLTextAreaElement) {
+          (el as HTMLInputElement).placeholder = t[key];
+        }
+      });
+      document.documentElement.lang = lang === 'nb' ? 'no' : 'en';
+      document.querySelectorAll<HTMLElement>('.lang button').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.lang === lang);
+      });
+      localStorage.setItem('lang', lang);
+    }
+
+    const saved = (localStorage.getItem('lang') as Lang) || 'nb';
+    applyLang(saved);
+
+    document.querySelectorAll<HTMLElement>('.lang button').forEach(btn => {
+      btn.addEventListener('click', () => {
+        applyLang((btn.dataset.lang as Lang) || 'nb');
+      });
+    });
+  </script>
+
+  <!-- FAQ-accordion (global) -->
+  <script>
+    document.querySelectorAll('.acc-head').forEach(btn => {
+      btn.addEventListener('click', () => {
+        btn.closest('.acc-item')?.classList.toggle('open');
+      });
+    });
+  </script>
+
+  <!-- Hamburger-meny (mobil) -->
+  <script>
+    const toggle = document.getElementById('nav-toggle');
+    const navMobile = document.getElementById('nav-mobile');
+    toggle?.addEventListener('click', () => {
+      navMobile?.classList.toggle('open');
+      const expanded = navMobile?.classList.contains('open');
+      toggle.setAttribute('aria-expanded', String(expanded));
+    });
+    navMobile?.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', () => navMobile.classList.remove('open'));
+    });
+  </script>
+</body>
+</html>

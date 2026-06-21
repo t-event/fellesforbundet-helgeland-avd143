@@ -1,0 +1,83 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { TURTIPS } from '../config.ts';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+const vanskelighetFarge = {
+  'Lett': 'var(--lysgronn)',
+  'Middels': 'var(--gul)',
+  'Krevende': 'var(--rosa)',
+};
+---
+
+<Layout
+  title="Turtips fra Umbukta — Fellesforbundet Helgeland Hytteutleie"
+  description="Utforsk fjell og vatn rundt Umbukta. Turtips for alle nivåer — fra korte vandringer til krevende toppturer. Sauvasshytta, Oksskolten, Virvasshytta og mer."
+  ogImage="/images/umbukta/509360428_23863111016672162_2775771386801520296_n.jpg"
+>
+
+  <!-- HERO -->
+  <div class="hero-dark">
+    <div class="container section">
+      <span class="hero-pill" data-i18n="nav_turtips">Turtips</span>
+      <h1 class="h1" style="font-size:clamp(28px,3.8vw,46px); margin-bottom:12px;">
+        Turtips fra Umbukta
+      </h1>
+      <p class="lead" style="max-width:54ch;">
+        Fjell, vatn og gammel ferdselsvei rett utenfor hyttedøra. Her er noen favoritter
+        i området rundt Umbukta på Helgeland.
+      </p>
+    </div>
+  </div>
+
+  <div class="container section">
+
+    <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:22px;">
+      {TURTIPS.map(tur => (
+        <article class="tur-card">
+          <div class="tur-img">
+            <img
+              src={`${base}/images/umbukta/509360428_23863111016672162_2775771386801520296_n.jpg`}
+              alt={`Turlandskap rundt ${tur.navn} i Umbukta`}
+              width="480"
+              height="340"
+              loading="lazy"
+            />
+          </div>
+          <div class="body">
+            <div class="meta">
+              <span style={`background:${vanskelighetFarge[tur.vanskelighet] ?? 'var(--gra)'}; padding:3px 10px; border-radius:20px; color:var(--morkbla);`}>
+                {tur.vanskelighet}
+              </span>
+              {' · '}
+              {tur.distanse} · {tur.tid}
+            </div>
+            <h3 class="h3" style="margin-bottom:8px;">{tur.navn}</h3>
+            <p class="muted" style="font-size:14.5px; flex:1; line-height:1.6;">{tur.beskrivelse}</p>
+          </div>
+        </article>
+      ))}
+    </div>
+
+    <!-- Generell info -->
+    <div class="section" style="padding-bottom:0;">
+      <div class="alert alert-warn">
+        <span class="ic">!</span>
+        <div style="font-size:14.5px; line-height:1.7;">
+          <strong>Husk:</strong> Sjekk været før du drar — bruk
+          <a href="https://www.yr.no/nb/v%C3%A6rvarsel/daglig-tabell/66.1659051,14.5832452/" target="_blank" rel="noopener noreferrer" class="btn-link">Yr.no for Umbukta</a>.
+          Fortell noen hvor du går. Ta med riktige klær og nok mat og drikke.
+          Fiskekort kjøpes lokalt.
+        </div>
+      </div>
+    </div>
+
+    <div style="text-align:center; padding-top:40px;">
+      <p class="muted" style="font-size:15px; margin-bottom:20px;">
+        Klar for turen? Book hytta i Umbukta og bruk den som base.
+      </p>
+      <a href={`${base}/umbukta#booking`} class="btn btn-primary">Book hytta i Umbukta →</a>
+    </div>
+
+  </div>
+</Layout>

@@ -1,0 +1,214 @@
+---
+// Påske-seksjon med loddtrekning.
+// Visningslogikk kjøres client-side for å alltid bruke riktig dato.
+---
+
+<div id="paske-seksjon" style="display:none;">
+  <div class="lodd-wrap">
+    <div>
+      <span class="badge badge-gul" style="margin-bottom:18px;" data-i18n="paske_badge">★ Loddtrekning</span>
+      <h2 class="h2" style="font-size:clamp(24px,3vw,34px); margin-bottom:14px;" data-i18n="paske_title">
+        Påske i Umbukta
+      </h2>
+      <p style="font-size:16px; line-height:1.65; color:#5a4218; margin-bottom:20px;" data-i18n="paske_lead">
+        Påska er populær, så disse periodene fordeles ved loddtrekning — ikke førstemann-til-mølla.
+        Meld deg på, så trekkes plassene blant alle påmeldte.
+      </p>
+      <div class="lodd-frist">
+        <span class="ic">!</span>
+        <div>
+          <div class="k" data-i18n="paske_frist_label">Påmeldingsfrist</div>
+          <div class="v" id="paske-frist-dato">–</div>
+        </div>
+      </div>
+      <div style="margin-top:18px;">
+        <div style="font-size:15px; font-weight:700; color:#5a4218; margin-bottom:8px;">Periodene:</div>
+        <p id="paske-p1-info" style="font-size:14px; color:#5a4218; margin-bottom:6px;"></p>
+        <p id="paske-p2-info" style="font-size:14px; color:#5a4218;"></p>
+      </div>
+    </div>
+
+    <!-- Skjema eller «frist passert»-melding -->
+    <div id="paske-skjema-wrapper">
+
+      <!-- Skjema (synlig når registrering er åpen) -->
+      <div class="card card-pad" id="paske-skjema">
+        <h3 class="h3" style="font-size:20px; margin-bottom:18px;" data-i18n="paske_form_title">
+          Meld deg på loddtrekningen
+        </h3>
+        <div id="paske-feil" class="alert alert-error" style="display:none; margin-bottom:14px;">
+          <span class="ic">×</span>
+          <p id="paske-feil-tekst" style="font-size:14.5px;"></p>
+        </div>
+        <div id="paske-suksess" class="alert alert-green" style="display:none; margin-bottom:14px;">
+          <span class="ic">✓</span>
+          <p style="font-size:14.5px;">Takk! Vi har registrert påmeldingen din. Du får svar etter trekningen.</p>
+        </div>
+        <form class="form-stack" id="paske-form" novalidate>
+          <input type="text" name="botcheck" tabindex="-1" autocomplete="off" aria-hidden="true"
+            style="position:absolute; left:-9999px; width:1px; height:1px; opacity:0;" />
+          <div class="field">
+            <label for="paske-navn">Navn</label>
+            <input class="input" type="text" id="paske-navn" name="navn"
+              placeholder="Ola Nordmann" required aria-required="true" autocomplete="name" />
+            <div class="field-error" id="paske-err-navn" style="display:none;"></div>
+          </div>
+          <div class="field">
+            <label for="paske-epost">E-post</label>
+            <input class="input" type="email" id="paske-epost" name="epost"
+              placeholder="ola@epost.no" required aria-required="true" autocomplete="email" />
+            <div class="field-error" id="paske-err-epost" style="display:none;"></div>
+          </div>
+          <div class="field">
+            <label for="paske-telefon">Telefon</label>
+            <input class="input" type="tel" id="paske-telefon" name="telefon"
+              placeholder="900 00 000" required aria-required="true" autocomplete="tel" />
+          </div>
+          <div class="field">
+            <label data-i18n="paske_period_label">
+              Ønsket periode <span style="font-weight:500; color:var(--tekst-svak);" data-i18n="paske_period_note">(velg én eller begge)</span>
+            </label>
+            <label class="check" style="margin-bottom:10px;">
+              <input type="checkbox" id="paske-p1" name="periode_1" />
+              <span>
+                <b data-i18n="paske_p1">Periode 1</b>
+                <span class="desc" id="paske-p1-label">Fredag i palmehelga → onsdag i stille uke</span>
+              </span>
+            </label>
+            <label class="check">
+              <input type="checkbox" id="paske-p2" name="periode_2" />
+              <span>
+                <b data-i18n="paske_p2">Periode 2</b>
+                <span class="desc" id="paske-p2-label">Onsdag i stille uke → 2. påskedag</span>
+              </span>
+            </label>
+            <div class="field-error" id="paske-err-periode" style="display:none;"></div>
+          </div>
+          <button class="btn btn-primary btn-block" type="submit" id="paske-submit">
+            <span data-i18n="paske_submit">Meld på loddtrekning</span>
+            <span id="paske-spinner" class="spinner" style="display:none;"></span>
+          </button>
+        </form>
+      </div>
+
+      <!-- Melding når fristen er passert -->
+      <div id="paske-frist-passert" class="alert alert-warn" style="display:none;">
+        <span class="ic">!</span>
+        <p style="font-size:14.5px;" data-i18n="paske_closed">
+          Påmeldingsfristen er passert. Trekning er gjennomført — alle påmeldte fikk svar på e-post.
+        </p>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+import { getRelevantEaster, isEasterRegistrationOpen, isEasterSectionVisible, formatNorsk } from '../utils/easter.ts';
+
+const now = new Date();
+const ep  = getRelevantEaster(now);
+
+// Datoformat
+function fmt(d) {
+  return d.toLocaleDateString('nb-NO', { day:'numeric', month:'long', year:'numeric' });
+}
+function fmtKort(d) {
+  return d.toLocaleDateString('nb-NO', { day:'numeric', month:'long' });
+}
+
+// Fyll inn datoer
+const fristEl  = document.getElementById('paske-frist-dato');
+const p1InfoEl = document.getElementById('paske-p1-info');
+const p2InfoEl = document.getElementById('paske-p2-info');
+const p1LblEl  = document.getElementById('paske-p1-label');
+const p2LblEl  = document.getElementById('paske-p2-label');
+
+if (fristEl)  fristEl.textContent = `${fmt(ep.registrationDeadline)}, kl. 23:59`;
+if (p1InfoEl) p1InfoEl.textContent = `Periode 1: ${fmtKort(ep.p1Start)} → ${fmtKort(ep.p1End)} (kl. 12:00 utsjekk)`;
+if (p2InfoEl) p2InfoEl.textContent = `Periode 2: ${fmtKort(ep.p2Start)} (innsjekk kl. 16:00) → ${fmtKort(ep.p2End)}`;
+if (p1LblEl)  p1LblEl.textContent = `${fmtKort(ep.p1Start)} – ${fmtKort(ep.p1End)}`;
+if (p2LblEl)  p2LblEl.textContent = `${fmtKort(ep.p2Start)} – ${fmtKort(ep.p2End)}`;
+
+// Vis/skjul seksjonen
+const seksjonEl = document.getElementById('paske-seksjon');
+if (seksjonEl && isEasterSectionVisible(now)) {
+  seksjonEl.style.display = '';
+}
+
+// Vis skjema eller «frist passert»
+const skjemaEl  = document.getElementById('paske-skjema');
+const fristPEl  = document.getElementById('paske-frist-passert');
+if (isEasterRegistrationOpen(now)) {
+  skjemaEl?.removeAttribute('style');
+  if (fristPEl) fristPEl.style.display = 'none';
+} else {
+  if (skjemaEl) skjemaEl.style.display = 'none';
+  if (fristPEl) fristPEl.style.display = 'flex';
+}
+
+// Skjemainnsending
+const form     = document.getElementById('paske-form');
+const feilBoks = document.getElementById('paske-feil');
+const feilTxt  = document.getElementById('paske-feil-tekst');
+const suksess  = document.getElementById('paske-suksess');
+const spinner  = document.getElementById('paske-spinner');
+const submitBtn= document.getElementById('paske-submit');
+
+function setFeil(id, tekst) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.textContent = tekst;
+  el.style.display = tekst ? '' : 'none';
+}
+
+form?.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  setFeil('paske-err-navn', '');
+  setFeil('paske-err-epost', '');
+  setFeil('paske-err-periode', '');
+  if (feilBoks) feilBoks.style.display = 'none';
+
+  const navn    = (document.getElementById('paske-navn')).value.trim();
+  const epost   = (document.getElementById('paske-epost')).value.trim();
+  const telefon = (document.getElementById('paske-telefon')).value.trim();
+  const p1      = (document.getElementById('paske-p1')).checked;
+  const p2      = (document.getElementById('paske-p2')).checked;
+
+  let ok = true;
+  if (!navn)                   { setFeil('paske-err-navn',    'Oppgi navn.');            ok = false; }
+  if (!epost || !epost.includes('@')) { setFeil('paske-err-epost', 'Oppgi gyldig e-post.'); ok = false; }
+  if (!p1 && !p2)              { setFeil('paske-err-periode', 'Velg minst én periode.'); ok = false; }
+  if (!ok) return;
+
+  const perioder = [p1 && `Periode 1 (${p1LblEl?.textContent})`, p2 && `Periode 2 (${p2LblEl?.textContent})`].filter(Boolean).join(', ');
+  const key = import.meta.env.PUBLIC_WEB3FORMS_KEY ?? '';
+
+  submitBtn.disabled = true;
+  if (spinner) spinner.style.display = '';
+
+  try {
+    const resp = await fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+      body: JSON.stringify({
+        access_key: key,
+        subject: `Loddtrekning påske ${ep.year} — ${navn}`,
+        from_name: navn,
+        replyto: epost,
+        message: `PÅMELDING LODDTREKNING PÅSKE ${ep.year}\n\nNavn: ${navn}\nE-post: ${epost}\nTelefon: ${telefon || '–'}\nPeriode(r): ${perioder}`,
+      }),
+    });
+    const data = await resp.json();
+    if (data.success) {
+      form.style.display = 'none';
+      if (suksess) suksess.style.display = 'flex';
+    } else throw new Error(data.message);
+  } catch {
+    submitBtn.disabled = false;
+    if (spinner) spinner.style.display = 'none';
+    if (feilTxt) feilTxt.textContent = 'Det oppstod en feil. Prøv igjen eller ring oss.';
+    if (feilBoks) feilBoks.style.display = 'flex';
+  }
+});
+</script>

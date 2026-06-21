@@ -1,0 +1,114 @@
+---
+import { KONTAKT } from '../config.ts';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer" role="contentinfo">
+  <div class="container" style="padding-top:clamp(40px,5vw,60px); padding-bottom:30px;">
+    <div class="footer-cols">
+
+      <!-- Merkevare -->
+      <div class="footer-brand">
+        <a href={`${base}/`} class="brand" style="margin-bottom:14px; text-decoration:none;" aria-label="Forside">
+          <span class="brand-mark" style="width:42px; height:42px;">
+            <img
+              src={`${base}/images/logo/ff_logo_hvit_rgb-01.png`}
+              alt="Fellesforbundet-logo"
+              width="32"
+              height="32"
+            />
+          </span>
+          <span class="brand-name">
+            <b>Fellesforbundet</b>
+            <span>Helgeland</span>
+          </span>
+        </a>
+        <p data-i18n="footer_tagline">Hytteutleie for LO-medlemmer på Helgeland.</p>
+      </div>
+
+      <!-- Hyttene -->
+      <div>
+        <h4 data-i18n="footer_hytter">Hyttene</h4>
+        <ul>
+          <li><a href={`${base}/umbukta`}>Hytte i Umbukta</a></li>
+          <li>
+            <a
+              href="https://www.inatur.no/hytte/670e2bd422a51709667760cd/hytte-i-ovre-elsvatn-hattfjelldal"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Hytte i Øvre Elsvatn ↗
+            </a>
+          </li>
+          <li><a href={`${base}/turtips`}>Turtips</a></li>
+          <li><a href={`${base}/hjelp`}>Hjelpesenter</a></li>
+        </ul>
+      </div>
+
+      <!-- Om oss -->
+      <div>
+        <h4 data-i18n="footer_om">Om oss</h4>
+        <ul>
+          <li><a href={`${base}/om-oss`} data-i18n="footer_om_ffh">Om Fellesforbundet Helgeland</a></li>
+          <li><a href={`${base}/personvern`} data-i18n="footer_personvern">Personvernerklæring</a></li>
+          <li><a href={`${base}/cookies`} data-i18n="footer_cookies">Cookies</a></li>
+          <li>
+            <a
+              href={KONTAKT.brreg}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Org.nr. {KONTAKT.orgnr}
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Kontakt -->
+      <div>
+        <h4 data-i18n="footer_kontakt">Kontakt</h4>
+        <ul>
+          <li>
+            <a href={`tel:+47${KONTAKT.telefon}`}>
+              Tlf. {KONTAKT.telefonFormatert}
+            </a>
+          </li>
+          <li>
+            <a href={`mailto:${KONTAKT.epost}`}>{KONTAKT.epost}</a>
+          </li>
+          <li>{KONTAKT.adresse}, {KONTAKT.poststed}</li>
+          <li>Åpent {KONTAKT.apningstider}</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <span>© <span id="footer-year">{year}</span> Fellesforbundet Helgeland avd. 143. Alle rettigheter reservert.</span>
+      <span style="display:flex; gap:1.5rem; align-items:center; flex-wrap:wrap;">
+        <a
+          href={KONTAKT.brreg}
+          target="_blank"
+          rel="noopener noreferrer"
+          style="color:inherit;"
+        >
+          Org.nr. {KONTAKT.orgnr}
+        </a>
+        <a
+          href="https://t-event.no"
+          target="_blank"
+          rel="noopener noreferrer"
+          style="color:inherit; opacity:0.7;"
+        >
+          Utviklet av T-Event
+        </a>
+      </span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Auto-oppdaterende årstall (kjøres client-side for å alltid vise inneværende år)
+  const el = document.getElementById('footer-year');
+  if (el) el.textContent = String(new Date().getFullYear());
+</script>

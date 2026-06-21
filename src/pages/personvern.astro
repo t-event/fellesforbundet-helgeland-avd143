@@ -1,0 +1,68 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { KONTAKT } from '../config.ts';
+---
+<Layout
+  title="Personvernerklæring — Fellesforbundet Helgeland Hytteutleie"
+  description="Les om hvordan Fellesforbundet Helgeland avd. 143 behandler personopplysninger ved hyttebooking."
+>
+  <div class="container section" style="max-width:720px; margin:0 auto;">
+    <h1 class="h1" style="font-size:clamp(26px,3.6vw,38px); margin-bottom:10px;">Personvernerklæring</h1>
+    <p class="muted" style="margin-bottom:32px;">Sist oppdatert: juni 2026</p>
+
+    <div style="display:flex; flex-direction:column; gap:28px; font-size:16px; line-height:1.75; color:var(--tekst-dempet);">
+      <section>
+        <h2 style="font-size:20px; font-weight:800; color:var(--tekst); margin-bottom:8px;">Behandlingsansvarlig</h2>
+        <p>
+          Fellesforbundet Helgeland avd. 143 · Søndre gate 13, 8624 Mo i Rana ·
+          Org.nr. {KONTAKT.orgnr} · <a href={`mailto:${KONTAKT.epost}`} class="btn-link">{KONTAKT.epost}</a>
+        </p>
+      </section>
+
+      <section>
+        <h2 style="font-size:20px; font-weight:800; color:var(--tekst); margin-bottom:8px;">Hvilke opplysninger samler vi inn?</h2>
+        <p>
+          Når du sender en bookingforespørsel eller kontaktmelding via nettsiden, samler vi inn:
+          navn, e-postadresse, telefonnummer, ønskede datoer, prisgruppe og eventuelt LO-forbund.
+        </p>
+      </section>
+
+      <section>
+        <h2 style="font-size:20px; font-weight:800; color:var(--tekst); margin-bottom:8px;">Formål og grunnlag</h2>
+        <p>
+          Opplysningene brukes utelukkende til å behandle din bookingforespørsel (GDPR art. 6(1)(b) — nødvendig
+          for å oppfylle en avtale). Kontakthenvendelser behandles på grunnlag av berettiget interesse (art. 6(1)(f)).
+        </p>
+      </section>
+
+      <section>
+        <h2 style="font-size:20px; font-weight:800; color:var(--tekst); margin-bottom:8px;">Lagring og sletting</h2>
+        <p>
+          Nettsiden lagrer ingen personopplysninger selv — alle data sendes direkte til avdelingens
+          e-postinnboks og til skjematjenesten Web3Forms (EU-databehandling). Opplysninger i e-poster
+          slettes i tråd med avdelingens interne rutiner.
+        </p>
+      </section>
+
+      <section>
+        <h2 style="font-size:20px; font-weight:800; color:var(--tekst); margin-bottom:8px;">Dine rettigheter</h2>
+        <p>
+          Du har rett til innsyn, retting, sletting og dataportabilitet. Kontakt oss på
+          <a href={`mailto:${KONTAKT.epost}`} class="btn-link">{KONTAKT.epost}</a>
+          eller tlf. {KONTAKT.telefonFormatert}.
+        </p>
+        <p style="margin-top:8px;">
+          Du kan også klage til Datatilsynet: <a href="https://www.datatilsynet.no" target="_blank" rel="noopener noreferrer" class="btn-link">datatilsynet.no ↗</a>
+        </p>
+      </section>
+
+      <section>
+        <h2 style="font-size:20px; font-weight:800; color:var(--tekst); margin-bottom:8px;">Informasjonskapsler (cookies)</h2>
+        <p>
+          Nettsiden bruker kun én cookie: <code>lang</code> — lagrer ditt valgte språk (NO/EN) lokalt i nettleseren.
+          Ingen sporings- eller markedsføringscookies. Se <a href="/cookies" class="btn-link">cookie-siden</a> for detaljer.
+        </p>
+      </section>
+    </div>
+  </div>
+</Layout>

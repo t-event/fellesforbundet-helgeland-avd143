@@ -1,0 +1,57 @@
+name: Bygg og deploy til GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Sjekk ut kode
+        uses: actions/checkout@v4
+
+      - name: Sett opp Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Installer avhengigheter
+        run: npm ci
+
+      - name: Bygg statisk side
+        run: npm run build
+        env:
+          # Bytt SITE og BASE når eget domene er kjøpt:
+          # SITE: https://hytteutleie-ffh143.no
+          # BASE: /
+          SITE: https://t-event.github.io/fellesforbundet-helgeland-avd143
+          BASE: /fellesforbundet-helgeland-avd143
+          PUBLIC_WEB3FORMS_KEY: ${{ secrets.WEB3FORMS_KEY }}
+
+      - name: Last opp Pages-artefakt
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy til GitHub Pages
+        uses: actions/deploy-pages@v4
+        id: deployment

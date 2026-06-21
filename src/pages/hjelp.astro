@@ -1,0 +1,240 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { KONTAKT } from '../config.ts';
+---
+
+<Layout
+  title="Hjelpesenter — Fellesforbundet Helgeland Hytteutleie"
+  description="Finn svar på vanlige spørsmål om hytteleie i Umbukta og Øvre Elsvatn. Eller ta kontakt med Fellesforbundet Helgeland avd. 143 direkte."
+>
+  <div style="background:var(--flate); min-height:70vh;">
+    <div class="container section">
+      <h1 class="h1" style="font-size:clamp(28px,3.8vw,44px); margin-bottom:8px;" data-i18n="hjelp_title">
+        Hjelpesenter
+      </h1>
+      <p class="muted" style="font-size:16px; margin-bottom:40px;" data-i18n="hjelp_lead">
+        Finn svar på vanlige spørsmål, eller ta kontakt med avdelingen.
+      </p>
+
+      <div class="grid" style="grid-template-columns:1fr 1fr; align-items:start; gap:32px;">
+
+        <!-- FAQ -->
+        <div>
+          <h2 class="h2" style="font-size:22px; margin-bottom:18px;" data-i18n="hjelp_faq_title">
+            Ofte stilte spørsmål
+          </h2>
+          <div class="accordion">
+
+            <div class="acc-item open">
+              <button class="acc-head"><b>Hvordan betaler jeg?</b><span class="acc-icon" aria-hidden="true">+</span></button>
+              <div class="acc-body">
+                Du sender en bookingforespørsel på nettsiden. Avdelingen bekrefter på e-post og du betaler til
+                kontonr. <strong>45163 58 21274</strong> med oppgitt betalingsreferanse. Ingen kortbetaling eller Vipps.
+              </div>
+            </div>
+
+            <div class="acc-item">
+              <button class="acc-head"><b>Når får jeg dørkoden?</b><span class="acc-icon" aria-hidden="true">+</span></button>
+              <div class="acc-body">
+                Du får dørkoden på SMS eller e-post fra avdelingen etter at betalingen er registrert — ikke på forhånd.
+              </div>
+            </div>
+
+            <div class="acc-item">
+              <button class="acc-head"><b>Hvor langt fram i tid kan jeg booke?</b><span class="acc-icon" aria-hidden="true">+</span></button>
+              <div class="acc-body">
+                Kalenderen er som regel åpen for booking. I påskeukene gjelder loddtrekning — se
+                Umbukta-siden for detaljer. Kontakt avdelingen ved spørsmål.
+              </div>
+            </div>
+
+            <div class="acc-item">
+              <button class="acc-head"><b>Kalenderen oppdaterte seg ikke etter at jeg sendte forespørsel.</b><span class="acc-icon" aria-hidden="true">+</span></button>
+              <div class="acc-body">
+                Avdelingen behandler forespørselen og oppdaterer kalenderen manuelt i Outlook.
+                Kalenderen på nettsiden oppdateres automatisk omtrent én gang i timen.
+              </div>
+            </div>
+
+            <div class="acc-item">
+              <button class="acc-head"><b>Jeg har valgt feil periode / vil endre dato.</b><span class="acc-icon" aria-hidden="true">+</span></button>
+              <div class="acc-body">
+                Ta kontakt med avdelingen på e-post eller telefon så snart som mulig.
+                Se kontaktinfo under.
+              </div>
+            </div>
+
+            <div class="acc-item">
+              <button class="acc-head"><b>Kan jeg avbestille og få refusjon?</b><span class="acc-icon" aria-hidden="true">+</span></button>
+              <div class="acc-body">
+                Avbestilt leie refunderes ikke. Vi anbefaler reise-/avbestillingsforsikring.
+                Kontakt avdelingen direkte ved avbestilling.
+              </div>
+            </div>
+
+            <div class="acc-item">
+              <button class="acc-head"><b>Er Øvre Elsvatn åpen for alle?</b><span class="acc-icon" aria-hidden="true">+</span></button>
+              <div class="acc-body">
+                Ja! Hytta i Øvre Elsvatn er åpen for alle og bookes via
+                <a href="https://www.inatur.no/hytte/670e2bd422a51709667760cd/hytte-i-ovre-elsvatn-hattfjelldal" target="_blank" rel="noopener noreferrer" class="btn-link">inatur.no ↗</a>.
+                Hytta i Umbukta er kun for LO-medlemmer.
+              </div>
+            </div>
+
+            <div class="acc-item">
+              <button class="acc-head"><b>Jeg er LO-medlem, men ikke i Fellesforbundet — kan jeg leie?</b><span class="acc-icon" aria-hidden="true">+</span></button>
+              <div class="acc-body">
+                Ja, hytta i Umbukta er tilgjengelig for alle LO-forbund. Prisgruppen er
+                «Annet LO-forbund» — 1 200 kr/døgn. Velg riktig forbund i skjemaet.
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Kontaktskjema -->
+        <div class="card card-pad">
+          <h2 class="h2" style="font-size:22px; margin-bottom:6px;" data-i18n="hjelp_contact_title">
+            Kontakt oss
+          </h2>
+          <p class="muted" style="font-size:14.5px; margin-bottom:22px;" data-i18n="hjelp_contact_lead">
+            Vi svarer vanligvis innen to virkedager.
+          </p>
+
+          <div id="kontakt-suksess" class="alert alert-green" style="display:none; margin-bottom:16px;">
+            <span class="ic">✓</span>
+            <p style="font-size:14.5px;">Takk! Meldingen din er sendt. Vi tar kontakt snart.</p>
+          </div>
+          <div id="kontakt-feil" class="alert alert-error" style="display:none; margin-bottom:16px;">
+            <span class="ic">×</span>
+            <p id="kontakt-feil-tekst" style="font-size:14.5px;"></p>
+          </div>
+
+          <form class="form-stack" id="kontakt-form" novalidate>
+            <input type="text" name="botcheck" tabindex="-1" autocomplete="off" aria-hidden="true"
+              style="position:absolute; left:-9999px; width:1px; height:1px; opacity:0;" />
+
+            <div class="field">
+              <label for="k-navn" data-i18n="form_name">Navn</label>
+              <input class="input" type="text" id="k-navn" name="navn"
+                placeholder="Ola Nordmann" required autocomplete="name" />
+              <div class="field-error" id="kerr-navn" style="display:none;"></div>
+            </div>
+            <div class="field-row">
+              <div class="field">
+                <label for="k-epost" data-i18n="form_email">E-post</label>
+                <input class="input" type="email" id="k-epost" name="epost"
+                  placeholder="ola@epost.no" required autocomplete="email" />
+                <div class="field-error" id="kerr-epost" style="display:none;"></div>
+              </div>
+              <div class="field">
+                <label for="k-telefon" data-i18n="form_phone">Telefon</label>
+                <input class="input" type="tel" id="k-telefon" name="telefon"
+                  placeholder="900 00 000" autocomplete="tel" />
+              </div>
+            </div>
+            <div class="field">
+              <label for="k-gjelder" data-i18n="hjelp_gjelder">Hva gjelder det?</label>
+              <select class="input" id="k-gjelder" name="gjelder">
+                <option>Generell henvendelse</option>
+                <option>Booking og betaling</option>
+                <option>Påske / loddtrekning</option>
+                <option>Meld feil/mangler på hytta</option>
+                <option>Annet</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="k-melding" data-i18n="hjelp_melding">Melding</label>
+              <textarea class="input" id="k-melding" name="melding" rows="4"
+                placeholder="Skriv din melding her…" required data-i18n-placeholder="hjelp_melding_ph"></textarea>
+              <div class="field-error" id="kerr-melding" style="display:none;"></div>
+            </div>
+            <button class="btn btn-primary btn-block" type="submit" id="kontakt-submit" data-i18n="hjelp_send">
+              Send melding
+            </button>
+          </form>
+
+          <!-- Kontaktinfo -->
+          <div style="display:flex; flex-wrap:wrap; gap:18px; padding-top:22px; border-top:1px solid #efefef; margin-top:6px;">
+            <div style="font-size:14px; color:var(--tekst-dempet);">
+              <b style="display:block; color:var(--tekst);">Telefon</b>
+              <a href={`tel:+47${KONTAKT.telefon}`} class="btn-link" style="font-weight:normal;">
+                {KONTAKT.telefonFormatert}
+              </a>
+            </div>
+            <div style="font-size:14px; color:var(--tekst-dempet);">
+              <b style="display:block; color:var(--tekst);">E-post</b>
+              <a href={`mailto:${KONTAKT.epost}`} class="btn-link" style="font-weight:normal;">
+                {KONTAKT.epost}
+              </a>
+            </div>
+            <div style="font-size:14px; color:var(--tekst-dempet);">
+              <b style="display:block; color:var(--tekst);">Åpningstider</b>
+              {KONTAKT.apningstider}
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<script>
+const form    = document.getElementById('kontakt-form');
+const suksess = document.getElementById('kontakt-suksess');
+const feilBoks= document.getElementById('kontakt-feil');
+const feilTxt = document.getElementById('kontakt-feil-tekst');
+const submit  = document.getElementById('kontakt-submit');
+
+function setFeil(id, t) {
+  const el = document.getElementById(id);
+  if (el) { el.textContent = t; el.style.display = t ? '' : 'none'; }
+}
+
+form?.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  setFeil('kerr-navn', '');
+  setFeil('kerr-epost', '');
+  setFeil('kerr-melding', '');
+  if (feilBoks) feilBoks.style.display = 'none';
+
+  const navn    = (document.getElementById('k-navn') as HTMLInputElement).value.trim();
+  const epost   = (document.getElementById('k-epost') as HTMLInputElement).value.trim();
+  const telefon = (document.getElementById('k-telefon') as HTMLInputElement).value.trim();
+  const gjelder = (document.getElementById('k-gjelder') as HTMLSelectElement).value;
+  const melding = (document.getElementById('k-melding') as HTMLTextAreaElement).value.trim();
+
+  let ok = true;
+  if (!navn)  { setFeil('kerr-navn',    'Oppgi navn.');          ok = false; }
+  if (!epost || !epost.includes('@')) { setFeil('kerr-epost', 'Oppgi gyldig e-post.'); ok = false; }
+  if (!melding) { setFeil('kerr-melding', 'Skriv en melding.'); ok = false; }
+  if (!ok) return;
+
+  const key = import.meta.env.PUBLIC_WEB3FORMS_KEY ?? '';
+  submit.setAttribute('disabled', 'true');
+
+  try {
+    const resp = await fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+      body: JSON.stringify({
+        access_key: key,
+        subject: `Kontakthenvendelse — ${gjelder} — ${navn}`,
+        from_name: navn,
+        replyto: epost,
+        message: `Fra: ${navn}\nE-post: ${epost}\nTelefon: ${telefon || '–'}\nGjelder: ${gjelder}\n\n${melding}`,
+      }),
+    });
+    const data = await resp.json();
+    if (data.success) {
+      form.style.display = 'none';
+      if (suksess) suksess.style.display = 'flex';
+    } else throw new Error(data.message);
+  } catch {
+    submit.removeAttribute('disabled');
+    if (feilTxt) feilTxt.textContent = 'Det oppstod en feil. Prøv igjen eller ring oss.';
+    if (feilBoks) feilBoks.style.display = 'flex';
+  }
+});
+</script>

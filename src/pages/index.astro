@@ -1,0 +1,183 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { ELSVATN_INATUR_URL } from '../config.ts';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<Layout
+  title="Leie hytte — Fellesforbundet Helgeland | Umbukta og Øvre Elsvatn"
+  description="Fellesforbundet Helgeland leier ut to hytter til LO-medlemmer. Hytte i Umbukta (Rana) for deg som er FFH-/LO-medlem. Hytte i Øvre Elsvatn bookes via inatur.no."
+  ogImage="/images/og-forside.jpg"
+>
+
+  <!-- HERO -->
+  <div class="hero-dark">
+    <div class="container section">
+      <div class="hero-grid">
+        <div>
+          <span class="hero-pill" data-i18n="home_pill">Fjellhytter på Helgeland</span>
+          <h1 class="h1" data-i18n="home_h1">Leie hytte hos Fellesforbundet Helgeland</h1>
+          <p class="lead" style="max-width:46ch; margin-top:20px;" data-i18n="home_lead">
+            Medlemmer i Fellesforbundet og LO kan leie våre to hytter til hyggelig pris. Naturskjønt, enkelt og trygt.
+          </p>
+          <div class="hero-actions">
+            <a href={`${base}/umbukta`} class="btn btn-primary" data-i18n="home_cta_umbukta">
+              Se hytta i Umbukta →
+            </a>
+            <a href="#hytter" class="btn btn-ghost" data-i18n="home_cta_all">Begge hyttene</a>
+          </div>
+        </div>
+        <div class="hero-img">
+          <img
+            src={`${base}/images/umbukta/509359693_23863110636672200_8069005190491835382_n.jpg`}
+            alt="Hytte i Umbukta — fjell og vakker natur på Helgeland"
+            width="800"
+            height="600"
+            loading="eager"
+            fetchpriority="high"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- INTRO -->
+  <div class="container section" style="text-align:center;">
+    <h2 class="h2" style="max-width:22ch; margin:0 auto 16px;">Et sted å trekke pust — for medlemmene våre</h2>
+    <p class="lead" style="max-width:62ch; margin:0 auto;">
+      Fellesforbundet Helgeland avd. 143 eier to hytter som leies ut til LO-medlemmer og andre LO-forbund.
+      Velg hytte under, sjekk ledige datoer og send en uforpliktende forespørsel. Avdelingen bekrefter bookingen.
+    </p>
+  </div>
+
+  <!-- HYTTEKORT -->
+  <div id="hytter" style="background:var(--flate); border-top:1px solid #ededf0;">
+    <div class="container section">
+      <h2 class="h2" style="margin-bottom:8px;" data-i18n="home_section_title">
+        Ønsker du å leie en av våre hytter?
+      </h2>
+      <p class="muted" style="font-size:17px; margin-bottom:40px;" data-i18n="home_section_lead">
+        Vi har to hytter. Velg den du vil leie.
+      </p>
+
+      <div class="grid cols-auto">
+
+        <!-- Øvre Elsvatn -->
+        <article class="card" style="overflow:hidden; display:flex; flex-direction:column;">
+          <div style="height:220px; position:relative; overflow:hidden;">
+            <img
+              src={`${base}/images/elsvatn/w=1440,h=665,fit=cover,format=auto,gravity=auto,dpr=2.webp`}
+              alt="Hytte i Øvre Elsvatn ved Hattfjelldal — fjellhytte ved vatn"
+              width="720"
+              height="332"
+              loading="lazy"
+              style="width:100%; height:100%; object-fit:cover;"
+            />
+            <span class="badge badge-dark" style="position:absolute; top:14px; left:14px;">↗ Ekstern lenke</span>
+          </div>
+          <div class="card-pad" style="display:flex; flex-direction:column; flex:1;">
+            <h3 class="h3" style="font-size:23px;" data-i18n="elsvatn_title">Hytte i Øvre Elsvatn</h3>
+            <div style="font-size:14px; font-weight:600; color:var(--rod); margin:4px 0 14px;" data-i18n="elsvatn_subtitle">
+              Hattfjelldal
+            </div>
+            <p class="muted" style="font-size:15px; margin-bottom:16px;" data-i18n="elsvatn_desc">
+              Enkel fjellhytte ved Øvre Elsvatn. Åpen for alle — bookes via inatur.no.
+            </p>
+            <ul style="display:flex; flex-direction:column; gap:9px; margin-bottom:22px; flex:1;">
+              <li style="display:flex; gap:9px; align-items:center; font-size:14.5px;">
+                <span style="width:7px; height:7px; border-radius:50%; background:var(--rod); flex:none;"></span>
+                6 sengeplasser, 2 soverom
+              </li>
+              <li style="display:flex; gap:9px; align-items:center; font-size:14.5px;">
+                <span style="width:7px; height:7px; border-radius:50%; background:var(--rod); flex:none;"></span>
+                Vedfyring og gasskomfyr, solcelle med batteri
+              </li>
+              <li style="display:flex; gap:9px; align-items:center; font-size:14.5px;">
+                <span style="width:7px; height:7px; border-radius:50%; background:var(--rod); flex:none;"></span>
+                Utedo · ikke innlagt vann/strøm
+              </li>
+              <li style="display:flex; gap:9px; align-items:center; font-size:14.5px;">
+                <span style="width:7px; height:7px; border-radius:50%; background:var(--rod); flex:none;"></span>
+                13 fots motorbåt følger med
+              </li>
+              <li style="display:flex; gap:9px; align-items:center; font-size:14.5px;">
+                <span style="width:7px; height:7px; border-radius:50%; background:var(--rod); flex:none;"></span>
+                Ca. 30 min gange fra vei — parkering ved vei
+              </li>
+            </ul>
+            <a
+              class="btn btn-secondary"
+              href={ELSVATN_INATUR_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              data-i18n="elsvatn_cta"
+            >
+              Book på inatur ↗
+            </a>
+          </div>
+        </article>
+
+        <!-- Umbukta -->
+        <article class="card" style="overflow:hidden; display:flex; flex-direction:column;">
+          <div style="height:220px; position:relative; overflow:hidden;">
+            <img
+              src={`${base}/images/umbukta/480561933_1031634398995139_7564633413902508_n.jpg`}
+              alt="Hytte i Umbukta — fjellhytte ved Umbukta i Rana, nær Sverige"
+              width="720"
+              height="540"
+              loading="lazy"
+              style="width:100%; height:100%; object-fit:cover;"
+            />
+            <span class="badge badge-green" style="position:absolute; top:14px; left:14px;">Book her på siden</span>
+          </div>
+          <div class="card-pad" style="display:flex; flex-direction:column; flex:1;">
+            <h3 class="h3" style="font-size:23px;" data-i18n="umbukta_title">Hytte i Umbukta</h3>
+            <div style="font-size:14px; font-weight:600; color:var(--rod); margin:4px 0 14px;" data-i18n="umbukta_subtitle">
+              Ved svenskegrensa, Rana
+            </div>
+            <p class="muted" style="font-size:15.5px; margin-bottom:16px; flex:1;" data-i18n="umbukta_desc">
+              Se bilder, fasiliteter, priser og ledige datoer — og send forespørsel direkte her på nettsida.
+            </p>
+            <ul style="display:flex; flex-direction:column; gap:9px; margin-bottom:22px;">
+              <li style="display:flex; gap:9px; align-items:center; font-size:14.5px;">
+                <span style="width:7px; height:7px; border-radius:50%; background:var(--rod); flex:none;"></span>
+                Inntil 14 sengeplasser, 3 soverom + hems
+              </li>
+              <li style="display:flex; gap:9px; align-items:center; font-size:14.5px;">
+                <span style="width:7px; height:7px; border-radius:50%; background:var(--rod); flex:none;"></span>
+                Innlagt vann og strøm, varmepumpe og vedovn
+              </li>
+              <li style="display:flex; gap:9px; align-items:center; font-size:14.5px;">
+                <span style="width:7px; height:7px; border-radius:50%; background:var(--rod); flex:none;"></span>
+                Fullt kjøkken, WiFi og TV
+              </li>
+              <li style="display:flex; gap:9px; align-items:center; font-size:14.5px;">
+                <span style="width:7px; height:7px; border-radius:50%; background:var(--rod); flex:none;"></span>
+                Kun for LO-medlemmer · fra 700 kr/døgn
+              </li>
+            </ul>
+            <a href={`${base}/umbukta`} class="btn btn-primary" data-i18n="umbukta_cta">
+              Se hytta og book →
+            </a>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- INFORMASJONSBOKS -->
+  <div class="container" style="padding:clamp(32px,4vw,56px) 24px;">
+    <div class="alert alert-warn">
+      <span class="ic">!</span>
+      <div>
+        <strong>Kun for LO-medlemmer</strong>
+        <p style="font-size:14.5px; margin-top:4px; line-height:1.6;">
+          Hytta i Umbukta er forbeholdt medlemmer av Fellesforbundet Helgeland, Fellesforbundet (andre avdelinger) og andre LO-forbund.
+          Hytta i Øvre Elsvatn er åpen for alle og bookes via inatur.no.
+        </p>
+      </div>
+    </div>
+  </div>
+
+</Layout>

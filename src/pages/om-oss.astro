@@ -1,0 +1,63 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { KONTAKT } from '../config.ts';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+<Layout
+  title="Om Fellesforbundet Helgeland avd. 143"
+  description="Fellesforbundet Helgeland avd. 143 holder til i Mo i Rana. Les om avdelingen, kontaktinfo og hytteutleien."
+>
+  <div class="container section" style="max-width:860px; margin:0 auto;">
+    <h1 class="h1" style="font-size:clamp(28px,4vw,44px); margin-bottom:18px;">
+      Om Fellesforbundet Helgeland avd. 143
+    </h1>
+
+    <p class="lead" style="margin-bottom:32px;">
+      Fellesforbundet Helgeland er en lokal avdeling (nr. 143) av Fellesforbundet — Norges største LO-forbund.
+      Vi representerer arbeidstakere innen industri, bygg og anlegg, transport, skog og en rekke andre bransjer på Helgeland.
+    </p>
+
+    <div class="grid" style="grid-template-columns:1fr 1fr; gap:24px; margin-bottom:40px;">
+      <div class="card card-pad">
+        <h2 class="h3" style="margin-bottom:14px;">Kontaktinfo</h2>
+        <ul style="display:flex; flex-direction:column; gap:12px; font-size:15px; color:var(--tekst-dempet);">
+          <li><b style="color:var(--tekst);">Adresse</b><br />{KONTAKT.adresse}<br />{KONTAKT.postnummer} {KONTAKT.poststed}</li>
+          <li><b style="color:var(--tekst);">Telefon</b><br /><a href={`tel:+47${KONTAKT.telefon}`} class="btn-link">{KONTAKT.telefonFormatert}</a></li>
+          <li><b style="color:var(--tekst);">E-post</b><br /><a href={`mailto:${KONTAKT.epost}`} class="btn-link">{KONTAKT.epost}</a></li>
+          <li><b style="color:var(--tekst);">Åpningstider</b><br />{KONTAKT.apningstider}</li>
+          <li>
+            <b style="color:var(--tekst);">Org.nr.</b><br />
+            <a href={KONTAKT.brreg} target="_blank" rel="noopener noreferrer" class="btn-link">{KONTAKT.orgnr}</a>
+          </li>
+        </ul>
+      </div>
+      <div class="card card-pad">
+        <h2 class="h3" style="margin-bottom:14px;">Lenker</h2>
+        <ul style="display:flex; flex-direction:column; gap:12px; font-size:15px;">
+          <li><a href={KONTAKT.fellesforbundetUrl} target="_blank" rel="noopener noreferrer" class="btn-link">Fellesforbundet.no — Avd. 143 ↗</a></li>
+          <li><a href={KONTAKT.facebookUrl} target="_blank" rel="noopener noreferrer" class="btn-link">Facebook ↗</a></li>
+          <li><a href={KONTAKT.brreg} target="_blank" rel="noopener noreferrer" class="btn-link">Brønnøysundregistrene ↗</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <h2 class="h2" style="font-size:26px; margin-bottom:16px;">Hytteutleie</h2>
+    <p style="font-size:16px; line-height:1.7; color:var(--tekst-dempet); margin-bottom:20px;">
+      Fellesforbundet Helgeland avd. 143 eier to hytter som leies ut til LO-medlemmer:
+    </p>
+    <ul style="display:flex; flex-direction:column; gap:12px; font-size:16px; color:var(--tekst-dempet); margin-bottom:32px;">
+      <li>
+        <strong style="color:var(--tekst);">Hytte i Umbukta (Rana)</strong> — kun for LO-medlemmer.
+        Inntil 14 sengeplasser. Bookes her på nettsiden.
+        <a href={`${base}/umbukta`} class="btn-link" style="font-size:14px;">→ Se hytta</a>
+      </li>
+      <li>
+        <strong style="color:var(--tekst);">Hytte i Øvre Elsvatn (Hattfjelldal)</strong> — åpen for alle.
+        6 sengeplasser. Bookes via inatur.no.
+        <a href="https://www.inatur.no/hytte/670e2bd422a51709667760cd/hytte-i-ovre-elsvatn-hattfjelldal" target="_blank" rel="noopener noreferrer" class="btn-link" style="font-size:14px;">→ Se på inatur ↗</a>
+      </li>
+    </ul>
+
+    <a href={`${base}/`} class="btn btn-secondary">← Tilbake til forsiden</a>
+  </div>
+</Layout>
