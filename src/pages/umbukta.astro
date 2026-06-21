@@ -230,7 +230,7 @@ const faq = [
       </div>
       <div class="alert alert-warn" style="margin-top:22px; padding:14px 16px;">
         <span class="ic">!</span>
-        <div style="font-size:14.5px; line-height:1.6;">
+        <div style="font-size:14.5px; line-height:1.6;" data-en="<strong>Bring yourself:</strong> Bed linen and sheets, towels, toilet paper, a dish towel and other consumables.">
           <strong>Ta med selv:</strong> Sengetøy og laken, håndklær, toalettpapir, kjøkkenhåndkle og andre forbruksvarer.
         </div>
       </div>
@@ -257,7 +257,7 @@ const faq = [
             class="btn-link"
             style="font-size:14px;"
           >
-            Åpne i Google Maps ↗
+            <span data-en="Open in Google Maps ↗">Åpne i Google Maps ↗</span>
           </a>
           <span class="muted" style="font-size:13px; margin-left:12px;">
             GPS: {UMBUKTA.lat}°N, {UMBUKTA.lon}°Ø
@@ -268,28 +268,32 @@ const faq = [
         <h2 class="h2" style="font-size:24px; margin-bottom:18px;" data-i18n="umbukta_location_title">Beliggenhet</h2>
         <div style="display:flex; flex-direction:column; gap:20px;">
           <div>
-            <b style="font-size:15px;">Veibeskrivelse</b>
-            <p class="muted" style="font-size:14.5px; margin-top:4px; line-height:1.6;">
+            <b style="font-size:15px;" data-en="Directions">Veibeskrivelse</b>
+            <p class="muted" style="font-size:14.5px; margin-top:4px; line-height:1.6;"
+               data-en="From Mo i Rana: drive the E12 towards Sweden, approx. 35 km. Turn off at Umbukta — the cabin is right by Umbukta mountain lodge, about 3 km from the border.">
               Fra Mo i Rana: Kjør E12 mot Sverige, ca. 3,5 mil (35 km). Ta av ved
               Umbukta — hytta ligger rett ved Umbukta fjellstue, ca. 3 km fra grensen.
             </p>
           </div>
           <div>
-            <b style="font-size:15px;">Parkering</b>
-            <p class="muted" style="font-size:14.5px; margin-top:4px;">
+            <b style="font-size:15px;" data-en="Parking">Parkering</b>
+            <p class="muted" style="font-size:14.5px; margin-top:4px;"
+               data-en="Free parking right by the cabin — space for 4–5 cars.">
               Gratis parkering rett ved hytta — plass til 4–5 biler.
             </p>
           </div>
           <div>
-            <b style="font-size:15px;">Vinteradkomst</b>
-            <p class="muted" style="font-size:14.5px; margin-top:4px; line-height:1.6;">
+            <b style="font-size:15px;" data-en="Winter access">Vinteradkomst</b>
+            <p class="muted" style="font-size:14.5px; margin-top:4px; line-height:1.6;"
+               data-en="The road to the cabin is ploughed in winter, so you can drive all the way to the cabin year-round.">
               Veien inn til hytta brøytes om vinteren, så du kan kjøre helt fram til
               hytta hele året.
             </p>
           </div>
           <div>
-            <b style="font-size:15px;">Uten bil</b>
-            <p class="muted" style="font-size:14.5px; margin-top:4px;">
+            <b style="font-size:15px;" data-en="Without a car">Uten bil</b>
+            <p class="muted" style="font-size:14.5px; margin-top:4px;"
+               data-en="The cabin is not accessible by bus or train. A car is necessary.">
               Hytta er ikke tilgjengelig med buss eller tog. Bil er nødvendig.
             </p>
           </div>
@@ -318,22 +322,22 @@ const faq = [
       </p>
       <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:18px;">
         <div class="price-card featured">
-          <span class="tag">Beste pris</span>
-          <div class="label">Medlem Fellesforbundet Helgeland</div>
-          <div class="amount">{PRISER.FFH}&nbsp;kr<small> /døgn</small></div>
+          <span class="tag" data-en="Best price">Beste pris</span>
+          <div class="label" data-en="Fellesforbundet Helgeland member">Medlem Fellesforbundet Helgeland</div>
+          <div class="amount">{PRISER.FFH}&nbsp;kr<small data-en=" /night"> /døgn</small></div>
         </div>
         <div class="price-card">
-          <div class="label">Medlem Fellesforbundet (annen avd.)</div>
-          <div class="amount">{PRISER.FF}&nbsp;kr<small> /døgn</small></div>
+          <div class="label" data-en="Fellesforbundet member (other branch)">Medlem Fellesforbundet (annen avd.)</div>
+          <div class="amount">{PRISER.FF}&nbsp;kr<small data-en=" /night"> /døgn</small></div>
         </div>
         <div class="price-card">
-          <div class="label">Medlem annet LO-forbund</div>
-          <div class="amount">{PRISER.ANNET_LO}&nbsp;kr<small> /døgn</small></div>
+          <div class="label" data-en="Member of another LO union">Medlem annet LO-forbund</div>
+          <div class="amount">{PRISER.ANNET_LO}&nbsp;kr<small data-en=" /night"> /døgn</small></div>
         </div>
       </div>
       <div class="alert alert-warn" style="margin-top:18px;">
         <span class="ic">!</span>
-        <div style="font-size:14.5px; line-height:1.6;">
+        <div style="font-size:14.5px; line-height:1.6;" data-en="<strong>Cancellation:</strong> Cancelled bookings are not refunded. We recommend travel/cancellation insurance. Contact the office for changes.">
           <strong>Avbestilling:</strong> Avbestilt leie refunderes ikke.
           Vi anbefaler reise-/avbestillingsforsikring. Kontakt avdelingen ved endringer.
         </div>
@@ -347,7 +351,8 @@ const faq = [
           Ledige datoer
         </h2>
         <Calendar />
-        <p class="muted" style="font-size:13px; margin-top:12px;">
+        <p class="muted" style="font-size:13px; margin-top:12px;"
+           data-en="Click an available day to choose the check-in date, then the check-out date. Selected dates are copied automatically into the form.">
           Klikk på en ledig dag for å velge fra-dato, deretter til-dato.
           Valgte datoer kopieres automatisk til skjemaet.
         </p>
@@ -367,13 +372,13 @@ const faq = [
         <h2 class="h2" style="font-size:24px;" data-i18n="umbukta_rules_title">
           Husregler &amp; praktisk info
         </h2>
-        <div class="rule-row"><span class="k">Innsjekk</span><span class="v">fra kl. 16:00</span></div>
-        <div class="rule-row"><span class="k">Utsjekk</span><span class="v">innen kl. 12:00</span></div>
-        <div class="rule-row"><span class="k">Sengeplasser</span><span class="v">inntil 14</span></div>
-        <div class="rule-row"><span class="k">Avbestilling</span><span class="v">Ingen refusjon</span></div>
-        <div class="rule-row"><span class="k">Hunder</span><span class="v">Tillatt (ikke i seng/sofa)</span></div>
-        <div class="rule-row"><span class="k">Røyking</span><span class="v">Ikke tillatt innendørs</span></div>
-        <div class="rule-row"><span class="k">Elbillader</span><span class="v">Ikke tilgjengelig</span></div>
+        <div class="rule-row"><span class="k" data-en="Check-in">Innsjekk</span><span class="v" data-en="from 16:00">fra kl. 16:00</span></div>
+        <div class="rule-row"><span class="k" data-en="Check-out">Utsjekk</span><span class="v" data-en="by 12:00">innen kl. 12:00</span></div>
+        <div class="rule-row"><span class="k" data-en="Beds">Sengeplasser</span><span class="v" data-en="up to 14">inntil 14</span></div>
+        <div class="rule-row"><span class="k" data-en="Cancellation">Avbestilling</span><span class="v" data-en="No refund">Ingen refusjon</span></div>
+        <div class="rule-row"><span class="k" data-en="Dogs">Hunder</span><span class="v" data-en="Allowed (not in bed/sofa)">Tillatt (ikke i seng/sofa)</span></div>
+        <div class="rule-row"><span class="k" data-en="Smoking">Røyking</span><span class="v" data-en="Not allowed indoors">Ikke tillatt innendørs</span></div>
+        <div class="rule-row"><span class="k" data-en="EV charger">Elbillader</span><span class="v" data-en="Not available">Ikke tilgjengelig</span></div>
         <p class="note" data-en="The cabin must be left tidy and cleaned by the renter after use. The key is collected from a key box at the cabin — the code is sent by the office after confirmed payment.">
           Hytta skal forlates ryddig og rengjort av leietaker etter bruk.
           Nøkkel hentes i nøkkelboks på hytta — kode sendes av avdelingen etter bekreftet betaling.
@@ -409,14 +414,13 @@ const faq = [
     <div class="section" style="padding-top:0; padding-bottom:clamp(44px,6vw,72px);">
       <div class="card card-pad" style="display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:24px;">
         <div>
-          <h3 class="h3" style="margin-bottom:6px;">Spørsmål om leie?</h3>
+          <h3 class="h3" style="margin-bottom:6px;" data-en="Questions about renting?">Spørsmål om leie?</h3>
           <p class="muted" style="font-size:15px;">
-            Ring oss på <a href={`tel:+47${KONTAKT.telefon}`} class="btn-link">{KONTAKT.telefonFormatert}</a>
-            eller send e-post til <a href={`mailto:${KONTAKT.epost}`} class="btn-link">{KONTAKT.epost}</a>.
+            <span data-en="Call us at ">Ring oss på </span><a href={`tel:+47${KONTAKT.telefon}`} class="btn-link">{KONTAKT.telefonFormatert}</a><span data-en=" or email "> eller send e-post til </span><a href={`mailto:${KONTAKT.epost}`} class="btn-link">{KONTAKT.epost}</a>.
           </p>
-          <p class="muted" style="font-size:13.5px; margin-top:4px;">Åpent {KONTAKT.apningstider}.</p>
+          <p class="muted" style="font-size:13.5px; margin-top:4px;"><span data-en="Open">Åpent</span> {KONTAKT.apningstider}.</p>
         </div>
-        <a href={`${base}/hjelp`} class="btn btn-secondary">Gå til hjelpesenter</a>
+        <a href={`${base}/hjelp`} class="btn btn-secondary" data-en="Go to help centre">Gå til hjelpesenter</a>
       </div>
     </div>
 

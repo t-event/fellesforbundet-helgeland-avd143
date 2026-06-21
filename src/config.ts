@@ -74,54 +74,90 @@ export const TURTIPS = [
     id: 'sauvasshytta',
     navn: 'Sauvasshytta',
     vanskelighet: 'Middels',
+    vanskelighet_en: 'Moderate',
     distanse: 'ca. 12 km',
+    distanse_en: 'approx. 12 km',
     tid: 'ca. 4 t',
+    tid_en: 'approx. 4 h',
     beskrivelse:
       'Fin dagstur til Sauvasshytta med vakker utsikt over fjellheimen på Helgeland.',
+    beskrivelse_en:
+      'A nice day trip to Sauvasshytta with beautiful views over the Helgeland mountains.',
+    lenke: 'https://ut.no/hytte/1093/sauvasshytta',
   },
   {
     id: 'kvitstindalstunet',
     navn: 'Kvitstindalstunet',
     vanskelighet: 'Krevende',
+    vanskelighet_en: 'Demanding',
     distanse: 'ca. 15 km',
+    distanse_en: 'approx. 15 km',
     tid: 'ca. 6 t',
+    tid_en: 'approx. 6 h',
     beskrivelse:
       'Topptur til Kvitstindalstunet med panoramautsikt mot Sverige og innover i Rana.',
+    beskrivelse_en:
+      'A summit hike to Kvitstindalstunet with panoramic views towards Sweden and inland Rana.',
+    lenke: 'https://ut.no/hytte/10561/kvitsteindalstunet',
   },
   {
     id: 'virvasshytta',
     navn: 'Virvasshytta',
     vanskelighet: 'Lett',
+    vanskelighet_en: 'Easy',
     distanse: 'ca. 8 km',
+    distanse_en: 'approx. 8 km',
     tid: 'ca. 3 t',
+    tid_en: 'approx. 3 h',
     beskrivelse:
       'Rolig fjelltur til Virvasshytta — passer godt for familier og nybegynnere.',
+    beskrivelse_en:
+      'A calm mountain walk to Virvasshytta — well suited for families and beginners.',
+    lenke: 'https://ut.no/hytte/10571/virvasshytta',
   },
   {
     id: 'kjenvasshytta',
     navn: 'Kjenvasshytta',
     vanskelighet: 'Middels',
+    vanskelighet_en: 'Moderate',
     distanse: 'ca. 10 km',
+    distanse_en: 'approx. 10 km',
     tid: 'ca. 3,5 t',
+    tid_en: 'approx. 3.5 h',
     beskrivelse:
       'Tur til Kjenvasshytta langs stien mot riksgrensen, med stopp ved fiskevatn underveis.',
+    beskrivelse_en:
+      'A hike to Kjenvasshytta along the trail towards the national border, with a stop by a fishing lake on the way.',
+    lenke: 'https://ut.no/hytte/1079/kjennsvasshytta',
   },
   {
     id: 'oksskolten',
     navn: 'Oksskolten',
     vanskelighet: 'Krevende',
+    vanskelighet_en: 'Demanding',
     distanse: 'ca. 18 km',
+    distanse_en: 'approx. 18 km',
     tid: 'ca. 7 t',
+    tid_en: 'approx. 7 h',
     beskrivelse:
       'Norges nordligste brebre — et eventyrlignende fjellmassiv med Oksskolten som høyeste topp (1916 moh.).',
+    beskrivelse_en:
+      "Norway's northernmost glacier — a fairytale-like massif with Oksskolten as the highest peak (1916 m a.s.l.).",
+    lenke: 'https://ut.no/turforslag/117249/oksskolten-1916-moh-hyest-i-nord-norge',
   },
   {
-    id: 'uman',
-    navn: 'Uman',
+    id: 'arestue-umbukta',
+    navn: 'Årestue Umbukta',
     vanskelighet: 'Lett',
-    distanse: 'ca. 6 km',
-    tid: 'ca. 2 t',
+    vanskelighet_en: 'Easy',
+    distanse: 'Kort tur ved hytta',
+    distanse_en: 'Short walk by the cabin',
+    tid: '',
+    tid_en: '',
     beskrivelse:
-      'Kortere tur langs Uman-vatnet med godt fiske og rolig natur like utenfor hyttedøra.',
+      'Gammel årestue ved Umbukta — et stemningsfullt kulturminne med åpent ildsted. Se UT.no for detaljer.',
+    beskrivelse_en:
+      'An old open-hearth hut (årestue) at Umbukta — an atmospheric cultural heritage site. See UT.no for details.',
+    lenke: 'https://ut.no/hytte/10172351/arestue-umbukta',
   },
 ] as const;

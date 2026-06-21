@@ -55,7 +55,7 @@ export const translations = {
     form_email: 'E-post',
     form_phone: 'Telefon',
     form_prisgruppe: 'Prisgruppe',
-    form_forbund: 'Hvilket LO-forbund?',
+    form_forbund: 'Hvilket LO-forbund? *',
     form_total: 'Beregnet totalpris',
     form_submit: 'Send forespørsel',
     form_disclaimer: 'Du blir ikke belastet nå. Avdelingen tar kontakt for bekreftelse.',
@@ -103,7 +103,7 @@ export const translations = {
     hjelp_send: 'Send melding',
 
     // Footer
-    footer_tagline: 'Hytteutleie for LO-medlemmer på Helgeland.',
+    footer_tagline: 'Hytteutleie for alle LO-medlemmer — særlig Fellesforbundet Helgeland.',
     footer_hytter: 'Hyttene',
     footer_om: 'Om oss',
     footer_kontakt: 'Kontakt',
@@ -160,7 +160,7 @@ export const translations = {
     form_email: 'Email',
     form_phone: 'Phone',
     form_prisgruppe: 'Member category',
-    form_forbund: 'Which LO union?',
+    form_forbund: 'Which LO union? *',
     form_total: 'Estimated total price',
     form_submit: 'Send request',
     form_disclaimer: 'You will not be charged now. The office will confirm your booking.',
@@ -203,7 +203,7 @@ export const translations = {
     hjelp_melding_ph: 'Write your message here…',
     hjelp_send: 'Send message',
 
-    footer_tagline: 'Cabin rentals for LO members in Helgeland.',
+    footer_tagline: 'Cabin rentals for all LO members — especially Fellesforbundet Helgeland.',
     footer_hytter: 'Cabins',
     footer_om: 'About us',
     footer_kontakt: 'Contact',

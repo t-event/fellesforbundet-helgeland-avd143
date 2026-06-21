@@ -62,9 +62,9 @@ import { PRISER, KONTONUMMER, LO_FORBUND } from '../config.ts';
     <div class="field">
       <label for="booking-prisgruppe" data-i18n="form_prisgruppe">Prisgruppe</label>
       <select class="input" id="booking-prisgruppe" name="prisgruppe" required aria-required="true">
-        <option value="FFH">Medlem Fellesforbundet Helgeland — {PRISER.FFH} kr/døgn</option>
-        <option value="FF">Medlem Fellesforbundet (annen avd.) — {PRISER.FF} kr/døgn</option>
-        <option value="ANNET_LO">Medlem annet LO-forbund — {PRISER.ANNET_LO} kr/døgn</option>
+        <option value="FFH" data-en={`Fellesforbundet Helgeland member — NOK ${PRISER.FFH}/night`}>Medlem Fellesforbundet Helgeland — {PRISER.FFH} kr/døgn</option>
+        <option value="FF" data-en={`Fellesforbundet member (other branch) — NOK ${PRISER.FF}/night`}>Medlem Fellesforbundet (annen avd.) — {PRISER.FF} kr/døgn</option>
+        <option value="ANNET_LO" data-en={`Member of another LO union — NOK ${PRISER.ANNET_LO}/night`}>Medlem annet LO-forbund — {PRISER.ANNET_LO} kr/døgn</option>
       </select>
     </div>
 
@@ -72,7 +72,7 @@ import { PRISER, KONTONUMMER, LO_FORBUND } from '../config.ts';
     <div class="field" id="lo-forbund-felt" style="display:none;" aria-hidden="true">
       <label for="booking-forbund" data-i18n="form_forbund">Hvilket LO-forbund?</label>
       <select class="input" id="booking-forbund" name="lo_forbund">
-        <option value="">Velg forbund…</option>
+        <option value="" data-en="Choose union…">Velg forbund…</option>
         {LO_FORBUND.map(f => <option value={f}>{f}</option>)}
       </select>
       <div class="field-error" id="err-forbund" style="display:none;"></div>
@@ -165,6 +165,8 @@ prisGruppeEl?.addEventListener('change', () => {
   const visLO = prisGruppeEl.value === 'ANNET_LO';
   forbundFelt.style.display = visLO ? '' : 'none';
   forbundFelt.setAttribute('aria-hidden', String(!visLO));
+  forbundEl.toggleAttribute('required', visLO);
+  forbundEl.setAttribute('aria-required', String(visLO));
   if (!visLO) forbundEl.value = '';
   oppdaterPris();
 });
