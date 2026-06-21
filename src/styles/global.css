@@ -294,18 +294,36 @@ textarea.input { resize: vertical; min-height: 110px; }
   .nav-toggle  { display: flex; }
 }
 
+/* ── Nettbrett (641–900px) ─────────────────────────────────── */
+@media (min-width: 641px) and (max-width: 900px) {
+  .grid[style*="1fr 1fr"] { gap: 20px !important; }
+}
+
 @media (max-width: 700px) {
   .weather-days { grid-template-columns: repeat(3, 1fr); }
 }
 
+/* ── Mobil (≤640px) ────────────────────────────────────────── */
+@media (max-width: 640px) {
+  /* Stabel alle eksplisitte 2-kol grids */
+  .grid[style*="1fr 1fr"] { grid-template-columns: 1fr !important; }
+
+  /* Begrens hero-bildet på mobil */
+  .hero-img { height: clamp(200px, 55vw, 260px); }
+
+  /* Skjul hero-bildet på forsiden på veldig smale skjermer */
+  @media (max-width: 400px) { .hero-img { display: none; } }
+}
+
 @media (max-width: 600px) {
-  .container   { padding: 0 18px; }
+  .container   { padding: 0 16px; }
   .field-row   { grid-template-columns: 1fr; }
   .footer-cols { grid-template-columns: 1fr; }
   .card-pad    { padding: 20px; }
   .day         { height: 40px; font-size: 14px; }
   .cal-weekdays span { font-size: 11px; }
   .weather-stats { grid-template-columns: repeat(3, 1fr); }
+  .section { padding-top: clamp(28px,7vw,44px); padding-bottom: clamp(28px,7vw,44px); }
 }
 
 /* ── Skip-link ───────────────────────────────────────────────── */

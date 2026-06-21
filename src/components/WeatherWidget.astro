@@ -16,15 +16,26 @@ import { UMBUKTA, YR_URL, VEGVESEN_KAMERA_URL } from '../config.ts';
         yr.no ↗
       </a>
     </div>
+
     <div class="weather-temp">
-      <div class="deg" id="weather-temp">–</div>
-      <div class="cond" id="weather-cond">–</div>
+      <span id="weather-icon" style="font-size:48px; line-height:1;" aria-hidden="true">–</span>
+      <div>
+        <div class="deg" id="weather-temp">–</div>
+        <div class="cond" id="weather-cond" style="font-size:15px;">–</div>
+      </div>
     </div>
+
     <div class="weather-stats">
       <div class="weather-stat">
         <div class="k">Vind</div>
-        <div class="v" id="weather-vind">–</div>
-        <div class="u">m/s</div>
+        <div class="v" style="display:flex; align-items:center; gap:5px;">
+          <svg id="weather-vindpil" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"
+            aria-hidden="true" style="opacity:0.85; transition:transform 0.4s ease; flex:none;">
+            <path d="M12 2 L7.5 19 L12 14.5 L16.5 19 Z"/>
+          </svg>
+          <span id="weather-vind">–</span>
+        </div>
+        <div class="u"><span id="weather-vindretning" style="font-size:11px; opacity:0.7;"></span> m/s</div>
       </div>
       <div class="weather-stat">
         <div class="k">Nedbør</div>
@@ -37,6 +48,7 @@ import { UMBUKTA, YR_URL, VEGVESEN_KAMERA_URL } from '../config.ts';
         <div class="u">hPa</div>
       </div>
     </div>
+
     <div class="weather-days" id="weather-days"></div>
   </div>
 
@@ -62,17 +74,52 @@ import { UMBUKTA, YR_URL, VEGVESEN_KAMERA_URL } from '../config.ts';
 
 <script define:vars={{ LAT: UMBUKTA.lat, LON: UMBUKTA.lon, KAMERA_URL: VEGVESEN_KAMERA_URL }}>
 const DAGER_NB = ['søn','man','tir','ons','tor','fre','lør'];
+
+const ICON_MAP = {
+  clearsky:            '☀️',
+  fair:                '🌤️',
+  partlycloudy:        '⛅',
+  cloudy:              '☁️',
+  fog:                 '🌫️',
+  rain:                '🌧️',
+  lightrain:           '🌦️',
+  heavyrain:           '🌧️',
+  sleet:               '🌨️',
+  lightsleet:          '🌨️',
+  heavysleet:          '🌨️',
+  snow:                '❄️',
+  lightsnow:           '🌨️',
+  heavysnow:           '❄️',
+  rainandthunder:      '⛈️',
+  lightrainandthunder: '⛈️',
+  heavyrainandthunder: '⛈️',
+  sleetandthunder:     '⛈️',
+  snowandthunder:      '⛈️',
+};
+
 const SYMBOL_MAP = {
   clearsky: 'Sol', fair: 'Lettskyet', partlycloudy: 'Delvis skyet',
   cloudy: 'Skyet', fog: 'Tåke', rainandthunder: 'Tordenvær',
   rain: 'Regn', lightrain: 'Lett regn', heavyrain: 'Kraftig regn',
-  snow: 'Snø', lightsnow: 'Lett snø', sleet: 'Sludd',
+  snow: 'Snø', lightsnow: 'Lett snø', heavysnow: 'Kraftig snø',
+  sleet: 'Sludd', lightsleet: 'Lett sludd', heavysleet: 'Kraftig sludd',
 };
 
+function symbolBase(code) {
+  return code ? code.replace(/_day|_night|_polartwilight/,'') : '';
+}
+function symbolIcon(code) {
+  const b = symbolBase(code);
+  return ICON_MAP[b] ?? ICON_MAP[b.replace(/andthunder$|andrain$/, '')] ?? '🌡️';
+}
 function symbolLabel(code) {
-  if (!code) return '–';
-  const base = code.replace(/_day|_night|_polartwilight/,'');
-  return SYMBOL_MAP[base] ?? code.replace(/_/g,' ');
+  const b = symbolBase(code);
+  return SYMBOL_MAP[b] ?? b.replace(/_/g,' ');
+}
+
+const COMPASS = ['N','NNØ','NØ','ØNØ','Ø','ØSØ','SØ','SSØ','S','SSV','SV','VSV','V','VNV','NV','NNV'];
+function toCompass(deg) {
+  return COMPASS[Math.round(deg / 22.5) % 16];
 }
 
 async function fetchWeather() {
@@ -85,20 +132,29 @@ async function fetchWeather() {
     const ts = data?.properties?.timeseries ?? [];
     if (!ts.length) return;
 
-    // Finn nærmeste tidspunkt
     const now = new Date();
     let nearest = ts[0];
     for (const t of ts) {
       if (new Date(t.time) <= now) nearest = t;
       else break;
     }
-    const d = nearest?.data;
+    const d    = nearest?.data;
     const inst = d?.instant?.details;
 
+    const temp = inst?.air_temperature;
     document.getElementById('weather-temp').textContent =
-      inst?.air_temperature != null ? `${Math.round(inst.air_temperature)}°` : '–';
+      temp != null ? `${Math.round(temp)}°` : '–';
+
+    const windSpeed = inst?.wind_speed;
+    const windDir   = inst?.wind_from_direction;
     document.getElementById('weather-vind').textContent =
-      inst?.wind_speed != null ? String(Math.round(inst.wind_speed)) : '–';
+      windSpeed != null ? String(Math.round(windSpeed)) : '–';
+
+    if (windDir != null) {
+      document.getElementById('weather-vindpil').style.transform = `rotate(${windDir}deg)`;
+      document.getElementById('weather-vindretning').textContent = toCompass(windDir) + ' ';
+    }
+
     document.getElementById('weather-nedbor').textContent =
       d?.next_1_hours?.details?.precipitation_amount != null
         ? String(d.next_1_hours.details.precipitation_amount) : '0';
@@ -107,11 +163,12 @@ async function fetchWeather() {
         ? String(Math.round(inst.air_pressure_at_sea_level)) : '–';
 
     const sym = d?.next_1_hours?.summary?.symbol_code ?? d?.next_6_hours?.summary?.symbol_code;
-    document.getElementById('weather-cond').textContent = symbolLabel(sym);
+    document.getElementById('weather-icon').textContent = symbolIcon(sym);
+    document.getElementById('weather-cond').textContent = sym ? symbolLabel(sym) : '–';
     document.getElementById('weather-dato').textContent =
       now.toLocaleDateString('nb-NO', { weekday:'long', hour:'2-digit', minute:'2-digit' });
 
-    // Daglig oversikt (neste 5 dager, kl. 12:00)
+    // 5-dagers prognose
     const dagMap = {};
     for (const t of ts) {
       const d2 = new Date(t.time);
@@ -121,22 +178,22 @@ async function fetchWeather() {
       if (!dagMap[key]) dagMap[key] = { date: d2, data: t.data };
     }
     const dager5 = Object.values(dagMap).slice(0, 5);
-    const daysEl = document.getElementById('weather-days');
-    daysEl.innerHTML = dager5.map(({ date, data }) => {
-      const temp  = data?.instant?.details?.air_temperature;
+    document.getElementById('weather-days').innerHTML = dager5.map(({ date, data }) => {
+      const t2    = data?.instant?.details?.air_temperature;
       const prec  = data?.next_6_hours?.details?.precipitation_amount ?? 0;
+      const sym2  = data?.next_6_hours?.summary?.symbol_code ?? data?.next_1_hours?.summary?.symbol_code;
       return `<div class="weather-day">
         <div class="wd-dag">${DAGER_NB[date.getDay()]}</div>
-        <div class="wd-temp">${temp != null ? Math.round(temp) + '°' : '–'}</div>
+        <div style="font-size:22px; line-height:1.2;" aria-hidden="true">${symbolIcon(sym2)}</div>
+        <div class="wd-temp">${t2 != null ? Math.round(t2) + '°' : '–'}</div>
         <div class="wd-prec">${prec > 0 ? prec + ' mm' : ''}</div>
       </div>`;
     }).join('');
-  } catch (e) {
+  } catch {
     document.getElementById('weather-dato').textContent = 'Vær ikke tilgjengelig';
   }
 }
 
-// Oppdater webkamera hvert 5. min
 function oppdaterKamera() {
   const img = document.getElementById('webcam-img');
   const tid = document.getElementById('webcam-tid');
