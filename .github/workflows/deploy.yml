@@ -33,10 +33,10 @@ jobs:
       - name: Bygg statisk side
         run: npm run build
         env:
-          # Bytt SITE og BASE når eget domene er kjøpt:
-          # SITE: https://hytteutleie-ffh143.no
-          # BASE: /
-          SITE: https://t-event.github.io/fellesforbundet-helgeland-avd143
+          # SITE = kun origin (uten understi). Bytt når eget domene er kjøpt:
+          #   SITE: https://hytteutleie-ffh143.no
+          #   BASE: /
+          SITE: https://t-event.github.io
           BASE: /fellesforbundet-helgeland-avd143
           PUBLIC_WEB3FORMS_KEY: ${{ secrets.WEB3FORMS_KEY }}
 
