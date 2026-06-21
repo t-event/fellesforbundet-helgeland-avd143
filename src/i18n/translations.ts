@@ -9,7 +9,7 @@ export const translations = {
     nav_elsvatn: 'Øvre Elsvatn ↗',
     nav_turtips: 'Turtips',
     nav_hjelp: 'Hjelpesenter',
-    nav_book: 'Book hytte',
+    nav_book: 'Book Umbukta',
 
     // Forside
     home_pill: 'Fjellhytter på Helgeland',
@@ -118,7 +118,7 @@ export const translations = {
     nav_elsvatn: 'Øvre Elsvatn ↗',
     nav_turtips: 'Hiking tips',
     nav_hjelp: 'Help',
-    nav_book: 'Book cabin',
+    nav_book: 'Book Umbukta',
 
     home_pill: 'Mountain cabins in Helgeland',
     home_h1: 'Rent a cabin from Fellesforbundet Helgeland',
