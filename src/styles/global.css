@@ -109,7 +109,7 @@ ul { margin: 0; padding: 0; list-style: none; }
 .brand-logo { height: 40px; width: auto; display: block; }
 .brand-sub { font-size: 12px; font-weight: 600; color: var(--lysbla); letter-spacing: 0.04em; text-transform: uppercase; white-space: nowrap; }
 .nav-right { display: flex; align-items: center; gap: 16px; flex-wrap: nowrap; justify-content: flex-end; }
-.nav { display: flex; align-items: center; gap: 4px; flex-wrap: wrap; }
+.nav { display: flex; align-items: center; gap: 4px; flex-wrap: nowrap; }
 .nav a { background: transparent; color: #cfd0e0; font-weight: 600; font-size: 14px; padding: 9px 15px; border: none; border-radius: 9px; cursor: pointer; white-space: nowrap; text-decoration: none; }
 .nav a:hover { color: #fff; }
 .nav a.active, .nav a[aria-current="page"] { background: var(--rod); color: #fff; }
@@ -188,10 +188,13 @@ ul { margin: 0; padding: 0; list-style: none; }
 .cal-note { font-size: 12.5px; color: var(--tekst-svak); margin-top: 10px; line-height: 1.5; }
 
 /* ── Skjema ──────────────────────────────────────────────────── */
-.field { display: block; }
+/* min-width:0 lar feltene krympe i grid/flex slik at f.eks. dato-input på iOS
+   ikke flyter utenfor kortet på mobil. */
+.field { display: block; min-width: 0; }
 .field label { display: block; font-size: 13px; font-weight: 700; margin-bottom: 6px; }
 .input {
-  width: 100%; padding: 13px 15px; font-size: 15px; font-family: inherit; color: var(--tekst);
+  width: 100%; max-width: 100%; min-width: 0; box-sizing: border-box;
+  padding: 13px 15px; font-size: 15px; font-family: inherit; color: var(--tekst);
   border: 1.5px solid var(--kantlinje); border-radius: 10px; background: #fff; outline: none;
   appearance: auto;
 }
@@ -301,6 +304,11 @@ textarea.input { resize: vertical; min-height: 110px; }
   .hero-grid   { grid-template-columns: 1fr; }
   .footer-cols { grid-template-columns: 1fr 1fr; }
   .lodd-wrap   { grid-template-columns: 1fr; }
+}
+
+/* Desktop-menyen trenger god bredde for å få plass på én linje. Under dette
+   bytter vi til hamburger-meny slik at lenkene ikke wrapper til linje to. */
+@media (max-width: 1200px) {
   .nav         { display: none; }
   .nav-toggle  { display: flex; }
 }
