@@ -104,7 +104,7 @@
 </div>
 
 <script>
-import { getRelevantEaster, isEasterRegistrationOpen, isEasterSectionVisible, formatNorsk } from '../utils/easter.ts';
+import { getRelevantEaster, isEasterRegistrationOpen, isEasterSectionVisible, formatNorsk, PASKE_MANUELL_VISNING } from '../utils/easter.ts';
 
 const now = new Date();
 const ep  = getRelevantEaster(now);
@@ -140,9 +140,11 @@ fyllDatoer();
 document.querySelectorAll('.lang button').forEach(b =>
   b.addEventListener('click', () => setTimeout(fyllDatoer, 0)));
 
-// Testmodus: ?paske=test i URL-en tvinger seksjonen + skjemaet synlig for forhåndsvisning.
-// Påvirker ikke vanlige besøkende (de ser seksjonen kun i det faktiske påskevinduet).
-const testMode = new URLSearchParams(location.search).has('paske');
+// Tvungen visning av seksjon + skjema:
+//  • PASKE_MANUELL_VISNING (i src/utils/easter.ts) = på for ALLE besøkende (manuell bryter i koden)
+//  • ?paske=test i URL-en = kun forhåndsvisning for den som har lenken
+// Begge påvirker ikke den vanlige, fullautomatiske visningen når de står av.
+const testMode = PASKE_MANUELL_VISNING || new URLSearchParams(location.search).has('paske');
 
 // Vis/skjul seksjonen
 const seksjonEl = document.getElementById('paske-seksjon');

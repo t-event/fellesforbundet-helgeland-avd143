@@ -1,7 +1,16 @@
 /* ============================================================
    MERKEVARE — CSS-variabler (fra Hytteutleie-design.html)
    ============================================================ */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+/* Inter — selv-hostet (variabel woff2, latin-subset dekker æ/ø/å).
+   Erstatter ekstern Google Fonts-@import: raskere, ingen build-/runtime-
+   avhengighet av nett, og ingen IP-deling med Google (personvern). */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('../fonts/inter-latin.woff2') format('woff2');
+}
 
 @tailwind base;
 @tailwind components;
@@ -299,6 +308,12 @@ textarea.input { resize: vertical; min-height: 110px; }
 /* ── Nettbrett (641–900px) ─────────────────────────────────── */
 @media (min-width: 641px) and (max-width: 900px) {
   .grid[style*="1fr 1fr"] { gap: 20px !important; }
+}
+
+/* Mer luft i sidene på nettbrett (iPad o.l.) — unngå at innholdet
+   ligger helt i ytterkanten når skjermen er smalere enn maks-bredden. */
+@media (min-width: 641px) and (max-width: 1180px) {
+  .container { padding-left: clamp(32px, 5vw, 56px); padding-right: clamp(32px, 5vw, 56px); }
 }
 
 @media (max-width: 700px) {

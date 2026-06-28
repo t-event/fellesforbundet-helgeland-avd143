@@ -29,8 +29,8 @@ export const UMBUKTA = {
   kart: 'https://maps.app.goo.gl/Q8f8DPbiG6TmMtpy6',
   lat: 66.1659051,
   lon: 14.5832452,
-  sengeplasser: 14,
-  soverom: '3 soverom + hems',
+  sengeplasser: 12,
+  soverom: '2 soverom, sovealkove og romslig hems',
 } as const;
 
 export const ELSVATN_INATUR_URL =

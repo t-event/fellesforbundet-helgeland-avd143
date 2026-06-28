@@ -1,3 +1,11 @@
+// ── Manuell overstyring ──────────────────────────────────────────────
+// Sett til `true` for å TVINGE påske-/loddtrekningsseksjonen (med skjema)
+// synlig for ALLE besøkende, uavhengig av dato. Nyttig for å la styret se
+// hvordan seksjonen ser ut. La stå `false` for normal, fullautomatisk
+// visning (synlig fra 1. okt. → etter 2. påskedag, skjema fram til fristen).
+// Merk: `?paske=test` i URL-en gjør det samme, men kun for den med lenken.
+export const PASKE_MANUELL_VISNING = true;
+
 // Beregner påskedato for et gitt år.
 // Algoritme: Meeus/Jones/Butcher — fungerer for alle år 1900–2099.
 export function easterSunday(year: number): Date {

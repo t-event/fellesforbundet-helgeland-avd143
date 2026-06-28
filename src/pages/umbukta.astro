@@ -9,18 +9,21 @@ import { PRISER, KONTAKT, UMBUKTA } from '../config.ts';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
 const bilder = [
-  { src: '159843138_3797277120348848_4595777890852669872_n.jpg',  alt: 'Hytte i Umbukta — eksteriør, solskinn og blå himmel' },
-  { src: '480561933_1031634398995139_7564633413902508_n.jpg',     alt: 'Terrasse med utsikt over Umbukta og snødekte fjell' },
-  { src: '509413152_23863110600005537_4089812885910828954_n.jpg', alt: 'Fullt utstyrt kjøkken med komfyr og kjøleskap' },
-  { src: '510447695_23863110660005531_1894319381280647852_n.jpg', alt: 'Stor spisestue med langt bord — plass til alle' },
-  { src: '509516086_23863110906672173_4310947696842304937_n.jpg', alt: 'Koselig stue med hjørnesofagruppe og store vinduer' },
-  { src: '510195868_23863110700005527_2172912030040116231_n.jpg', alt: 'Kosehjørnet på hemsen — lenestoler og levende lys' },
-  { src: '510147927_23863110696672194_1716070958571014737_n.jpg', alt: 'Soverom med køyeseng' },
-  { src: '509364318_23863110756672188_7034588925113761005_n.jpg', alt: 'Bad med dusj og servant' },
+  { src: 'umbukta-eksterior-terrasse.jpg', alt: 'Hytte i Umbukta — eksteriør med terrasse i solskinn og blå himmel' },
+  { src: 'umbukta-eksterior-vinduer.jpg',  alt: 'Eksteriør med store panoramavinduer mot Umbukta' },
+  { src: 'umbukta-stue.jpg',               alt: 'Lys stue med hjørnesofa, vedovn og store vinduer' },
+  { src: 'umbukta-kjokken.jpg',            alt: 'Fullt utstyrt kjøkken med komfyr, kjøleskap og spisebord' },
+  { src: 'umbukta-spisestue-utsikt.jpg',   alt: 'Spisestue med panoramautsikt over Umbukta og fjellene' },
+  { src: 'umbukta-hems-sittegruppe.jpg',   alt: 'Sittegruppe på hemsen med lenestoler og utsikt over vatnet' },
+  { src: 'umbukta-hems-senger.jpg',        alt: 'Romslig sovehems med flere sengeplasser' },
+  { src: 'umbukta-soverom-dobbelt.jpg',    alt: 'Soverom med dobbeltseng og vindu mot naturen' },
+  { src: 'umbukta-soverom-koye.jpg',       alt: 'Soverom med køyeseng' },
+  { src: 'umbukta-bad.jpg',                alt: 'Bad med dusj, servant og toalett' },
+  { src: 'umbukta-naust-bat.jpg',          alt: 'Naust med aluminiumsbåt og påhengsmotor' },
 ];
 
 const fasiliteter = [
-  { ikon: '🛏', tittel: 'Inntil 14 sengeplasser', tittel_en: 'Up to 14 beds', beskrivelse: '3 soverom + hems. Dyner og puter medfølger.', beskrivelse_en: '3 bedrooms + loft. Duvets and pillows included.' },
+  { ikon: '🛏', tittel: 'Inntil 12 sengeplasser', tittel_en: 'Up to 12 beds', beskrivelse: '2 soverom, sovealkove og romslig hems. Dyner og puter medfølger.', beskrivelse_en: '2 bedrooms, sleeping alcove and a spacious loft. Duvets and pillows included.' },
   { ikon: '🍳', tittel: 'Fullt kjøkken', tittel_en: 'Full kitchen', beskrivelse: 'Komfyr, kjøleskap med fryser og kokeutstyr.', beskrivelse_en: 'Stove, fridge with freezer and cookware.' },
   { ikon: '⚡', tittel: 'Innlagt strøm', tittel_en: 'Electricity', beskrivelse: '230V i hele hytta.', beskrivelse_en: '230V throughout the cabin.' },
   { ikon: '💧', tittel: 'Innlagt vann', tittel_en: 'Running water', beskrivelse: 'Kaldt og varmt vann, dusj og toalett.', beskrivelse_en: 'Cold and hot water, shower and toilet.' },
@@ -72,16 +75,16 @@ const faq = [
   {
     spm: 'Er det elbillader?',
     spm_en: 'Is there an EV charger?',
-    svar: 'Nei, hytta har ikke elbillader. Det er heller ikke buss-/togadkomst eller handikaptilpasset innredning.',
-    svar_en: 'No, the cabin does not have an EV charger. There is also no bus/train access or wheelchair-accessible facilities.'
+    svar: 'Hytta har ikke egen elbillader, men det finnes elbillader på Umbukta fjellstue ca. 300 m unna. Hytta har ikke buss-/togadkomst eller handikaptilpasset innredning.',
+    svar_en: 'The cabin does not have its own EV charger, but there is an EV charger at Umbukta mountain lodge about 300 m away. The cabin has no bus/train access or wheelchair-accessible facilities.'
   },
 ];
 ---
 
 <Layout
   title="Hytte i Umbukta — Leie fjellhytte ved Rana | Fellesforbundet Helgeland"
-  description="Lei hytta i Umbukta nær Mo i Rana og Sveriges grense. Inntil 14 sengeplasser, fullt utstyrt, sjekk ledige datoer og book her. Kun for LO-medlemmer — fra 700 kr/døgn."
-  ogImage="/images/umbukta/159843138_3797277120348848_4595777890852669872_n.jpg"
+  description="Lei hytta i Umbukta nær Mo i Rana og Sveriges grense. Inntil 12 sengeplasser, fullt utstyrt, sjekk ledige datoer og book her. Kun for LO-medlemmer — fra 700 kr/døgn."
+  ogImage="/images/umbukta/umbukta-eksterior-terrasse.jpg"
   ogType="website"
 >
 
@@ -90,10 +93,10 @@ const faq = [
     "@context": "https://schema.org",
     "@type": "LodgingBusiness",
     "name": "Hytte i Umbukta — Fellesforbundet Helgeland",
-    "description": "Fjellhytte i Umbukta, Rana, eid av Fellesforbundet Helgeland avd. 143. Inntil 14 sengeplasser, fullt utstyrt. Kun for LO-medlemmer.",
+    "description": "Fjellhytte i Umbukta, Rana, eid av Fellesforbundet Helgeland avd. 143. Inntil 12 sengeplasser, fullt utstyrt. Kun for LO-medlemmer.",
     "url": Astro.site?.toString().replace(/\/$/, '') + base + '/umbukta',
     "image": [
-      Astro.site?.toString().replace(/\/$/, '') + base + '/images/umbukta/159843138_3797277120348848_4595777890852669872_n.jpg',
+      Astro.site?.toString().replace(/\/$/, '') + base + '/images/umbukta/umbukta-eksterior-terrasse.jpg',
     ],
     "geo": { "@type": "GeoCoordinates", "latitude": UMBUKTA.lat, "longitude": UMBUKTA.lon },
     "address": {
@@ -120,7 +123,7 @@ const faq = [
   <!-- HERO -->
   <div class="media-hero">
     <img
-      src={`${base}/images/umbukta/159843138_3797277120348848_4595777890852669872_n.jpg`}
+      src={`${base}/images/umbukta/umbukta-eksterior-terrasse.jpg`}
       alt="Hytte i Umbukta — fjellhytte i vakker natur ved Rana og Sveriges grense"
       width="1440"
       height="460"
@@ -150,9 +153,9 @@ const faq = [
       <div>
         <h2 class="h2" style="margin-bottom:16px;" data-i18n="umbukta_about_title">Om hytta</h2>
         <p class="muted" style="font-size:16.5px; line-height:1.7; margin-bottom:16px;"
-           data-en="The Umbukta cabin sits freely in the mountains, approx. 35 km from Mo i Rana along the E12, about 3 km from the Swedish border. The cabin sleeps <strong>up to 14 people</strong> across 3 bedrooms and a spacious loft, with a living room and a fully equipped kitchen.">
+           data-en="The Umbukta cabin sits freely in the mountains, approx. 35 km from Mo i Rana along the E12, about 3 km from the Swedish border. The cabin sleeps <strong>up to 12 people</strong> across 2 bedrooms, a sleeping alcove and a spacious loft, with a living room and a fully equipped kitchen.">
           Umbukta-hytta ligger fritt til i fjellet, ca. 3,5 mil fra Mo i Rana langs E12, ca. 3 km fra grensen til Sverige.
-          Hytta har plass til <strong>inntil 14 personer</strong> fordelt på 3 soverom og en romslig hems, med stue og fullt utstyrt kjøkken.
+          Hytta har plass til <strong>inntil 12 personer</strong> fordelt på 2 soverom, sovealkove og en romslig hems, med stue og fullt utstyrt kjøkken.
         </p>
         <p class="muted" style="font-size:16.5px; line-height:1.7; margin-bottom:16px;"
            data-en="Summer and winter alike, this is an excellent base for outdoor life in Helgeland — fishing, mountain hikes and skiing in winter. Right by the cabin there is a boathouse with an aluminium boat and a small motor that can be borrowed.">
@@ -168,8 +171,8 @@ const faq = [
       </div>
       <div style="height:clamp(240px,28vw,340px); border-radius:18px; overflow:hidden;">
         <img
-          src={`${base}/images/umbukta/509364318_23863110756672188_7034588925113761005_n.jpg`}
-          alt="Stua og kjøkkenet inne i Umbukta-hytta"
+          src={`${base}/images/umbukta/umbukta-stue.jpg`}
+          alt="Lys stue med hjørnesofa og vedovn inne i Umbukta-hytta"
           width="800"
           height="600"
           loading="lazy"
@@ -374,11 +377,11 @@ const faq = [
         </h2>
         <div class="rule-row"><span class="k" data-en="Check-in">Innsjekk</span><span class="v" data-en="from 16:00">fra kl. 16:00</span></div>
         <div class="rule-row"><span class="k" data-en="Check-out">Utsjekk</span><span class="v" data-en="by 12:00">innen kl. 12:00</span></div>
-        <div class="rule-row"><span class="k" data-en="Beds">Sengeplasser</span><span class="v" data-en="up to 14">inntil 14</span></div>
+        <div class="rule-row"><span class="k" data-en="Beds">Sengeplasser</span><span class="v" data-en="up to 12">inntil 12</span></div>
         <div class="rule-row"><span class="k" data-en="Cancellation">Avbestilling</span><span class="v" data-en="No refund">Ingen refusjon</span></div>
         <div class="rule-row"><span class="k" data-en="Dogs">Hunder</span><span class="v" data-en="Allowed (not in bed/sofa)">Tillatt (ikke i seng/sofa)</span></div>
         <div class="rule-row"><span class="k" data-en="Smoking">Røyking</span><span class="v" data-en="Not allowed indoors">Ikke tillatt innendørs</span></div>
-        <div class="rule-row"><span class="k" data-en="EV charger">Elbillader</span><span class="v" data-en="Not available">Ikke tilgjengelig</span></div>
+        <div class="rule-row"><span class="k" data-en="EV charger">Elbillader</span><span class="v" data-en="At the lodge (approx. 300 m)">På fjellstua (ca. 300 m)</span></div>
         <p class="note" data-en="The cabin must be left tidy and cleaned by the renter after use. The key is collected from a key box at the cabin — the code is sent by the office after confirmed payment.">
           Hytta skal forlates ryddig og rengjort av leietaker etter bruk.
           Nøkkel hentes i nøkkelboks på hytta — kode sendes av avdelingen etter bekreftet betaling.
@@ -386,8 +389,8 @@ const faq = [
         <p class="note" style="margin-top:8px;" data-en="The keys to the boathouse, woodshed and old cabin hang in the key box just inside the front door of the main cabin.">
           Nøkkel til naust, vedbod og gammel hytte henger i nøkkelboksen innenfor ytterdøra på hovedhytta.
         </p>
-        <p class="note" style="margin-top:8px;" data-en="<strong>Associations</strong> and similar may borrow the cabin on weekdays without an overnight stay — contact the office.">
-          <strong>Foreninger</strong> og lignende kan låne hytta på hverdager uten overnatting —
+        <p class="note" style="margin-top:8px;" data-en="<strong>Associations</strong> and similar may rent the cabin on weekdays without an overnight stay — contact the office.">
+          <strong>Foreninger</strong> og lignende kan leie hytta på hverdager uten overnatting —
           ta kontakt med avdelingen.
         </p>
       </div>
