@@ -9,6 +9,11 @@ on:
   pull_request:
   workflow_dispatch:
 
+# Minste rettigheter (CodeQL: actions/missing-workflow-permissions).
+# Bygg-sjekken trenger kun å lese koden — ingen skriving eller deploy.
+permissions:
+  contents: read
+
 jobs:
   build:
     runs-on: ubuntu-latest
