@@ -23,7 +23,7 @@ Bookingside for Umbukta-hytta og Elsvatn-hytta. Bygget med Astro 5 + Tailwind CS
 
 ### Forutsetninger
 - Git installert på maskinen
-- Node.js 20+ installert
+- Node.js 22+ installert (Astro 6 krever Node ≥ 22.12)
 - GitHub-konto med tilgang til organisasjonen `t-event`
 
 ### Klone og installere

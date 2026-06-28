@@ -1,0 +1,33 @@
+name: Bygg-sjekk (uten deploy)
+
+# Bygger siden på brancher og pull requests for å validere at den kompilerer,
+# UTEN å deploye. Selve deploy skjer kun fra main (deploy.yml).
+
+on:
+  push:
+    branches-ignore: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Sjekk ut kode
+        uses: actions/checkout@v4
+
+      - name: Sett opp Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Installer avhengigheter
+        run: npm ci
+
+      - name: Bygg statisk side
+        run: npm run build
+        env:
+          SITE: https://t-event.github.io
+          BASE: /fellesforbundet-helgeland-avd143
+          PUBLIC_WEB3FORMS_KEY: ${{ secrets.WEB3FORMS_KEY }}

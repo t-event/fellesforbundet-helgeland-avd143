@@ -1,5 +1,4 @@
 import { defineConfig } from 'astro/config';
-import tailwind from '@astrojs/tailwind';
 import sitemap from '@astrojs/sitemap';
 
 // Sett SITE og BASE via env-variabler i GitHub Actions.
@@ -13,7 +12,6 @@ export default defineConfig({
   base: BASE,
   output: 'static',
   integrations: [
-    tailwind({ applyBaseStyles: false }),
     sitemap(),
   ],
   image: {
