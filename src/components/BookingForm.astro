@@ -145,13 +145,16 @@ fetch(`${base}/availability.json`)
   .then(d => { if (d && Array.isArray(d.bookedDates)) { bookedDates = new Set(d.bookedDates); validerDatoerLive(); } })
   .catch(() => { /* tom liste = ingen blokkering */ });
 
-// Returnerer første opptatte natt i oppholdet [fra, til) (utsjekk-dagen er ledig), ellers null.
-function forsteOpptatteNatt(fra, til) {
-  if (!fra || !til || til <= fra) return null;
+// Returnerer første opptatte dato i det valgte intervallet [fra, til] (inklusiv begge
+// endepunkter), ellers null. Inklusiv slik at man verken kan sjekke inn ELLER ut på en
+// opptatt dato — man skal ikke kunne forespørre noen opptatt dato.
+function opptattDatoIPerioden(fra, til) {
+  if (!fra) return null;
+  const slutt = (til && til >= fra) ? til : fra; // mangler/ugyldig til → sjekk bare fra-datoen
   const [fy, fm, fd] = fra.split('-').map(Number);
-  const [ty, tm, td] = til.split('-').map(Number);
+  const [ty, tm, td] = slutt.split('-').map(Number);
   const d = new Date(fy, fm - 1, fd), end = new Date(ty, tm - 1, td);
-  while (d < end) {
+  while (d <= end) {
     const iso = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
     if (bookedDates.has(iso)) return iso;
     d.setDate(d.getDate() + 1);
@@ -159,12 +162,12 @@ function forsteOpptatteNatt(fra, til) {
   return null;
 }
 
-// Live-validering: vis feil hvis perioden inneholder opptatte netter.
+// Live-validering: vis feil hvis intervallet inneholder en opptatt dato.
 function validerDatoerLive() {
-  const konflikt = forsteOpptatteNatt(fraInput?.value, tilInput?.value);
+  const konflikt = opptattDatoIPerioden(fraInput?.value, tilInput?.value);
   setFeil('err-til', konflikt
-    ? (erEn() ? 'One or more nights in this period are already booked — please pick an available period.'
-              : 'En eller flere netter i perioden er opptatt — velg en ledig periode.')
+    ? (erEn() ? 'One or more of the selected dates are already booked — please pick an available period.'
+              : 'En eller flere av de valgte datoene er opptatt — velg en ledig periode.')
     : '');
   return !konflikt;
 }
@@ -267,7 +270,7 @@ form?.addEventListener('submit', async (e) => {
   if (!fra) { setFeil('err-fra', erEn() ? 'Choose a start date.' : 'Velg fra-dato.'); ok = false; }
   if (!til) { setFeil('err-til', erEn() ? 'Choose an end date.' : 'Velg til-dato.'); ok = false; }
   else if (til <= fra) { setFeil('err-til', erEn() ? 'End date must be after start date.' : 'Til-dato må være etter fra-dato.'); ok = false; }
-  else if (forsteOpptatteNatt(fra, til)) { setFeil('err-til', erEn() ? 'One or more nights in this period are already booked — please pick an available period.' : 'En eller flere netter i perioden er opptatt — velg en ledig periode.'); ok = false; }
+  else if (opptattDatoIPerioden(fra, til)) { setFeil('err-til', erEn() ? 'One or more of the selected dates are already booked — please pick an available period.' : 'En eller flere av de valgte datoene er opptatt — velg en ledig periode.'); ok = false; }
   if (!navn) { setFeil('err-navn', erEn() ? 'Enter your name.' : 'Oppgi navn.'); ok = false; }
   if (!epost || !epost.includes('@')) { setFeil('err-epost', erEn() ? 'Enter a valid email address.' : 'Oppgi gyldig e-postadresse.'); ok = false; }
   if (!telefon) { setFeil('err-telefon', erEn() ? 'Enter a phone number.' : 'Oppgi telefonnummer.'); ok = false; }
