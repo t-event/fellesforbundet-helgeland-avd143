@@ -1,6 +1,6 @@
 # Fellesforbundet Helgeland avd. 143 — Hyttebooking
 
-Bookingside for Umbukta-hytta og Elsvatn-hytta. Bygget med Astro 5 + Tailwind CSS, publisert på GitHub Pages. Ingen backend, ingen database — alt er statisk HTML med GitHub Actions for kalendersynkronisering.
+Bookingside for Umbukta-hytta og Elsvatn-hytta. Bygget med Astro 6 (egen CSS, Node ≥ 22), publisert på GitHub Pages. Ingen backend, ingen database — alt er statisk HTML med GitHub Actions for kalendersynkronisering.
 
 ---
 
@@ -133,12 +133,12 @@ Det tar 15–60 minutter for DNS å propagere første gang.
 
 ### Slik fungerer det
 
-En GitHub Actions-jobb kjører hvert minutt av timen (kl. 00, 01, 02 osv.) og:
+En GitHub Actions-jobb kjører på toppen av hver time (cron `0 * * * *`) og:
 
 1. Henter kalenderens `.ics`-fil fra Outlook
 2. Leser alle hendelser med tittel «Opptatt» (case-insensitiv)
-3. Skriver en liste med opptatte datoer til `public/availability.json`
-4. Pusher endringen til `main`-grenen dersom noe er endret
+3. Skriver en liste med opptatte datoer til `public/availability.json` — **kun når de opptatte datoene faktisk har endret seg** (ikke bare fordi tidsstempelet endrer seg)
+4. Committer og pusher til `main` kun ved en reell endring → da bygges/deployes siden på nytt. Står ingenting endret, skjer ingen deploy.
 
 Kalenderen på nettsiden leser så `availability.json` og farger opptatte dager rødt. Booking-skjemaet bruker samme data: man kan **ikke** sende forespørsel på en periode som inneholder en opptatt dato (verken innsjekk eller utsjekk på en opptatt dag).
 
@@ -256,6 +256,16 @@ git push
 
 GitHub Actions bygger og publiserer siden automatisk (tar ca. 1–2 minutter).
 
+### GitHub Actions-workflows
+
+| Workflow | Trigger | Gjør |
+|----------|---------|------|
+| `deploy.yml` | Push til `main` | Bygger (Node 22) og deployer til GitHub Pages |
+| `build-check.yml` | Push til andre brancher + PR-er | Bygger **uten** å deploye — validerer at koden kompilerer før merge til `main` |
+| `update-availability.yml` | Cron (hver time) | Synker Outlook-kalenderen → `availability.json` (deployer kun ved reell endring) |
+
+> Astro 6 krever Node ≥ 22, så begge bygge-workflowene bruker Node 22.
+
 ---
 
 ## 10. Lokal utvikling
@@ -297,8 +307,8 @@ Etter at siden er oppe og domenet er satt:
 
 | Komponent | Teknologi |
 |-----------|-----------|
-| Rammeverk | [Astro 5](https://astro.build) (statisk) |
-| Styling | [Tailwind CSS 3](https://tailwindcss.com) |
+| Rammeverk | [Astro 6](https://astro.build) (statisk, Node ≥ 22) |
+| Styling | Egen CSS + CSS-variabler (Tailwind fjernet — var ubrukt) |
 | Skrift | Inter — **selv-hostet** woff2 (`src/fonts/`), ingen ekstern Google Fonts |
 | Skjema-til-e-post | [Web3Forms](https://web3forms.com) |
 | Hosting | GitHub Pages |

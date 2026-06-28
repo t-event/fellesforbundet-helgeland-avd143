@@ -18,8 +18,8 @@ Statisk nettside for utleie av Fellesforbundet Helgeland (avd. 143) sine to hytt
 
 | Lag | Teknologi | Begrunnelse |
 |---|---|---|
-| Framework | **Astro 5** (statisk eksport) | Fleksibel SSG, glimrende for innholdsside med komponenter, støttes av GitHub Pages |
-| Styling | **Tailwind CSS + CSS-variabler** fra designfilen | Mobil-først, designsystemet følges nøyaktig |
+| Framework | **Astro 6** (statisk eksport, Node ≥ 22) | Fleksibel SSG, glimrende for innholdsside med komponenter, støttes av GitHub Pages |
+| Styling | **Egen CSS + CSS-variabler** fra designfilen (Tailwind fjernet — ingen utility-klasser i bruk, kun preflight) | Mobil-først, designsystemet følges nøyaktig |
 | Skrift | **Inter — selv-hostet woff2** (`src/fonts/`) | Ingen ekstern Google Fonts: raskere bygg/last, ingen IP-deling med Google (personvern) |
 | Skjema → e-post | **Web3Forms** (gratis, ingen backend) | Stateless POST, autosvar-funksjon, trygg public key |
 | Kalender-data | **GitHub Actions → `availability.json`** | CORS-fri henting av .ics, statisk JSON leses av klienten |
@@ -68,7 +68,7 @@ Statisk nettside for utleie av Fellesforbundet Helgeland (avd. 143) sine to hytt
 }
 ```
 
-- **GitHub-bot committer** filen tilbake til `main` → Pages deployer på nytt
+- **GitHub-bot committer** filen tilbake til `main` **kun når de opptatte datoene faktisk endrer seg** (ikke ved tidsstempel-endring alene) → Pages deployer på nytt. Ingen endring = ingen deploy.
 - **Forbehold på nettsiden:** «Dato er ikke garantert reservert før avdelingen bekrefter — kalenderen oppdateres ca. én gang i timen.»
 
 ### Integrasjon 2 — Web3Forms (bookingforespørsel + kontaktskjema)
@@ -306,7 +306,7 @@ Nettsiden har ingen admin-del. Etter mottatt e-postforespørsel:
 
 | Fase | Innhold |
 |---|---|
-| 1 | Prosjektoppsett (Astro, Tailwind, konfig, bilder), forside, layout, header/footer |
+| 1 | Prosjektoppsett (Astro, konfig, bilder), forside, layout, header/footer |
 | 2 | Umbukta-side: galleri, fasiliteter, beliggenhet, priser, husregler, FAQ |
 | 3 | GitHub Action → `availability.json`, kalendervisning (ledig/opptatt/loddtrekning) |
 | 4 | Bookingskjema: datovelger, prisberegning, Web3Forms-integrasjon, kvitteringsside |
