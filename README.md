@@ -140,7 +140,7 @@ En GitHub Actions-jobb kjører hvert minutt av timen (kl. 00, 01, 02 osv.) og:
 3. Skriver en liste med opptatte datoer til `public/availability.json`
 4. Pusher endringen til `main`-grenen dersom noe er endret
 
-Kalenderen på nettsiden leser så `availability.json` og farger opptatte dager rødt.
+Kalenderen på nettsiden leser så `availability.json` og farger opptatte dager rødt. Booking-skjemaet bruker samme data: man kan **ikke** sende forespørsel på en periode som inneholder en opptatt dato (verken innsjekk eller utsjekk på en opptatt dag).
 
 ### Merke en dato som opptatt i Outlook
 
@@ -206,6 +206,19 @@ Umbukta-hytta er populær i påsken. Systemet håndterer dette automatisk:
 | Etter påske | Seksjonen skjules igjen til neste 1. oktober |
 
 Ingen manuell konfigurasjon nødvendig — alt er automatisk basert på norsk påskedato.
+
+### Vis påske-seksjonen manuelt (forhåndsvisning / utenom sesong)
+
+Noen ganger ønsker man å se eller vise fram påske-seksjonen utenom det automatiske vinduet (f.eks. for at styret skal se hvordan den ser ut). Det finnes to måter:
+
+- **Kun for deg selv (lenke):** legg til `?paske=test` i URL-en, f.eks.
+  `…/umbukta?paske=test`. Vanlige besøkende påvirkes ikke.
+- **For alle besøkende (bryter i koden):** sett `PASKE_MANUELL_VISNING = true` i
+  [src/utils/easter.ts](src/utils/easter.ts) og push. Da vises seksjonen **og det
+  innsendbare skjemaet** for alle, uavhengig av dato. **Husk å sette den tilbake til
+  `false`** etterpå, ellers ser publikum en påske-loddtrekning utenom sesong.
+
+Den automatiske visningen (1. okt. → etter påske) virker som normalt når begge står av.
 
 ### Loddtrekning (kontorets oppgave)
 
@@ -286,6 +299,7 @@ Etter at siden er oppe og domenet er satt:
 |-----------|-----------|
 | Rammeverk | [Astro 5](https://astro.build) (statisk) |
 | Styling | [Tailwind CSS 3](https://tailwindcss.com) |
+| Skrift | Inter — **selv-hostet** woff2 (`src/fonts/`), ingen ekstern Google Fonts |
 | Skjema-til-e-post | [Web3Forms](https://web3forms.com) |
 | Hosting | GitHub Pages |
 | CI/CD | GitHub Actions |
@@ -305,3 +319,5 @@ Etter at siden er oppe og domenet er satt:
 **Tekniske spørsmål om nettsiden:** T-Event v/ Mathias — [mathias@t-event.no](mailto:mathias@t-event.no) · 929 63 907
 
 Alt som gjelder selve nettsiden (feil, endringer, utvikling, domene, GitHub, secrets) håndteres av T-Event. Kontoret håndterer booking og hyttedrift.
+
+Sikkerhetssvakheter meldes privat til T-Event — se [SECURITY.md](SECURITY.md).

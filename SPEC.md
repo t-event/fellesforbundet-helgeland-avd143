@@ -20,6 +20,7 @@ Statisk nettside for utleie av Fellesforbundet Helgeland (avd. 143) sine to hytt
 |---|---|---|
 | Framework | **Astro 5** (statisk eksport) | Fleksibel SSG, glimrende for innholdsside med komponenter, støttes av GitHub Pages |
 | Styling | **Tailwind CSS + CSS-variabler** fra designfilen | Mobil-først, designsystemet følges nøyaktig |
+| Skrift | **Inter — selv-hostet woff2** (`src/fonts/`) | Ingen ekstern Google Fonts: raskere bygg/last, ingen IP-deling med Google (personvern) |
 | Skjema → e-post | **Web3Forms** (gratis, ingen backend) | Stateless POST, autosvar-funksjon, trygg public key |
 | Kalender-data | **GitHub Actions → `availability.json`** | CORS-fri henting av .ics, statisk JSON leses av klienten |
 | Vær | **MET Norway Locationforecast API** | Gratis, CORS-tillatt, `User-Agent`-krav følges |
@@ -82,6 +83,8 @@ Statisk nettside for utleie av Fellesforbundet Helgeland (avd. 143) sine to hytt
 - Beregnet totalpris
 - `replyto` = bestillers e-post → avdelingen kan svare direkte
 
+**Validering mot opptatte datoer:** Booking-skjemaet henter samme `availability.json` som kalenderen og blokkerer innsending hvis det valgte intervallet `[fra, til]` inneholder en opptatt dato (inklusiv begge endepunkter — verken innsjekk eller utsjekk på en opptatt dag). Kalenderen tillater heller ikke å markere et intervall som spenner over opptatte netter.
+
 **Kvittering til bestiller:** Vises umiddelbart på `/takk`-siden (ikke e-post — Web3Forms' autosvar er en betalt funksjon som ikke er aktivert):
 - Valgte datoer, antall døgn, prisgruppe, totalpris
 - Kontonummer `451635821274`
@@ -111,15 +114,15 @@ export const PRISER = { FFH: 700, FF: 1050, ANNET_LO: 1200 } as const;
 ## 5. Umbukta-siden — seksjonsoversikt
 
 1. **Hero** — stort bilde med overlay-tittel og badge
-2. **Om hytta** — inntil 14 sengeplasser, 3 soverom + hems, 3,5 mil fra Mo i Rana, 3 km fra Sverige
-3. **Bildegalleri** — bilder fra Facebook-mappa (ute, inne, omgivelser)
+2. **Om hytta** — inntil 12 sengeplasser, 2 soverom + sovealkove + romslig hems, 3,5 mil fra Mo i Rana, 3 km fra Sverige
+3. **Bildegalleri** — sommerbilder fra Rikke (`public/images/umbukta/umbukta-*.jpg`): eksteriør, stue, kjøkken, spisestue med utsikt, soverom, hems, bad, naust med båt
 4. **Fasiliteter** — SVG-ikoner: innlagt vann + strøm, varmepumpe, vedovn, dusj, fullt kjøkken, mobildekning, WiFi, TV, parkering (4–5 biler), naust med aluminiumsbåt
 5. **Beliggenhet** — innebygd **OpenStreetMap**-kart + «Åpne i Google Maps»-lenke, veibeskrivelse, parkering, vinteradkomst (vei brøytes — bilvei helt fram hele året). *Merk: Google Maps-embed ble droppet pga. API-nøkkel; OSM krever ingen nøkkel.*
 6. **Vær & webkamera** — MET API + Vegvesen-kamera (side ved side)
 7. **Priser** — tre prisskort (FFH 700 / FF 1050 / Annet LO 1200 kr/døgn)
 8. **Ledighetskalender + bookingskjema** — side ved side (stakkede på mobil)
 9. **Påske / loddtrekning** — vises automatisk basert på dato (se seksjon 6)
-10. **Husregler** — innsjekk 16:00, utsjekk 12:00, ingen refusjon, hunder ok (ikke i seng/sofa)
+10. **Husregler** — innsjekk 16:00, utsjekk 12:00, ingen refusjon, hunder ok (ikke i seng/sofa), elbillader på Umbukta fjellstue ca. 300 m unna
 11. **FAQ-accordion** — 6+ spørsmål
 
 ---
@@ -134,7 +137,8 @@ Ingen manuell oppdatering nødvendig.
 - P1: Fredag i palmehelga (Påskedag − 9) → Onsdag i stille uke kl. 12 (Påskedag − 4)
 - P2: Onsdag i stille uke kl. 16 (Påskedag − 4) → 2. påskedag (Påskedag + 1)
 - Påmelding: man kan velge **begge** perioder, men kan vinne **maks én** (trekkes manuelt av kontoret).
-- Test/forhåndsvisning: legg til `?paske=test` i URL-en for å tvinge seksjonen + skjemaet synlig uavhengig av dato.
+- Test/forhåndsvisning: legg til `?paske=test` i URL-en for å tvinge seksjonen + skjemaet synlig uavhengig av dato (kun for den med lenken).
+- Manuell bryter for ALLE besøkende: `PASKE_MANUELL_VISNING = true` i `src/utils/easter.ts` tvinger seksjonen + skjemaet synlig uavhengig av dato. Settes tilbake til `false` for normal automatikk.
 
 **Eksempel 2026:** Påskedag 5. april  
 - P1: 27. mars → 1. april (kl. 12)  
@@ -157,9 +161,11 @@ Ingen manuell oppdatering nødvendig.
 ## 7. Hyttene — innhold
 
 ### Umbukta (intern booking)
-- **Sengeplasser:** inntil 14 (3 soverom + hems)
+- **Sengeplasser:** inntil 12 (2 soverom + sovealkove + romslig hems)
 - **Fasiliteter:** innlagt vann, strøm, varmepumpe, vedovn, dusj, fullt kjøkken, mobildekning, WiFi, TV, dyner/puter, parkering (4–5 biler)
 - **Naust:** Aluminiumsbåt med liten motor — ta med eget drivstoff
+- **Elbillader:** Ikke på hytta, men på Umbukta fjellstue ca. 300 m unna
+- **Foreninger o.l.:** Kan leie hytta på hverdager uten overnatting (kontakt avdelingen)
 - **Ta med selv:** Sengetøy/laken, håndklær, toalettpapir, kjøkkenhåndkle
 - **Husdyr:** Tillatt — ikke i sofa/seng
 - **Avbestilling:** Ingen refusjon
@@ -271,7 +277,9 @@ Vises tydelig på Umbukta-siden og kvitteringssiden:
 - GDPR: Nettsiden lagrer ingenting — data finnes kun hos avdelingen og Web3Forms
 - Samtykketekst vises i booking- og kontaktskjema
 - Dørkode: håndteres utelukkende av avdelingen, ALDRI i kode, e-poster eller nettsted
-- **Google Maps API-nøkkel** (fra tidlig versjon) er fjernet fra koden (byttet til OpenStreetMap), men finnes fortsatt i git-historikk på offentlig repo → **må deaktiveres/regenereres i Google Cloud Console**. Dagens kart- og skjemaløsning krever ingen hemmelig nøkkel.
+- **Skrift selv-hostet** (Inter woff2 i `src/fonts/`) — ingen ekstern Google Fonts-forespørsel, så besøkendes IP deles ikke med Google
+- **Google Maps API-nøkkel** (fra tidlig versjon) ble lekket i git-historikk → **revokert i Google Cloud Console og fjernet fra historikken** (filter-branch + force-push). Kart bruker nå OpenStreetMap (ingen nøkkel). Ikke gjeninnfør Google Maps-embed.
+- Sårbarhetsrapportering: se [SECURITY.md](SECURITY.md) (privat melding til T-Event)
 
 ---
 
@@ -314,7 +322,7 @@ Nettsiden har ingen admin-del. Etter mottatt e-postforespørsel:
 | Design-HTML sier | Spec/faktisk verdi | Vinner |
 |---|---|---|
 | Avbestilling: gratis inntil 7 dager | Ingen refusjon ved avbestilling | **Spec** |
-| 6 sengeplasser, 2 soverom | 14 sengeplasser, 3 soverom + hems | **Spec** |
+| 6 sengeplasser, 2 soverom | 12 sengeplasser, 2 soverom + sovealkove + romslig hems | **Spec** |
 | 4 turtips (Umbukta-basert) | 6 turtips: Sauvasshytta, Kvitstindalstunet, Virvasshytta, Kjenvasshytta, Oksskolten, Uman | **Spec** |
 | Plassholder-tlf. 75 00 00 00 | 75151228 | **Spec** |
 | Plassholder-konto 1503.27.44871 | 451635821274 | **Spec** |
