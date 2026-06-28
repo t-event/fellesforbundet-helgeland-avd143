@@ -4,7 +4,7 @@
 
 import https from 'https';
 import http from 'http';
-import { writeFileSync } from 'fs';
+import { writeFileSync, readFileSync } from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 
@@ -103,12 +103,32 @@ async function main() {
   }
 
   const sortedDates = Array.from(bookedDates).sort();
+  const outputPath = join(__dirname, '..', 'public', 'availability.json');
+
+  // Skriv kun på nytt når de opptatte datoene faktisk har endret seg — ikke bare
+  // fordi tidsstempelet endrer seg. Da slipper vi en commit + Pages-deploy hver time.
+  // Ved tvil (fil mangler/ugyldig, eller lesefeil) skriver vi alltid, slik at
+  // synkingen aldri stopper.
+  let uendret = false;
+  try {
+    const gamle = JSON.parse(readFileSync(outputPath, 'utf8')).bookedDates;
+    if (Array.isArray(gamle) && gamle.length === sortedDates.length
+        && gamle.every((d, i) => d === sortedDates[i])) {
+      uendret = true;
+    }
+  } catch {
+    uendret = false; // fil mangler eller er ugyldig → skriv på nytt
+  }
+
+  if (uendret) {
+    console.log(`✓ Ingen endring i opptatte datoer (${sortedDates.length}) — hopper over skriving (ingen deploy).`);
+    return;
+  }
+
   const output = {
     lastUpdated: new Date().toISOString(),
     bookedDates: sortedDates,
   };
-
-  const outputPath = join(__dirname, '..', 'public', 'availability.json');
   writeFileSync(outputPath, JSON.stringify(output, null, 2) + '\n', 'utf8');
   console.log(`✓ Oppdatert ${sortedDates.length} opptatte dato(er) → ${outputPath}`);
 }
