@@ -68,6 +68,16 @@ function parseIso(s: string): Date {
   return new Date(y, m-1, d);
 }
 
+// Sjekker om nettene [fra, til) inneholder en opptatt dato (utsjekk-dagen er ledig).
+function rangeHarOpptatt(fra: string, til: string): boolean {
+  const d = parseIso(fra), end = parseIso(til);
+  while (d < end) {
+    if (availability.bookedDates.includes(isoDate(d.getFullYear(), d.getMonth(), d.getDate()))) return true;
+    d.setDate(d.getDate() + 1);
+  }
+  return false;
+}
+
 function renderCalendar() {
   const today = new Date(); today.setHours(0,0,0,0);
   const firstDay = new Date(viewYear, viewMonth, 1);
@@ -176,8 +186,9 @@ function handleDayClick(iso: string) {
     selectedFrom = iso;
     selectedTo   = null;
   } else {
-    // Andre klikk = til-dato
-    if (iso <= selectedFrom) {
+    // Andre klikk = til-dato. Hvis perioden ville spenne over opptatte netter,
+    // start i stedet et nytt valg fra denne dagen.
+    if (iso <= selectedFrom || rangeHarOpptatt(selectedFrom, iso)) {
       selectedFrom = iso;
       selectedTo   = null;
     } else {

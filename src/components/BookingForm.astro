@@ -137,6 +137,38 @@ const form          = document.getElementById('booking-form');
 const RATE_MAP = { FFH: PRISER.FFH, FF: PRISER.FF, ANNET_LO: PRISER.ANNET_LO };
 const erEn = () => localStorage.getItem('lang') === 'en';
 
+// Opptatte netter — samme kilde som kalenderen. Hindrer forespørsel på opptatte
+// datoer (de native dato-velgerne kan ikke deaktivere enkeltdatoer, så vi validerer).
+let bookedDates = new Set();
+fetch(`${base}/availability.json`)
+  .then(r => (r.ok ? r.json() : null))
+  .then(d => { if (d && Array.isArray(d.bookedDates)) { bookedDates = new Set(d.bookedDates); validerDatoerLive(); } })
+  .catch(() => { /* tom liste = ingen blokkering */ });
+
+// Returnerer første opptatte natt i oppholdet [fra, til) (utsjekk-dagen er ledig), ellers null.
+function forsteOpptatteNatt(fra, til) {
+  if (!fra || !til || til <= fra) return null;
+  const [fy, fm, fd] = fra.split('-').map(Number);
+  const [ty, tm, td] = til.split('-').map(Number);
+  const d = new Date(fy, fm - 1, fd), end = new Date(ty, tm - 1, td);
+  while (d < end) {
+    const iso = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+    if (bookedDates.has(iso)) return iso;
+    d.setDate(d.getDate() + 1);
+  }
+  return null;
+}
+
+// Live-validering: vis feil hvis perioden inneholder opptatte netter.
+function validerDatoerLive() {
+  const konflikt = forsteOpptatteNatt(fraInput?.value, tilInput?.value);
+  setFeil('err-til', konflikt
+    ? (erEn() ? 'One or more nights in this period are already booked — please pick an available period.'
+              : 'En eller flere netter i perioden er opptatt — velg en ledig periode.')
+    : '');
+  return !konflikt;
+}
+
 // Beregn antall døgn mellom to ISO-datoer
 function antallDøgn(fra, til) {
   const f = new Date(fra), t = new Date(til);
@@ -186,8 +218,9 @@ fraInput?.addEventListener('change', () => {
   }
   tilInput?.setAttribute('min', fraInput.value);
   oppdaterPris();
+  validerDatoerLive();
 });
-tilInput?.addEventListener('change', oppdaterPris);
+tilInput?.addEventListener('change', () => { oppdaterPris(); validerDatoerLive(); });
 
 // Vis pris med en gang, og oppdater tekst ved språkbytte
 oppdaterPris();
@@ -234,6 +267,7 @@ form?.addEventListener('submit', async (e) => {
   if (!fra) { setFeil('err-fra', erEn() ? 'Choose a start date.' : 'Velg fra-dato.'); ok = false; }
   if (!til) { setFeil('err-til', erEn() ? 'Choose an end date.' : 'Velg til-dato.'); ok = false; }
   else if (til <= fra) { setFeil('err-til', erEn() ? 'End date must be after start date.' : 'Til-dato må være etter fra-dato.'); ok = false; }
+  else if (forsteOpptatteNatt(fra, til)) { setFeil('err-til', erEn() ? 'One or more nights in this period are already booked — please pick an available period.' : 'En eller flere netter i perioden er opptatt — velg en ledig periode.'); ok = false; }
   if (!navn) { setFeil('err-navn', erEn() ? 'Enter your name.' : 'Oppgi navn.'); ok = false; }
   if (!epost || !epost.includes('@')) { setFeil('err-epost', erEn() ? 'Enter a valid email address.' : 'Oppgi gyldig e-postadresse.'); ok = false; }
   if (!telefon) { setFeil('err-telefon', erEn() ? 'Enter a phone number.' : 'Oppgi telefonnummer.'); ok = false; }
