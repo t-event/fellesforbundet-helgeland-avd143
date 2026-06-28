@@ -12,9 +12,9 @@
   src: url('../fonts/inter-latin.woff2') format('woff2');
 }
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/* Tailwind er fjernet (Astro 6 droppet @astrojs/tailwind, og siden brukte ingen
+   utility-klasser — kun preflight). Den nødvendige resetten er lagt inn manuelt
+   i «Reset»-blokka under. */
 
 :root {
   --morkbla:     #1A1836;
@@ -53,12 +53,13 @@ body {
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
 }
-img { max-width: 100%; display: block; }
-button { font-family: inherit; }
+img, svg { max-width: 100%; display: block; }
+button { font-family: inherit; background: none; border: 0; cursor: pointer; }
+input, select, textarea { font-family: inherit; }
 h1, h2, h3 { margin: 0; letter-spacing: -0.02em; line-height: 1.05; }
 p { margin: 0; }
-a { color: inherit; }
-ul { margin: 0; padding: 0; list-style: none; }
+a { color: inherit; text-decoration: none; }
+ul, ol { margin: 0; padding: 0; list-style: none; }
 
 /* ── Layout ──────────────────────────────────────────────────── */
 .container { max-width: var(--maks-bredde); margin: 0 auto; padding: 0 24px; }
