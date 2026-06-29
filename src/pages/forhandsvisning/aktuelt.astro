@@ -1,0 +1,65 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { KONTAKT } from '../../config.ts';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<Layout
+  title="Aktuelt — Fellesforbundet Helgeland avd. 143"
+  description="Siste nytt fra Fellesforbundet avd. 143 — tariff, arrangementer og medlemsinfo. Følg avdelingen på Facebook for løpende oppdateringer."
+  variant="hovedside"
+  noindex={true}
+>
+
+  <!-- HERO -->
+  <div class="hero-dark">
+    <div class="container section">
+      <span class="hero-pill" data-en="News">Aktuelt</span>
+      <h1 class="h1" style="max-width:16ch; margin-top:18px;" data-en="News from the branch">Nytt fra avdelingen</h1>
+      <p class="lead" style="max-width:58ch; margin-top:20px;"
+         data-en="Updates on agreements, events and member info. The branch posts current news on Facebook.">
+        Oppdateringer om tariff, arrangementer og medlemsinfo. Avdelingen legger ut løpende nyheter
+        på Facebook.
+      </p>
+    </div>
+  </div>
+
+  <div class="container">
+
+    <!-- FØLG OSS -->
+    <div class="section">
+      <div class="grid" style="grid-template-columns:1fr 1fr; gap:clamp(28px,4vw,48px); align-items:center;">
+        <div>
+          <span class="eyebrow" data-en="Follow the branch">Følg avdelingen</span>
+          <h2 class="h2" style="margin:6px 0 16px;" data-en="Latest news on Facebook">Siste nytt på Facebook</h2>
+          <p class="muted" style="font-size:16.5px; line-height:1.7; margin-bottom:22px;"
+             data-en="The branch shares news, events and updates on its Facebook page — follow along to stay informed about what's happening on Helgeland.">
+            Avdelingen deler nyheter, arrangementer og oppdateringer på Facebook-sida si — følg med
+            for å holde deg oppdatert på hva som skjer på Helgeland.
+          </p>
+          <a href={KONTAKT.facebookUrl} target="_blank" rel="noopener noreferrer" class="btn btn-primary" data-en="Follow on Facebook ↗">Følg på Facebook ↗</a>
+        </div>
+        <div class="about-quote">
+          <p data-en="&ldquo;Together we are stronger — on Helgeland and across the country.&rdquo;">
+            «Sammen er vi sterkere — på Helgeland og i hele landet.»
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- KONTAKT-STRIPE -->
+    <div class="section" style="padding-top:0;">
+      <div class="cta-band">
+        <div>
+          <h2 class="h2" style="color:#fff; font-size:clamp(22px,2.6vw,30px); max-width:22ch;" data-en="Have a tip or a case?">Har du tips eller en sak?</h2>
+          <p style="color:#dcdce8; font-size:16px; margin-top:10px; max-width:46ch; line-height:1.6;"
+             data-en="Get in touch with the branch — we want to hear from members.">
+            Ta kontakt med avdelingen — vi vil høre fra medlemmene.
+          </p>
+        </div>
+        <a href={`${base}/forhandsvisning/kontakt`} class="btn btn-primary" data-en="Contact the branch →">Kontakt avdelingen →</a>
+      </div>
+    </div>
+
+  </div>
+</Layout>

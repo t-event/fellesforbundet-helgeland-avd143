@@ -25,6 +25,19 @@ export const KONTAKT = {
   brreg: 'https://virksomhet.brreg.no/nb/oppslag/enheter/943238049',
 } as const;
 
+// Fellesforbundet sentralt — offisielle lenker (ekte)
+export const FF_LENKER = {
+  medlemskap: 'https://www.fellesforbundet.no/medlemskap/',
+  kontingent: 'https://www.fellesforbundet.no/medlemskap/hva-koster-det/',
+} as const;
+
+// Avdelingens ledelse (offentlig registrert i Brønnøysund).
+// MERK: utvid med flere tillitsvalgte + direkte kontakt når avdelingen oppgir det.
+export const LEDELSE = [
+  { navn: 'Tommy Rannov Nystad', rolle: 'Leder',     rolle_en: 'Leader' },
+  { navn: 'Kjell Arne Olsen',    rolle: 'Nestleder', rolle_en: 'Deputy leader' },
+] as const;
+
 export const UMBUKTA = {
   kart: 'https://maps.app.goo.gl/Q8f8DPbiG6TmMtpy6',
   lat: 66.1659051,

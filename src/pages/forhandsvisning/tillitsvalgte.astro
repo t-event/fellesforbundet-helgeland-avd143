@@ -1,0 +1,98 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { LEDELSE, KONTAKT } from '../../config.ts';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+const initialer = (navn: string) =>
+  navn.split(/\s+/).map(d => d[0]).join('').slice(0, 2).toUpperCase();
+
+const verktoy = [
+  { ikon: '📘', tittel: 'Håndbok for tillitsvalgte', tittel_en: 'Shop steward handbook', body: 'Rettigheter, plikter og praktiske råd i tillitsvervet.', body_en: 'Rights, duties and practical advice in the role.' },
+  { ikon: '🎓', tittel: 'Grunnopplæring',            tittel_en: 'Basic training',         body: 'Kurs for nye tillitsvalgte gjennom Fellesforbundet.', body_en: 'Courses for new shop stewards through Fellesforbundet.' },
+  { ikon: '📄', tittel: 'Maler og skjema',           tittel_en: 'Templates & forms',      body: 'Protokoller, drøftinger og varsler.', body_en: 'Minutes, consultations and notices.' },
+  { ikon: '☎️', tittel: 'Rådgivningstelefon',        tittel_en: 'Advisory line',          body: 'Direkte støtte fra avdelingen når du står i en sak.', body_en: 'Direct support from the branch when you face a case.' },
+];
+---
+
+<Layout
+  title="Tillitsvalgte — Fellesforbundet Helgeland avd. 143"
+  description="Tillitsvalgte i Fellesforbundet avd. 143. Ledelse, verktøy for tillitsvalgte og veien til å bli tillitsvalgt på din arbeidsplass."
+  variant="hovedside"
+  noindex={true}
+>
+
+  <!-- HERO -->
+  <div class="hero-dark">
+    <div class="container section">
+      <span class="hero-pill" data-en="Shop stewards">Tillitsvalgte</span>
+      <h1 class="h1" style="max-width:16ch; margin-top:18px;" data-en="The shop stewards — closest to you">Tillitsvalgte — nærmest deg</h1>
+      <p class="lead" style="max-width:58ch; margin-top:20px;"
+         data-en="The shop stewards are your representatives at the workplace and in the branch. They negotiate, raise cases and look after your rights.">
+        Tillitsvalgte er dine representanter på arbeidsplassen og i avdelingen. De forhandler,
+        tar opp saker og passer på rettighetene dine.
+      </p>
+    </div>
+  </div>
+
+  <div class="container">
+
+    <!-- LEDELSE -->
+    <div class="section">
+      <span class="eyebrow" data-en="Leadership">Ledelse</span>
+      <h2 class="h2" style="margin:6px 0 10px;" data-en="The branch's leadership">Avdelingens ledelse</h2>
+      <p class="muted" style="font-size:16px; max-width:60ch; margin-bottom:24px;"
+         data-en="Reach the leadership and shop stewards through the branch office below.">
+        Du når ledelsen og tillitsvalgte gjennom avdelingskontoret nedenfor.
+      </p>
+      <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:18px;">
+        {LEDELSE.map(p => (
+          <div class="person">
+            <span class="person-avatar" aria-hidden="true">{initialer(p.navn)}</span>
+            <div>
+              <b style="display:block; font-size:15.5px;">{p.navn}</b>
+              <span class="muted" style="font-size:13.5px;" data-en={p.rolle_en}>{p.rolle}</span>
+              <div style="font-size:13.5px; margin-top:4px;">
+                <a href={`tel:+47${KONTAKT.telefon}`} class="btn-link" style="font-size:13.5px;">{KONTAKT.telefonFormatert}</a>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+      <p class="muted" style="font-size:13.5px; margin-top:14px;"
+         data-en="Full list of shop stewards is available from the branch office.">
+        Full oversikt over tillitsvalgte får du ved å kontakte avdelingskontoret.
+      </p>
+    </div>
+
+    <!-- VERKTØY -->
+    <div class="section" style="padding-top:0;">
+      <span class="eyebrow" data-en="Tools for shop stewards">Verktøy for tillitsvalgte</span>
+      <h2 class="h2" style="margin:6px 0 32px;" data-en="Support in the role">Støtte i vervet</h2>
+      <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:18px;">
+        {verktoy.map(v => (
+          <div class="benefit">
+            <span class="benefit-ic" aria-hidden="true">{v.ikon}</span>
+            <h3 class="h3" style="font-size:17px; margin-bottom:6px;" data-en={v.tittel_en}>{v.tittel}</h3>
+            <p class="muted" style="font-size:14px; line-height:1.6;" data-en={v.body_en}>{v.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <!-- BLI TILLITSVALGT -->
+    <div class="section" style="padding-top:0;">
+      <div class="cta-band">
+        <div>
+          <h2 class="h2" style="color:#fff; font-size:clamp(22px,2.8vw,32px); max-width:16ch;" data-en="Want to become a shop steward?">Vil du bli tillitsvalgt?</h2>
+          <p style="color:#dcdce8; font-size:16px; margin-top:12px; max-width:48ch; line-height:1.6;"
+             data-en="Shop stewards make a difference at the workplace — and get training and support from the branch. Get in touch to hear more.">
+            Tillitsvalgte gjør en forskjell på arbeidsplassen — og får opplæring og støtte fra
+            avdelingen. Ta kontakt for å høre mer.
+          </p>
+        </div>
+        <a href={`${base}/forhandsvisning/kontakt`} class="btn btn-primary" data-en="Get in touch →">Ta kontakt →</a>
+      </div>
+    </div>
+
+  </div>
+</Layout>

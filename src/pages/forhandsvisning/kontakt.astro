@@ -1,0 +1,180 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { KONTAKT } from '../../config.ts';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const kartUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${KONTAKT.adresse}, ${KONTAKT.postnummer} ${KONTAKT.poststed}`)}`;
+---
+
+<Layout
+  title="Kontakt — Fellesforbundet Helgeland avd. 143"
+  description="Kontakt Fellesforbundet avd. 143. Besøk oss i Søndre gate 13, Mo i Rana, ring 75 15 12 28 eller send oss en melding."
+  variant="hovedside"
+  noindex={true}
+>
+
+  <!-- HERO -->
+  <div class="hero-dark">
+    <div class="container section">
+      <span class="hero-pill" data-en="Contact">Kontakt</span>
+      <h1 class="h1" style="max-width:16ch; margin-top:18px;" data-en="Get in touch with the branch">Ta kontakt med avdelingen</h1>
+      <p class="lead" style="max-width:56ch; margin-top:20px;"
+         data-en="Visit us in Mo i Rana, give us a call or send a message — we're here for the members.">
+        Besøk oss i Mo i Rana, ring oss eller send en melding — vi er her for medlemmene.
+      </p>
+    </div>
+  </div>
+
+  <div class="container section">
+    <div class="grid" style="grid-template-columns:1fr 1fr; gap:clamp(28px,4vw,48px); align-items:start;">
+
+      <!-- KONTAKTINFO -->
+      <div>
+        <span class="eyebrow" data-en="Contact information">Kontaktinformasjon</span>
+        <h2 class="h2" style="font-size:clamp(22px,2.6vw,30px); margin:6px 0 22px;" data-en="The branch office">Avdelingskontoret</h2>
+        <div style="display:flex; flex-direction:column; gap:18px;">
+          <div>
+            <b style="font-size:14px;" data-en="Address">Adresse</b>
+            <p class="muted" style="font-size:15px; margin-top:2px;">
+              {KONTAKT.adresse}, {KONTAKT.postnummer} {KONTAKT.poststed}<br />
+              <a href={kartUrl} target="_blank" rel="noopener noreferrer" class="btn-link" style="font-size:14px;" data-en="Show on map ↗">Vis i kart ↗</a>
+            </p>
+          </div>
+          <div>
+            <b style="font-size:14px;" data-en="Phone">Telefon</b>
+            <p style="font-size:15px; margin-top:2px;"><a href={`tel:+47${KONTAKT.telefon}`} class="btn-link">{KONTAKT.telefonFormatert}</a></p>
+          </div>
+          <div>
+            <b style="font-size:14px;" data-en="Email">E-post</b>
+            <p style="font-size:15px; margin-top:2px;"><a href={`mailto:${KONTAKT.epost}`} class="btn-link">{KONTAKT.epost}</a></p>
+          </div>
+          <div>
+            <b style="font-size:14px;" data-en="Opening hours">Åpningstider</b>
+            <p class="muted" style="font-size:15px; margin-top:2px;">{KONTAKT.apningstider}</p>
+          </div>
+          <div>
+            <b style="font-size:14px;" data-en="Facebook">Facebook</b>
+            <p style="font-size:15px; margin-top:2px;"><a href={KONTAKT.facebookUrl} target="_blank" rel="noopener noreferrer" class="btn-link" data-en="Follow the branch ↗">Følg avdelingen ↗</a></p>
+          </div>
+          <div>
+            <b style="font-size:14px;" data-en="Org. number">Org.nr.</b>
+            <p class="muted" style="font-size:15px; margin-top:2px;">
+              <a href={KONTAKT.brreg} target="_blank" rel="noopener noreferrer" class="btn-link" style="font-weight:normal;">{KONTAKT.orgnr}</a>
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- SKJEMA -->
+      <div class="card card-pad">
+        <h2 class="h2" style="font-size:clamp(20px,2.4vw,26px); margin-bottom:16px;" data-en="Send us a message">Send oss en melding</h2>
+
+        <div id="k-suksess" style="display:none; align-items:flex-start; gap:12px;" class="alert alert-green">
+          <span class="ic">✓</span>
+          <p style="font-size:14.5px;" data-en="Thank you! Your message has been sent. We'll get back to you.">
+            Takk! Meldingen er sendt. Vi tar kontakt med deg.
+          </p>
+        </div>
+        <div id="k-feil" style="display:none; align-items:flex-start; gap:12px;" class="alert alert-error">
+          <span class="ic">×</span>
+          <p id="k-feil-tekst" style="font-size:14.5px;"></p>
+        </div>
+
+        <form class="form-stack" id="hk-form" novalidate>
+          <input type="text" name="botcheck" tabindex="-1" autocomplete="off" aria-hidden="true"
+            style="position:absolute; left:-9999px; width:1px; height:1px; opacity:0;" />
+          <div class="field">
+            <label for="hk-navn" data-en="Name">Navn</label>
+            <input class="input" type="text" id="hk-navn" name="navn" placeholder="Ola Nordmann" required autocomplete="name" />
+            <div class="field-error" id="hkerr-navn" style="display:none;"></div>
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label for="hk-epost" data-en="Email">E-post</label>
+              <input class="input" type="email" id="hk-epost" name="epost" placeholder="ola@epost.no" required autocomplete="email" />
+              <div class="field-error" id="hkerr-epost" style="display:none;"></div>
+            </div>
+            <div class="field">
+              <label for="hk-telefon" data-en="Phone">Telefon</label>
+              <input class="input" type="tel" id="hk-telefon" name="telefon" placeholder="900 00 000" autocomplete="tel" />
+            </div>
+          </div>
+          <div class="field">
+            <label for="hk-gjelder" data-en="What is it about?">Hva gjelder det?</label>
+            <select class="input" id="hk-gjelder" name="gjelder">
+              <option data-en="Membership / join">Medlemskap / bli medlem</option>
+              <option data-en="Pay & agreements">Lønn & tariff</option>
+              <option data-en="Shop steward / workplace">Tillitsvalgt / arbeidsplass</option>
+              <option data-en="Cabin rental">Hyttebooking</option>
+              <option data-en="Other">Annet</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="hk-melding" data-en="Message">Melding</label>
+            <textarea class="input" id="hk-melding" name="melding" rows="4" placeholder="Skriv din melding her…" required></textarea>
+            <div class="field-error" id="hkerr-melding" style="display:none;"></div>
+          </div>
+          <button class="btn btn-primary btn-block" type="submit" id="hk-submit" data-en="Send message">Send melding</button>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</Layout>
+
+<script>
+  const form    = document.getElementById('hk-form') as HTMLFormElement | null;
+  const suksess = document.getElementById('k-suksess');
+  const feilBoks= document.getElementById('k-feil');
+  const feilTxt = document.getElementById('k-feil-tekst');
+  const submit  = document.getElementById('hk-submit');
+  const erEn = () => localStorage.getItem('lang') === 'en';
+
+  function setFeil(id: string, t: string) {
+    const el = document.getElementById(id);
+    if (el) { el.textContent = t; (el as HTMLElement).style.display = t ? '' : 'none'; }
+  }
+
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    setFeil('hkerr-navn', ''); setFeil('hkerr-epost', ''); setFeil('hkerr-melding', '');
+    if (feilBoks) feilBoks.style.display = 'none';
+
+    const navn    = (document.getElementById('hk-navn') as HTMLInputElement).value.trim();
+    const epost   = (document.getElementById('hk-epost') as HTMLInputElement).value.trim();
+    const telefon = (document.getElementById('hk-telefon') as HTMLInputElement).value.trim();
+    const gjelder = (document.getElementById('hk-gjelder') as HTMLSelectElement).value;
+    const melding = (document.getElementById('hk-melding') as HTMLTextAreaElement).value.trim();
+
+    let ok = true;
+    if (!navn)  { setFeil('hkerr-navn', erEn() ? 'Enter your name.' : 'Oppgi navn.'); ok = false; }
+    if (!epost || !epost.includes('@')) { setFeil('hkerr-epost', erEn() ? 'Enter a valid email.' : 'Oppgi gyldig e-post.'); ok = false; }
+    if (!melding) { setFeil('hkerr-melding', erEn() ? 'Write a message.' : 'Skriv en melding.'); ok = false; }
+    if (!ok) return;
+
+    const key = import.meta.env.PUBLIC_WEB3FORMS_KEY ?? '';
+    submit?.setAttribute('disabled', 'true');
+
+    try {
+      const resp = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({
+          access_key: key,
+          subject: `Avd. 143 kontakt — ${gjelder} — ${navn}`,
+          from_name: navn,
+          email: epost,
+          message: `Fra: ${navn}\nE-post: ${epost}\nTelefon: ${telefon || '–'}\nGjelder: ${gjelder}\n\n${melding}`,
+        }),
+      });
+      const data = await resp.json();
+      if (data.success) {
+        form.style.display = 'none';
+        if (suksess) suksess.style.display = 'flex';
+      } else throw new Error(data.message);
+    } catch {
+      submit?.removeAttribute('disabled');
+      if (feilTxt) feilTxt.textContent = erEn() ? 'Something went wrong. Please try again or call us.' : 'Det oppstod en feil. Prøv igjen eller ring oss.';
+      if (feilBoks) feilBoks.style.display = 'flex';
+    }
+  });
+</script>

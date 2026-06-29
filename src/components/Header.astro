@@ -14,11 +14,13 @@ const cabinLinks = [
 ];
 
 const hovedLinks = [
-  { href: '/forhandsvisning',          label: 'Hjem',         en: 'Home' },
-  { href: '/forhandsvisning#fordeler', label: 'Medlemskap',   en: 'Membership' },
-  { href: '/forhandsvisning#aktuelt',  label: 'Aktuelt',      en: 'News' },
-  { href: '/',                         label: 'Hyttebooking', en: 'Cabin rental' },
-  { href: '/forhandsvisning#kontakt',  label: 'Kontakt',      en: 'Contact' },
+  { href: '/forhandsvisning',               label: 'Hjem',          en: 'Home' },
+  { href: '/forhandsvisning/bli-medlem',    label: 'Bli medlem',    en: 'Join' },
+  { href: '/forhandsvisning/lonn-tariff',   label: 'Lønn & tariff', en: 'Pay & agreements' },
+  { href: '/forhandsvisning/tillitsvalgte', label: 'Tillitsvalgte', en: 'Shop stewards' },
+  { href: '/forhandsvisning/aktuelt',       label: 'Aktuelt',       en: 'News' },
+  { href: '/forhandsvisning/kontakt',       label: 'Kontakt',       en: 'Contact' },
+  { href: '/',                              label: 'Hyttebooking',  en: 'Cabin rental' },
 ];
 
 const navLinks = variant === 'hovedside' ? hovedLinks : cabinLinks;
@@ -27,7 +29,7 @@ const brandSub = variant === 'hovedside'
   : { no: 'Helgeland hytteutleie', en: 'Helgeland cabin rental' };
 const brandHref = variant === 'hovedside' ? '/forhandsvisning' : '/';
 const mobileCta = variant === 'hovedside'
-  ? { href: '/forhandsvisning#bli-medlem', label: 'Bli medlem',  en: 'Become a member' }
+  ? { href: '/forhandsvisning/bli-medlem', label: 'Bli medlem',  en: 'Become a member' }
   : { href: '/umbukta#ledige-datoer',      label: 'Book Umbukta', key: 'nav_book' };
 
 const currentPath = Astro.url.pathname.replace(base, '').replace(/\/$/, '') || '/';
