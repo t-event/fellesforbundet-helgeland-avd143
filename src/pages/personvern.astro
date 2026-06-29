@@ -56,10 +56,19 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       </section>
 
       <section>
-        <h2 style="font-size:20px; font-weight:800; color:var(--tekst); margin-bottom:8px;" data-en="Cookies">Informasjonskapsler (cookies)</h2>
+        <h2 style="font-size:20px; font-weight:800; color:var(--tekst); margin-bottom:8px;" data-en="Cookies and embedded content">Informasjonskapsler og innebygd innhold</h2>
         <p>
-          <span data-en="The website uses only one cookie: ">Nettsiden bruker kun én cookie: </span><code>lang</code><span data-en=" — stores your chosen language (NO/EN) locally in the browser. No tracking or marketing cookies. See the "> — lagrer ditt valgte språk (NO/EN) lokalt i nettleseren.
-          Ingen sporings- eller markedsføringscookies. Se </span><a href={`${base}/cookies`} class="btn-link" data-en="cookie page">cookie-siden</a><span data-en=" for details."> for detaljer.</span>
+          <span data-en="The website itself uses only necessary cookies stored locally in your browser: ">Nettsiden bruker i seg selv kun nødvendige informasjonskapsler som lagres lokalt i nettleseren: </span><code>lang</code><span data-en=" (chosen language) and "> (valgt språk) og </span><code>samtykke</code><span data-en=" (your cookie choice). These are not shared with anyone."> (cookie-valget ditt). Disse deles ikke med noen.</span>
+        </p>
+        <p style="margin-top:12px;"
+           data-en="On the news page we can embed the branch's Facebook posts. This is third-party content from Facebook (Meta) that sets Facebook's own cookies and may involve tracking. It is loaded only if you choose «Accept all» in the cookie banner — never with «Necessary only». You can change or withdraw consent at any time on the cookie page.">
+          På aktuelt-sida kan vi bygge inn avdelingens Facebook-innlegg. Dette er tredjepartsinnhold fra
+          Facebook (Meta) som setter Facebooks egne informasjonskapsler og kan innebære sporing. Det lastes
+          kun hvis du velger «Godta alle» i cookie-banneret — aldri med «Bare nødvendige». Du kan endre eller
+          trekke tilbake samtykket når som helst på <a href={`${base}/cookies`} class="btn-link" data-en="the cookie page">cookie-sida</a>.
+        </p>
+        <p style="margin-top:12px;" data-en="We use no analytics, Facebook Pixel, Google Analytics or advertising cookies.">
+          Vi bruker ingen analyse, Facebook Pixel, Google Analytics eller reklame-informasjonskapsler.
         </p>
       </section>
     </div>

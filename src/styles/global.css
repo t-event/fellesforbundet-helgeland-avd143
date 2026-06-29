@@ -388,6 +388,15 @@ textarea.input { resize: vertical; min-height: 110px; }
 .skip-link { position: absolute; left: -9999px; top: auto; width: 1px; height: 1px; overflow: hidden; }
 .skip-link:focus { position: fixed; top: 0; left: 0; width: auto; height: auto; background: var(--rod); color: #fff; padding: 12px 20px; z-index: 9999; font-weight: 700; }
 
+/* ── Cookie-samtykke ─────────────────────────────────────────── */
+.cookie-banner { position: fixed; left: 16px; right: 16px; bottom: 16px; z-index: 200; display: none; gap: 18px; align-items: center; justify-content: space-between; flex-wrap: wrap; max-width: 940px; margin: 0 auto; background: var(--morkbla); color: #fff; border: 1px solid rgba(255,255,255,.14); border-radius: 16px; padding: 18px 22px; box-shadow: 0 16px 40px rgba(0,0,0,.4); }
+.cookie-banner.show { display: flex; }
+.cookie-text strong { display: block; font-size: 15px; margin-bottom: 4px; }
+.cookie-text p { font-size: 13.5px; color: #cfd0e0; max-width: 62ch; line-height: 1.55; }
+.cookie-link { color: #fff; text-decoration: underline; }
+.cookie-actions { display: flex; gap: 10px; flex: none; }
+@media (max-width: 560px) { .cookie-actions { width: 100%; } .cookie-actions .btn { flex: 1; } }
+
 /* ── Spinner (lastings-indikator) ────────────────────────────── */
 .spinner { display: inline-block; width: 20px; height: 20px; border: 2.5px solid rgba(207,0,0,.2); border-top-color: var(--rod); border-radius: 50%; animation: spin .7s linear infinite; }
 @keyframes spin { to { transform: rotate(360deg); } }

@@ -3,16 +3,22 @@ import Layout from '../layouts/Layout.astro';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 <Layout
-  title="Cookies — Fellesforbundet Helgeland Hytteutleie"
-  description="Informasjon om bruk av informasjonskapsler (cookies) på hytteutleie-nettsiden til Fellesforbundet Helgeland."
+  title="Cookies — Fellesforbundet Helgeland avd. 143"
+  description="Informasjon om bruk av informasjonskapsler (cookies) på nettsiden til Fellesforbundet Helgeland avd. 143."
 >
   <div class="container section" style="max-width:720px; margin:0 auto;">
     <h1 class="h1" style="font-size:clamp(26px,3.6vw,38px); margin-bottom:32px;" data-en="Cookies">
       Informasjonskapsler (cookies)
     </h1>
     <div style="display:flex; flex-direction:column; gap:24px; font-size:16px; line-height:1.75; color:var(--tekst-dempet);">
-      <p data-en="This website uses very few cookies — and no tracking or advertising.">
-        Denne nettsiden bruker svært få informasjonskapsler — og ingen sporing eller reklame.
+      <p data-en="This website uses very few cookies and no analytics or advertising. We only load embedded content from Facebook if you accept all cookies.">
+        Denne nettsiden bruker svært få informasjonskapsler, og ingen analyse eller reklame. Vi laster kun
+        innebygd innhold fra Facebook dersom du godtar alle informasjonskapsler.
+      </p>
+
+      <h2 class="h3" data-en="Necessary cookies">Nødvendige informasjonskapsler</h2>
+      <p style="margin-top:-12px;" data-en="These are stored locally in your browser for the site to work. They are not shared with anyone.">
+        Disse lagres lokalt i nettleseren din for at sida skal fungere. De deles ikke med noen.
       </p>
       <div class="card card-pad">
         <table style="width:100%; border-collapse:collapse; font-size:14.5px;">
@@ -27,17 +33,38 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
             <tr style="border-bottom:1px solid var(--kantlinje);">
               <td style="padding:12px 8px;"><code>lang</code></td>
               <td style="padding:12px 8px;" data-en="Stores your chosen language (NO/EN)">Lagrer valgt språk (NO/EN)</td>
-              <td style="padding:12px 8px;" data-en="Until you delete it / the browser closes">Inntil du sletter den / nettleseren lukkes</td>
+              <td style="padding:12px 8px;" data-en="Until you delete it">Inntil du sletter den</td>
+            </tr>
+            <tr>
+              <td style="padding:12px 8px;"><code>samtykke</code></td>
+              <td style="padding:12px 8px;" data-en="Stores your cookie choice (all / necessary)">Lagrer cookie-valget ditt (alle / nødvendige)</td>
+              <td style="padding:12px 8px;" data-en="Until you delete it">Inntil du sletter den</td>
             </tr>
           </tbody>
         </table>
       </div>
-      <p data-en="No third-party analytics, Facebook Pixel, Google Analytics or similar. The site is static and does not collect data unless you actively fill in a form.">
-        Ingen tredjeparts analyse, Facebook Pixel, Google Analytics eller lignende. Siden er statisk og samler
-        ikke inn data uten at du aktivt fyller ut et skjema.
+
+      <h2 class="h3" data-en="Embedded content from Facebook">Innebygd innhold fra Facebook</h2>
+      <p style="margin-top:-12px;"
+         data-en="On the news page we can embed the branch's latest Facebook posts. This content comes from facebook.com and sets Facebook's own cookies, which may be used for tracking. It is therefore loaded only if you choose «Accept all». If you choose «Necessary only», no Facebook content or cookies are loaded.">
+        På aktuelt-sida kan vi bygge inn avdelingens siste Facebook-innlegg. Dette innholdet kommer fra
+        facebook.com og setter Facebooks egne informasjonskapsler, som kan brukes til sporing. Det lastes
+        derfor kun hvis du velger «Godta alle». Velger du «Bare nødvendige», lastes verken Facebook-innhold
+        eller -informasjonskapsler.
       </p>
+
+      <div class="card card-pad" style="display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:16px;">
+        <div>
+          <b style="color:var(--tekst);" data-en="Change your choice">Endre valget ditt</b>
+          <p style="font-size:14px; margin-top:2px;" data-en="Reopen the cookie banner to change or withdraw your consent.">
+            Åpne cookie-banneret på nytt for å endre eller trekke tilbake samtykket.
+          </p>
+        </div>
+        <button class="btn btn-secondary" type="button" onclick="window.visCookieBanner && window.visCookieBanner()" data-en="Change cookie consent">Endre samtykke</button>
+      </div>
+
       <p>
-        <span data-en="You can delete cookies in your browser settings at any time. Read more in our ">Du kan slette cookies i nettleserinnstillingene dine når som helst.
+        <span data-en="You can also delete cookies in your browser settings at any time. Read more in our ">Du kan også slette cookies i nettleserinnstillingene dine når som helst.
         Les mer i vår </span><a href={`${base}/personvern`} class="btn-link" data-en="privacy policy">personvernerklæring</a>.
       </p>
     </div>

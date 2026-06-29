@@ -40,16 +40,16 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
           <a href={KONTAKT.facebookUrl} target="_blank" rel="noopener noreferrer" class="btn btn-primary" data-en="Open Facebook ↗">Åpne Facebook ↗</a>
         </div>
 
-        <!-- Facebook-innlegg (klikk for å laste — ingenting fra Facebook lastes før brukeren velger det) -->
+        <!-- Facebook-innlegg: lastes automatisk når «Godta alle» er valgt (cookie-samtykke) -->
         <div class="fb-embed" id="fb-embed" data-href={KONTAKT.facebookUrl}>
           <div class="fb-placeholder">
             <span aria-hidden="true" style="font-size:32px;">📘</span>
-            <p style="font-weight:800; margin:10px 0 4px;" data-en="Show posts from Facebook">Vis innlegg fra Facebook</p>
-            <p class="muted" style="font-size:13px; max-width:36ch; margin:0 auto 16px; line-height:1.5;"
-               data-en="Loading shows posts from facebook.com and accepts cookies from Facebook.">
-              Innlastingen henter innlegg fra facebook.com og godtar informasjonskapsler fra Facebook.
+            <p style="font-weight:800; margin:10px 0 4px;" data-en="Facebook posts require cookies">Facebook-innlegg krever informasjonskapsler</p>
+            <p class="muted" style="font-size:13px; max-width:38ch; margin:0 auto 16px; line-height:1.5;"
+               data-en="Embedded posts load from facebook.com, which sets cookies. Accept cookies to view them here.">
+              Innleggene hentes fra facebook.com, som setter informasjonskapsler. Godta informasjonskapsler for å se dem her.
             </p>
-            <button class="btn btn-secondary" id="fb-load" type="button" data-en="Show Facebook posts">Vis Facebook-innlegg</button>
+            <button class="btn btn-primary" id="fb-load" type="button" data-en="Accept cookies & show posts">Godta og vis innlegg</button>
           </div>
         </div>
       </div>
@@ -80,8 +80,11 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
 <script>
   const wrap = document.getElementById('fb-embed');
-  document.getElementById('fb-load')?.addEventListener('click', () => {
-    if (!wrap) return;
+  let lastet = false;
+
+  function lastFacebook() {
+    if (!wrap || lastet) return;
+    lastet = true;
     const href = wrap.getAttribute('data-href') || '';
     const src = 'https://www.facebook.com/plugins/page.php?href=' + encodeURIComponent(href)
       + '&tabs=timeline&width=500&height=720&small_header=true&adapt_container_width=true&hide_cover=false&show_facepile=false';
@@ -96,5 +99,21 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     ifr.title = 'Facebook-innlegg fra Fellesforbundet Helgeland avd. 143';
     wrap.innerHTML = '';
     wrap.appendChild(ifr);
+  }
+
+  // Auto-last hvis brukeren allerede har godtatt alle informasjonskapsler.
+  let samtykke: string | null = null;
+  try { samtykke = localStorage.getItem('samtykke'); } catch (e) {}
+  if (samtykke === 'alle') lastFacebook();
+
+  // Last når samtykke gis (banner eller knappen under).
+  document.addEventListener('samtykke-endret', (e) => {
+    if ((e as CustomEvent).detail === 'alle') lastFacebook();
+  });
+
+  // Knappen i notisen: godta alle + last.
+  document.getElementById('fb-load')?.addEventListener('click', () => {
+    try { localStorage.setItem('samtykke', 'alle'); } catch (e) {}
+    document.dispatchEvent(new CustomEvent('samtykke-endret', { detail: 'alle' }));
   });
 </script>

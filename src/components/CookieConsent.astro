@@ -1,0 +1,41 @@
+---
+// Cookie-samtykke (GDPR/ePrivacy). Nødvendige cookies (språkvalg, samtykke)
+// settes alltid; innebygd Facebook-innhold lastes kun etter «Godta alle».
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<div id="cookie-banner" class="cookie-banner" role="dialog" aria-live="polite" aria-label="Informasjonskapsler">
+  <div class="cookie-text">
+    <strong data-en="Cookies">Informasjonskapsler</strong>
+    <p data-en={`We use necessary cookies for the site to work. If you accept all, we also load embedded content from Facebook (which sets cookies). You can change your choice anytime on the <a href='${base}/cookies' class='cookie-link'>cookie page</a>.`}>
+      Vi bruker nødvendige informasjonskapsler for at sida skal fungere. Godtar du alle, laster vi
+      også inn innebygd innhold fra Facebook (som setter informasjonskapsler). Du kan endre valget
+      når som helst på <a href={`${base}/cookies`} class="cookie-link">cookie-sida</a>.
+    </p>
+  </div>
+  <div class="cookie-actions">
+    <button id="cookie-necessary" class="btn btn-secondary" type="button" data-en="Necessary only">Bare nødvendige</button>
+    <button id="cookie-all" class="btn btn-primary" type="button" data-en="Accept all">Godta alle</button>
+  </div>
+</div>
+
+<script>
+  const KEY = 'samtykke';
+  const banner = document.getElementById('cookie-banner');
+
+  function settSamtykke(verdi: string) {
+    try { localStorage.setItem(KEY, verdi); } catch (e) {}
+    banner?.classList.remove('show');
+    document.dispatchEvent(new CustomEvent('samtykke-endret', { detail: verdi }));
+  }
+
+  let lagret: string | null = null;
+  try { lagret = localStorage.getItem(KEY); } catch (e) {}
+  if (!lagret) banner?.classList.add('show');
+
+  document.getElementById('cookie-all')?.addEventListener('click', () => settSamtykke('alle'));
+  document.getElementById('cookie-necessary')?.addEventListener('click', () => settSamtykke('nodvendig'));
+
+  // Lar «Endre samtykke»-lenker (f.eks. på cookie-sida) åpne banneret igjen.
+  (window as any).visCookieBanner = () => banner?.classList.add('show');
+</script>
