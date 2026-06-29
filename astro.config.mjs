@@ -12,7 +12,10 @@ export default defineConfig({
   base: BASE,
   output: 'static',
   integrations: [
-    sitemap(),
+    // Skjult forhåndsvisning av hovedsida holdes ute av sitemap (også noindex i Layout)
+    sitemap({
+      filter: (page) => !page.includes('/forhandsvisning'),
+    }),
   ],
   image: {
     // Astro-bildeoptimasjon bruker sharp (installert som dep)

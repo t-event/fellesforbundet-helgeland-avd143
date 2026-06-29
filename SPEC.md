@@ -6,11 +6,12 @@
 
 ## 1. Oversikt
 
-Statisk nettside for utleie av Fellesforbundet Helgeland (avd. 143) sine to hytter. Ingen database, ingen backend, ingen betalingsløsning på nettsiden. Alt hostes på GitHub Pages.
+Statisk nettside for Fellesforbundet Helgeland (avd. 143): **avdelingens hjemmeside** og **hyttebooking** for de to hyttene. Ingen database, ingen backend, ingen betalingsløsning på nettsiden. Alt hostes på GitHub Pages i **ett repo / ett Astro-prosjekt**.
 
 **GitHub-repo:** `https://github.com/t-event/fellesforbundet-helgeland-avd143`  
-**Domain-plassholder:** `hytteutleie-ffh143.no` (oppdateres med `CNAME` når domene er kjøpt)  
-**Pages-URL midlertidig:** `t-event.github.io/fellesforbundet-helgeland-avd143`
+**Domene:** `ffh143.no` (bestilt via domene.no — aktivt når faktura er betalt). Ved endelig lansering: forside på `ffh143.no`, hyttebooking via videresending `hyttebooking.ffh143.no`.  
+**Pages-URL midlertidig:** `t-event.github.io/fellesforbundet-helgeland-avd143`  
+**Status (interim):** Publikum ser **hyttesida på rot** (`/`). Avdelingens hovedside ligger som en **skjult forhåndsvisning** på `/forhandsvisning` (noindex, utelatt fra sitemap, ikke lenket) for intern/styre-gjennomgang — den er IKKE den endelige strukturen. Se «Lansering av hovedsida» under.
 
 ---
 
@@ -33,7 +34,8 @@ Statisk nettside for utleie av Fellesforbundet Helgeland (avd. 143) sine to hytt
 
 | Rute | Fil | Innhold |
 |---|---|---|
-| `/` | `index.astro` | Forside: hero, intro, to hyttekort |
+| `/` | `index.astro` | Forside (publikum): hero, intro, to hyttekort |
+| `/forhandsvisning` | `forhandsvisning.astro` | **SKJULT** forhåndsvisning av avdelingens hovedside (noindex, utelatt fra sitemap, Header-variant `hovedside`) — interim til hovedsida lanseres |
 | `/umbukta` | `umbukta.astro` | Full hytteside (se seksjon 5) |
 | `/turtips` | `turtips.astro` | 6 turtips fra Umbukta-området |
 | `/hjelp` | `hjelp.astro` | FAQ-accordion + kontaktskjema |
@@ -42,6 +44,29 @@ Statisk nettside for utleie av Fellesforbundet Helgeland (avd. 143) sine to hytt
 | `/personvern` | `personvern.astro` | GDPR-personvernerklæring |
 | `/cookies` | `cookies.astro` | Informasjonskapseltekst |
 | `/404` | `404.astro` | «Side ikke funnet» |
+
+### Hovedside — interim skjult forhåndsvisning
+
+`forhandsvisning.astro` er avdelingens hovedside, bygget fra designet `Hovedside design/Fellesforbundet avd 143 - Hovedside.html` (Vue-mockup) i eksisterende designsystem (profilhåndbok-CSS + `data-en`-i18n). Den ligger nå som en **skjult side** så hyttesida kan lanseres uavhengig:
+
+- Rute: `/forhandsvisning` (ikke lenket fra noe sted)
+- `noindex,nofollow` via `Layout`-propen `noindex` → ikke i søkemotorer
+- Utelatt fra `sitemap.xml` via `filter` i `astro.config.mjs`
+- Egen avdelings-meny/merkevare via `Layout`/`Header`-propen `variant="hovedside"` (publikumssidene bruker standard `variant="hytte"`)
+
+> Sikkerhet: dette er «skjult via ulistet URL» (security through obscurity), ikke passordbeskyttelse. Hvem som helst med den eksakte lenken kan se den. Holder for intern/styre-gjennomgang.
+
+### ⚠️ Lansering av hovedsida — MÅ endres for å bli korrekt
+
+Når hovedsida skal bli den offentlige forsida, gjør følgende (den skjulte forhåndsvisningen er IKKE den endelige strukturen):
+
+1. **Flytt innhold:** gjør hovedsida til rot — `forhandsvisning.astro` → `index.astro`, og dagens hytte-velger (`index.astro`) → `hytter.astro` (eller `/hyttebooking`).
+2. **Fjern skjulingen:** ta bort `noindex={true}` og `variant="hovedside"` fra siden (variant blir standard når den er på rot), fjern `/forhandsvisning`-filteret i `astro.config.mjs`.
+3. **Header:** sett `variant="hovedside"` som standard (eller fjern variant-mekanikken og gjør avdelings-menyen til den faste). Hytte-undersidene må fortsatt nå menyen sin.
+4. **Lenker:** ankerlenker (`#fordeler` osv.) og «Se hyttene» (→ hytte-velgeren på ny rute) oppdateres.
+5. **Ekte innhold** (erstatt plassholdere): nyheter (3 eksempelsaker), ansatte (AB/OK/TV/SE, tlf 75 15 12 21–23, post@ffh143.no), og «Bli medlem»-lenken (peker nå til Fellesforbundet sentralt — bør gå til ekte innmeldingsskjema).
+6. **Domene:** `ffh143.no` på rot + `hyttebooking.ffh143.no` som videresending til hytte-seksjonen. Oppdater `CNAME`, `SITE`/`BASE`, robots.txt.
+7. **Bygg de planlagte undersidene** (fra designet): Bli medlem, Lønn & tariff, Tillitsvalgte, Aktuelt, Kontakt.
 
 ---
 

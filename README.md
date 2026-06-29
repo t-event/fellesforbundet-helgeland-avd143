@@ -1,6 +1,17 @@
-# Fellesforbundet Helgeland avd. 143 — Hyttebooking
+# Fellesforbundet Helgeland avd. 143 — Nettside
 
-Bookingside for Umbukta-hytta og Elsvatn-hytta. Bygget med Astro 6 (egen CSS, Node ≥ 22), publisert på GitHub Pages. Ingen backend, ingen database — alt er statisk HTML med GitHub Actions for kalendersynkronisering.
+Avdelingens nettside: **avdelingens hjemmeside** (forside, medlemskap, aktuelt, kontakt) **og hyttebooking** for Umbukta- og Elsvatn-hyttene. Bygget med Astro 6 (egen CSS, Node ≥ 22), publisert på GitHub Pages. Ingen backend, ingen database — alt er statisk HTML med GitHub Actions for kalendersynkronisering.
+
+### Struktur (ett repo, ett Astro-prosjekt)
+
+| Rute | Innhold |
+|------|---------|
+| `/` | Forside (publikum): de to hyttene |
+| `/umbukta` | Full hytteside med booking |
+| `/forhandsvisning` | **Skjult** forhåndsvisning av avdelingens hovedside (noindex, ikke i sitemap, ikke lenket) |
+
+- **Hyttebooking er det som er live** og lever på rot. Avdelingens hovedside ligger som **skjult forhåndsvisning** på `/forhandsvisning` til den er ferdig — se sjekklista **«Lansering av hovedsida»** i [SPEC.md](SPEC.md) for hva som må endres ved go-live.
+- **Planlagte domener (ved endelig lansering):** `ffh143.no` (forside) med `hyttebooking.ffh143.no` som videresending inn til hytteseksjonen.
 
 ---
 
@@ -95,9 +106,9 @@ Siden vil nå bygges og publiseres automatisk ved hvert push til `main`-grenen. 
 
 ---
 
-## 5. Eget domene (valgfritt)
+## 5. Eget domene
 
-Når dere kjøper domenenavnet (f.eks. `hytteutleie-ffh143.no`):
+Domenet **`ffh143.no`** er bestilt via domene.no (aktivt når faktura er betalt). Forsida skal ligge på `ffh143.no`, og `hyttebooking.ffh143.no` settes opp som videresending til hytteseksjonen. Slik kobler du domenet til når det er aktivt:
 
 ### Oppdater i kodebasen
 
