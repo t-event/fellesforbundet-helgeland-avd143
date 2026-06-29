@@ -31,10 +31,10 @@ export const FF_LENKER = {
   kontingent: 'https://www.fellesforbundet.no/medlemskap/hva-koster-det/',
 } as const;
 
-// Avdelingens styre (offentlig registrert i Brønnøysund pr. 2024).
-// Tommy Rannov Nystad er leder/daglig leder; øvrige er styremedlemmer.
-// MERK: nestleder/kasserer o.l. er ikke spesifisert i Brønnøysund — be avdelingen
-// bekrefte verv + ev. direkte kontakt. Avregistrerte medlemmer er utelatt.
+// Avdelingens styre (offentlig registrert i Brønnøysund).
+// Verv: Tommy Rannov Nystad = leder (daglig leder + styreleder); øvrige = styremedlemmer.
+// Avregistrerte er utelatt. MERK: dette er STYRET (valgt) — de 6 ANSATTE (lønnede
+// på kontoret) er en egen gruppe som ikke er lagt inn ennå (navn ikke mottatt).
 export const STYRE = [
   { navn: 'Tommy Rannov Nystad',             rolle: 'Leder',       rolle_en: 'Leader' },
   { navn: 'Kjell Arne Olsen',                rolle: 'Styremedlem', rolle_en: 'Board member' },
