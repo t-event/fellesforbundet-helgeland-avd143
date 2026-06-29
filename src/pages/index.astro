@@ -51,7 +51,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
   <!-- INTRO -->
   <div class="container section" style="text-align:center;">
-    <h2 class="h2" style="max-width:22ch; margin:0 auto 16px;"
+    <h2 class="h2" style="max-width:34ch; margin:0 auto 16px; text-wrap:balance;"
         data-en="A place to breathe — for our members">Et sted å trekke pust — for medlemmene våre</h2>
     <p class="lead" style="max-width:62ch; margin:0 auto;"
        data-en="Fellesforbundet Helgeland, avd. 143, owns two cabins rented out to LO members and other LO unions. Choose a cabin below, check availability and send a non-binding request. The office confirms the booking.">
@@ -66,9 +66,21 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       <h2 class="h2" style="margin-bottom:8px;" data-i18n="home_section_title">
         Ønsker du å leie en av våre hytter?
       </h2>
-      <p class="muted" style="font-size:17px; margin-bottom:40px;" data-i18n="home_section_lead">
+      <p class="muted" style="font-size:17px; margin-bottom:24px;" data-i18n="home_section_lead">
         Vi har to hytter. Velg den du vil leie.
       </p>
+
+      <div class="alert alert-warn" style="margin-bottom:40px;">
+        <span class="ic">!</span>
+        <div>
+          <strong data-en="LO members only">Kun for LO-medlemmer</strong>
+          <p style="font-size:14.5px; margin-top:4px; line-height:1.6;"
+             data-en={`The Umbukta cabin is reserved for members of Fellesforbundet Helgeland, Fellesforbundet (other branches) and other LO unions. The Øvre Elsvatn cabin is open to everyone and is booked via <a href='${ELSVATN_INATUR_URL}' target='_blank' rel='noopener noreferrer' class='btn-link'>inatur.no</a>.`}>
+            Hytta i Umbukta er forbeholdt medlemmer av Fellesforbundet Helgeland, Fellesforbundet (andre avdelinger) og andre LO-forbund.
+            Hytta i Øvre Elsvatn er åpen for alle og bookes via <a href={ELSVATN_INATUR_URL} target="_blank" rel="noopener noreferrer" class="btn-link">inatur.no</a>.
+          </p>
+        </div>
+      </div>
 
       <div class="grid cols-auto">
 
@@ -83,7 +95,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
               loading="lazy"
               style="width:100%; height:100%; object-fit:cover;"
             />
-            <span class="badge badge-dark" style="position:absolute; top:14px; left:14px;" data-en="↗ External link">↗ Ekstern lenke</span>
+            <span class="badge badge-gul" style="position:absolute; top:14px; left:14px;" data-en="↗ External link — inatur.no">↗ Ekstern lenke — inatur.no</span>
           </div>
           <div class="card-pad" style="display:flex; flex-direction:column; flex:1;">
             <h3 class="h3" style="font-size:23px;" data-i18n="elsvatn_title">Hytte i Øvre Elsvatn</h3>
@@ -184,19 +196,5 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     </div>
   </div>
 
-  <!-- INFORMASJONSBOKS -->
-  <div class="container" style="padding:clamp(32px,4vw,56px) 24px;">
-    <div class="alert alert-warn">
-      <span class="ic">!</span>
-      <div>
-        <strong data-en="LO members only">Kun for LO-medlemmer</strong>
-        <p style="font-size:14.5px; margin-top:4px; line-height:1.6;"
-           data-en={`The Umbukta cabin is reserved for members of Fellesforbundet Helgeland, Fellesforbundet (other branches) and other LO unions. The Øvre Elsvatn cabin is open to everyone and is booked via <a href='${ELSVATN_INATUR_URL}' target='_blank' rel='noopener noreferrer' class='btn-link'>inatur.no</a>.`}>
-          Hytta i Umbukta er forbeholdt medlemmer av Fellesforbundet Helgeland, Fellesforbundet (andre avdelinger) og andre LO-forbund.
-          Hytta i Øvre Elsvatn er åpen for alle og bookes via <a href={ELSVATN_INATUR_URL} target="_blank" rel="noopener noreferrer" class="btn-link">inatur.no</a>.
-        </p>
-      </div>
-    </div>
-  </div>
 
 </Layout>

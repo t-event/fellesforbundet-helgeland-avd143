@@ -134,7 +134,7 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 
 /* ── Hero ────────────────────────────────────────────────────── */
 .hero-dark { background: linear-gradient(180deg, var(--morkbla) 0%, #221f43 100%); color: #fff; }
-.hero-dark .lead { color: #cfd0e0; }
+.hero-dark .lead { color: #dcdce8; }
 .hero-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(32px, 5vw, 56px); align-items: center; }
 .hero-pill { display: inline-block; background: rgba(196,211,164,.22); color: var(--lysgronn); font-weight: 700; font-size: 13px; padding: 7px 14px; border-radius: var(--radius-pill); margin-bottom: 22px; }
 .hero-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 30px; }

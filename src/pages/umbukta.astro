@@ -181,28 +181,40 @@ const faq = [
       </div>
     </div>
 
-    <!-- BILDEGALLERI -->
+    <!-- BILDEGALLERI (hovedbilde + miniatyrer) -->
     <div class="section" style="padding-top:0;">
       <h2 class="h2" style="font-size:clamp(22px,2.8vw,32px); margin-bottom:22px;" data-i18n="umbukta_gallery_title">
         Bildegalleri
       </h2>
-      <div class="gallery" id="galleri">
-        {bilder.map(b => (
-          <button
-            class="galleri-btn"
-            aria-label={`Forstørr bilde: ${b.alt}`}
-            data-src={`${base}/images/umbukta/${b.src}`}
-            data-alt={b.alt}
-          >
-            <img
-              src={`${base}/images/umbukta/${b.src}`}
-              alt={b.alt}
-              width="480"
-              height="360"
-              loading="lazy"
-            />
-          </button>
-        ))}
+      <div class="gallery-hero">
+        <button class="gallery-main" id="gallery-main" aria-label="Forstørr hovedbilde">
+          <img
+            id="gallery-main-img"
+            src={`${base}/images/umbukta/${bilder[0].src}`}
+            alt={bilder[0].alt}
+            width="1200"
+            height="750"
+            loading="lazy"
+          />
+        </button>
+        <div class="gallery-thumbs" id="galleri">
+          {bilder.map((b, i) => (
+            <button
+              class={`thumb${i === 0 ? ' active' : ''}`}
+              aria-label={`Vis bilde: ${b.alt}`}
+              data-src={`${base}/images/umbukta/${b.src}`}
+              data-alt={b.alt}
+            >
+              <img
+                src={`${base}/images/umbukta/${b.src}`}
+                alt={b.alt}
+                width="240"
+                height="180"
+                loading="lazy"
+              />
+            </button>
+          ))}
+        </div>
       </div>
     </div>
 
@@ -213,6 +225,67 @@ const faq = [
       <button id="lb-close" aria-label="Lukk" style="position:absolute; top:16px; right:16px; background:rgba(255,255,255,0.12); border:none; color:#fff; font-size:22px; width:44px; height:44px; border-radius:50%; cursor:pointer; display:flex; align-items:center; justify-content:center;">✕</button>
       <img id="lb-img" src="" alt="" style="max-width:min(90vw,1200px); max-height:85vh; object-fit:contain; border-radius:8px; display:block;" />
       <p id="lb-caption" style="position:absolute; bottom:20px; left:50%; transform:translateX(-50%); color:#ccc; font-size:14px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:80vw;"></p>
+    </div>
+
+    <!-- PRISER -->
+    <div class="section" style="padding-top:0;">
+      <h2 class="h2" style="font-size:clamp(22px,2.8vw,32px); margin-bottom:6px;" data-i18n="umbukta_prices_title">
+        Priser
+      </h2>
+      <p class="muted" style="font-size:16px; margin-bottom:28px;" data-i18n="umbukta_prices_lead">
+        Alle priser er per døgn. Hytta er kun tilgjengelig for LO-medlemmer.
+      </p>
+      <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:18px;">
+        <div class="price-card featured">
+          <span class="tag" data-en="Best price">Beste pris</span>
+          <div class="label" data-en="Fellesforbundet Helgeland member">Medlem Fellesforbundet Helgeland</div>
+          <div class="amount">{PRISER.FFH}&nbsp;kr<small data-en=" /night"> /døgn</small></div>
+        </div>
+        <div class="price-card">
+          <div class="label" data-en="Fellesforbundet member (other branch)">Medlem Fellesforbundet (annen avd.)</div>
+          <div class="amount">{PRISER.FF}&nbsp;kr<small data-en=" /night"> /døgn</small></div>
+        </div>
+        <div class="price-card">
+          <div class="label" data-en="Member of another LO union">Medlem annet LO-forbund</div>
+          <div class="amount">{PRISER.ANNET_LO}&nbsp;kr<small data-en=" /night"> /døgn</small></div>
+        </div>
+      </div>
+      <div class="alert alert-warn" style="margin-top:18px;">
+        <span class="ic">!</span>
+        <div style="font-size:14.5px; line-height:1.6;" data-en="<strong>Cancellation:</strong> Cancelled bookings are not refunded. We recommend travel/cancellation insurance. Contact the office for changes.">
+          <strong>Avbestilling:</strong> Avbestilt leie refunderes ikke.
+          Vi anbefaler reise-/avbestillingsforsikring. Kontakt avdelingen ved endringer.
+        </div>
+      </div>
+    </div>
+
+    <!-- KALENDER + BOOKINGSKJEMA -->
+    <div id="ledige-datoer" class="section grid" style="scroll-margin-top:90px; padding-top:0; grid-template-columns:1fr 1fr; align-items:start; gap:clamp(20px,4vw,36px);">
+      <div>
+        <h2 class="h2" style="font-size:clamp(22px,2.6vw,28px); margin-bottom:18px;" data-i18n="umbukta_calendar_title">
+          Ledige datoer
+        </h2>
+        <Calendar />
+        <p class="muted" style="font-size:13px; margin-top:12px;"
+           data-en="Click an available day to choose the check-in date, then the check-out date. Selected dates are copied automatically into the form.">
+          Klikk på en ledig dag for å velge fra-dato, deretter til-dato.
+          Valgte datoer kopieres automatisk til skjemaet.
+        </p>
+      </div>
+      <BookingForm />
+    </div>
+
+    <!-- PÅSKE / LODDTREKNING -->
+    <div class="section" style="padding-top:0;">
+      <EasterSection />
+    </div>
+
+    <!-- ── BRA Å VITE ─────────────────────────────────────────── -->
+    <div class="section section-divider" style="padding-bottom:0;">
+      <span class="eyebrow" data-en="Good to know">Bra å vite</span>
+      <h2 class="h2" style="font-size:clamp(22px,2.8vw,32px); margin-top:6px;" data-en="Facilities, location and house rules">
+        Fasiliteter, beliggenhet og husregler
+      </h2>
     </div>
 
     <!-- FASILITETER -->
@@ -315,59 +388,6 @@ const faq = [
       <WeatherWidget />
     </div>
 
-    <!-- PRISER -->
-    <div class="section" style="padding-top:0;">
-      <h2 class="h2" style="font-size:clamp(22px,2.8vw,32px); margin-bottom:6px;" data-i18n="umbukta_prices_title">
-        Priser
-      </h2>
-      <p class="muted" style="font-size:16px; margin-bottom:28px;" data-i18n="umbukta_prices_lead">
-        Alle priser er per døgn. Hytta er kun tilgjengelig for LO-medlemmer.
-      </p>
-      <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:18px;">
-        <div class="price-card featured">
-          <span class="tag" data-en="Best price">Beste pris</span>
-          <div class="label" data-en="Fellesforbundet Helgeland member">Medlem Fellesforbundet Helgeland</div>
-          <div class="amount">{PRISER.FFH}&nbsp;kr<small data-en=" /night"> /døgn</small></div>
-        </div>
-        <div class="price-card">
-          <div class="label" data-en="Fellesforbundet member (other branch)">Medlem Fellesforbundet (annen avd.)</div>
-          <div class="amount">{PRISER.FF}&nbsp;kr<small data-en=" /night"> /døgn</small></div>
-        </div>
-        <div class="price-card">
-          <div class="label" data-en="Member of another LO union">Medlem annet LO-forbund</div>
-          <div class="amount">{PRISER.ANNET_LO}&nbsp;kr<small data-en=" /night"> /døgn</small></div>
-        </div>
-      </div>
-      <div class="alert alert-warn" style="margin-top:18px;">
-        <span class="ic">!</span>
-        <div style="font-size:14.5px; line-height:1.6;" data-en="<strong>Cancellation:</strong> Cancelled bookings are not refunded. We recommend travel/cancellation insurance. Contact the office for changes.">
-          <strong>Avbestilling:</strong> Avbestilt leie refunderes ikke.
-          Vi anbefaler reise-/avbestillingsforsikring. Kontakt avdelingen ved endringer.
-        </div>
-      </div>
-    </div>
-
-    <!-- KALENDER + BOOKINGSKJEMA -->
-    <div id="ledige-datoer" class="section grid" style="scroll-margin-top:90px; padding-top:0; grid-template-columns:1fr 1fr; align-items:start; gap:clamp(20px,4vw,36px);">
-      <div>
-        <h2 class="h2" style="font-size:clamp(22px,2.6vw,28px); margin-bottom:18px;" data-i18n="umbukta_calendar_title">
-          Ledige datoer
-        </h2>
-        <Calendar />
-        <p class="muted" style="font-size:13px; margin-top:12px;"
-           data-en="Click an available day to choose the check-in date, then the check-out date. Selected dates are copied automatically into the form.">
-          Klikk på en ledig dag for å velge fra-dato, deretter til-dato.
-          Valgte datoer kopieres automatisk til skjemaet.
-        </p>
-      </div>
-      <BookingForm />
-    </div>
-
-    <!-- PÅSKE / LODDTREKNING -->
-    <div class="section" style="padding-top:0;">
-      <EasterSection />
-    </div>
-
     <!-- HUSREGLER + FAQ -->
     <div class="section grid" style="padding-top:0; grid-template-columns:1fr 1fr; align-items:start; gap:clamp(20px,4vw,36px);">
 
@@ -428,77 +448,166 @@ const faq = [
     </div>
 
   </div>
+
+  <!-- Sticky book-knapp (vises etter at hero er forbi, skjules når booking er synlig) -->
+  <a href="#ledige-datoer" id="sticky-book" class="sticky-book btn btn-primary" data-en="Check availability →">
+    Sjekk ledige datoer →
+  </a>
 </Layout>
 
-<!-- Responsiv justering: stabel kalender+skjema på mobil -->
 <style>
   @media (max-width: 768px) {
     .section.grid[style*="grid-template-columns:1fr 1fr"] {
       grid-template-columns: 1fr !important;
     }
   }
-  .galleri-btn {
+
+  /* ── Galleri: hovedbilde + miniatyrer ─────────────────────── */
+  .gallery-hero { display: flex; flex-direction: column; gap: 14px; }
+  .gallery-main {
     display: block;
+    width: 100%;
+    aspect-ratio: 16 / 10;
     padding: 0;
     border: none;
     background: none;
-    cursor: zoom-in;
-    border-radius: 10px;
+    border-radius: 14px;
     overflow: hidden;
+    cursor: zoom-in;
     position: relative;
   }
-  .galleri-btn img {
-    display: block;
+  .gallery-main img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.25s ease;
+    transition: transform 0.3s ease;
   }
-  .galleri-btn:hover img { transform: scale(1.04); }
-  .galleri-btn::after {
+  .gallery-main:hover img { transform: scale(1.02); }
+  .gallery-main::after {
     content: '⤢';
     position: absolute;
-    bottom: 8px;
-    right: 10px;
+    bottom: 12px;
+    right: 14px;
     color: #fff;
-    font-size: 18px;
-    opacity: 0;
-    transition: opacity 0.2s;
-    text-shadow: 0 1px 4px rgba(0,0,0,0.6);
+    font-size: 20px;
+    opacity: 0.85;
+    text-shadow: 0 1px 6px rgba(0,0,0,0.7);
   }
-  .galleri-btn:hover::after { opacity: 1; }
+  .gallery-thumbs {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(92px, 1fr));
+    gap: 10px;
+  }
+  .thumb {
+    display: block;
+    aspect-ratio: 4 / 3;
+    padding: 0;
+    border: 2px solid transparent;
+    background: none;
+    border-radius: 10px;
+    overflow: hidden;
+    cursor: pointer;
+  }
+  .thumb img { width: 100%; height: 100%; object-fit: cover; }
+  .thumb.active { border-color: var(--rod); }
+  .thumb:not(.active) img { opacity: 0.78; transition: opacity 0.2s; }
+  .thumb:hover img { opacity: 1; }
+
+  /* ── "Bra å vite"-skille ──────────────────────────────────── */
+  .section-divider { border-top: 1px solid var(--kantlinje); }
+  .eyebrow {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--rod);
+  }
+
+  /* ── Sticky book-knapp ────────────────────────────────────── */
+  .sticky-book {
+    position: fixed;
+    right: 22px;
+    bottom: 22px;
+    z-index: 60;
+    box-shadow: 0 10px 28px rgba(26,24,54,0.32);
+    opacity: 0;
+    transform: translateY(14px);
+    pointer-events: none;
+    transition: opacity 0.25s ease, transform 0.25s ease;
+  }
+  .sticky-book.show { opacity: 1; transform: none; pointer-events: auto; }
+  @media (max-width: 600px) {
+    .sticky-book { left: 16px; right: 16px; bottom: 16px; text-align: center; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .sticky-book { transition: opacity 0.25s ease; transform: none; }
+    .gallery-main img, .thumb img { transition: none; }
+  }
 </style>
 
 <script>
-  const btns = Array.from(document.querySelectorAll('.galleri-btn'));
+  // ── Galleri: miniatyr bytter hovedbilde, hovedbilde åpner lightbox ──
+  const thumbs = Array.from(document.querySelectorAll<HTMLButtonElement>('.thumb'));
+  const mainBtn = document.getElementById('gallery-main');
+  const mainImg = document.getElementById('gallery-main-img') as HTMLImageElement | null;
   const lb    = document.getElementById('lightbox');
-  const lbImg = document.getElementById('lb-img');
+  const lbImg = document.getElementById('lb-img') as HTMLImageElement | null;
   const lbCap = document.getElementById('lb-caption');
   let cur = 0;
 
-  function show(i) {
-    cur = (i + btns.length) % btns.length;
-    const btn = btns[cur];
-    lbImg.src = btn.dataset.src;
-    lbImg.alt = btn.dataset.alt;
-    lbCap.textContent = btn.dataset.alt;
+  function setMain(i: number) {
+    if (!thumbs.length) return;
+    cur = (i + thumbs.length) % thumbs.length;
+    const t = thumbs[cur];
+    if (mainImg) {
+      mainImg.src = t.dataset.src || '';
+      mainImg.alt = t.dataset.alt || '';
+    }
+    thumbs.forEach((el, idx) => el.classList.toggle('active', idx === cur));
+  }
+
+  function openLightbox(i: number) {
+    if (!lb || !lbImg) return;
+    cur = (i + thumbs.length) % thumbs.length;
+    const t = thumbs[cur];
+    lbImg.src = t.dataset.src || '';
+    lbImg.alt = t.dataset.alt || '';
+    if (lbCap) lbCap.textContent = t.dataset.alt || '';
+    setMain(cur);
     lb.style.display = 'flex';
     document.body.style.overflow = 'hidden';
   }
-  function close() {
+  function closeLightbox() {
+    if (!lb) return;
     lb.style.display = 'none';
     document.body.style.overflow = '';
   }
 
-  btns.forEach((btn, i) => btn.addEventListener('click', () => show(i)));
-  document.getElementById('lb-close').addEventListener('click', close);
-  document.getElementById('lb-prev').addEventListener('click', () => show(cur - 1));
-  document.getElementById('lb-next').addEventListener('click', () => show(cur + 1));
-  lb.addEventListener('click', e => { if (e.target === lb) close(); });
+  thumbs.forEach((t, i) => t.addEventListener('click', () => setMain(i)));
+  mainBtn?.addEventListener('click', () => openLightbox(cur));
+  document.getElementById('lb-close')?.addEventListener('click', closeLightbox);
+  document.getElementById('lb-prev')?.addEventListener('click', () => openLightbox(cur - 1));
+  document.getElementById('lb-next')?.addEventListener('click', () => openLightbox(cur + 1));
+  lb?.addEventListener('click', e => { if (e.target === lb) closeLightbox(); });
   document.addEventListener('keydown', e => {
-    if (lb.style.display === 'none') return;
-    if (e.key === 'Escape') close();
-    if (e.key === 'ArrowLeft') show(cur - 1);
-    if (e.key === 'ArrowRight') show(cur + 1);
+    if (!lb || lb.style.display === 'none') return;
+    if (e.key === 'Escape') closeLightbox();
+    if (e.key === 'ArrowLeft') openLightbox(cur - 1);
+    if (e.key === 'ArrowRight') openLightbox(cur + 1);
   });
+
+  // ── Sticky book-knapp: vis når hero er forbi, skjul når booking er synlig ──
+  const sticky = document.getElementById('sticky-book');
+  const heroEl = document.querySelector('.media-hero');
+  const bookEl = document.getElementById('ledige-datoer');
+  if (sticky && heroEl && bookEl && 'IntersectionObserver' in window) {
+    let pastHero = false;
+    let bookVisible = false;
+    const update = () => sticky.classList.toggle('show', pastHero && !bookVisible);
+    new IntersectionObserver(([e]) => { pastHero = !e.isIntersecting; update(); })
+      .observe(heroEl);
+    new IntersectionObserver(([e]) => { bookVisible = e.isIntersecting; update(); }, { threshold: 0.12 })
+      .observe(bookEl);
+  }
 </script>
