@@ -1,66 +1,145 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import { KONTAKT } from '../config.ts';
+import { KONTAKT, FF_LENKER } from '../config.ts';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+const fakta = [
+  { tall: '1965', tekst: 'Stiftet', tekst_en: 'Founded' },
+  { tall: '160 000+', tekst: 'medlemmer i Fellesforbundet', tekst_en: 'members in Fellesforbundet' },
+  { tall: 'Helgeland', tekst: 'fra Mo i Rana til kysten', tekst_en: 'from Mo i Rana to the coast' },
+];
+
+const hvaViGjor = [
+  { ikon: '🤝', tittel: 'Forhandler lønn og tariff', tittel_en: 'Negotiate pay and agreements', body: 'Vi forhandler tariffavtaler og sikrer ordnede lønns- og arbeidsvilkår.', body_en: 'We negotiate collective agreements and secure proper pay and working conditions.' },
+  { ikon: '⚖️', tittel: 'Gir juridisk bistand', tittel_en: 'Provide legal assistance', body: 'Medlemmer får hjelp i saker om oppsigelse, lønn og rettigheter på jobb.', body_en: 'Members get help with dismissal, pay and rights at work.' },
+  { ikon: '🎓', tittel: 'Skolerer medlemmer', tittel_en: 'Train members', body: 'Kurs og opplæring for medlemmer og tillitsvalgte gjennom hele året.', body_en: 'Courses and training for members and shop stewards all year round.' },
+  { ikon: '🏔️', tittel: 'Tilbyr medlemsfordeler', tittel_en: 'Offer member benefits', body: 'Forsikring, rabatter og leie av forbundets fjellhytter til medlemspris.', body_en: 'Insurance, discounts and rental of the union\'s mountain cabins at member prices.' },
+];
 ---
 <Layout
   title="Om Fellesforbundet Helgeland avd. 143"
-  description="Fellesforbundet Helgeland avd. 143 holder til i Mo i Rana. Les om avdelingen, kontaktinfo og hytteutleien."
+  description="Fellesforbundet Helgeland avd. 143 er en lokal fagforening i Mo i Rana, stiftet i 1965. Vi organiserer arbeidsfolk i industri, bygg, transport og service på Helgeland."
 >
-  <div class="container section" style="max-width:860px; margin:0 auto;">
-    <h1 class="h1" style="font-size:clamp(28px,4vw,44px); margin-bottom:18px;"
-        data-en="About Fellesforbundet Helgeland, branch 143">
-      Om Fellesforbundet Helgeland avd. 143
-    </h1>
 
-    <p class="lead" style="margin-bottom:32px;"
-       data-en="Fellesforbundet Helgeland is a local branch (no. 143) of Fellesforbundet — Norway's largest LO union. We represent workers in industry, construction, transport, forestry and a range of other sectors in Helgeland.">
-      Fellesforbundet Helgeland er en lokal avdeling (nr. 143) av Fellesforbundet — Norges største LO-forbund.
-      Vi representerer arbeidstakere innen industri, bygg og anlegg, transport, skog og en rekke andre bransjer på Helgeland.
-    </p>
-
-    <div class="grid" style="grid-template-columns:1fr 1fr; gap:24px; margin-bottom:40px;">
-      <div class="card card-pad">
-        <h2 class="h3" style="margin-bottom:14px;" data-en="Contact info">Kontaktinfo</h2>
-        <ul style="display:flex; flex-direction:column; gap:12px; font-size:15px; color:var(--tekst-dempet);">
-          <li><b style="color:var(--tekst);" data-en="Address">Adresse</b><br />{KONTAKT.adresse}<br />{KONTAKT.postnummer} {KONTAKT.poststed}</li>
-          <li><b style="color:var(--tekst);" data-en="Phone">Telefon</b><br /><a href={`tel:+47${KONTAKT.telefon}`} class="btn-link">{KONTAKT.telefonFormatert}</a></li>
-          <li><b style="color:var(--tekst);" data-en="Email">E-post</b><br /><a href={`mailto:${KONTAKT.epost}`} class="btn-link">{KONTAKT.epost}</a></li>
-          <li><b style="color:var(--tekst);" data-en="Opening hours">Åpningstider</b><br />{KONTAKT.apningstider}</li>
-          <li>
-            <b style="color:var(--tekst);" data-en="Org. no.">Org.nr.</b><br />
-            <a href={KONTAKT.brreg} target="_blank" rel="noopener noreferrer" class="btn-link">{KONTAKT.orgnr}</a>
-          </li>
-        </ul>
+  <!-- HERO -->
+  <div class="hero-dark">
+    <div class="container section">
+      <div class="hero-grid" style="align-items:center;">
+        <div>
+          <span class="hero-pill" data-en="About the branch">Om avdelingen</span>
+          <h1 class="h1" style="margin-top:18px;" data-en="Fellesforbundet Helgeland, branch 143">
+            Fellesforbundet Helgeland avd. 143
+          </h1>
+          <p class="lead" style="max-width:54ch; margin-top:20px;"
+             data-en="We are a local branch of Fellesforbundet — Norway's largest union in the private sector and part of LO. We organise workers in industry, construction, transport and service across Helgeland.">
+            Vi er en lokal avdeling av Fellesforbundet — Norges største forbund i privat sektor og en del
+            av LO. Vi organiserer arbeidsfolk innen industri, bygg og anlegg, transport og service på Helgeland.
+          </p>
+        </div>
+        <div class="hero-img">
+          <img src={`${base}/images/hovedside/ff-knyttneve.png`} alt="Illustrasjon: knyttneve — symbol på samhold" width="1200" height="675" loading="eager" style="width:100%; height:100%; object-fit:cover;" />
+        </div>
       </div>
-      <div class="card card-pad">
-        <h2 class="h3" style="margin-bottom:14px;" data-en="Links">Lenker</h2>
-        <ul style="display:flex; flex-direction:column; gap:12px; font-size:15px;">
-          <li><a href={KONTAKT.fellesforbundetUrl} target="_blank" rel="noopener noreferrer" class="btn-link">Fellesforbundet.no — Avd. 143 ↗</a></li>
-          <li><a href={KONTAKT.facebookUrl} target="_blank" rel="noopener noreferrer" class="btn-link">Facebook ↗</a></li>
-          <li><a href={KONTAKT.brreg} target="_blank" rel="noopener noreferrer" class="btn-link">Brønnøysundregistrene ↗</a></li>
-        </ul>
+      <div class="hero-stats">
+        {fakta.map(f => (
+          <div><b>{f.tall}</b><span data-en={f.tekst_en}>{f.tekst}</span></div>
+        ))}
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+
+    <!-- HISTORIE -->
+    <div class="section" style="max-width:760px;">
+      <span class="eyebrow" data-en="Our history">Vår historie</span>
+      <h2 class="h2" style="margin:6px 0 18px;" data-en="Over 60 years for working people on Helgeland">
+        Over 60 år for arbeidsfolk på Helgeland
+      </h2>
+      <p class="muted" style="font-size:16.5px; line-height:1.75; margin-bottom:16px;"
+         data-en="The branch was founded in 1965, originally as Mo Jern- og Metallarbeiderforening. Through mergers and the growth of Fellesforbundet, the branch became Fellesforbundet Helgeland avd. 143 — today organising members across many trades in the whole Helgeland region.">
+        Avdelingen ble stiftet i 1965, opprinnelig som Mo Jern- og Metallarbeiderforening. Gjennom
+        sammenslåinger og framveksten av Fellesforbundet ble avdelingen til Fellesforbundet Helgeland
+        avd. 143 — som i dag organiserer medlemmer på tvers av en rekke fag i hele Helgeland-regionen.
+      </p>
+      <p class="muted" style="font-size:16.5px; line-height:1.75;"
+         data-en="We work for secure jobs, decent pay and an organised working life — and stand together with members both locally and across the country.">
+        Vi jobber for trygge ansettelser, anstendig lønn og et organisert arbeidsliv — og står sammen
+        med medlemmene både lokalt og i hele landet.
+      </p>
+    </div>
+
+    <!-- HVA VI GJØR -->
+    <div class="section" style="padding-top:0;">
+      <span class="eyebrow" data-en="What we do">Hva vi gjør</span>
+      <h2 class="h2" style="margin:6px 0 32px;" data-en="For our members">For medlemmene våre</h2>
+      <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:18px;">
+        {hvaViGjor.map(h => (
+          <div class="benefit">
+            <span class="benefit-ic" aria-hidden="true">{h.ikon}</span>
+            <h3 class="h3" style="font-size:18px; margin-bottom:6px;" data-en={h.tittel_en}>{h.tittel}</h3>
+            <p class="muted" style="font-size:14.5px; line-height:1.6;" data-en={h.body_en}>{h.body}</p>
+          </div>
+        ))}
       </div>
     </div>
 
-    <h2 class="h2" style="font-size:26px; margin-bottom:16px;" data-en="Cabin rentals">Hytteutleie</h2>
-    <p style="font-size:16px; line-height:1.7; color:var(--tekst-dempet); margin-bottom:20px;"
-       data-en="Fellesforbundet Helgeland, avd. 143, owns two cabins rented out to LO members:">
-      Fellesforbundet Helgeland avd. 143 eier to hytter som leies ut til LO-medlemmer:
-    </p>
-    <ul style="display:flex; flex-direction:column; gap:12px; font-size:16px; color:var(--tekst-dempet); margin-bottom:32px;">
-      <li>
-        <strong style="color:var(--tekst);" data-en="Cabin in Umbukta (Rana)">Hytte i Umbukta (Rana)</strong><span data-en=" — LO members only. Up to 12 beds. Booked here on the website. "> — kun for LO-medlemmer.
-        Inntil 12 sengeplasser. Bookes her på nettsiden. </span>
-        <a href={`${base}/umbukta`} class="btn-link" style="font-size:14px;" data-en="→ See the cabin">→ Se hytta</a>
-      </li>
-      <li>
-        <strong style="color:var(--tekst);" data-en="Cabin in Øvre Elsvatn (Hattfjelldal)">Hytte i Øvre Elsvatn (Hattfjelldal)</strong><span data-en=" — open to everyone. 6 beds. Booked via inatur.no. "> — åpen for alle.
-        6 sengeplasser. Bookes via inatur.no. </span>
-        <a href="https://www.inatur.no/hytte/670e2bd422a51709667760cd/hytte-i-ovre-elsvatn-hattfjelldal" target="_blank" rel="noopener noreferrer" class="btn-link" style="font-size:14px;" data-en="→ See on inatur ↗">→ Se på inatur ↗</a>
-      </li>
-    </ul>
+    <!-- HYTTENE (medlemsfordel) -->
+    <div class="section" style="padding-top:0;">
+      <span class="eyebrow" data-en="Member benefit">Medlemsfordel</span>
+      <h2 class="h2" style="font-size:clamp(22px,2.8vw,32px); margin:6px 0 12px;" data-en="Two cabins for LO members">To hytter for LO-medlemmer</h2>
+      <p class="muted" style="font-size:16px; line-height:1.7; max-width:62ch; margin-bottom:18px;"
+         data-en="Fellesforbundet Helgeland avd. 143 owns two cabins rented out to LO members:">
+        Fellesforbundet Helgeland avd. 143 eier to hytter som leies ut til LO-medlemmer:
+      </p>
+      <div class="grid" style="grid-template-columns:1fr 1fr; gap:18px;">
+        <div class="card card-pad">
+          <b style="font-size:16px;" data-en="Cabin in Umbukta (Rana)">Hytte i Umbukta (Rana)</b>
+          <p class="muted" style="font-size:14.5px; margin:6px 0 12px; line-height:1.6;" data-en="LO members only. Up to 12 beds, fully equipped. Booked here on the website.">
+            Kun for LO-medlemmer. Inntil 12 sengeplasser, fullt utstyrt. Bookes her på nettsiden.
+          </p>
+          <a href={`${base}/umbukta`} class="btn-link" style="font-size:14px;" data-en="See the cabin →">Se hytta →</a>
+        </div>
+        <div class="card card-pad">
+          <b style="font-size:16px;" data-en="Cabin in Øvre Elsvatn (Hattfjelldal)">Hytte i Øvre Elsvatn (Hattfjelldal)</b>
+          <p class="muted" style="font-size:14.5px; margin:6px 0 12px; line-height:1.6;" data-en="Open to everyone. 6 beds. Booked via inatur.no.">
+            Åpen for alle. 6 sengeplasser. Bookes via inatur.no.
+          </p>
+          <a href="https://www.inatur.no/hytte/670e2bd422a51709667760cd/hytte-i-ovre-elsvatn-hattfjelldal" target="_blank" rel="noopener noreferrer" class="btn-link" style="font-size:14px;" data-en="See on inatur ↗">Se på inatur ↗</a>
+        </div>
+      </div>
+    </div>
 
-    <a href={`${base}/`} class="btn btn-secondary" data-en="← Back to home">← Tilbake til forsiden</a>
+    <!-- KONTAKT + LENKER -->
+    <div class="section" style="padding-top:0; padding-bottom:clamp(44px,6vw,72px);">
+      <div class="grid" style="grid-template-columns:1fr 1fr; gap:24px;">
+        <div class="card card-pad">
+          <h2 class="h3" style="margin-bottom:14px;" data-en="Contact info">Kontaktinfo</h2>
+          <ul style="display:flex; flex-direction:column; gap:12px; font-size:15px; color:var(--tekst-dempet);">
+            <li><b style="color:var(--tekst);" data-en="Address">Adresse</b><br />{KONTAKT.adresse}, {KONTAKT.postnummer} {KONTAKT.poststed}</li>
+            <li><b style="color:var(--tekst);" data-en="Phone">Telefon</b><br /><a href={`tel:+47${KONTAKT.telefon}`} class="btn-link">{KONTAKT.telefonFormatert}</a></li>
+            <li><b style="color:var(--tekst);" data-en="Email">E-post</b><br /><a href={`mailto:${KONTAKT.epost}`} class="btn-link">{KONTAKT.epost}</a></li>
+            <li><b style="color:var(--tekst);" data-en="Opening hours">Åpningstider</b><br />{KONTAKT.apningstider}</li>
+            <li><b style="color:var(--tekst);" data-en="Org. no.">Org.nr.</b><br /><a href={KONTAKT.brreg} target="_blank" rel="noopener noreferrer" class="btn-link">{KONTAKT.orgnr}</a></li>
+          </ul>
+        </div>
+        <div class="card card-pad">
+          <h2 class="h3" style="margin-bottom:14px;" data-en="Links">Lenker</h2>
+          <ul style="display:flex; flex-direction:column; gap:12px; font-size:15px;">
+            <li><a href={FF_LENKER.medlemskap} target="_blank" rel="noopener noreferrer" class="btn-link" data-en="Become a member ↗">Bli medlem ↗</a></li>
+            <li><a href={KONTAKT.fellesforbundetUrl} target="_blank" rel="noopener noreferrer" class="btn-link">Fellesforbundet.no — Avd. 143 ↗</a></li>
+            <li><a href={KONTAKT.facebookUrl} target="_blank" rel="noopener noreferrer" class="btn-link">Facebook ↗</a></li>
+            <li><a href={KONTAKT.brreg} target="_blank" rel="noopener noreferrer" class="btn-link">Brønnøysundregistrene ↗</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
   </div>
 </Layout>
+
+<style>
+  @media (max-width: 768px) {
+    .container .grid[style*="grid-template-columns:1fr 1fr"] { grid-template-columns: 1fr !important; }
+  }
+</style>

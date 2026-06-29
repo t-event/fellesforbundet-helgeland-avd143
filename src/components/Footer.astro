@@ -2,6 +2,11 @@
 import { KONTAKT } from '../config.ts';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const year = new Date().getFullYear();
+
+// variant: 'hytte' (publikum) | 'hovedside' (avdelingssida). Avdelings-lenker
+// vises kun på hovedside-footeren slik at de ikke lekker ut på den offentlige hyttesida.
+const { variant = 'hytte' } = Astro.props;
+const brandHref = variant === 'hovedside' ? '/forhandsvisning' : '/';
 ---
 
 <footer class="site-footer" role="contentinfo">
@@ -10,7 +15,7 @@ const year = new Date().getFullYear();
 
       <!-- Merkevare -->
       <div class="footer-brand">
-        <a href={`${base}/`} class="brand" style="margin-bottom:14px; text-decoration:none;" aria-label="Forside">
+        <a href={`${base}${brandHref}`} class="brand" style="margin-bottom:14px; text-decoration:none;" aria-label="Forside">
           <img
             src={`${base}/images/logo/ff_logo_hvit_rgb.svg`}
             alt="Fellesforbundet Helgeland"
@@ -19,8 +24,22 @@ const year = new Date().getFullYear();
             class="brand-logo"
           />
         </a>
-        <p data-i18n="footer_tagline">Hytteutleie for alle LO-medlemmer — særlig Fellesforbundet Helgeland.</p>
+        <p data-en="Trade union for working people in Helgeland — we organise, negotiate and stand together.">
+          Fagforening for arbeidsfolk på Helgeland — vi organiserer, forhandler og står sammen.
+        </p>
       </div>
+
+      {variant === 'hovedside' && (
+        <div>
+          <h4 data-en="The branch">Avdelingen</h4>
+          <ul>
+            <li><a href={`${base}/forhandsvisning/bli-medlem`} data-en="Become a member">Bli medlem</a></li>
+            <li><a href={`${base}/forhandsvisning/lonn-tariff`} data-en="Pay & agreements">Lønn & tariff</a></li>
+            <li><a href={`${base}/forhandsvisning/tillitsvalgte`} data-en="Shop stewards">Tillitsvalgte</a></li>
+            <li><a href={`${base}/forhandsvisning/aktuelt`} data-en="News">Aktuelt</a></li>
+          </ul>
+        </div>
+      )}
 
       <!-- Hyttene -->
       <div>
@@ -46,7 +65,7 @@ const year = new Date().getFullYear();
       <div>
         <h4 data-i18n="footer_om">Om oss</h4>
         <ul>
-          <li><a href={`${base}/om-oss`} data-i18n="footer_om_ffh">Om Fellesforbundet Helgeland</a></li>
+          <li><a href={`${base}/om-oss`} data-en="About the branch">Om avdelingen</a></li>
           <li><a href={`${base}/personvern`} data-i18n="footer_personvern">Personvernerklæring</a></li>
           <li><a href={`${base}/cookies`} data-i18n="footer_cookies">Cookies</a></li>
         </ul>
@@ -56,16 +75,11 @@ const year = new Date().getFullYear();
       <div>
         <h4 data-i18n="footer_kontakt">Kontakt</h4>
         <ul>
-          <li>
-            <a href={`tel:+47${KONTAKT.telefon}`}>
-              Tlf. {KONTAKT.telefonFormatert}
-            </a>
-          </li>
-          <li>
-            <a href={`mailto:${KONTAKT.epost}`}>{KONTAKT.epost}</a>
-          </li>
+          <li><a href={`tel:+47${KONTAKT.telefon}`}>Tlf. {KONTAKT.telefonFormatert}</a></li>
+          <li><a href={`mailto:${KONTAKT.epost}`}>{KONTAKT.epost}</a></li>
           <li>{KONTAKT.adresse}, {KONTAKT.poststed}</li>
           <li><span data-en="Open">Åpent</span> {KONTAKT.apningstider}</li>
+          <li><a href={KONTAKT.facebookUrl} target="_blank" rel="noopener noreferrer" data-en="Facebook ↗">Facebook ↗</a></li>
         </ul>
       </div>
     </div>
@@ -73,20 +87,10 @@ const year = new Date().getFullYear();
     <div class="footer-bottom">
       <span>© <span id="footer-year">{year}</span> Fellesforbundet Helgeland avd. 143. Alle rettigheter reservert.</span>
       <span style="display:flex; gap:1.5rem; align-items:center; flex-wrap:wrap;">
-        <a
-          href={KONTAKT.brreg}
-          target="_blank"
-          rel="noopener noreferrer"
-          style="color:inherit;"
-        >
+        <a href={KONTAKT.brreg} target="_blank" rel="noopener noreferrer" style="color:inherit;">
           Org.nr. {KONTAKT.orgnr}
         </a>
-        <a
-          href="https://t-event.no"
-          target="_blank"
-          rel="noopener noreferrer"
-          style="color:inherit; opacity:0.7;"
-        >
+        <a href="https://t-event.no" target="_blank" rel="noopener noreferrer" style="color:inherit; opacity:0.7;">
           Utviklet av T-Event
         </a>
       </span>
