@@ -119,8 +119,10 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .nav-group-btn { display: inline-flex; align-items: center; gap: 5px; background: transparent; color: #cfd0e0; font-weight: 600; font-size: 14px; font-family: inherit; padding: 9px 15px; border: none; border-radius: 9px; cursor: pointer; white-space: nowrap; }
 .nav-group-btn:hover { color: #fff; }
 .nav-group .caret { font-size: 10px; opacity: .7; }
-.nav-menu { position: absolute; top: calc(100% + 4px); left: 0; min-width: 200px; background: #221f43; border: 1px solid rgba(255,255,255,.12); border-radius: 12px; padding: 8px; display: none; flex-direction: column; gap: 2px; box-shadow: 0 14px 34px rgba(0,0,0,.35); z-index: 60; }
-.nav-group:hover .nav-menu, .nav-group:focus-within .nav-menu { display: flex; }
+/* Usynlig «bro» over mellomrommet slik at menyen ikke lukkes når musa beveger seg sakte fra knappen ned til menyen */
+.nav-group::after { content: ''; position: absolute; top: 100%; left: 0; right: 0; height: 14px; }
+.nav-menu { position: absolute; top: calc(100% + 8px); left: 0; min-width: 200px; background: #221f43; border: 1px solid rgba(255,255,255,.12); border-radius: 12px; padding: 8px; display: flex; flex-direction: column; gap: 2px; box-shadow: 0 14px 34px rgba(0,0,0,.35); z-index: 60; opacity: 0; visibility: hidden; transform: translateY(-6px); transition: opacity .16s ease, visibility .16s ease, transform .16s ease; }
+.nav-group:hover .nav-menu, .nav-group:focus-within .nav-menu { opacity: 1; visibility: visible; transform: none; }
 .nav-menu a { display: block; color: #cfd0e0; font-weight: 600; font-size: 14px; padding: 9px 12px; border-radius: 8px; white-space: nowrap; text-decoration: none; }
 .nav-menu a:hover { color: #fff; background: rgba(255,255,255,.08); }
 .nav-menu a.active { background: var(--rod); color: #fff; }
