@@ -378,3 +378,45 @@ textarea.input { resize: vertical; min-height: 110px; }
 /* ── Spinner (lastings-indikator) ────────────────────────────── */
 .spinner { display: inline-block; width: 20px; height: 20px; border: 2.5px solid rgba(207,0,0,.2); border-top-color: var(--rod); border-radius: 50%; animation: spin .7s linear infinite; }
 @keyframes spin { to { transform: rotate(360deg); } }
+
+/* ── Hovedside-komponenter (avdelingens hjemmeside) ──────────── */
+.eyebrow { display: inline-block; font-size: 12px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: var(--rod); }
+
+/* Hero-statistikk (mørk hero) */
+.hero-stats { display: flex; flex-wrap: wrap; gap: clamp(24px, 5vw, 56px); margin-top: 36px; padding-top: 28px; border-top: 1px solid rgba(255,255,255,0.15); }
+.hero-stats div { display: flex; flex-direction: column; }
+.hero-stats b { font-size: 26px; font-weight: 900; letter-spacing: -0.02em; }
+.hero-stats span { font-size: 13.5px; color: #b9bad0; margin-top: 2px; }
+
+/* Fordel-/ikonkort */
+.benefit { background: #fff; border: 1px solid var(--kantlinje); border-radius: 16px; padding: 24px; }
+.benefit-ic { display: inline-flex; align-items: center; justify-content: center; width: 48px; height: 48px; border-radius: 12px; background: #fbeceb; font-size: 24px; margin-bottom: 16px; }
+
+/* Sitatboks */
+.about-quote { background: var(--morkbla); color: #fff; border-radius: 20px; padding: clamp(28px, 4vw, 44px); display: flex; align-items: center; border-left: 6px solid var(--rod); }
+.about-quote p { font-size: clamp(20px, 2.4vw, 28px); font-weight: 800; letter-spacing: -0.02em; line-height: 1.25; }
+
+/* Nyhetskort */
+.news-card { background: #fff; border: 1px solid var(--kantlinje); border-radius: 16px; padding: 22px; display: flex; flex-direction: column; }
+.news-meta { display: flex; align-items: center; gap: 12px; }
+.news-tag { font-size: 11.5px; font-weight: 800; letter-spacing: 0.04em; text-transform: uppercase; color: var(--rod); background: #fbeceb; padding: 4px 10px; border-radius: 100px; }
+
+/* Person-/tillitsvalgtkort */
+.person { display: flex; gap: 14px; align-items: flex-start; background: var(--flate); border: 1px solid var(--kantlinje); border-radius: 16px; padding: 18px; }
+.person-avatar { flex: none; width: 46px; height: 46px; border-radius: 50%; background: var(--morkbla); color: #fff; font-weight: 800; font-size: 15px; display: flex; align-items: center; justify-content: center; }
+
+/* CTA-band */
+.cta-band { background: linear-gradient(135deg, var(--morkbla) 0%, #2a2657 100%); border-radius: 22px; padding: clamp(32px, 5vw, 56px); display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 28px; }
+
+/* Nummererte steg */
+.step { background: #fff; border: 1px solid var(--kantlinje); border-radius: 16px; padding: 24px; }
+.step-n { display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 50%; background: var(--rod); color: #fff; font-weight: 900; font-size: 18px; margin-bottom: 14px; }
+
+/* Liste-rad (tariffavtaler o.l.) */
+.list-row { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px; padding: 16px 0; border-bottom: 1px solid var(--kantlinje); }
+.list-row:last-child { border-bottom: 0; }
+.list-row b { font-size: 16px; }
+.list-row span { font-size: 14px; color: var(--tekst-dempet); }
+
+/* Anker-seksjoner under sticky header */
+.hs-anchor { scroll-margin-top: 84px; }

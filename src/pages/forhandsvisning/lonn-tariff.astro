@@ -1,0 +1,97 @@
+---
+import Layout from '../../layouts/Layout.astro';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+// Reelle avtaleområder i Fellesforbundet. MERK: hvilken overenskomst som
+// gjelder den enkelte arbeidsplass må bekreftes av avdelingen.
+const avtaler = [
+  { navn: 'Industrioverenskomsten',  omr: 'Verksted, smelteverk og prosessindustri', omr_en: 'Workshop, smelting and process industry' },
+  { navn: 'Byggfagene',              omr: 'Tømrer, betong og anlegg',                 omr_en: 'Carpentry, concrete and construction' },
+  { navn: 'Riksavtalen',             omr: 'Hotell, restaurant og servering',          omr_en: 'Hotel, restaurant and catering' },
+  { navn: 'Biloverenskomsten',       omr: 'Bilverksteder og transport',               omr_en: 'Car workshops and transport' },
+  { navn: 'Renholdsoverenskomsten',  omr: 'Renhold og service',                       omr_en: 'Cleaning and service' },
+];
+
+const ressurser = [
+  { ikon: '📄', tittel: 'Hva er en tariffavtale?', tittel_en: 'What is a collective agreement?', body: 'En avtale mellom fagforening og arbeidsgiver om lønn, arbeidstid og rettigheter.', body_en: 'An agreement between union and employer on pay, working hours and rights.' },
+  { ikon: '✊', tittel: 'Krev tariffavtale',        tittel_en: 'Demand an agreement',             body: 'Mangler arbeidsplassen din avtale? Ta kontakt, så hjelper avdelingen deg videre.', body_en: 'No agreement at your workplace? Get in touch and the branch will help you.' },
+  { ikon: '💬', tittel: 'Spørsmål om lønn?',        tittel_en: 'Questions about pay?',            body: 'Usikker på om du får det du har krav på? Avdelingen svarer deg.', body_en: 'Unsure if you get what you are entitled to? The branch will answer you.' },
+];
+---
+
+<Layout
+  title="Lønn & tariff — Fellesforbundet Helgeland avd. 143"
+  description="Tariffavtaler, lønn og rettigheter for medlemmer i Fellesforbundet avd. 143. Avtaleområder i industri, bygg, transport og service på Helgeland."
+  variant="hovedside"
+  noindex={true}
+>
+
+  <!-- HERO -->
+  <div class="hero-dark">
+    <div class="container section">
+      <span class="hero-pill" data-en="Pay & agreements">Lønn & tariff</span>
+      <h1 class="h1" style="max-width:16ch; margin-top:18px;" data-en="Pay, agreements and your rights">Lønn, tariff og dine rettigheter</h1>
+      <p class="lead" style="max-width:58ch; margin-top:20px;"
+         data-en="The collective agreement is your safety net at work — it secures minimum pay, supplements, working hours and the right to negotiate.">
+        Tariffavtalen er sikkerhetsnettet ditt på jobb — den sikrer minstelønn, tillegg,
+        arbeidstid og retten til å forhandle.
+      </p>
+    </div>
+  </div>
+
+  <div class="container">
+
+    <!-- AVTALEOMRÅDER -->
+    <div class="section">
+      <span class="eyebrow" data-en="Agreement areas">Avtaleområder</span>
+      <h2 class="h2" style="margin:6px 0 10px;" data-en="Agreements in the branch">Avtaler i avdelingen</h2>
+      <p class="muted" style="font-size:16px; max-width:60ch; margin-bottom:22px;"
+         data-en="Examples of agreement areas our members work under. Unsure which applies to your workplace? Contact the branch.">
+        Eksempler på avtaleområder medlemmene våre jobber under. Usikker på hvilken som gjelder
+        din arbeidsplass? Kontakt avdelingen.
+      </p>
+      <div class="card card-pad">
+        {avtaler.map(a => (
+          <div class="list-row">
+            <b>{a.navn}</b>
+            <span data-en={a.omr_en}>{a.omr}</span>
+          </div>
+        ))}
+      </div>
+      <div class="alert alert-warn" style="margin-top:18px;">
+        <span class="ic">!</span>
+        <div style="font-size:14.5px; line-height:1.6;"
+             data-en="Minimum rates and supplements follow the current agreement and are adjusted at each wage settlement. The branch can tell you what applies to you.">
+          Minstesatser og tillegg følger gjeldende overenskomst og justeres ved hvert lønnsoppgjør.
+          Avdelingen kan fortelle deg hva som gjelder for deg.
+        </div>
+      </div>
+    </div>
+
+    <!-- RESSURSER -->
+    <div class="section" style="padding-top:0;">
+      <span class="eyebrow" data-en="Resources & help">Ressurser og hjelp</span>
+      <h2 class="h2" style="margin:6px 0 32px;" data-en="Good to know">Bra å vite</h2>
+      <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:18px;">
+        {ressurser.map(r => (
+          <div class="benefit">
+            <span class="benefit-ic" aria-hidden="true">{r.ikon}</span>
+            <h3 class="h3" style="font-size:18px; margin-bottom:6px;" data-en={r.tittel_en}>{r.tittel}</h3>
+            <p class="muted" style="font-size:14.5px; line-height:1.6;" data-en={r.body_en}>{r.body}</p>
+          </div>
+        ))}
+      </div>
+      <div class="cta-band" style="margin-top:32px;">
+        <div>
+          <h2 class="h2" style="color:#fff; font-size:clamp(22px,2.6vw,30px); max-width:22ch;" data-en="Questions about pay or agreements?">Spørsmål om lønn eller tariff?</h2>
+          <p style="color:#dcdce8; font-size:16px; margin-top:10px; max-width:46ch; line-height:1.6;"
+             data-en="The branch helps members with pay, agreements and rights at work.">
+            Avdelingen hjelper medlemmer med lønn, avtaler og rettigheter på jobb.
+          </p>
+        </div>
+        <a href={`${base}/forhandsvisning/kontakt`} class="btn btn-primary" data-en="Contact the branch →">Kontakt avdelingen →</a>
+      </div>
+    </div>
+
+  </div>
+</Layout>

@@ -1,28 +1,16 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import { KONTAKT } from '../config.ts';
+import { KONTAKT, LEDELSE, FF_LENKER } from '../config.ts';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
-// MERK: nyheter og ansatte under er PLASSHOLDER-innhold fra designet —
-// erstattes med ekte saker/personer før hovedsida publiseres.
+const initialer = (navn: string) =>
+  navn.split(/\s+/).map(d => d[0]).join('').slice(0, 2).toUpperCase();
+
 const fordeler = [
   { ikon: '🤝', tittel: 'Lønn & tariff',     tittel_en: 'Pay & agreements', body: 'Vi forhandler tariffavtaler og sikrer deg riktig lønn og ordnede arbeidsforhold.', body_en: 'We negotiate collective agreements and secure fair pay and proper working conditions.' },
   { ikon: '⚖️', tittel: 'Juridisk hjelp',    tittel_en: 'Legal help',       body: 'Gratis bistand i saker om arbeidsforhold, oppsigelse, lønn og rettigheter.', body_en: 'Free assistance in matters of employment, dismissal, pay and rights.' },
   { ikon: '🎓', tittel: 'Kurs & skolering',  tittel_en: 'Courses & training', body: 'Tilbud om kurs for medlemmer og tillitsvalgte gjennom hele året.', body_en: 'Courses for members and shop stewards throughout the year.' },
   { ikon: '🏔️', tittel: 'Medlemsfordeler',   tittel_en: 'Member benefits',   body: 'Forsikring, rabatter og leie av forbundets fjellhytter til medlemspris.', body_en: 'Insurance, discounts and rental of the union\'s mountain cabins at member prices.' },
-];
-
-const nyheter = [
-  { tag: 'Tariff',      tag_en: 'Agreement', dato: '12. mai 2026',   dato_en: '12 May 2026',   tittel: 'Enighet i lokale lønnsforhandlinger ved industribedriftene i Rana', tittel_en: 'Agreement reached in local pay talks at Rana industry', body: 'Partene kom til enighet etter to dagers forhandlinger.', body_en: 'The parties reached agreement after two days of negotiations.' },
-  { tag: 'Arrangement', tag_en: 'Event',     dato: '28. april 2026', dato_en: '28 Apr 2026',   tittel: 'Påmelding til tillitsvalgtkonferansen 2026 er åpen', tittel_en: 'Registration for the 2026 shop steward conference is open', body: 'Årets samling holdes i Mosjøen. Meld deg på i god tid.', body_en: 'This year\'s gathering is in Mosjøen. Sign up in good time.' },
-  { tag: 'Medlem',      tag_en: 'Member',    dato: '9. april 2026',  dato_en: '9 Apr 2026',    tittel: 'Nye medlemsfordeler på plass fra sommeren', tittel_en: 'New member benefits in place from summer', body: 'Vi utvider tilbudet med flere rabattavtaler og enklere hyttebooking.', body_en: 'We are expanding with more discount deals and easier cabin booking.' },
-];
-
-const ansatte = [
-  { init: 'AB', rolle: 'Avdelingsleder',        rolle_sub: 'Leder, avd. 143',     rolle_en: 'Branch leader',          rolle_sub_en: 'Leader, branch 143',   kontakt: '75 15 12 21' },
-  { init: 'OK', rolle: 'Organisasjonsarbeider', rolle_sub: 'Medlem & verving',     rolle_en: 'Organiser',              rolle_sub_en: 'Members & recruiting', kontakt: '75 15 12 22' },
-  { init: 'TV', rolle: 'Hovedtillitsvalgt',     rolle_sub: 'Industri',            rolle_en: 'Chief shop steward',     rolle_sub_en: 'Industry',             kontakt: '75 15 12 23' },
-  { init: 'SE', rolle: 'Sekretariat',           rolle_sub: 'Post & hytteutleie',  rolle_en: 'Secretariat',            rolle_sub_en: 'Post & cabin rental',  kontakt: 'post@ffh143.no' },
 ];
 ---
 
@@ -47,8 +35,8 @@ const ansatte = [
         fra Mo i Rana til kysten. Vi forhandler lønn, gir juridisk hjelp og står sammen når det gjelder.
       </p>
       <div class="hero-actions" style="margin-top:26px;">
-        <a href="#bli-medlem" class="btn btn-primary" data-en="Become a member today">Bli medlem i dag</a>
-        <a href="#kontakt" class="btn btn-ghost" data-en="Contact the branch">Kontakt avdelingen</a>
+        <a href={`${base}/forhandsvisning/bli-medlem`} class="btn btn-primary" data-en="Become a member today">Bli medlem i dag</a>
+        <a href={`${base}/forhandsvisning/kontakt`} class="btn btn-ghost" data-en="Contact the branch">Kontakt avdelingen</a>
       </div>
       <div class="hero-stats">
         <div><b>160 000+</b><span data-en="members in Fellesforbundet">medlemmer i Fellesforbundet</span></div>
@@ -103,45 +91,47 @@ const ansatte = [
   </div>
 
   <!-- AKTUELT / NYHETER -->
-  <div id="aktuelt" style="background:var(--flate); border-top:1px solid var(--kantlinje);">
+  <div id="aktuelt" class="hs-anchor" style="background:var(--flate); border-top:1px solid var(--kantlinje);">
     <div class="container section">
-      <div style="display:flex; flex-wrap:wrap; align-items:end; justify-content:space-between; gap:16px; margin-bottom:32px;">
+      <div style="display:flex; flex-wrap:wrap; align-items:end; justify-content:space-between; gap:16px; margin-bottom:24px;">
         <div>
           <span class="eyebrow" data-en="News">Aktuelt</span>
           <h2 class="h2" style="margin-top:6px;" data-en="News from the branch">Nytt fra avdelingen</h2>
         </div>
-        <a href="#aktuelt" class="btn-link" data-en="All news →">Alle saker →</a>
+        <a href={`${base}/forhandsvisning/aktuelt`} class="btn-link" data-en="All news →">Til Aktuelt →</a>
       </div>
-      <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:20px;">
-        {nyheter.map(n => (
-          <article class="news-card">
-            <div class="news-meta">
-              <span class="news-tag" data-en={n.tag_en}>{n.tag}</span>
-              <span class="muted" style="font-size:13px;" data-en={n.dato_en}>{n.dato}</span>
-            </div>
-            <h3 class="h3" style="font-size:18px; margin:10px 0 8px; line-height:1.25;" data-en={n.tittel_en}>{n.tittel}</h3>
-            <p class="muted" style="font-size:14.5px; line-height:1.6;" data-en={n.body_en}>{n.body}</p>
-          </article>
-        ))}
+      <div class="card card-pad" style="display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:24px;">
+        <div>
+          <h3 class="h3" style="margin-bottom:6px;" data-en="Latest news on Facebook">Siste nytt på Facebook</h3>
+          <p class="muted" style="font-size:15px; max-width:52ch; line-height:1.6;"
+             data-en="The branch posts news, events and updates on its Facebook page. Follow along to stay informed.">
+            Avdelingen legger ut nyheter, arrangementer og oppdateringer på Facebook. Følg med for å
+            holde deg oppdatert.
+          </p>
+        </div>
+        <a href={KONTAKT.facebookUrl} target="_blank" rel="noopener noreferrer" class="btn btn-secondary" data-en="Follow on Facebook ↗">Følg på Facebook ↗</a>
       </div>
     </div>
   </div>
 
   <!-- ANSATTE / TILLITSVALGTE -->
-  <div id="ansatte" class="container section">
-    <span class="eyebrow" data-en="People in the branch">Folk i avdelingen</span>
-    <h2 class="h2" style="margin:6px 0 32px;" data-en="The branch's staff and shop stewards">Avdelingens ansatte og tillitsvalgte</h2>
-    <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:18px;">
-      {ansatte.map(a => (
+  <div id="ansatte" class="container section hs-anchor">
+    <div style="display:flex; flex-wrap:wrap; align-items:end; justify-content:space-between; gap:16px; margin-bottom:24px;">
+      <div>
+        <span class="eyebrow" data-en="People in the branch">Folk i avdelingen</span>
+        <h2 class="h2" style="margin-top:6px;" data-en="Leadership and shop stewards">Ledelse og tillitsvalgte</h2>
+      </div>
+      <a href={`${base}/forhandsvisning/tillitsvalgte`} class="btn-link" data-en="See all →">Se alle →</a>
+    </div>
+    <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:18px;">
+      {LEDELSE.map(p => (
         <div class="person">
-          <span class="person-avatar" aria-hidden="true">{a.init}</span>
+          <span class="person-avatar" aria-hidden="true">{initialer(p.navn)}</span>
           <div>
-            <b style="display:block; font-size:15.5px;" data-en={a.rolle_en}>{a.rolle}</b>
-            <span class="muted" style="font-size:13.5px;" data-en={a.rolle_sub_en}>{a.rolle_sub}</span>
+            <b style="display:block; font-size:15.5px;">{p.navn}</b>
+            <span class="muted" style="font-size:13.5px;" data-en={p.rolle_en}>{p.rolle}</span>
             <div style="font-size:13.5px; margin-top:4px;">
-              {a.kontakt.includes('@')
-                ? <a href={`mailto:${a.kontakt}`} class="btn-link" style="font-size:13.5px;">{a.kontakt}</a>
-                : <a href={`tel:+47${a.kontakt.replace(/\s/g,'')}`} class="btn-link" style="font-size:13.5px;">{a.kontakt}</a>}
+              <a href={`tel:+47${KONTAKT.telefon}`} class="btn-link" style="font-size:13.5px;">{KONTAKT.telefonFormatert}</a>
             </div>
           </div>
         </div>
@@ -162,7 +152,7 @@ const ansatte = [
           Meld deg inn på under fem minutter. Du blir en del av over 160 000 medlemmer i Fellesforbundet.
         </p>
       </div>
-      <a href={KONTAKT.fellesforbundetUrl} target="_blank" rel="noopener noreferrer" class="btn btn-primary" data-en="Become a member →">
+      <a href={FF_LENKER.medlemskap} target="_blank" rel="noopener noreferrer" class="btn btn-primary" data-en="Become a member →">
         Bli medlem →
       </a>
     </div>
@@ -222,68 +212,6 @@ const ansatte = [
   @media (max-width: 768px) {
     .container .grid[style*="grid-template-columns:1fr 1fr"] { grid-template-columns: 1fr !important; }
   }
-
-  /* Sticky header kompenseres ved hopp til ankerseksjoner */
+  /* Sticky header kompenseres ved hopp til ankerseksjoner (komponentstiler ligger i global.css) */
   #fordeler, #om, #aktuelt, #ansatte, #bli-medlem, #hytte, #kontakt { scroll-margin-top: 84px; }
-
-  .eyebrow {
-    display: inline-block;
-    font-size: 12px;
-    font-weight: 800;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--rod);
-  }
-
-  /* Hero-stats */
-  .hero-stats {
-    display: flex;
-    flex-wrap: wrap;
-    gap: clamp(24px, 5vw, 56px);
-    margin-top: 36px;
-    padding-top: 28px;
-    border-top: 1px solid rgba(255,255,255,0.15);
-  }
-  .hero-stats div { display: flex; flex-direction: column; }
-  .hero-stats b { font-size: 26px; font-weight: 900; letter-spacing: -0.02em; }
-  .hero-stats span { font-size: 13.5px; color: #b9bad0; margin-top: 2px; }
-
-  /* Fordel-kort */
-  .benefit { background: #fff; border: 1px solid var(--kantlinje); border-radius: 16px; padding: 24px; }
-  .benefit-ic {
-    display: inline-flex; align-items: center; justify-content: center;
-    width: 48px; height: 48px; border-radius: 12px;
-    background: #fbeceb; font-size: 24px; margin-bottom: 16px;
-  }
-
-  /* Sitat-boks */
-  .about-quote {
-    background: var(--morkbla); color: #fff; border-radius: 20px;
-    padding: clamp(28px, 4vw, 44px); display: flex; align-items: center;
-    border-left: 6px solid var(--rod);
-  }
-  .about-quote p { font-size: clamp(20px, 2.4vw, 28px); font-weight: 800; letter-spacing: -0.02em; line-height: 1.25; }
-
-  /* Nyhetskort */
-  .news-card { background: #fff; border: 1px solid var(--kantlinje); border-radius: 16px; padding: 22px; }
-  .news-meta { display: flex; align-items: center; gap: 12px; }
-  .news-tag {
-    font-size: 11.5px; font-weight: 800; letter-spacing: 0.04em; text-transform: uppercase;
-    color: var(--rod); background: #fbeceb; padding: 4px 10px; border-radius: 100px;
-  }
-
-  /* Person-kort */
-  .person { display: flex; gap: 14px; align-items: flex-start; background: var(--flate); border: 1px solid var(--kantlinje); border-radius: 16px; padding: 18px; }
-  .person-avatar {
-    flex: none; width: 46px; height: 46px; border-radius: 50%;
-    background: var(--morkbla); color: #fff; font-weight: 800; font-size: 15px;
-    display: flex; align-items: center; justify-content: center;
-  }
-
-  /* CTA-band */
-  .cta-band {
-    background: linear-gradient(135deg, var(--morkbla) 0%, #2a2657 100%);
-    border-radius: 22px; padding: clamp(32px, 5vw, 56px);
-    display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 28px;
-  }
 </style>
