@@ -29,16 +29,23 @@ const steg = [
   <!-- HERO -->
   <div class="hero-dark">
     <div class="container section">
-      <span class="hero-pill" data-en="Membership">Medlemskap</span>
-      <h1 class="h1" style="max-width:18ch; margin-top:18px;" data-en="Join Fellesforbundet">Bli medlem i Fellesforbundet</h1>
-      <p class="lead" style="max-width:58ch; margin-top:20px;"
-         data-en="Over 160,000 members stand together for fair pay and a secure working life. Membership costs 1.5% of your gross salary — and gives you far more in return.">
-        Over 160 000 medlemmer står sammen for skikkelig lønn og et trygt arbeidsliv. Medlemskapet
-        koster 1,5 % av bruttolønna — og gir deg langt mer igjen.
-      </p>
-      <div class="hero-actions" style="margin-top:26px;">
-        <a href={FF_LENKER.medlemskap} target="_blank" rel="noopener noreferrer" class="btn btn-primary" data-en="Become a member now →">Bli medlem nå →</a>
-        <a href={`${base}/forhandsvisning/kontakt`} class="btn btn-ghost" data-en="Contact the branch">Kontakt avdelingen</a>
+      <div class="hero-grid" style="align-items:center;">
+        <div>
+          <span class="hero-pill" data-en="Membership">Medlemskap</span>
+          <h1 class="h1" style="margin-top:18px;" data-en="Join Fellesforbundet">Bli medlem i Fellesforbundet</h1>
+          <p class="lead" style="max-width:52ch; margin-top:20px;"
+             data-en="Over 160,000 members stand together for fair pay and a secure working life. Membership costs 1.5% of your gross salary — and gives you far more in return.">
+            Over 160 000 medlemmer står sammen for skikkelig lønn og et trygt arbeidsliv. Medlemskapet
+            koster 1,5 % av bruttolønna — og gir deg langt mer igjen.
+          </p>
+          <div class="hero-actions" style="margin-top:26px;">
+            <a href={FF_LENKER.medlemskap} target="_blank" rel="noopener noreferrer" class="btn btn-primary" data-en="Become a member now →">Bli medlem nå →</a>
+            <a href={`${base}/forhandsvisning/kontakt`} class="btn btn-ghost" data-en="Contact the branch">Kontakt avdelingen</a>
+          </div>
+        </div>
+        <div class="hero-img">
+          <img src={`${base}/images/hovedside/ff-knyttneve.png`} alt="Illustrasjon: knyttneve — symbol på samhold" width="1200" height="675" loading="eager" style="width:100%; height:100%; object-fit:cover;" />
+        </div>
       </div>
     </div>
   </div>

@@ -28,21 +28,29 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
     <!-- FØLG OSS -->
     <div class="section">
-      <div class="grid" style="grid-template-columns:1fr 1fr; gap:clamp(28px,4vw,48px); align-items:center;">
+      <div class="grid" style="grid-template-columns:1fr 1fr; gap:clamp(28px,4vw,48px); align-items:start;">
         <div>
           <span class="eyebrow" data-en="Follow the branch">Følg avdelingen</span>
           <h2 class="h2" style="margin:6px 0 16px;" data-en="Latest news on Facebook">Siste nytt på Facebook</h2>
           <p class="muted" style="font-size:16.5px; line-height:1.7; margin-bottom:22px;"
-             data-en="The branch shares news, events and updates on its Facebook page — follow along to stay informed about what's happening on Helgeland.">
-            Avdelingen deler nyheter, arrangementer og oppdateringer på Facebook-sida si — følg med
-            for å holde deg oppdatert på hva som skjer på Helgeland.
+             data-en="The branch shares news, events and updates on its Facebook page. The latest posts load directly here when you choose to show them.">
+            Avdelingen deler nyheter, arrangementer og oppdateringer på Facebook-sida si. De siste
+            innleggene lastes rett inn her når du velger å vise dem.
           </p>
-          <a href={KONTAKT.facebookUrl} target="_blank" rel="noopener noreferrer" class="btn btn-primary" data-en="Follow on Facebook ↗">Følg på Facebook ↗</a>
+          <a href={KONTAKT.facebookUrl} target="_blank" rel="noopener noreferrer" class="btn btn-primary" data-en="Open Facebook ↗">Åpne Facebook ↗</a>
         </div>
-        <div class="about-quote">
-          <p data-en="&ldquo;Together we are stronger — on Helgeland and across the country.&rdquo;">
-            «Sammen er vi sterkere — på Helgeland og i hele landet.»
-          </p>
+
+        <!-- Facebook-innlegg (klikk for å laste — ingenting fra Facebook lastes før brukeren velger det) -->
+        <div class="fb-embed" id="fb-embed" data-href={KONTAKT.facebookUrl}>
+          <div class="fb-placeholder">
+            <span aria-hidden="true" style="font-size:32px;">📘</span>
+            <p style="font-weight:800; margin:10px 0 4px;" data-en="Show posts from Facebook">Vis innlegg fra Facebook</p>
+            <p class="muted" style="font-size:13px; max-width:36ch; margin:0 auto 16px; line-height:1.5;"
+               data-en="Loading shows posts from facebook.com and accepts cookies from Facebook.">
+              Innlastingen henter innlegg fra facebook.com og godtar informasjonskapsler fra Facebook.
+            </p>
+            <button class="btn btn-secondary" id="fb-load" type="button" data-en="Show Facebook posts">Vis Facebook-innlegg</button>
+          </div>
         </div>
       </div>
     </div>
@@ -63,3 +71,30 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
   </div>
 </Layout>
+
+<style>
+  .fb-embed { border: 1px solid var(--kantlinje); border-radius: 16px; overflow: hidden; background: var(--flate); min-height: 320px; display: flex; }
+  .fb-placeholder { margin: auto; text-align: center; padding: 40px 24px; }
+  .fb-embed iframe { display: block; width: 100%; border: 0; }
+</style>
+
+<script>
+  const wrap = document.getElementById('fb-embed');
+  document.getElementById('fb-load')?.addEventListener('click', () => {
+    if (!wrap) return;
+    const href = wrap.getAttribute('data-href') || '';
+    const src = 'https://www.facebook.com/plugins/page.php?href=' + encodeURIComponent(href)
+      + '&tabs=timeline&width=500&height=720&small_header=true&adapt_container_width=true&hide_cover=false&show_facepile=false';
+    const ifr = document.createElement('iframe');
+    ifr.src = src;
+    ifr.style.cssText = 'width:100%;height:720px;border:0;overflow:hidden;';
+    ifr.setAttribute('scrolling', 'no');
+    ifr.setAttribute('frameborder', '0');
+    ifr.setAttribute('allowfullscreen', 'true');
+    ifr.setAttribute('allow', 'autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share');
+    ifr.setAttribute('loading', 'lazy');
+    ifr.title = 'Facebook-innlegg fra Fellesforbundet Helgeland avd. 143';
+    wrap.innerHTML = '';
+    wrap.appendChild(ifr);
+  });
+</script>

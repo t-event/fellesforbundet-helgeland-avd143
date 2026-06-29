@@ -31,11 +31,26 @@ export const FF_LENKER = {
   kontingent: 'https://www.fellesforbundet.no/medlemskap/hva-koster-det/',
 } as const;
 
-// Avdelingens ledelse (offentlig registrert i Brønnøysund).
-// MERK: utvid med flere tillitsvalgte + direkte kontakt når avdelingen oppgir det.
-export const LEDELSE = [
-  { navn: 'Tommy Rannov Nystad', rolle: 'Leder',     rolle_en: 'Leader' },
-  { navn: 'Kjell Arne Olsen',    rolle: 'Nestleder', rolle_en: 'Deputy leader' },
+// Avdelingens styre (offentlig registrert i Brønnøysund pr. 2024).
+// Tommy Rannov Nystad er leder/daglig leder; øvrige er styremedlemmer.
+// MERK: nestleder/kasserer o.l. er ikke spesifisert i Brønnøysund — be avdelingen
+// bekrefte verv + ev. direkte kontakt. Avregistrerte medlemmer er utelatt.
+export const STYRE = [
+  { navn: 'Tommy Rannov Nystad',             rolle: 'Leder',       rolle_en: 'Leader' },
+  { navn: 'Kjell Arne Olsen',                rolle: 'Styremedlem', rolle_en: 'Board member' },
+  { navn: 'Roger Eugen Ranfjordnes',         rolle: 'Styremedlem', rolle_en: 'Board member' },
+  { navn: 'Ulrikke Bergitte Hansen Skjevik', rolle: 'Styremedlem', rolle_en: 'Board member' },
+  { navn: 'Mathias Erlandsen Tustervatn',    rolle: 'Styremedlem', rolle_en: 'Board member' },
+  { navn: 'Mary-Linn Kümmel',                rolle: 'Styremedlem', rolle_en: 'Board member' },
+  { navn: 'Arnt Ove Kirknes',                rolle: 'Styremedlem', rolle_en: 'Board member' },
+  { navn: 'Ann Kristin Sletvold',            rolle: 'Styremedlem', rolle_en: 'Board member' },
+  { navn: 'Remi Andre Knapstad',             rolle: 'Styremedlem', rolle_en: 'Board member' },
+  { navn: 'Johan Hovind',                    rolle: 'Styremedlem', rolle_en: 'Board member' },
+  { navn: 'Andreas Bech Stene',              rolle: 'Styremedlem', rolle_en: 'Board member' },
+  { navn: 'Stein André Olsen',               rolle: 'Styremedlem', rolle_en: 'Board member' },
+  { navn: 'Jon Arne Myrvold Nygård',         rolle: 'Styremedlem', rolle_en: 'Board member' },
+  { navn: 'Matz Petter Johansen',            rolle: 'Styremedlem', rolle_en: 'Board member' },
+  { navn: 'Bjørn Tore Isaksen',              rolle: 'Styremedlem', rolle_en: 'Board member' },
 ] as const;
 
 export const UMBUKTA = {
