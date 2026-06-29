@@ -1,6 +1,6 @@
 # Sikkerhetspolicy
 
-Takk for at du bidrar til å holde hytteutleie-nettsiden til **Fellesforbundet Helgeland avd. 143** trygg.
+Takk for at du bidrar til å holde nettsiden til **Fellesforbundet Helgeland avd. 143** (avdelingens hjemmeside og hyttebooking) trygg.
 
 ## Rapportere en sårbarhet
 

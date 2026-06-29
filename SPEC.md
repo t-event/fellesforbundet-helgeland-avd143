@@ -6,11 +6,12 @@
 
 ## 1. Oversikt
 
-Statisk nettside for utleie av Fellesforbundet Helgeland (avd. 143) sine to hytter. Ingen database, ingen backend, ingen betalingsløsning på nettsiden. Alt hostes på GitHub Pages.
+Statisk nettside for Fellesforbundet Helgeland (avd. 143): **avdelingens hjemmeside** og **hyttebooking** for de to hyttene. Ingen database, ingen backend, ingen betalingsløsning på nettsiden. Alt hostes på GitHub Pages i **ett repo / ett Astro-prosjekt**.
 
 **GitHub-repo:** `https://github.com/t-event/fellesforbundet-helgeland-avd143`  
-**Domain-plassholder:** `hytteutleie-ffh143.no` (oppdateres med `CNAME` når domene er kjøpt)  
-**Pages-URL midlertidig:** `t-event.github.io/fellesforbundet-helgeland-avd143`
+**Domene:** `ffh143.no` (bestilt via domene.no — aktivt når faktura er betalt). Forside på `ffh143.no`, hyttebooking via videresending `hyttebooking.ffh143.no` → `/hytter`.  
+**Pages-URL midlertidig:** `t-event.github.io/fellesforbundet-helgeland-avd143`  
+**Status:** Hyttebooking lanseres først (lever på `main`). Hovedsida bygges på branch `hovedside` og merges når klar (= go-live/omkobling).
 
 ---
 
@@ -33,7 +34,8 @@ Statisk nettside for utleie av Fellesforbundet Helgeland (avd. 143) sine to hytt
 
 | Rute | Fil | Innhold |
 |---|---|---|
-| `/` | `index.astro` | Forside: hero, intro, to hyttekort |
+| `/` | `index.astro` | Avdelingens forside: hero, medlemsfordeler, om avdelingen, aktuelt, ansatte, bli medlem, hytte-teaser, kontakt *(branch `hovedside`)* |
+| `/hytter` | `hytter.astro` | Oversikt over de to hyttene (hero, intro, to hyttekort) |
 | `/umbukta` | `umbukta.astro` | Full hytteside (se seksjon 5) |
 | `/turtips` | `turtips.astro` | 6 turtips fra Umbukta-området |
 | `/hjelp` | `hjelp.astro` | FAQ-accordion + kontaktskjema |
@@ -42,6 +44,12 @@ Statisk nettside for utleie av Fellesforbundet Helgeland (avd. 143) sine to hytt
 | `/personvern` | `personvern.astro` | GDPR-personvernerklæring |
 | `/cookies` | `cookies.astro` | Informasjonskapseltekst |
 | `/404` | `404.astro` | «Side ikke funnet» |
+
+### Hovedside (under bygging på branch `hovedside`)
+
+Forsida (`index.astro`) er bygget fra designet `Hovedside design/Fellesforbundet avd 143 - Hovedside.html` (Vue-mockup) i eksisterende designsystem (profilhåndbok-CSS + `data-en`-i18n). **Plassholdere som må erstattes med ekte innhold før publisering:** nyheter (3 eksempelsaker), ansatte (AB/OK/TV/SE, tlf 75 15 12 21–23, post@ffh143.no), og «Bli medlem»-lenken (peker foreløpig til Fellesforbundet sentralt — bør gå til ekte innmeldingsskjema).
+
+**Planlagte undersider** (fra designet, bygges etter forsida): Bli medlem, Lønn & tariff, Tillitsvalgte, Aktuelt, Kontakt.
 
 ---
 
