@@ -16,10 +16,7 @@ export default defineConfig({
   // CSS-fila ennå rett etter en deploy. CSS-en er liten (~12 KB / 4 KB gzip).
   build: { inlineStylesheets: 'always' },
   integrations: [
-    // Skjult forhåndsvisning av hovedsida holdes ute av sitemap (også noindex i Layout)
-    sitemap({
-      filter: (page) => !page.includes('/forhandsvisning'),
-    }),
+    sitemap(),
   ],
   image: {
     // Astro-bildeoptimasjon bruker sharp (installert som dep)

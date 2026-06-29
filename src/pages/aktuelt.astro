@@ -1,14 +1,12 @@
 ---
-import Layout from '../../layouts/Layout.astro';
-import { KONTAKT } from '../../config.ts';
+import Layout from '../layouts/Layout.astro';
+import { KONTAKT } from '../config.ts';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
 <Layout
   title="Aktuelt — Fellesforbundet Helgeland avd. 143"
   description="Siste nytt fra Fellesforbundet avd. 143 — tariff, arrangementer og medlemsinfo. Følg avdelingen på Facebook for løpende oppdateringer."
-  variant="hovedside"
-  noindex={true}
 >
 
   <!-- HERO -->
@@ -65,7 +63,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
             Ta kontakt med avdelingen — vi vil høre fra medlemmene.
           </p>
         </div>
-        <a href={`${base}/forhandsvisning/kontakt`} class="btn btn-primary" data-en="Contact the branch →">Kontakt avdelingen →</a>
+        <a href={`${base}/kontakt`} class="btn btn-primary" data-en="Contact the branch →">Kontakt avdelingen →</a>
       </div>
     </div>
 
