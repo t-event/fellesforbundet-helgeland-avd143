@@ -1,6 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import { KONTAKT, LEDELSE, FF_LENKER } from '../config.ts';
+import { KONTAKT, STYRE, FF_LENKER } from '../config.ts';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
 const initialer = (navn: string) =>
@@ -25,18 +25,32 @@ const fordeler = [
   <!-- HERO -->
   <div class="hero-dark">
     <div class="container section">
-      <span class="hero-pill" data-en="Norway's largest union in the private sector">Norges største forbund i privat sektor</span>
-      <h1 class="h1" style="max-width:20ch; margin-top:18px;" data-en="Standing together — for a safe working life in Helgeland">
-        Vi står sammen — for et trygt arbeidsliv på Helgeland
-      </h1>
-      <p class="lead" style="max-width:60ch; margin-top:20px;"
-         data-en="Fellesforbundet branch 143 organises members in industry, construction, transport and service from Mo i Rana to the coast. We negotiate pay, give legal help and stand together when it matters.">
-        Fellesforbundet avdeling 143 organiserer medlemmer i industri, bygg, transport og service
-        fra Mo i Rana til kysten. Vi forhandler lønn, gir juridisk hjelp og står sammen når det gjelder.
-      </p>
-      <div class="hero-actions" style="margin-top:26px;">
-        <a href={`${base}/forhandsvisning/bli-medlem`} class="btn btn-primary" data-en="Become a member today">Bli medlem i dag</a>
-        <a href={`${base}/forhandsvisning/kontakt`} class="btn btn-ghost" data-en="Contact the branch">Kontakt avdelingen</a>
+      <div class="hero-grid" style="align-items:center;">
+        <div>
+          <span class="hero-pill" data-en="Norway's largest union in the private sector">Norges største forbund i privat sektor</span>
+          <h1 class="h1" style="margin-top:18px;" data-en="Standing together — for a safe working life in Helgeland">
+            Vi står sammen — for et trygt arbeidsliv på Helgeland
+          </h1>
+          <p class="lead" style="max-width:54ch; margin-top:20px;"
+             data-en="Fellesforbundet branch 143 organises members in industry, construction, transport and service from Mo i Rana to the coast. We negotiate pay, give legal help and stand together when it matters.">
+            Fellesforbundet avdeling 143 organiserer medlemmer i industri, bygg, transport og service
+            fra Mo i Rana til kysten. Vi forhandler lønn, gir juridisk hjelp og står sammen når det gjelder.
+          </p>
+          <div class="hero-actions" style="margin-top:26px;">
+            <a href={`${base}/forhandsvisning/bli-medlem`} class="btn btn-primary" data-en="Become a member today">Bli medlem i dag</a>
+            <a href={`${base}/forhandsvisning/kontakt`} class="btn btn-ghost" data-en="Contact the branch">Kontakt avdelingen</a>
+          </div>
+        </div>
+        <div class="hero-img">
+          <img
+            src={`${base}/images/hovedside/ff-demonstrasjon.png`}
+            alt="Illustrasjon: tre medlemmer i tog med Fellesforbundets fane"
+            width="1200"
+            height="675"
+            loading="eager"
+            style="width:100%; height:100%; object-fit:cover;"
+          />
+        </div>
       </div>
       <div class="hero-stats">
         <div><b>160 000+</b><span data-en="members in Fellesforbundet">medlemmer i Fellesforbundet</span></div>
@@ -121,18 +135,15 @@ const fordeler = [
         <span class="eyebrow" data-en="People in the branch">Folk i avdelingen</span>
         <h2 class="h2" style="margin-top:6px;" data-en="Leadership and shop stewards">Ledelse og tillitsvalgte</h2>
       </div>
-      <a href={`${base}/forhandsvisning/tillitsvalgte`} class="btn-link" data-en="See all →">Se alle →</a>
+      <a href={`${base}/forhandsvisning/tillitsvalgte`} class="btn-link" data-en="See the whole board →">Se hele styret →</a>
     </div>
-    <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:18px;">
-      {LEDELSE.map(p => (
+    <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:16px;">
+      {STYRE.slice(0, 4).map(p => (
         <div class="person">
           <span class="person-avatar" aria-hidden="true">{initialer(p.navn)}</span>
           <div>
-            <b style="display:block; font-size:15.5px;">{p.navn}</b>
-            <span class="muted" style="font-size:13.5px;" data-en={p.rolle_en}>{p.rolle}</span>
-            <div style="font-size:13.5px; margin-top:4px;">
-              <a href={`tel:+47${KONTAKT.telefon}`} class="btn-link" style="font-size:13.5px;">{KONTAKT.telefonFormatert}</a>
-            </div>
+            <b style="display:block; font-size:15px;">{p.navn}</b>
+            <span class="muted" style="font-size:13px;" data-en={p.rolle_en}>{p.rolle}</span>
           </div>
         </div>
       ))}

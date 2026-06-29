@@ -14,16 +14,18 @@ const cabinLinks = [
 ];
 
 const hovedLinks = [
-  { href: '/forhandsvisning',               label: 'Hjem',          en: 'Home' },
-  { href: '/forhandsvisning/bli-medlem',    label: 'Bli medlem',    en: 'Join' },
-  { href: '/forhandsvisning/lonn-tariff',   label: 'Lønn & tariff', en: 'Pay & agreements' },
-  { href: '/forhandsvisning/tillitsvalgte', label: 'Tillitsvalgte', en: 'Shop stewards' },
-  { href: '/forhandsvisning/aktuelt',       label: 'Aktuelt',       en: 'News' },
-  { href: '/forhandsvisning/kontakt',       label: 'Kontakt',       en: 'Contact' },
-  { href: '/',                              label: 'Hyttebooking',  en: 'Cabin rental' },
+  { href: '/forhandsvisning', label: 'Hjem', en: 'Home' },
+  { label: 'Medlem', en: 'Member', children: [
+    { href: '/forhandsvisning/bli-medlem',    label: 'Bli medlem',    en: 'Join' },
+    { href: '/forhandsvisning/lonn-tariff',   label: 'Lønn & tariff', en: 'Pay & agreements' },
+    { href: '/forhandsvisning/tillitsvalgte', label: 'Tillitsvalgte', en: 'Shop stewards' },
+  ] },
+  { href: '/forhandsvisning/aktuelt', label: 'Aktuelt',     en: 'News' },
+  { href: '/forhandsvisning/kontakt', label: 'Kontakt',     en: 'Contact' },
+  { href: '/',                        label: 'Hytteutleie', en: 'Cabin rental' },
 ];
 
-const navLinks = variant === 'hovedside' ? hovedLinks : cabinLinks;
+const navLinks = (variant === 'hovedside' ? hovedLinks : cabinLinks) as any[];
 const brandSub = variant === 'hovedside'
   ? { no: 'Helgeland · avd. 143', en: 'Helgeland · branch 143' }
   : { no: 'Helgeland hytteutleie', en: 'Helgeland cabin rental' };
@@ -52,16 +54,29 @@ const currentPath = Astro.url.pathname.replace(base, '').replace(/\/$/, '') || '
       <!-- Desktop-nav -->
       <nav class="nav" aria-label="Hovedmeny">
         {navLinks.map(link => (
-          <a
-            href={link.external ? link.href : `${base}${link.href}`}
-            class={!link.external && currentPath === link.href ? 'active' : ''}
-            data-i18n={link.key}
-            data-en={link.en}
-            target={link.external ? '_blank' : undefined}
-            rel={link.external ? 'noopener noreferrer' : undefined}
-          >
-            {link.label}
-          </a>
+          link.children ? (
+            <div class="nav-group">
+              <button class="nav-group-btn" type="button" aria-haspopup="true">
+                <span data-en={link.en}>{link.label}</span><span class="caret" aria-hidden="true">▾</span>
+              </button>
+              <div class="nav-menu">
+                {link.children.map((c: any) => (
+                  <a href={`${base}${c.href}`} class={currentPath === c.href ? 'active' : ''} data-en={c.en}>{c.label}</a>
+                ))}
+              </div>
+            </div>
+          ) : (
+            <a
+              href={link.external ? link.href : `${base}${link.href}`}
+              class={!link.external && currentPath === link.href ? 'active' : ''}
+              data-i18n={link.key}
+              data-en={link.en}
+              target={link.external ? '_blank' : undefined}
+              rel={link.external ? 'noopener noreferrer' : undefined}
+            >
+              {link.label}
+            </a>
+          )
         ))}
       </nav>
 
@@ -108,16 +123,25 @@ const currentPath = Astro.url.pathname.replace(base, '').replace(/\/$/, '') || '
 <!-- Mobilmeny (vises ved hamburger-klikk) -->
 <nav class="nav-mobile" id="nav-mobile" aria-label="Mobilmeny" role="navigation">
   {navLinks.map(link => (
-    <a
-      href={link.external ? link.href : `${base}${link.href}`}
-      class={!link.external && currentPath === link.href ? 'active' : ''}
-      data-i18n={link.key}
-      data-en={link.en}
-      target={link.external ? '_blank' : undefined}
-      rel={link.external ? 'noopener noreferrer' : undefined}
-    >
-      {link.label}
-    </a>
+    link.children ? (
+      <Fragment>
+        <div class="nav-m-label" data-en={link.en}>{link.label}</div>
+        {link.children.map((c: any) => (
+          <a href={`${base}${c.href}`} class={`nav-m-sub${currentPath === c.href ? ' active' : ''}`} data-en={c.en}>{c.label}</a>
+        ))}
+      </Fragment>
+    ) : (
+      <a
+        href={link.external ? link.href : `${base}${link.href}`}
+        class={!link.external && currentPath === link.href ? 'active' : ''}
+        data-i18n={link.key}
+        data-en={link.en}
+        target={link.external ? '_blank' : undefined}
+        rel={link.external ? 'noopener noreferrer' : undefined}
+      >
+        {link.label}
+      </a>
+    )
   ))}
   <a href={`${base}${mobileCta.href}`} class="btn btn-primary" data-i18n={mobileCta.key} data-en={mobileCta.en}>
     {mobileCta.label}

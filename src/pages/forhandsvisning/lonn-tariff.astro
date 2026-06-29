@@ -29,13 +29,20 @@ const ressurser = [
   <!-- HERO -->
   <div class="hero-dark">
     <div class="container section">
-      <span class="hero-pill" data-en="Pay & agreements">Lønn & tariff</span>
-      <h1 class="h1" style="max-width:16ch; margin-top:18px;" data-en="Pay, agreements and your rights">Lønn, tariff og dine rettigheter</h1>
-      <p class="lead" style="max-width:58ch; margin-top:20px;"
-         data-en="The collective agreement is your safety net at work — it secures minimum pay, supplements, working hours and the right to negotiate.">
-        Tariffavtalen er sikkerhetsnettet ditt på jobb — den sikrer minstelønn, tillegg,
-        arbeidstid og retten til å forhandle.
-      </p>
+      <div class="hero-grid" style="align-items:center;">
+        <div>
+          <span class="hero-pill" data-en="Pay & agreements">Lønn & tariff</span>
+          <h1 class="h1" style="margin-top:18px;" data-en="Pay, agreements and your rights">Lønn, tariff og dine rettigheter</h1>
+          <p class="lead" style="max-width:52ch; margin-top:20px;"
+             data-en="The collective agreement is your safety net at work — it secures minimum pay, supplements, working hours and the right to negotiate.">
+            Tariffavtalen er sikkerhetsnettet ditt på jobb — den sikrer minstelønn, tillegg,
+            arbeidstid og retten til å forhandle.
+          </p>
+        </div>
+        <div class="hero-img">
+          <img src={`${base}/images/hovedside/ff-industri.png`} alt="Illustrasjon: industriarbeid" width="1200" height="675" loading="eager" style="width:100%; height:100%; object-fit:cover;" />
+        </div>
+      </div>
     </div>
   </div>
 
