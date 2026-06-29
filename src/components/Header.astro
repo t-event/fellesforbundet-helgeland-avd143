@@ -1,12 +1,11 @@
 ---
-import { ELSVATN_INATUR_URL } from '../config.ts';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const navLinks = [
-  { href: '/',                label: 'Forside',        key: 'nav_home'    },
-  { href: '/umbukta',         label: 'Umbukta',        key: 'nav_umbukta' },
-  { href: ELSVATN_INATUR_URL, label: 'Øvre Elsvatn ↗', key: 'nav_elsvatn', external: true },
-  { href: '/turtips',         label: 'Turtips',        key: 'nav_turtips' },
-  { href: '/hjelp',           label: 'Hjelpesenter',   key: 'nav_hjelp'   },
+  { href: '/',           label: 'Hjem',         en: 'Home' },
+  { href: '/#fordeler',  label: 'Medlemskap',   en: 'Membership' },
+  { href: '/#aktuelt',   label: 'Aktuelt',      en: 'News' },
+  { href: '/hytter',     label: 'Hyttebooking', en: 'Cabin rental' },
+  { href: '/#kontakt',   label: 'Kontakt',      en: 'Contact' },
 ];
 
 const currentPath = Astro.url.pathname.replace(base, '').replace(/\/$/, '') || '/';
@@ -14,7 +13,7 @@ const currentPath = Astro.url.pathname.replace(base, '').replace(/\/$/, '') || '
 
 <header class="site-header" role="banner">
   <div class="container">
-    <a href={`${base}/`} class="brand" aria-label="Fellesforbundet Helgeland Hytteutleie – til forsiden">
+    <a href={`${base}/`} class="brand" aria-label="Fellesforbundet Helgeland avd. 143 – til forsiden">
       <img
         src={`${base}/images/logo/ff_logo_hvit_rgb.svg`}
         alt="Fellesforbundet Helgeland"
@@ -22,7 +21,7 @@ const currentPath = Astro.url.pathname.replace(base, '').replace(/\/$/, '') || '
         loading="eager"
         class="brand-logo"
       />
-      <span class="brand-sub" data-en="Helgeland cabin rental">Helgeland hytteutleie</span>
+      <span class="brand-sub" data-en="Helgeland · branch 143">Helgeland · avd. 143</span>
     </a>
 
     <div class="nav-right">
@@ -30,11 +29,9 @@ const currentPath = Astro.url.pathname.replace(base, '').replace(/\/$/, '') || '
       <nav class="nav" aria-label="Hovedmeny">
         {navLinks.map(link => (
           <a
-            href={link.external ? link.href : `${base}${link.href}`}
-            class={!link.external && (currentPath === link.href || (link.href !== '/' && currentPath.startsWith(link.href))) ? 'active' : ''}
-            data-i18n={link.key}
-            target={link.external ? '_blank' : undefined}
-            rel={link.external ? 'noopener noreferrer' : undefined}
+            href={`${base}${link.href}`}
+            class={currentPath === link.href ? 'active' : ''}
+            data-en={link.en}
           >
             {link.label}
           </a>
@@ -85,16 +82,14 @@ const currentPath = Astro.url.pathname.replace(base, '').replace(/\/$/, '') || '
 <nav class="nav-mobile" id="nav-mobile" aria-label="Mobilmeny" role="navigation">
   {navLinks.map(link => (
     <a
-      href={link.external ? link.href : `${base}${link.href}`}
-      class={!link.external && currentPath === link.href ? 'active' : ''}
-      data-i18n={link.key}
-      target={link.external ? '_blank' : undefined}
-      rel={link.external ? 'noopener noreferrer' : undefined}
+      href={`${base}${link.href}`}
+      class={currentPath === link.href ? 'active' : ''}
+      data-en={link.en}
     >
       {link.label}
     </a>
   ))}
-  <a href={`${base}/umbukta#ledige-datoer`} class="btn btn-primary" data-i18n="nav_book">
-    Book Umbukta
+  <a href={`${base}/#bli-medlem`} class="btn btn-primary" data-en="Become a member">
+    Bli medlem
   </a>
 </nav>

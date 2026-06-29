@@ -1,200 +1,287 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import { ELSVATN_INATUR_URL } from '../config.ts';
+import { KONTAKT } from '../config.ts';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+// MERK: nyheter og ansatte under er PLASSHOLDER-innhold fra designet —
+// erstattes med ekte saker/personer før hovedsida publiseres.
+const fordeler = [
+  { ikon: '🤝', tittel: 'Lønn & tariff',     tittel_en: 'Pay & agreements', body: 'Vi forhandler tariffavtaler og sikrer deg riktig lønn og ordnede arbeidsforhold.', body_en: 'We negotiate collective agreements and secure fair pay and proper working conditions.' },
+  { ikon: '⚖️', tittel: 'Juridisk hjelp',    tittel_en: 'Legal help',       body: 'Gratis bistand i saker om arbeidsforhold, oppsigelse, lønn og rettigheter.', body_en: 'Free assistance in matters of employment, dismissal, pay and rights.' },
+  { ikon: '🎓', tittel: 'Kurs & skolering',  tittel_en: 'Courses & training', body: 'Tilbud om kurs for medlemmer og tillitsvalgte gjennom hele året.', body_en: 'Courses for members and shop stewards throughout the year.' },
+  { ikon: '🏔️', tittel: 'Medlemsfordeler',   tittel_en: 'Member benefits',   body: 'Forsikring, rabatter og leie av forbundets fjellhytter til medlemspris.', body_en: 'Insurance, discounts and rental of the union\'s mountain cabins at member prices.' },
+];
+
+const nyheter = [
+  { tag: 'Tariff',      tag_en: 'Agreement', dato: '12. mai 2026',   dato_en: '12 May 2026',   tittel: 'Enighet i lokale lønnsforhandlinger ved industribedriftene i Rana', tittel_en: 'Agreement reached in local pay talks at Rana industry', body: 'Partene kom til enighet etter to dagers forhandlinger.', body_en: 'The parties reached agreement after two days of negotiations.' },
+  { tag: 'Arrangement', tag_en: 'Event',     dato: '28. april 2026', dato_en: '28 Apr 2026',   tittel: 'Påmelding til tillitsvalgtkonferansen 2026 er åpen', tittel_en: 'Registration for the 2026 shop steward conference is open', body: 'Årets samling holdes i Mosjøen. Meld deg på i god tid.', body_en: 'This year\'s gathering is in Mosjøen. Sign up in good time.' },
+  { tag: 'Medlem',      tag_en: 'Member',    dato: '9. april 2026',  dato_en: '9 Apr 2026',    tittel: 'Nye medlemsfordeler på plass fra sommeren', tittel_en: 'New member benefits in place from summer', body: 'Vi utvider tilbudet med flere rabattavtaler og enklere hyttebooking.', body_en: 'We are expanding with more discount deals and easier cabin booking.' },
+];
+
+const ansatte = [
+  { init: 'AB', rolle: 'Avdelingsleder',        rolle_sub: 'Leder, avd. 143',     rolle_en: 'Branch leader',          rolle_sub_en: 'Leader, branch 143',   kontakt: '75 15 12 21' },
+  { init: 'OK', rolle: 'Organisasjonsarbeider', rolle_sub: 'Medlem & verving',     rolle_en: 'Organiser',              rolle_sub_en: 'Members & recruiting', kontakt: '75 15 12 22' },
+  { init: 'TV', rolle: 'Hovedtillitsvalgt',     rolle_sub: 'Industri',            rolle_en: 'Chief shop steward',     rolle_sub_en: 'Industry',             kontakt: '75 15 12 23' },
+  { init: 'SE', rolle: 'Sekretariat',           rolle_sub: 'Post & hytteutleie',  rolle_en: 'Secretariat',            rolle_sub_en: 'Post & cabin rental',  kontakt: 'post@ffh143.no' },
+];
 ---
 
 <Layout
-  title="Leie hytte — Fellesforbundet Helgeland | Umbukta og Øvre Elsvatn"
-  description="Fellesforbundet Helgeland leier ut to hytter til LO-medlemmer. Hytte i Umbukta (Rana) for deg som er FFH-/LO-medlem. Hytte i Øvre Elsvatn bookes via inatur.no."
+  title="Fellesforbundet Helgeland avd. 143 — fagforening for arbeidsfolk på Helgeland"
+  description="Avdeling 143 organiserer medlemmer i industri, bygg, transport og service fra Mo i Rana til kysten. Bli medlem, få juridisk hjelp, tariffavtaler og medlemsfordeler."
   ogImage="/images/og-default.jpg"
 >
 
   <!-- HERO -->
   <div class="hero-dark">
     <div class="container section">
-      <div class="hero-grid">
+      <span class="hero-pill" data-en="Norway's largest union in the private sector">Norges største forbund i privat sektor</span>
+      <h1 class="h1" style="max-width:20ch; margin-top:18px;" data-en="Standing together — for a safe working life in Helgeland">
+        Vi står sammen — for et trygt arbeidsliv på Helgeland
+      </h1>
+      <p class="lead" style="max-width:60ch; margin-top:20px;"
+         data-en="Fellesforbundet branch 143 organises members in industry, construction, transport and service from Mo i Rana to the coast. We negotiate pay, give legal help and stand together when it matters.">
+        Fellesforbundet avdeling 143 organiserer medlemmer i industri, bygg, transport og service
+        fra Mo i Rana til kysten. Vi forhandler lønn, gir juridisk hjelp og står sammen når det gjelder.
+      </p>
+      <div class="hero-actions" style="margin-top:26px;">
+        <a href={`${base}/#bli-medlem`} class="btn btn-primary" data-en="Become a member today">Bli medlem i dag</a>
+        <a href={`${base}/#kontakt`} class="btn btn-ghost" data-en="Contact the branch">Kontakt avdelingen</a>
+      </div>
+      <div class="hero-stats">
+        <div><b>160 000+</b><span data-en="members in Fellesforbundet">medlemmer i Fellesforbundet</span></div>
+        <div><b>Helgeland</b><span data-en="from Mo i Rana to the coast">fra Mo i Rana til kysten</span></div>
+        <div><b>Avd. 143</b><span data-en="your local branch">din lokale avdeling</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FORDELER / VI HAR RYGGEN DIN -->
+  <div id="fordeler" style="background:var(--flate); border-top:1px solid var(--kantlinje);">
+    <div class="container section">
+      <span class="eyebrow" data-en="This is what you get as a member">Dette får du som medlem</span>
+      <h2 class="h2" style="margin:6px 0 36px;" data-en="We've got your back">Vi har ryggen din</h2>
+      <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:18px;">
+        {fordeler.map(f => (
+          <div class="benefit">
+            <span class="benefit-ic" aria-hidden="true">{f.ikon}</span>
+            <h3 class="h3" style="font-size:18px; margin-bottom:6px;" data-en={f.tittel_en}>{f.tittel}</h3>
+            <p class="muted" style="font-size:14.5px; line-height:1.6;" data-en={f.body_en}>{f.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+
+  <!-- OM AVDELINGEN -->
+  <div id="om" class="container section">
+    <div class="grid" style="grid-template-columns:1fr 1fr; gap:clamp(32px,5vw,56px); align-items:center;">
+      <div>
+        <span class="eyebrow" data-en="About branch 143">Om avdeling 143</span>
+        <h2 class="h2" style="margin:6px 0 18px;" data-en="A strong voice for working people in Helgeland">
+          En sterk stemme for arbeidsfolk på Helgeland
+        </h2>
+        <p class="muted" style="font-size:16.5px; line-height:1.7; margin-bottom:16px;"
+           data-en="Branch 143 covers the whole Helgeland region and brings members together across industries. We work for secure jobs, decent pay and an organised working life.">
+          Avdeling 143 dekker hele Helgeland-regionen og samler medlemmer på tvers av bransjer.
+          Vi jobber for trygge ansettelser, anstendig lønn og et organisert arbeidsliv.
+        </p>
+        <p class="muted" style="font-size:16.5px; line-height:1.7;"
+           data-en="As a member you get access to shop stewards, legal assistance, training and a range of member benefits — including renting the union's mountain cabins at member prices.">
+          Som medlem får du tilgang til tillitsvalgtapparat, juridisk bistand, kursing og en rekke
+          medlemsfordeler — inkludert leie av forbundets fjellhytter til medlemspris.
+        </p>
+      </div>
+      <div class="about-quote">
+        <p data-en="&ldquo;Alone you are an employee. Together we are a movement.&rdquo;">
+          «Alene er du en ansatt. Sammen er vi en bevegelse.»
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- AKTUELT / NYHETER -->
+  <div id="aktuelt" style="background:var(--flate); border-top:1px solid var(--kantlinje);">
+    <div class="container section">
+      <div style="display:flex; flex-wrap:wrap; align-items:end; justify-content:space-between; gap:16px; margin-bottom:32px;">
         <div>
-          <span class="hero-pill" data-i18n="home_pill">Fjellhytter på Helgeland</span>
-          <h1 class="h1" data-i18n="home_h1">Leie hytte hos Fellesforbundet Helgeland</h1>
-          <p class="lead" style="max-width:46ch; margin-top:20px;" data-i18n="home_lead">
-            Medlemmer i Fellesforbundet og LO kan leie våre to hytter til hyggelig pris. Naturskjønt, enkelt og trygt.
-          </p>
-          <div class="hero-actions">
-            <a href={`${base}/umbukta`} class="btn btn-primary" data-i18n="home_cta_umbukta">
-              Hytte i Umbukta →
-            </a>
-            <a
-              href={ELSVATN_INATUR_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              class="btn btn-ghost"
-              data-i18n="home_cta_elsvatn"
-            >
-              Hytte i Øvre Elsvatn ↗
-            </a>
+          <span class="eyebrow" data-en="News">Aktuelt</span>
+          <h2 class="h2" style="margin-top:6px;" data-en="News from the branch">Nytt fra avdelingen</h2>
+        </div>
+        <a href={`${base}/#aktuelt`} class="btn-link" data-en="All news →">Alle saker →</a>
+      </div>
+      <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:20px;">
+        {nyheter.map(n => (
+          <article class="news-card">
+            <div class="news-meta">
+              <span class="news-tag" data-en={n.tag_en}>{n.tag}</span>
+              <span class="muted" style="font-size:13px;" data-en={n.dato_en}>{n.dato}</span>
+            </div>
+            <h3 class="h3" style="font-size:18px; margin:10px 0 8px; line-height:1.25;" data-en={n.tittel_en}>{n.tittel}</h3>
+            <p class="muted" style="font-size:14.5px; line-height:1.6;" data-en={n.body_en}>{n.body}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </div>
+
+  <!-- ANSATTE / TILLITSVALGTE -->
+  <div id="ansatte" class="container section">
+    <span class="eyebrow" data-en="People in the branch">Folk i avdelingen</span>
+    <h2 class="h2" style="margin:6px 0 32px;" data-en="The branch's staff and shop stewards">Avdelingens ansatte og tillitsvalgte</h2>
+    <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:18px;">
+      {ansatte.map(a => (
+        <div class="person">
+          <span class="person-avatar" aria-hidden="true">{a.init}</span>
+          <div>
+            <b style="display:block; font-size:15.5px;" data-en={a.rolle_en}>{a.rolle}</b>
+            <span class="muted" style="font-size:13.5px;" data-en={a.rolle_sub_en}>{a.rolle_sub}</span>
+            <div style="font-size:13.5px; margin-top:4px;">
+              {a.kontakt.includes('@')
+                ? <a href={`mailto:${a.kontakt}`} class="btn-link" style="font-size:13.5px;">{a.kontakt}</a>
+                : <a href={`tel:+47${a.kontakt.replace(/\s/g,'')}`} class="btn-link" style="font-size:13.5px;">{a.kontakt}</a>}
+            </div>
           </div>
         </div>
-        <div class="hero-img">
+      ))}
+    </div>
+  </div>
+
+  <!-- BLI MEDLEM (CTA-band) -->
+  <div id="bli-medlem" class="container" style="padding-bottom:clamp(44px,6vw,72px);">
+    <div class="cta-band">
+      <div>
+        <h2 class="h2" style="color:#fff; font-size:clamp(24px,3vw,34px); max-width:18ch;"
+            data-en="Alone you are an employee. Together we are a movement.">
+          Alene er du en ansatt. Sammen er vi en bevegelse.
+        </h2>
+        <p style="color:#dcdce8; font-size:16px; margin-top:12px; max-width:48ch; line-height:1.6;"
+           data-en="Join in under five minutes. You become part of over 160,000 members in Fellesforbundet.">
+          Meld deg inn på under fem minutter. Du blir en del av over 160 000 medlemmer i Fellesforbundet.
+        </p>
+      </div>
+      <a href={KONTAKT.fellesforbundetUrl} target="_blank" rel="noopener noreferrer" class="btn btn-primary" data-en="Become a member →">
+        Bli medlem →
+      </a>
+    </div>
+  </div>
+
+  <!-- HYTTE-TEASER (medlemsfordel) -->
+  <div id="hytte" style="background:var(--flate); border-top:1px solid var(--kantlinje);">
+    <div class="container section">
+      <div class="grid" style="grid-template-columns:1fr 1fr; gap:clamp(28px,4vw,48px); align-items:center;">
+        <div style="border-radius:18px; overflow:hidden; aspect-ratio:16/11;">
           <img
             src={`${base}/images/umbukta/umbukta-eksterior-terrasse.jpg`}
-            alt="Hytte i Umbukta — eksteriør med terrasse i solskinn og blå himmel"
+            alt="Fjellhytta i Umbukta — eksteriør med terrasse i solskinn"
             width="800"
-            height="600"
-            loading="eager"
-            fetchpriority="high"
+            height="550"
+            loading="lazy"
+            style="width:100%; height:100%; object-fit:cover;"
           />
         </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- INTRO -->
-  <div class="container section" style="text-align:center;">
-    <h2 class="h2" style="max-width:34ch; margin:0 auto 16px; text-wrap:balance;"
-        data-en="A place to breathe — for our members">Et sted å trekke pust — for medlemmene våre</h2>
-    <p class="lead" style="max-width:62ch; margin:0 auto;"
-       data-en="Fellesforbundet Helgeland, avd. 143, owns two cabins rented out to LO members and other LO unions. Choose a cabin below, check availability and send a non-binding request. The office confirms the booking.">
-      Fellesforbundet Helgeland avd. 143 eier to hytter som leies ut til LO-medlemmer og andre LO-forbund.
-      Velg hytte under, sjekk ledige datoer og send en uforpliktende forespørsel. Avdelingen bekrefter bookingen.
-    </p>
-  </div>
-
-  <!-- HYTTEKORT -->
-  <div id="hytter" style="background:var(--flate); border-top:1px solid #ededf0;">
-    <div class="container section">
-      <h2 class="h2" style="margin-bottom:8px;" data-i18n="home_section_title">
-        Ønsker du å leie en av våre hytter?
-      </h2>
-      <p class="muted" style="font-size:17px; margin-bottom:24px;" data-i18n="home_section_lead">
-        Vi har to hytter. Velg den du vil leie.
-      </p>
-
-      <div class="alert alert-warn" style="margin-bottom:40px;">
-        <span class="ic">!</span>
         <div>
-          <strong data-en="LO members only">Kun for LO-medlemmer</strong>
-          <p style="font-size:14.5px; margin-top:4px; line-height:1.6;"
-             data-en={`The Umbukta cabin is reserved for members of Fellesforbundet Helgeland, Fellesforbundet (other branches) and other LO unions. The Øvre Elsvatn cabin is open to everyone and is booked via <a href='${ELSVATN_INATUR_URL}' target='_blank' rel='noopener noreferrer' class='btn-link'>inatur.no</a>.`}>
-            Hytta i Umbukta er forbeholdt medlemmer av Fellesforbundet Helgeland, Fellesforbundet (andre avdelinger) og andre LO-forbund.
-            Hytta i Øvre Elsvatn er åpen for alle og bookes via <a href={ELSVATN_INATUR_URL} target="_blank" rel="noopener noreferrer" class="btn-link">inatur.no</a>.
+          <span class="eyebrow" data-en="Member benefit">Medlemsfordel</span>
+          <h2 class="h2" style="margin:6px 0 16px;" data-en="Rent a mountain cabin at member price">
+            Leie fjellhytte til medlemspris
+          </h2>
+          <p class="muted" style="font-size:16.5px; line-height:1.7; margin-bottom:22px;"
+             data-en="The branch has cabins at Umbukta and Øvre Elsvatn, available to LO members. Check availability and book directly.">
+            Avdelingen disponerer hytter ved Umbukta og Øvre Elsvatn, til leie for LO-medlemmer.
+            Sjekk ledige datoer og book direkte.
           </p>
+          <a href={`${base}/hytter`} class="btn btn-primary" data-en="See the cabins →">Se hyttene →</a>
         </div>
       </div>
-
-      <div class="grid cols-auto">
-
-        <!-- Øvre Elsvatn -->
-        <article class="card" style="overflow:hidden; display:flex; flex-direction:column;">
-          <div style="height:220px; position:relative; overflow:hidden;">
-            <img
-              src={`${base}/images/elsvatn/w=1440,h=1080,fit=cover,format=auto,gravity=auto,dpr=2-2.webp`}
-              alt="Hytte i Øvre Elsvatn ved Hattfjelldal — fjellhytte ved vatn"
-              width="720"
-              height="332"
-              loading="lazy"
-              style="width:100%; height:100%; object-fit:cover;"
-            />
-            <span class="badge badge-gul" style="position:absolute; top:14px; left:14px;" data-en="↗ External link — inatur.no">↗ Ekstern lenke — inatur.no</span>
-          </div>
-          <div class="card-pad" style="display:flex; flex-direction:column; flex:1;">
-            <h3 class="h3" style="font-size:23px;" data-i18n="elsvatn_title">Hytte i Øvre Elsvatn</h3>
-            <div style="font-size:14px; font-weight:600; color:var(--rod); margin:4px 0 14px;" data-i18n="elsvatn_subtitle">
-              Hattfjelldal
-            </div>
-            <p class="muted" style="font-size:15px; margin-bottom:16px;" data-i18n="elsvatn_desc">
-              Enkel fjellhytte ved Øvre Elsvatn. Åpen for alle — bookes via inatur.no.
-            </p>
-            <ul style="display:flex; flex-direction:column; gap:9px; margin-bottom:22px; flex:1;">
-              <li style="display:flex; gap:9px; align-items:center; font-size:14.5px;">
-                <span style="width:7px; height:7px; border-radius:50%; background:var(--rod); flex:none;"></span>
-                <span data-en="6 beds, 2 bedrooms">6 sengeplasser, 2 soverom</span>
-              </li>
-              <li style="display:flex; gap:9px; align-items:center; font-size:14.5px;">
-                <span style="width:7px; height:7px; border-radius:50%; background:var(--rod); flex:none;"></span>
-                <span data-en="Wood heating and gas stove, solar panel with battery">Vedfyring og gasskomfyr, solcelle med batteri</span>
-              </li>
-              <li style="display:flex; gap:9px; align-items:center; font-size:14.5px;">
-                <span style="width:7px; height:7px; border-radius:50%; background:var(--rod); flex:none;"></span>
-                <span data-en="Outhouse · no running water/electricity">Utedo · ikke innlagt vann/strøm</span>
-              </li>
-              <li style="display:flex; gap:9px; align-items:center; font-size:14.5px;">
-                <span style="width:7px; height:7px; border-radius:50%; background:var(--rod); flex:none;"></span>
-                <span data-en="13-foot motorboat included">13 fots motorbåt følger med</span>
-              </li>
-              <li style="display:flex; gap:9px; align-items:center; font-size:14.5px;">
-                <span style="width:7px; height:7px; border-radius:50%; background:var(--rod); flex:none;"></span>
-                <span data-en="Approx. 30 min walk from the road — parking by the road">Ca. 30 min gange fra vei — parkering ved vei</span>
-              </li>
-            </ul>
-            <a
-              class="btn btn-secondary"
-              href={ELSVATN_INATUR_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              data-i18n="elsvatn_cta"
-            >
-              Book på inatur ↗
-            </a>
-          </div>
-        </article>
-
-        <!-- Umbukta -->
-        <article class="card" style="overflow:hidden; display:flex; flex-direction:column;">
-          <div style="height:220px; position:relative; overflow:hidden;">
-            <img
-              src={`${base}/images/umbukta/umbukta-eksterior-vinduer.jpg`}
-              alt="Hytte i Umbukta — fjellhytte ved Umbukta i Rana, nær Sverige"
-              width="720"
-              height="540"
-              loading="lazy"
-              style="width:100%; height:100%; object-fit:cover;"
-            />
-            <span class="badge badge-green" style="position:absolute; top:14px; left:14px;" data-en="Book on this site">Book her på siden</span>
-          </div>
-          <div class="card-pad" style="display:flex; flex-direction:column; flex:1;">
-            <h3 class="h3" style="font-size:23px;" data-i18n="umbukta_title">Hytte i Umbukta</h3>
-            <div style="font-size:14px; font-weight:600; color:var(--rod); margin:4px 0 14px;" data-i18n="umbukta_subtitle">
-              Ved svenskegrensa, Rana
-            </div>
-            <p class="muted" style="font-size:15.5px; margin-bottom:16px; flex:1;" data-i18n="umbukta_desc">
-              Se bilder, fasiliteter, priser og ledige datoer — og send forespørsel direkte her på nettsida.
-            </p>
-            <ul style="display:flex; flex-direction:column; gap:9px; margin-bottom:22px;">
-              <li style="display:flex; gap:9px; align-items:center; font-size:14.5px;">
-                <span style="width:7px; height:7px; border-radius:50%; background:var(--rod); flex:none;"></span>
-                <span data-en="Up to 12 beds, 2 bedrooms + alcove + loft">Inntil 12 sengeplasser, 2 soverom + sovealkove + hems</span>
-              </li>
-              <li style="display:flex; gap:9px; align-items:center; font-size:14.5px;">
-                <span style="width:7px; height:7px; border-radius:50%; background:var(--rod); flex:none;"></span>
-                <span data-en="Running water and electricity, heat pump and wood stove">Innlagt vann og strøm, varmepumpe og vedovn</span>
-              </li>
-              <li style="display:flex; gap:9px; align-items:center; font-size:14.5px;">
-                <span style="width:7px; height:7px; border-radius:50%; background:var(--rod); flex:none;"></span>
-                <span data-en="Full kitchen, WiFi and TV">Fullt kjøkken, WiFi og TV</span>
-              </li>
-              <li style="display:flex; gap:9px; align-items:center; font-size:14.5px;">
-                <span style="width:7px; height:7px; border-radius:50%; background:var(--rod); flex:none;"></span>
-                <span data-en="Aluminium boat with motor in boathouse">Aluminiumsbåt med motor i naust</span>
-              </li>
-              <li style="display:flex; gap:9px; align-items:center; font-size:14.5px;">
-                <span style="width:7px; height:7px; border-radius:50%; background:var(--rod); flex:none;"></span>
-                <span data-en="Road all the way — parking right by the cabin">Bilvei helt fram — parkering rett ved hytta</span>
-              </li>
-              <li style="display:flex; gap:9px; align-items:center; font-size:14.5px;">
-                <span style="width:7px; height:7px; border-radius:50%; background:var(--rod); flex:none;"></span>
-                <span data-en="LO members only · from NOK 700/night">Kun for LO-medlemmer · fra 700 kr/døgn</span>
-              </li>
-            </ul>
-            <a href={`${base}/umbukta`} class="btn btn-primary" data-i18n="umbukta_cta">
-              Se hytta og book →
-            </a>
-          </div>
-        </article>
-
-      </div>
     </div>
   </div>
 
+  <!-- KONTAKT -->
+  <div id="kontakt" class="container section">
+    <div class="card card-pad" style="display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:24px;">
+      <div>
+        <span class="eyebrow" data-en="Contact us">Kontakt oss</span>
+        <h2 class="h2" style="font-size:clamp(22px,2.6vw,30px); margin:6px 0 10px;" data-en="Get in touch with the branch">
+          Ta kontakt med avdelingen
+        </h2>
+        <p class="muted" style="font-size:15.5px; line-height:1.7;">
+          <span data-en="Phone ">Telefon </span><a href={`tel:+47${KONTAKT.telefon}`} class="btn-link">{KONTAKT.telefonFormatert}</a>
+          <span data-en=" · email "> · e-post </span><a href={`mailto:${KONTAKT.epost}`} class="btn-link">{KONTAKT.epost}</a><br />
+          {KONTAKT.adresse}, {KONTAKT.poststed} · <span data-en="Open">Åpent</span> {KONTAKT.apningstider}
+        </p>
+      </div>
+      <a href={`mailto:${KONTAKT.epost}`} class="btn btn-secondary" data-en="Send an email">Send e-post</a>
+    </div>
+  </div>
 
 </Layout>
+
+<style>
+  @media (max-width: 768px) {
+    .container .grid[style*="grid-template-columns:1fr 1fr"] { grid-template-columns: 1fr !important; }
+  }
+
+  /* Sticky header kompenseres ved hopp til ankerseksjoner */
+  #fordeler, #om, #aktuelt, #ansatte, #bli-medlem, #hytte, #kontakt { scroll-margin-top: 84px; }
+
+  .eyebrow {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--rod);
+  }
+
+  /* Hero-stats */
+  .hero-stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: clamp(24px, 5vw, 56px);
+    margin-top: 36px;
+    padding-top: 28px;
+    border-top: 1px solid rgba(255,255,255,0.15);
+  }
+  .hero-stats div { display: flex; flex-direction: column; }
+  .hero-stats b { font-size: 26px; font-weight: 900; letter-spacing: -0.02em; }
+  .hero-stats span { font-size: 13.5px; color: #b9bad0; margin-top: 2px; }
+
+  /* Fordel-kort */
+  .benefit { background: #fff; border: 1px solid var(--kantlinje); border-radius: 16px; padding: 24px; }
+  .benefit-ic {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 48px; height: 48px; border-radius: 12px;
+    background: #fbeceb; font-size: 24px; margin-bottom: 16px;
+  }
+
+  /* Sitat-boks */
+  .about-quote {
+    background: var(--morkbla); color: #fff; border-radius: 20px;
+    padding: clamp(28px, 4vw, 44px); display: flex; align-items: center;
+    border-left: 6px solid var(--rod);
+  }
+  .about-quote p { font-size: clamp(20px, 2.4vw, 28px); font-weight: 800; letter-spacing: -0.02em; line-height: 1.25; }
+
+  /* Nyhetskort */
+  .news-card { background: #fff; border: 1px solid var(--kantlinje); border-radius: 16px; padding: 22px; }
+  .news-meta { display: flex; align-items: center; gap: 12px; }
+  .news-tag {
+    font-size: 11.5px; font-weight: 800; letter-spacing: 0.04em; text-transform: uppercase;
+    color: var(--rod); background: #fbeceb; padding: 4px 10px; border-radius: 100px;
+  }
+
+  /* Person-kort */
+  .person { display: flex; gap: 14px; align-items: flex-start; background: var(--flate); border: 1px solid var(--kantlinje); border-radius: 16px; padding: 18px; }
+  .person-avatar {
+    flex: none; width: 46px; height: 46px; border-radius: 50%;
+    background: var(--morkbla); color: #fff; font-weight: 800; font-size: 15px;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  /* CTA-band */
+  .cta-band {
+    background: linear-gradient(135deg, var(--morkbla) 0%, #2a2657 100%);
+    border-radius: 22px; padding: clamp(32px, 5vw, 56px);
+    display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 28px;
+  }
+</style>
