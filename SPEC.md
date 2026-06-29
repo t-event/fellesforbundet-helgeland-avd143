@@ -11,7 +11,7 @@ Statisk nettside for Fellesforbundet Helgeland (avd. 143): **avdelingens hjemmes
 **GitHub-repo:** `https://github.com/t-event/fellesforbundet-helgeland-avd143`  
 **Domene:** `ffh143.no` (bestilt via domene.no — aktivt når faktura er betalt). Ved endelig lansering: forside på `ffh143.no`, hyttebooking via videresending `hyttebooking.ffh143.no`.  
 **Pages-URL midlertidig:** `t-event.github.io/fellesforbundet-helgeland-avd143`  
-**Status (interim):** Publikum ser **hyttesida på rot** (`/`). Avdelingens hovedside ligger som en **skjult forhåndsvisning** på `/forhandsvisning` (noindex, utelatt fra sitemap, ikke lenket) for intern/styre-gjennomgang — den er IKKE den endelige strukturen. Se «Lansering av hovedsida» under.
+**Status:** Avdelingens hovedside er **fronten** (rot `/`). Hytteutleia er en seksjon under «Hytteutleie ▾» i menyen (`/hytter`, `/umbukta`, `/turtips`, `/hjelp`). Én felles meny/footer for hele sida (ingen variant-splitt). MERK: noen plassholdere gjenstår (6 ansatte = navn, lokal kontingentsats). Domene `ffh143.no` ikke aktivt ennå.
 
 ---
 
@@ -34,39 +34,31 @@ Statisk nettside for Fellesforbundet Helgeland (avd. 143): **avdelingens hjemmes
 
 | Rute | Fil | Innhold |
 |---|---|---|
-| `/` | `index.astro` | Forside (publikum): hero, intro, to hyttekort |
-| `/forhandsvisning` | `forhandsvisning.astro` | **SKJULT** forhåndsvisning av avdelingens hovedside (noindex, utelatt fra sitemap, Header-variant `hovedside`) — interim til hovedsida lanseres |
+| `/` | `index.astro` | **Avdelingens forside**: hero, medlemsfordeler, om, aktuelt-teaser, styre-teaser, hytte-teaser, kontakt |
+| `/bli-medlem` | `bli-medlem.astro` | Medlemsfordeler, kontingent, innmelding |
+| `/lonn-tariff` | `lonn-tariff.astro` | Avtaleområder + ressurser |
+| `/tillitsvalgte` | `tillitsvalgte.astro` | Styret (Brreg) + ansatte (plassholder) + verktøy |
+| `/aktuelt` | `aktuelt.astro` | Facebook-feed (samtykke) + følg-lenker |
+| `/kontakt` | `kontakt.astro` | Kontaktinfo + Web3Forms-melding |
+| `/hytter` | `hytter.astro` | Hytteoversikt (to hyttekort) — seksjonsforside for «Hytteutleie» |
 | `/umbukta` | `umbukta.astro` | Full hytteside (se seksjon 5) |
 | `/turtips` | `turtips.astro` | 6 turtips fra Umbukta-området |
 | `/hjelp` | `hjelp.astro` | FAQ-accordion + kontaktskjema |
 | `/takk` | `takk.astro` | Kvitteringsside etter bookingforespørsel |
-| `/om-oss` | `om-oss.astro` | Om FFH avd. 143, kontaktinfo |
+| `/om-oss` | `om-oss.astro` | Om avdelingen (historie fra 1965), kontakt, lenker |
 | `/personvern` | `personvern.astro` | GDPR-personvernerklæring |
-| `/cookies` | `cookies.astro` | Informasjonskapseltekst |
+| `/cookies` | `cookies.astro` | Informasjonskapsler + samtykke |
 | `/404` | `404.astro` | «Side ikke funnet» |
 
-### Hovedside — interim skjult forhåndsvisning
+### Hovedside — go-live utført
 
-`forhandsvisning.astro` er avdelingens hovedside, bygget fra designet `Hovedside design/Fellesforbundet avd 143 - Hovedside.html` (Vue-mockup) i eksisterende designsystem (profilhåndbok-CSS + `data-en`-i18n). Den ligger nå som en **skjult side** så hyttesida kan lanseres uavhengig:
+Avdelingens hovedside er nå **den offentlige fronten** (rot `/`), bygget fra designet `Hovedside design/Fellesforbundet avd 143 - Hovedside.html` (Vue-mockup) i designsystemet (profilhåndbok-CSS + `data-en`-i18n + offisielle FF-illustrasjoner). Hytteutleia er en **seksjon** under «Hytteutleie ▾» i menyen.
 
-- Rute: `/forhandsvisning` (ikke lenket fra noe sted)
-- `noindex,nofollow` via `Layout`-propen `noindex` → ikke i søkemotorer
-- Utelatt fra `sitemap.xml` via `filter` i `astro.config.mjs`
-- Egen avdelings-meny/merkevare via `Layout`/`Header`-propen `variant="hovedside"` (publikumssidene bruker standard `variant="hytte"`)
+- **Én felles meny** (`Header.astro`): Hjem · Medlem ▾ (Bli medlem, Lønn & tariff, Tillitsvalgte) · Aktuelt · Kontakt · Hytteutleie ▾ (Begge hyttene, Umbukta, Øvre Elsvatn ↗, Turtips, Hjelpesenter). Ingen variant-splitt lenger.
+- **Én felles footer** (`Footer.astro`): Avdelingen, Hyttene, Kontakt + juridisk bunnlinje.
+- Tidligere skjult `/forhandsvisning`-struktur er fjernet (sidene flyttet til rot, `noindex` + sitemap-filter borte).
 
-> Sikkerhet: dette er «skjult via ulistet URL» (security through obscurity), ikke passordbeskyttelse. Hvem som helst med den eksakte lenken kan se den. Holder for intern/styre-gjennomgang.
-
-### ⚠️ Lansering av hovedsida — MÅ endres for å bli korrekt
-
-Når hovedsida skal bli den offentlige forsida, gjør følgende (den skjulte forhåndsvisningen er IKKE den endelige strukturen):
-
-1. **Flytt innhold:** gjør hovedsida til rot — `forhandsvisning.astro` → `index.astro`, og dagens hytte-velger (`index.astro`) → `hytter.astro` (eller `/hyttebooking`).
-2. **Fjern skjulingen:** ta bort `noindex={true}` og `variant="hovedside"` fra siden (variant blir standard når den er på rot), fjern `/forhandsvisning`-filteret i `astro.config.mjs`.
-3. **Header:** sett `variant="hovedside"` som standard (eller fjern variant-mekanikken og gjør avdelings-menyen til den faste). Hytte-undersidene må fortsatt nå menyen sin.
-4. **Lenker:** ankerlenker (`#fordeler` osv.) og «Se hyttene» (→ hytte-velgeren på ny rute) oppdateres.
-5. **Ekte innhold** (erstatt plassholdere): nyheter (3 eksempelsaker), ansatte (AB/OK/TV/SE, tlf 75 15 12 21–23, post@ffh143.no), og «Bli medlem»-lenken (peker nå til Fellesforbundet sentralt — bør gå til ekte innmeldingsskjema).
-6. **Domene:** `ffh143.no` på rot + `hyttebooking.ffh143.no` som videresending til hytte-seksjonen. Oppdater `CNAME`, `SITE`/`BASE`, robots.txt.
-7. **Bygg de planlagte undersidene** (fra designet): Bli medlem, Lønn & tariff, Tillitsvalgte, Aktuelt, Kontakt.
+**Gjenstår (plassholdere/ekstern):** 6 ansatte (navn — plassholder vises), lokal kontingentsats, domene `ffh143.no` + ev. `hyttebooking.ffh143.no`-videresending (oppdater `CNAME`, `SITE`/`BASE`, robots.txt når aktivt).
 
 ---
 

@@ -6,12 +6,14 @@ Avdelingens nettside: **avdelingens hjemmeside** (forside, medlemskap, aktuelt, 
 
 | Rute | Innhold |
 |------|---------|
-| `/` | Forside (publikum): de to hyttene |
+| `/` | **Avdelingens forside** (hovedside) |
+| `/bli-medlem`, `/lonn-tariff`, `/tillitsvalgte`, `/aktuelt`, `/kontakt` | Avdelingssider |
+| `/hytter` | Hytteoversikt (seksjonsforside for «Hytteutleie») |
 | `/umbukta` | Full hytteside med booking |
-| `/forhandsvisning` | **Skjult** forhåndsvisning av avdelingens hovedside (noindex, ikke i sitemap, ikke lenket) |
+| `/turtips`, `/hjelp`, `/om-oss` | Turtips, hjelpesenter, om avdelingen |
 
-- **Hyttebooking er det som er live** og lever på rot. Avdelingens hovedside ligger som **skjult forhåndsvisning** på `/forhandsvisning` til den er ferdig — se sjekklista **«Lansering av hovedsida»** i [SPEC.md](SPEC.md) for hva som må endres ved go-live.
-- **Planlagte domener (ved endelig lansering):** `ffh143.no` (forside) med `hyttebooking.ffh143.no` som videresending inn til hytteseksjonen.
+- Avdelingens hovedside er **fronten** på rot. Hytteutleia er en seksjon under «Hytteutleie ▾» i menyen. Én felles meny + footer for hele sida.
+- **Planlagt domene:** `ffh143.no` (ikke aktivt ennå — se seksjon 5). Ev. `hyttebooking.ffh143.no` som videresending til hytteseksjonen.
 
 ---
 

@@ -2,44 +2,31 @@
 import { ELSVATN_INATUR_URL } from '../config.ts';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
-// variant: 'hytte' (publikum, standard) | 'hovedside' (skjult forhåndsvisning)
-const { variant = 'hytte' } = Astro.props;
-
-const cabinLinks = [
-  { href: '/',                label: 'Forside',        key: 'nav_home'    },
-  { href: '/umbukta',         label: 'Umbukta',        key: 'nav_umbukta' },
-  { href: ELSVATN_INATUR_URL, label: 'Øvre Elsvatn ↗', key: 'nav_elsvatn', external: true },
-  { href: '/turtips',         label: 'Turtips',        key: 'nav_turtips' },
-  { href: '/hjelp',           label: 'Hjelpesenter',   key: 'nav_hjelp'   },
-];
-
-const hovedLinks = [
-  { href: '/forhandsvisning', label: 'Hjem', en: 'Home' },
+// Én samlet avdelings-meny. Hytteutleia er en seksjon (dropdown), ikke et eget nettsted.
+const navLinks = [
+  { href: '/', label: 'Hjem', en: 'Home' },
   { label: 'Medlem', en: 'Member', children: [
-    { href: '/forhandsvisning/bli-medlem',    label: 'Bli medlem',    en: 'Join' },
-    { href: '/forhandsvisning/lonn-tariff',   label: 'Lønn & tariff', en: 'Pay & agreements' },
-    { href: '/forhandsvisning/tillitsvalgte', label: 'Tillitsvalgte', en: 'Shop stewards' },
+    { href: '/bli-medlem',    label: 'Bli medlem',    en: 'Join' },
+    { href: '/lonn-tariff',   label: 'Lønn & tariff', en: 'Pay & agreements' },
+    { href: '/tillitsvalgte', label: 'Tillitsvalgte', en: 'Shop stewards' },
   ] },
-  { href: '/forhandsvisning/aktuelt', label: 'Aktuelt',     en: 'News' },
-  { href: '/forhandsvisning/kontakt', label: 'Kontakt',     en: 'Contact' },
-  { href: '/',                        label: 'Hytteutleie', en: 'Cabin rental' },
-];
-
-const navLinks = (variant === 'hovedside' ? hovedLinks : cabinLinks) as any[];
-const brandSub = variant === 'hovedside'
-  ? { no: 'Helgeland · avd. 143', en: 'Helgeland · branch 143' }
-  : { no: 'Helgeland hytteutleie', en: 'Helgeland cabin rental' };
-const brandHref = variant === 'hovedside' ? '/forhandsvisning' : '/';
-const mobileCta = variant === 'hovedside'
-  ? { href: '/forhandsvisning/bli-medlem', label: 'Bli medlem',  en: 'Become a member' }
-  : { href: '/umbukta#ledige-datoer',      label: 'Book Umbukta', key: 'nav_book' };
+  { href: '/aktuelt', label: 'Aktuelt',  en: 'News' },
+  { href: '/kontakt', label: 'Kontakt',  en: 'Contact' },
+  { label: 'Hytteutleie', en: 'Cabin rental', children: [
+    { href: '/hytter',          label: 'Begge hyttene',      en: 'Both cabins' },
+    { href: '/umbukta',         label: 'Hytte i Umbukta',    en: 'Umbukta cabin' },
+    { href: ELSVATN_INATUR_URL, label: 'Øvre Elsvatn ↗',     en: 'Øvre Elsvatn ↗', external: true },
+    { href: '/turtips',         label: 'Turtips',            en: 'Hiking tips' },
+    { href: '/hjelp',           label: 'Hjelpesenter',       en: 'Help centre' },
+  ] },
+] as any[];
 
 const currentPath = Astro.url.pathname.replace(base, '').replace(/\/$/, '') || '/';
 ---
 
 <header class="site-header" role="banner">
   <div class="container">
-    <a href={`${base}${brandHref}`} class="brand" aria-label="Fellesforbundet Helgeland avd. 143 – til forsiden">
+    <a href={`${base}/`} class="brand" aria-label="Fellesforbundet Helgeland avd. 143 – til forsiden">
       <img
         src={`${base}/images/logo/ff_logo_hvit_rgb.svg`}
         alt="Fellesforbundet Helgeland"
@@ -47,7 +34,7 @@ const currentPath = Astro.url.pathname.replace(base, '').replace(/\/$/, '') || '
         loading="eager"
         class="brand-logo"
       />
-      <span class="brand-sub" data-en={brandSub.en}>{brandSub.no}</span>
+      <span class="brand-sub" data-en="Helgeland · branch 143">Helgeland · avd. 143</span>
     </a>
 
     <div class="nav-right">
@@ -61,18 +48,21 @@ const currentPath = Astro.url.pathname.replace(base, '').replace(/\/$/, '') || '
               </button>
               <div class="nav-menu">
                 {link.children.map((c: any) => (
-                  <a href={`${base}${c.href}`} class={currentPath === c.href ? 'active' : ''} data-en={c.en}>{c.label}</a>
+                  <a
+                    href={c.external ? c.href : `${base}${c.href}`}
+                    class={!c.external && currentPath === c.href ? 'active' : ''}
+                    data-en={c.en}
+                    target={c.external ? '_blank' : undefined}
+                    rel={c.external ? 'noopener noreferrer' : undefined}
+                  >{c.label}</a>
                 ))}
               </div>
             </div>
           ) : (
             <a
-              href={link.external ? link.href : `${base}${link.href}`}
-              class={!link.external && currentPath === link.href ? 'active' : ''}
-              data-i18n={link.key}
+              href={`${base}${link.href}`}
+              class={currentPath === link.href ? 'active' : ''}
               data-en={link.en}
-              target={link.external ? '_blank' : undefined}
-              rel={link.external ? 'noopener noreferrer' : undefined}
             >
               {link.label}
             </a>
@@ -127,23 +117,24 @@ const currentPath = Astro.url.pathname.replace(base, '').replace(/\/$/, '') || '
       <Fragment>
         <div class="nav-m-label" data-en={link.en}>{link.label}</div>
         {link.children.map((c: any) => (
-          <a href={`${base}${c.href}`} class={`nav-m-sub${currentPath === c.href ? ' active' : ''}`} data-en={c.en}>{c.label}</a>
+          <a
+            href={c.external ? c.href : `${base}${c.href}`}
+            class={`nav-m-sub${!c.external && currentPath === c.href ? ' active' : ''}`}
+            data-en={c.en}
+            target={c.external ? '_blank' : undefined}
+            rel={c.external ? 'noopener noreferrer' : undefined}
+          >{c.label}</a>
         ))}
       </Fragment>
     ) : (
       <a
-        href={link.external ? link.href : `${base}${link.href}`}
-        class={!link.external && currentPath === link.href ? 'active' : ''}
-        data-i18n={link.key}
+        href={`${base}${link.href}`}
+        class={currentPath === link.href ? 'active' : ''}
         data-en={link.en}
-        target={link.external ? '_blank' : undefined}
-        rel={link.external ? 'noopener noreferrer' : undefined}
       >
         {link.label}
       </a>
     )
   ))}
-  <a href={`${base}${mobileCta.href}`} class="btn btn-primary" data-i18n={mobileCta.key} data-en={mobileCta.en}>
-    {mobileCta.label}
-  </a>
+  <a href={`${base}/bli-medlem`} class="btn btn-primary" data-en="Become a member">Bli medlem</a>
 </nav>

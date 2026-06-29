@@ -3,19 +3,13 @@ import { KONTAKT } from '../config.ts';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const year = new Date().getFullYear();
 
-// variant: 'hytte' (publikum) | 'hovedside' (avdelingssida). Avdelings-lenker
-// vises kun på hovedside-footeren slik at de ikke lekker ut på den offentlige hyttesida.
-const { variant = 'hytte' } = Astro.props;
-const erHoved = variant === 'hovedside';
-const brandHref = erHoved ? '/forhandsvisning' : '/';
-
 const avdLinks = [
-  { href: '/forhandsvisning',               label: 'Hjem',         en: 'Home' },
-  { href: '/forhandsvisning/bli-medlem',    label: 'Bli medlem',   en: 'Become a member' },
-  { href: '/forhandsvisning/lonn-tariff',   label: 'Lønn & tariff', en: 'Pay & agreements' },
-  { href: '/forhandsvisning/tillitsvalgte', label: 'Tillitsvalgte', en: 'Shop stewards' },
-  { href: '/forhandsvisning/aktuelt',       label: 'Aktuelt',      en: 'News' },
-  { href: '/forhandsvisning/kontakt',       label: 'Kontakt',      en: 'Contact' },
+  { href: '/',              label: 'Hjem',          en: 'Home' },
+  { href: '/bli-medlem',    label: 'Bli medlem',    en: 'Become a member' },
+  { href: '/lonn-tariff',   label: 'Lønn & tariff', en: 'Pay & agreements' },
+  { href: '/tillitsvalgte', label: 'Tillitsvalgte', en: 'Shop stewards' },
+  { href: '/aktuelt',       label: 'Aktuelt',       en: 'News' },
+  { href: '/kontakt',       label: 'Kontakt',       en: 'Contact' },
 ];
 ---
 
@@ -25,7 +19,7 @@ const avdLinks = [
 
       <!-- Merkevare -->
       <div class="footer-brand">
-        <a href={`${base}${brandHref}`} class="brand" style="margin-bottom:14px; text-decoration:none;" aria-label="Forside">
+        <a href={`${base}/`} class="brand" style="margin-bottom:14px; text-decoration:none;" aria-label="Forside">
           <img
             src={`${base}/images/logo/ff_logo_hvit_rgb.svg`}
             alt="Fellesforbundet Helgeland"
@@ -42,30 +36,21 @@ const avdLinks = [
         </a>
       </div>
 
-      {erHoved ? (
-        <div>
-          <h4 data-en="The branch">Avdelingen</h4>
-          <ul>
-            {avdLinks.map(l => (
-              <li><a href={`${base}${l.href}`} data-en={l.en}>{l.label}</a></li>
-            ))}
-          </ul>
-        </div>
-      ) : (
-        <div>
-          <h4 data-i18n="footer_om">Om oss</h4>
-          <ul>
-            <li><a href={`${base}/om-oss`} data-en="About the branch">Om avdelingen</a></li>
-            <li><a href={`${base}/personvern`} data-i18n="footer_personvern">Personvernerklæring</a></li>
-            <li><a href={`${base}/cookies`} data-i18n="footer_cookies">Cookies</a></li>
-          </ul>
-        </div>
-      )}
+      <!-- Avdelingen -->
+      <div>
+        <h4 data-en="The branch">Avdelingen</h4>
+        <ul>
+          {avdLinks.map(l => (
+            <li><a href={`${base}${l.href}`} data-en={l.en}>{l.label}</a></li>
+          ))}
+        </ul>
+      </div>
 
       <!-- Hyttene -->
       <div>
         <h4 data-i18n="footer_hytter">Hyttene</h4>
         <ul>
+          <li><a href={`${base}/hytter`} data-en="Both cabins">Begge hyttene</a></li>
           <li><a href={`${base}/umbukta`} data-en="Umbukta cabin">Hytte i Umbukta</a></li>
           <li>
             <a
@@ -97,9 +82,9 @@ const avdLinks = [
     <div class="footer-bottom">
       <span>© <span id="footer-year">{year}</span> Fellesforbundet Helgeland avd. 143. <span data-en="All rights reserved.">Alle rettigheter reservert.</span></span>
       <span style="display:flex; gap:1.25rem; align-items:center; flex-wrap:wrap;">
-        {erHoved && <a href={`${base}/om-oss`} style="color:inherit;" data-en="About">Om oss</a>}
-        {erHoved && <a href={`${base}/personvern`} style="color:inherit;" data-en="Privacy">Personvern</a>}
-        {erHoved && <a href={`${base}/cookies`} style="color:inherit;" data-en="Cookies">Cookies</a>}
+        <a href={`${base}/om-oss`} style="color:inherit;" data-en="About">Om oss</a>
+        <a href={`${base}/personvern`} style="color:inherit;" data-en="Privacy">Personvern</a>
+        <a href={`${base}/cookies`} style="color:inherit;" data-en="Cookies">Cookies</a>
         <a href={KONTAKT.brreg} target="_blank" rel="noopener noreferrer" style="color:inherit;">
           Org.nr. {KONTAKT.orgnr}
         </a>
