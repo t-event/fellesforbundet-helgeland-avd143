@@ -6,12 +6,12 @@ Avdelingens nettside: **avdelingens hjemmeside** (forside, medlemskap, aktuelt, 
 
 | Rute | Innhold |
 |------|---------|
-| `/` | Avdelingens forside (hovedside) |
-| `/hytter` | Oversikt over de to hyttene |
+| `/` | Forside (publikum): de to hyttene |
 | `/umbukta` | Full hytteside med booking |
+| `/forhandsvisning` | **Skjult** forhåndsvisning av avdelingens hovedside (noindex, ikke i sitemap, ikke lenket) |
 
-- **Hyttebooking lanseres først** og lever selvstendig. **Hovedsida bygges på branchen `hovedside`** og merges til `main` når den er klar — det er da forsida kobles om (rot → hovedside, hytte-velger → `/hytter`). Hytte-fiks i mellomtiden tas på korte brancher fra `main`.
-- **Planlagte domener:** `ffh143.no` (forside) med `hyttebooking.ffh143.no` som videresending inn til hytteseksjonen.
+- **Hyttebooking er det som er live** og lever på rot. Avdelingens hovedside ligger som **skjult forhåndsvisning** på `/forhandsvisning` til den er ferdig — se sjekklista **«Lansering av hovedsida»** i [SPEC.md](SPEC.md) for hva som må endres ved go-live.
+- **Planlagte domener (ved endelig lansering):** `ffh143.no` (forside) med `hyttebooking.ffh143.no` som videresending inn til hytteseksjonen.
 
 ---
 
