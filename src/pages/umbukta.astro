@@ -9,17 +9,17 @@ import { PRISER, KONTAKT, UMBUKTA } from '../config.ts';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
 const bilder = [
-  { src: 'umbukta-eksterior-terrasse.jpg', alt: 'Hytte i Umbukta — eksteriør med terrasse i solskinn og blå himmel' },
-  { src: 'umbukta-eksterior-vinduer.jpg',  alt: 'Eksteriør med store panoramavinduer mot Umbukta' },
-  { src: 'umbukta-stue.jpg',               alt: 'Lys stue med hjørnesofa, vedovn og store vinduer' },
-  { src: 'umbukta-kjokken.jpg',            alt: 'Fullt utstyrt kjøkken med komfyr, kjøleskap og spisebord' },
-  { src: 'umbukta-spisestue-utsikt.jpg',   alt: 'Spisestue med panoramautsikt over Umbukta og fjellene' },
-  { src: 'umbukta-hems-sittegruppe.jpg',   alt: 'Sittegruppe på hemsen med lenestoler og utsikt over vatnet' },
-  { src: 'umbukta-hems-senger.jpg',        alt: 'Romslig sovehems med flere sengeplasser' },
-  { src: 'umbukta-soverom-dobbelt.jpg',    alt: 'Soverom med dobbeltseng og vindu mot naturen' },
-  { src: 'umbukta-soverom-koye.jpg',       alt: 'Soverom med køyeseng' },
-  { src: 'umbukta-bad.jpg',                alt: 'Bad med dusj, servant og toalett' },
-  { src: 'umbukta-naust-bat.jpg',          alt: 'Aluminiumsbåt med påhengsmotor i naustet' },
+  { src: 'umbukta-eksterior-terrasse.jpg', alt: 'Hytte i Umbukta — eksteriør med terrasse i solskinn og blå himmel', alt_en: 'Umbukta cabin — exterior with terrace in sunshine and blue sky' },
+  { src: 'umbukta-eksterior-vinduer.jpg',  alt: 'Eksteriør med store panoramavinduer mot Umbukta', alt_en: 'Exterior with large panoramic windows facing Umbukta' },
+  { src: 'umbukta-stue.jpg',               alt: 'Lys stue med hjørnesofa, vedovn og store vinduer', alt_en: 'Bright living room with corner sofa, wood stove and large windows' },
+  { src: 'umbukta-kjokken.jpg',            alt: 'Fullt utstyrt kjøkken med komfyr, kjøleskap og spisebord', alt_en: 'Fully equipped kitchen with stove, fridge and dining table' },
+  { src: 'umbukta-spisestue-utsikt.jpg',   alt: 'Spisestue med panoramautsikt over Umbukta og fjellene', alt_en: 'Dining area with panoramic view over Umbukta and the mountains' },
+  { src: 'umbukta-hems-sittegruppe.jpg',   alt: 'Sittegruppe på hemsen med lenestoler og utsikt over vatnet', alt_en: 'Seating area in the loft with armchairs and a view over the lake' },
+  { src: 'umbukta-hems-senger.jpg',        alt: 'Romslig sovehems med flere sengeplasser', alt_en: 'Spacious sleeping loft with several beds' },
+  { src: 'umbukta-soverom-dobbelt.jpg',    alt: 'Soverom med dobbeltseng og vindu mot naturen', alt_en: 'Bedroom with double bed and window facing nature' },
+  { src: 'umbukta-soverom-koye.jpg',       alt: 'Soverom med køyeseng', alt_en: 'Bedroom with bunk bed' },
+  { src: 'umbukta-bad.jpg',                alt: 'Bad med dusj, servant og toalett', alt_en: 'Bathroom with shower, sink and toilet' },
+  { src: 'umbukta-naust-bat.jpg',          alt: 'Aluminiumsbåt med påhengsmotor i naustet', alt_en: 'Aluminium boat with outboard motor in the boathouse' },
 ];
 
 const fasiliteter = [
@@ -208,6 +208,7 @@ const faq = [
               aria-label={`Vis bilde: ${b.alt}`}
               data-src={`${base}/images/umbukta/${b.src}`}
               data-alt={b.alt}
+              data-alt-en={b.alt_en}
             >
               <img
                 src={`${base}/images/umbukta/${b.src}`}
@@ -588,13 +589,18 @@ const faq = [
   const lbCap = document.getElementById('lb-caption');
   let cur = 0;
 
+  // Velg bildetekst etter aktivt språk (lagret i localStorage av Layout).
+  const isEn = () => (localStorage.getItem('lang') || 'nb') === 'en';
+  const altOf = (t: HTMLButtonElement) =>
+    (isEn() ? (t.dataset.altEn || t.dataset.alt) : t.dataset.alt) || '';
+
   function setMain(i: number) {
     if (!thumbs.length) return;
     cur = (i + thumbs.length) % thumbs.length;
     const t = thumbs[cur];
     if (mainImg) {
       mainImg.src = t.dataset.src || '';
-      mainImg.alt = t.dataset.alt || '';
+      mainImg.alt = altOf(t);
     }
     thumbs.forEach((el, idx) => el.classList.toggle('active', idx === cur));
   }
@@ -604,8 +610,8 @@ const faq = [
     cur = (i + thumbs.length) % thumbs.length;
     const t = thumbs[cur];
     lbImg.src = t.dataset.src || '';
-    lbImg.alt = t.dataset.alt || '';
-    if (lbCap) lbCap.textContent = t.dataset.alt || '';
+    lbImg.alt = altOf(t);
+    if (lbCap) lbCap.textContent = altOf(t);
     setMain(cur);
     lb.style.display = 'flex';
     document.body.style.overflow = 'hidden';
@@ -620,6 +626,21 @@ const faq = [
   mainBtn?.addEventListener('click', () => openLightbox(cur));
   document.getElementById('gallery-prev')?.addEventListener('click', () => setMain(cur - 1));
   document.getElementById('gallery-next')?.addEventListener('click', () => setMain(cur + 1));
+
+  // Oppdater bildetekst når språket byttes (les ønsket språk fra knappen
+  // for å unngå timing mot Layout sin applyLang).
+  document.querySelectorAll<HTMLButtonElement>('[data-lang]').forEach(btn =>
+    btn.addEventListener('click', () => {
+      if (!thumbs.length) return;
+      const t = thumbs[cur];
+      const a = (btn.dataset.lang === 'en' ? (t.dataset.altEn || t.dataset.alt) : t.dataset.alt) || '';
+      if (mainImg) mainImg.alt = a;
+      if (lb && lb.style.display !== 'none') {
+        if (lbImg) lbImg.alt = a;
+        if (lbCap) lbCap.textContent = a;
+      }
+    })
+  );
   document.getElementById('lb-close')?.addEventListener('click', closeLightbox);
   document.getElementById('lb-prev')?.addEventListener('click', () => openLightbox(cur - 1));
   document.getElementById('lb-next')?.addEventListener('click', () => openLightbox(cur + 1));
