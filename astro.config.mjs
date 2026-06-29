@@ -11,6 +11,10 @@ export default defineConfig({
   site: SITE,
   base: BASE,
   output: 'static',
+  // Bygg CSS inn i HTML-en i stedet for en ekstern hashet fil. Da slipper vi
+  // «uformatert side» (FOUC) når GitHub Pages sin CDN ikke har propagert den nye
+  // CSS-fila ennå rett etter en deploy. CSS-en er liten (~12 KB / 4 KB gzip).
+  build: { inlineStylesheets: 'always' },
   integrations: [
     // Skjult forhåndsvisning av hovedsida holdes ute av sitemap (også noindex i Layout)
     sitemap({

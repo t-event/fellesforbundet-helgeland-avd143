@@ -6,6 +6,17 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const initialer = (navn: string) =>
   navn.split(/\s+/).map(d => d[0]).join('').slice(0, 2).toUpperCase();
 
+// PLASSHOLDER: 6 ansatte (Brønnøysund: «antall ansatte 6»). Navn/bilder/roller
+// fylles inn når avdelingen sender dem — dette er kun for å vise oppsettet.
+const ansattePlassholder = [
+  { rolle: 'Daglig leder',          rolle_en: 'General manager' },
+  { rolle: 'Organisasjonsarbeider', rolle_en: 'Organiser' },
+  { rolle: 'Ungdomssekretær',       rolle_en: 'Youth secretary' },
+  { rolle: 'Medlemsservice',        rolle_en: 'Member services' },
+  { rolle: 'Regnskap og økonomi',   rolle_en: 'Accounting & finance' },
+  { rolle: 'Sekretariat',           rolle_en: 'Secretariat' },
+];
+
 const verktoy = [
   { ikon: '📘', tittel: 'Håndbok for tillitsvalgte', tittel_en: 'Shop steward handbook', body: 'Rettigheter, plikter og praktiske råd i tillitsvervet.', body_en: 'Rights, duties and practical advice in the role.' },
   { ikon: '🎓', tittel: 'Grunnopplæring',            tittel_en: 'Basic training',         body: 'Kurs for nye tillitsvalgte gjennom Fellesforbundet.', body_en: 'Courses for new shop stewards through Fellesforbundet.' },
@@ -42,6 +53,33 @@ const verktoy = [
   </div>
 
   <div class="container">
+
+    <!-- ANSATTE (plassholder) -->
+    <div class="section">
+      <span class="eyebrow" data-en="Staff">Ansatte</span>
+      <h2 class="h2" style="margin:6px 0 10px;" data-en="The branch's staff">Avdelingens ansatte</h2>
+      <div class="alert alert-warn" style="margin:0 0 22px; max-width:680px;">
+        <span class="ic">!</span>
+        <div style="font-size:14px; line-height:1.6;"
+             data-en="Placeholder — names and photos will be added when the branch provides them. This only shows the layout.">
+          Plassholder — navn og bilder fylles inn når avdelingen sender dem. Dette viser kun oppsettet.
+        </div>
+      </div>
+      <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:14px;">
+        {ansattePlassholder.map(a => (
+          <div class="person">
+            <span class="person-avatar" aria-hidden="true" style="background:#e4e4ec;">👤</span>
+            <div>
+              <b style="display:block; font-size:15px; color:var(--tekst-svak);" data-en="Name coming">Navn kommer</b>
+              <span class="muted" style="font-size:13px;" data-en={a.rolle_en}>{a.rolle}</span>
+            </div>
+          </div>
+        ))}
+      </div>
+      <p class="muted" style="font-size:13.5px; margin-top:14px;" data-en="Reach the staff through the branch office: ">
+        Du når de ansatte gjennom avdelingskontoret: <a href={`tel:+47${KONTAKT.telefon}`} class="btn-link" style="font-size:13.5px;">{KONTAKT.telefonFormatert}</a>
+      </p>
+    </div>
 
     <!-- STYRET -->
     <div class="section">
