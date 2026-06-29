@@ -6,7 +6,17 @@ const year = new Date().getFullYear();
 // variant: 'hytte' (publikum) | 'hovedside' (avdelingssida). Avdelings-lenker
 // vises kun på hovedside-footeren slik at de ikke lekker ut på den offentlige hyttesida.
 const { variant = 'hytte' } = Astro.props;
-const brandHref = variant === 'hovedside' ? '/forhandsvisning' : '/';
+const erHoved = variant === 'hovedside';
+const brandHref = erHoved ? '/forhandsvisning' : '/';
+
+const avdLinks = [
+  { href: '/forhandsvisning',               label: 'Hjem',         en: 'Home' },
+  { href: '/forhandsvisning/bli-medlem',    label: 'Bli medlem',   en: 'Become a member' },
+  { href: '/forhandsvisning/lonn-tariff',   label: 'Lønn & tariff', en: 'Pay & agreements' },
+  { href: '/forhandsvisning/tillitsvalgte', label: 'Tillitsvalgte', en: 'Shop stewards' },
+  { href: '/forhandsvisning/aktuelt',       label: 'Aktuelt',      en: 'News' },
+  { href: '/forhandsvisning/kontakt',       label: 'Kontakt',      en: 'Contact' },
+];
 ---
 
 <footer class="site-footer" role="contentinfo">
@@ -27,16 +37,27 @@ const brandHref = variant === 'hovedside' ? '/forhandsvisning' : '/';
         <p data-en="Trade union for working people in Helgeland — we organise, negotiate and stand together.">
           Fagforening for arbeidsfolk på Helgeland — vi organiserer, forhandler og står sammen.
         </p>
+        <a href={KONTAKT.facebookUrl} target="_blank" rel="noopener noreferrer" class="footer-social" data-en="Follow us on Facebook ↗">
+          Følg oss på Facebook ↗
+        </a>
       </div>
 
-      {variant === 'hovedside' && (
+      {erHoved ? (
         <div>
           <h4 data-en="The branch">Avdelingen</h4>
           <ul>
-            <li><a href={`${base}/forhandsvisning/bli-medlem`} data-en="Become a member">Bli medlem</a></li>
-            <li><a href={`${base}/forhandsvisning/lonn-tariff`} data-en="Pay & agreements">Lønn & tariff</a></li>
-            <li><a href={`${base}/forhandsvisning/tillitsvalgte`} data-en="Shop stewards">Tillitsvalgte</a></li>
-            <li><a href={`${base}/forhandsvisning/aktuelt`} data-en="News">Aktuelt</a></li>
+            {avdLinks.map(l => (
+              <li><a href={`${base}${l.href}`} data-en={l.en}>{l.label}</a></li>
+            ))}
+          </ul>
+        </div>
+      ) : (
+        <div>
+          <h4 data-i18n="footer_om">Om oss</h4>
+          <ul>
+            <li><a href={`${base}/om-oss`} data-en="About the branch">Om avdelingen</a></li>
+            <li><a href={`${base}/personvern`} data-i18n="footer_personvern">Personvernerklæring</a></li>
+            <li><a href={`${base}/cookies`} data-i18n="footer_cookies">Cookies</a></li>
           </ul>
         </div>
       )}
@@ -61,32 +82,24 @@ const brandHref = variant === 'hovedside' ? '/forhandsvisning' : '/';
         </ul>
       </div>
 
-      <!-- Om oss -->
-      <div>
-        <h4 data-i18n="footer_om">Om oss</h4>
-        <ul>
-          <li><a href={`${base}/om-oss`} data-en="About the branch">Om avdelingen</a></li>
-          <li><a href={`${base}/personvern`} data-i18n="footer_personvern">Personvernerklæring</a></li>
-          <li><a href={`${base}/cookies`} data-i18n="footer_cookies">Cookies</a></li>
-        </ul>
-      </div>
-
       <!-- Kontakt -->
       <div>
         <h4 data-i18n="footer_kontakt">Kontakt</h4>
         <ul>
+          <li>{KONTAKT.adresse}, {KONTAKT.postnummer} {KONTAKT.poststed}</li>
           <li><a href={`tel:+47${KONTAKT.telefon}`}>Tlf. {KONTAKT.telefonFormatert}</a></li>
           <li><a href={`mailto:${KONTAKT.epost}`}>{KONTAKT.epost}</a></li>
-          <li>{KONTAKT.adresse}, {KONTAKT.poststed}</li>
           <li><span data-en="Open">Åpent</span> {KONTAKT.apningstider}</li>
-          <li><a href={KONTAKT.facebookUrl} target="_blank" rel="noopener noreferrer" data-en="Facebook ↗">Facebook ↗</a></li>
         </ul>
       </div>
     </div>
 
     <div class="footer-bottom">
-      <span>© <span id="footer-year">{year}</span> Fellesforbundet Helgeland avd. 143. Alle rettigheter reservert.</span>
-      <span style="display:flex; gap:1.5rem; align-items:center; flex-wrap:wrap;">
+      <span>© <span id="footer-year">{year}</span> Fellesforbundet Helgeland avd. 143. <span data-en="All rights reserved.">Alle rettigheter reservert.</span></span>
+      <span style="display:flex; gap:1.25rem; align-items:center; flex-wrap:wrap;">
+        {erHoved && <a href={`${base}/om-oss`} style="color:inherit;" data-en="About">Om oss</a>}
+        {erHoved && <a href={`${base}/personvern`} style="color:inherit;" data-en="Privacy">Personvern</a>}
+        {erHoved && <a href={`${base}/cookies`} style="color:inherit;" data-en="Cookies">Cookies</a>}
         <a href={KONTAKT.brreg} target="_blank" rel="noopener noreferrer" style="color:inherit;">
           Org.nr. {KONTAKT.orgnr}
         </a>

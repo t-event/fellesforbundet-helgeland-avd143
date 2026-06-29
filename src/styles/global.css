@@ -327,6 +327,8 @@ textarea.input { resize: vertical; min-height: 110px; }
 .footer-cols a:hover { color: #fff; }
 .footer-cols ul { display: flex; flex-direction: column; gap: 10px; }
 .footer-brand p { font-size: 14px; line-height: 1.6; color: #bcbcd0; max-width: 30ch; }
+.footer-social { display: inline-block; margin-top: 14px; font-size: 14px; font-weight: 600; color: #fff; text-decoration: none; }
+.footer-social:hover { text-decoration: underline; }
 .footer-bottom { padding-top: 22px; display: flex; flex-wrap: wrap; gap: 8px 20px; justify-content: space-between; font-size: 13px; color: #8a8aa0; }
 
 /* ── Responsivt ──────────────────────────────────────────────── */
