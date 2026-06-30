@@ -1,0 +1,48 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { LENKER_GRUPPER } from '../config.ts';
+---
+<Layout
+  title="Nyttige lenker — Fellesforbundet Helgeland avd. 143"
+  description="Samlede lenker til Fellesforbundet og LO: medlemskap, Min side, lønn og tariff, LO Favør, advokatforsikring, Hovedavtalen og mer."
+>
+  <div class="container section" style="max-width:880px; margin:0 auto;">
+    <h1 class="h1" style="font-size:clamp(26px,3.6vw,38px); margin-bottom:10px;" data-en="Useful links">Nyttige lenker</h1>
+    <p class="muted" style="max-width:60ch; margin-bottom:40px; font-size:16.5px; line-height:1.7;"
+       data-en="Quick access to Fellesforbundet and LO — membership, My page, pay and agreements, member benefits and more. All links open in a new tab.">
+      Rask vei til Fellesforbundet og LO — medlemskap, Min side, lønn og tariff, medlemsfordeler og mer.
+      Alle lenker åpnes i ny fane.
+    </p>
+
+    <div style="display:flex; flex-direction:column; gap:40px;">
+      {LENKER_GRUPPER.map(gruppe => (
+        <section>
+          <h2 class="h2" style="font-size:clamp(20px,2.4vw,26px); margin-bottom:18px;" data-en={gruppe.tittel_en}>{gruppe.tittel}</h2>
+          <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:14px;">
+            {gruppe.lenker.map(l => (
+              <a href={l.url} target="_blank" rel="noopener noreferrer" class="card card-pad lenkkort">
+                <div style="display:flex; align-items:baseline; gap:8px;">
+                  <b style="font-size:16px; color:var(--tekst);" data-en={l.navn_en}>{l.navn}</b>
+                  <span class="lenkkort-pil" aria-hidden="true">↗</span>
+                </div>
+                <p class="muted" style="font-size:14px; line-height:1.55; margin-top:4px;" data-en={l.desc_en}>{l.desc}</p>
+              </a>
+            ))}
+          </div>
+        </section>
+      ))}
+    </div>
+
+    <p class="muted" style="font-size:13.5px; margin-top:40px;"
+       data-en="The branch is not responsible for the content of external websites.">
+      Avdelingen er ikke ansvarlig for innholdet på eksterne nettsteder.
+    </p>
+  </div>
+</Layout>
+
+<style>
+  .lenkkort { display:block; text-decoration:none; transition:transform .12s ease, border-color .12s ease, box-shadow .12s ease; }
+  .lenkkort:hover { transform:translateY(-2px); border-color:var(--rod); box-shadow:0 8px 24px rgba(0,0,0,.08); }
+  .lenkkort:hover .lenkkort-pil { transform:translate(2px,-2px); }
+  .lenkkort-pil { color:var(--rod); font-weight:700; transition:transform .12s ease; }
+</style>

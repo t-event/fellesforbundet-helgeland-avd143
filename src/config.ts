@@ -31,6 +31,40 @@ export const FF_LENKER = {
   kontingent: 'https://www.fellesforbundet.no/medlemskap/hva-koster-det/',
 } as const;
 
+// Nyttige eksterne lenker til Fellesforbundet og LO (vises på /nyttige-lenker).
+// Kilde: avdelingens dokument «Nyttige lenker til Fellesforbundet og LO».
+export const LENKER_GRUPPER = [
+  {
+    tittel: 'Fellesforbundet', tittel_en: 'Fellesforbundet',
+    lenker: [
+      { navn: 'Medlemskap',            navn_en: 'Membership',            desc: 'Bli medlem og se hva medlemskapet gir deg.',          desc_en: 'Join and see what membership gives you.',           url: 'https://www.fellesforbundet.no/medlemskap/' },
+      { navn: 'Lønn og tariff',        navn_en: 'Pay & agreements',      desc: 'Tariffavtaler, lønnsoppgjør og dine rettigheter.',    desc_en: 'Collective agreements, settlements and your rights.', url: 'https://www.fellesforbundet.no/lonn-og-tariff/' },
+      { navn: 'Om Fellesforbundet',    navn_en: 'About Fellesforbundet', desc: 'Hvem forbundet er og hva det jobber for.',            desc_en: 'Who the union is and what it works for.',           url: 'https://www.fellesforbundet.no/om-fellesforbundet/' },
+      { navn: 'Finn din avdeling',     navn_en: 'Find your branch',      desc: 'Oversikt over alle avdelinger i landet.',             desc_en: 'Overview of all branches in the country.',          url: 'https://www.fellesforbundet.no/avdelinger/' },
+      { navn: 'For tillitsvalgte',     navn_en: 'For shop stewards',     desc: 'Verktøy, kurs og støtte i tillitsvervet.',            desc_en: 'Tools, courses and support in the role.',           url: 'https://www.fellesforbundet.no/for-tillitsvalgte/' },
+      { navn: 'Min side (innlogging)', navn_en: 'My page (login)',       desc: 'Logg inn for medlemskort, kontingent og dine data.',  desc_en: 'Log in for membership card, fees and your data.',    url: 'https://minside.fellesforbundet.no' },
+    ],
+  },
+  {
+    tittel: 'Medlemsfordeler og forsikring', tittel_en: 'Member benefits & insurance',
+    lenker: [
+      { navn: 'LO Favør',                 navn_en: 'LO Favør',              desc: 'Medlemsfordeler, rabatter og forsikringer.',     desc_en: 'Member benefits, discounts and insurance.',     url: 'https://www.lofavor.no' },
+      { navn: 'Advokatforsikring (HELP)', navn_en: 'Legal insurance (HELP)', desc: 'Juridisk bistand i privatlivet for medlemmer.', desc_en: 'Legal assistance in private life for members.', url: 'https://help.no/forbund-bank/fellesforbundet/' },
+    ],
+  },
+  {
+    tittel: 'LO', tittel_en: 'LO',
+    lenker: [
+      { navn: 'LO – Landsorganisasjonen', navn_en: 'LO – Confederation of Trade Unions', desc: 'Norges største arbeidstakerorganisasjon.', desc_en: 'Norway\'s largest workers\' organisation.', url: 'https://www.lo.no' },
+      { navn: 'Hvem vi er',            navn_en: 'Who we are',            desc: 'Om LO og fellesskapet av forbund.',                   desc_en: 'About LO and the community of unions.',             url: 'https://www.lo.no/hvem-vi-er/' },
+      { navn: 'Hva vi gjør',           navn_en: 'What we do',            desc: 'LOs arbeid for arbeidslivet.',                        desc_en: 'LO\'s work for working life.',                      url: 'https://www.lo.no/hva-vi-gjor/' },
+      { navn: 'Hva vi mener',          navn_en: 'What we stand for',     desc: 'LOs politikk og standpunkter.',                       desc_en: 'LO\'s politics and positions.',                     url: 'https://www.lo.no/hva-vi-mener/' },
+      { navn: 'Bli medlem i LO',       navn_en: 'Join LO',               desc: 'Medlemskap via et LO-forbund.',                       desc_en: 'Membership through an LO union.',                   url: 'https://www.lo.no/bli-medlem/' },
+      { navn: 'Hovedavtalen',          navn_en: 'The Basic Agreement',   desc: '«Arbeidslivets grunnlov» mellom LO og NHO.',          desc_en: 'The «constitution of working life» between LO and NHO.', url: 'https://www.lo.no/hovedavtalen/' },
+    ],
+  },
+] as const;
+
 // Avdelingens styre (offentlig registrert i Brønnøysund).
 // Verv: Tommy Rannov Nystad = leder (daglig leder + styreleder); øvrige = styremedlemmer.
 // Avregistrerte er utelatt. MERK: dette er STYRET (valgt) — de 6 ANSATTE (lønnede
