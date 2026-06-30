@@ -1,0 +1,80 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { KONTAKT, KONTONUMMER } from '../config.ts';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+<Layout
+  title="Vilkår for hytteleie — Fellesforbundet Helgeland avd. 143"
+  description="Vilkår for leie av avdelingens hytte i Umbukta: hvem kan leie, betaling, avbestilling, dørkode, ansvar og husregler."
+>
+  <div class="container section" style="max-width:720px; margin:0 auto;">
+    <h1 class="h1" style="font-size:clamp(26px,3.6vw,38px); margin-bottom:10px;" data-en="Terms for cabin rental">Vilkår for hytteleie</h1>
+    <p class="muted" style="margin-bottom:32px;" data-en="These terms apply to rental of the branch's cabin in Umbukta. Øvre Elsvatn is booked via inatur.no on inatur's terms.">
+      Disse vilkårene gjelder leie av avdelingens hytte i Umbukta. Øvre Elsvatn bookes via inatur.no på inaturs vilkår.
+    </p>
+
+    <div style="display:flex; flex-direction:column; gap:28px; font-size:16px; line-height:1.75; color:var(--tekst-dempet);">
+
+      <section>
+        <h2 style="font-size:20px; font-weight:800; color:var(--tekst); margin-bottom:8px;" data-en="Who can rent">Hvem kan leie</h2>
+        <p data-en="The cabin is reserved for members of LO-affiliated unions. The price depends on your membership category (Fellesforbundet Helgeland, Fellesforbundet other branch, or another LO union). You may be asked to document membership.">
+          Hytta er forbeholdt medlemmer av LO-tilknyttede forbund. Prisen avhenger av medlemskategori
+          (Fellesforbundet Helgeland, Fellesforbundet annen avdeling, eller annet LO-forbund). Du kan bli
+          bedt om å dokumentere medlemskap.
+        </p>
+      </section>
+
+      <section>
+        <h2 style="font-size:20px; font-weight:800; color:var(--tekst); margin-bottom:8px;" data-en="Booking and confirmation">Booking og bekreftelse</h2>
+        <p data-en="You send a non-binding booking request via the form on the cabin page. The booking is confirmed and becomes binding once the office has registered your payment. Overlapping requests are handled in the order they arrive.">
+          Du sender en uforpliktende bookingforespørsel via skjemaet på hyttesida. Bookingen bekreftes og blir
+          bindende når avdelingen har registrert betalingen din. Overlappende forespørsler behandles i den
+          rekkefølgen de kommer inn.
+        </p>
+      </section>
+
+      <section>
+        <h2 style="font-size:20px; font-weight:800; color:var(--tekst); margin-bottom:8px;" data-en="Payment">Betaling</h2>
+        <p data-en="Payment is made by bank transfer to the branch's account. Use the payment reference shown on the confirmation page so we can match your payment to your booking. The booking is held until payment is registered within the stated deadline.">
+          Betaling skjer ved bankoverføring til avdelingens konto <strong>{KONTONUMMER}</strong>. Bruk
+          betalingsreferansen du får på bekreftelsessida, slik at vi kan koble betalingen til bookingen din.
+          Bookingen holdes av til betalingen er registrert innen oppgitt frist.
+        </p>
+      </section>
+
+      <section>
+        <h2 style="font-size:20px; font-weight:800; color:var(--tekst); margin-bottom:8px;" data-en="Cancellation and refund">Avbestilling og refusjon</h2>
+        <p data-en="Cancelled rentals are not refunded. Contact the office if you need to change the date — we will help if possible. We recommend that you have travel/cancellation insurance in place.">
+          Avbestilt leie refunderes ikke. Ta kontakt med avdelingen hvis du trenger å endre dato — vi hjelper
+          så langt det er mulig. Vi anbefaler at du har reise-/avbestillingsforsikring i orden.
+        </p>
+      </section>
+
+      <section>
+        <h2 style="font-size:20px; font-weight:800; color:var(--tekst); margin-bottom:8px;" data-en="Door code and key">Dørkode og nøkkel</h2>
+        <p data-en="The office sends the door code by SMS or email after your payment is registered — never in advance. The key is in a key box at the cabin. The code must not be shared with others.">
+          Avdelingen sender dørkoden på SMS eller e-post etter at betalingen er registrert — aldri på forhånd.
+          Nøkkelen ligger i en nøkkelboks ved hytta. Koden skal ikke deles med andre.
+        </p>
+      </section>
+
+      <section>
+        <h2 style="font-size:20px; font-weight:800; color:var(--tekst); margin-bottom:8px;" data-en="Responsibility and house rules">Ansvar og husregler</h2>
+        <p data-en="The cabin is rented as-is. The renter is responsible for leaving it clean and tidy, and must replace or compensate for damage and missing items beyond normal wear. The branch is not liable for personal belongings or for injury/loss during the stay. Full house rules and practical info are on the cabin page.">
+          Hytta leies ut som den er. Leietaker er ansvarlig for å forlate den ryddig og rengjort, og må erstatte
+          skader og manglende inventar utover normal slitasje. Avdelingen er ikke ansvarlig for personlige
+          eiendeler eller for skade/tap under oppholdet. Fullstendige husregler og praktisk info står på
+          <a href={`${base}/umbukta`} class="btn-link" data-en="the cabin page">hyttesida</a>.
+        </p>
+      </section>
+
+      <section>
+        <h2 style="font-size:20px; font-weight:800; color:var(--tekst); margin-bottom:8px;" data-en="Questions">Spørsmål</h2>
+        <p>
+          <span data-en="Contact the office at ">Kontakt avdelingen på </span><a href={`mailto:${KONTAKT.epost}`} class="btn-link">{KONTAKT.epost}</a><span data-en=" or phone "> eller tlf. </span>{KONTAKT.telefonFormatert}<span data-en=" (open ">  (åpent </span>{KONTAKT.apningstider}).
+        </p>
+      </section>
+
+    </div>
+  </div>
+</Layout>

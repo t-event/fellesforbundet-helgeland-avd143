@@ -1,0 +1,56 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { KONTAKT } from '../config.ts';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+<Layout
+  title="Tilgjengelighetserklæring — Fellesforbundet Helgeland avd. 143"
+  description="Hvordan nettsiden til Fellesforbundet Helgeland avd. 143 jobber med universell utforming (WCAG 2.1 AA), kjente begrensninger og hvordan du melder fra om problemer."
+>
+  <div class="container section" style="max-width:720px; margin:0 auto;">
+    <h1 class="h1" style="font-size:clamp(26px,3.6vw,38px); margin-bottom:10px;" data-en="Accessibility statement">Tilgjengelighetserklæring</h1>
+    <p class="muted" style="margin-bottom:32px;" data-en="We want everyone to be able to use this website, regardless of ability or assistive technology.">
+      Vi ønsker at alle skal kunne bruke denne nettsiden, uavhengig av funksjonsevne eller hjelpemidler.
+    </p>
+
+    <div style="display:flex; flex-direction:column; gap:28px; font-size:16px; line-height:1.75; color:var(--tekst-dempet);">
+
+      <section>
+        <h2 style="font-size:20px; font-weight:800; color:var(--tekst); margin-bottom:8px;" data-en="Our goal">Vårt mål</h2>
+        <p data-en="The website is built to follow the Web Content Accessibility Guidelines (WCAG) 2.1 at level AA, which is the requirement for universal design of websites under the Norwegian Equality and Anti-Discrimination Act.">
+          Nettsiden er bygget for å følge retningslinjene for tilgjengelig webinnhold (WCAG) 2.1 på nivå AA,
+          som er kravet til universell utforming av nettsider etter likestillings- og diskrimineringsloven.
+        </p>
+      </section>
+
+      <section>
+        <h2 style="font-size:20px; font-weight:800; color:var(--tekst); margin-bottom:8px;" data-en="What we have done">Hva vi har gjort</h2>
+        <ul style="margin:0; padding-left:1.2em; display:flex; flex-direction:column; gap:6px;">
+          <li data-en="Semantic HTML, clear heading structure and a «skip to content» link.">Semantisk HTML, tydelig overskriftsstruktur og en «hopp til innhold»-lenke.</li>
+          <li data-en="Full keyboard navigation with visible focus.">Full tastaturnavigasjon med synlig fokusmarkering.</li>
+          <li data-en="Text and colour contrast aimed at meeting AA.">Tekst- og fargekontrast som tilstreber AA-nivå.</li>
+          <li data-en="Alternative text on meaningful images and labels on form fields.">Alternativ tekst på meningsbærende bilder og ledetekster på skjemafelt.</li>
+          <li data-en="Responsive layout that works on mobile, tablet and desktop, and scales with text zoom.">Responsivt design som fungerer på mobil, nettbrett og PC, og som tåler tekstforstørrelse.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2 style="font-size:20px; font-weight:800; color:var(--tekst); margin-bottom:8px;" data-en="Known limitations">Kjente begrensninger</h2>
+        <p data-en="The news page can embed content from Facebook (Meta). This is third-party content we do not control, and its accessibility may vary. The same information is always available through the office on request. We work continuously to improve, and the statement is updated as the site changes.">
+          Aktuelt-sida kan bygge inn innhold fra Facebook (Meta). Dette er tredjepartsinnhold vi ikke
+          kontrollerer, og tilgjengeligheten der kan variere. Den samme informasjonen er alltid tilgjengelig
+          via avdelingen ved henvendelse. Vi jobber løpende med forbedringer, og erklæringen oppdateres når
+          siden endres.
+        </p>
+      </section>
+
+      <section>
+        <h2 style="font-size:20px; font-weight:800; color:var(--tekst); margin-bottom:8px;" data-en="Give us feedback">Gi oss tilbakemelding</h2>
+        <p>
+          <span data-en="Found something that is hard to use, or need information in another format? Contact us at ">Fant du noe som er vanskelig å bruke, eller trenger du informasjon i et annet format? Kontakt oss på </span><a href={`mailto:${KONTAKT.epost}`} class="btn-link">{KONTAKT.epost}</a><span data-en=" or phone "> eller tlf. </span>{KONTAKT.telefonFormatert}<span data-en=", and we will help.">, så hjelper vi deg.</span>
+        </p>
+      </section>
+
+    </div>
+  </div>
+</Layout>
