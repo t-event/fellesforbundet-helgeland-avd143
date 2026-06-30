@@ -1,0 +1,123 @@
+Opphavsrett / Copyright © 2025–2026 Tustervatn Eventservice
+(org.nr. 931 764 632), kjent som «T-Event», v/ Mathias Tustervatn.
+Med enerett. All rights reserved.
+
+═══════════════════════════════════════════════════════════════════════
+PROPRIETÆR LISENS — IKKE ÅPEN KILDEKODE
+PROPRIETARY LICENSE — NOT OPEN SOURCE
+═══════════════════════════════════════════════════════════════════════
+
+⚠ OFFENTLIG REPOSITORIUM — IKKE FRI BRUK
+Dette repositoriet er offentlig tilgjengelig på GitHub kun for innsyn
+og åpenhet. At kildekoden kan SES eller lastes ned gir INGEN rett til
+å bruke, kopiere, endre eller gjenbruke den. Fravær av en åpen
+kildekode-lisens betyr at all bruk utover det som uttrykkelig er
+tillatt nedenfor, er forbudt. Dette er IKKE åpen kildekode.
+
+⚠ PUBLIC REPOSITORY — NOT FREE TO USE
+This repository is publicly available on GitHub solely for inspection
+and transparency. The fact that the source code can be VIEWED or
+downloaded grants NO right to use, copy, modify or reuse it. The
+absence of an open-source license means that any use beyond what is
+expressly permitted below is prohibited. This is NOT open source.
+
+═══════════════════════════════════════════════════════════════════════
+
+NORSK
+
+Denne programvaren og alt tilhørende materiale i dette repositoriet
+(kildekode, design, oppsett, tekst, grafikk og dokumentasjon — samlet
+«Verket») er opphavsrettslig beskyttet og eies av Tustervatn
+Eventservice (org.nr. 931 764 632), kjent som «T-Event», v/ Mathias
+Tustervatn («Rettighetshaver»).
+
+1. EIERSKAP
+   Rettighetshaver beholder alle rettigheter til Verket, inkludert
+   opphavsrett og enhver annen immaterialrett. Ingen rettigheter
+   overdras med mindre det er uttrykkelig avtalt skriftlig.
+
+2. BRUKSRETT
+   Fellesforbundet Helgeland avd. 143 («Kunden») har en ikke-eksklusiv,
+   ikke-overførbar rett til å få Verket driftet og vist som kundens
+   nettside, så lenge gjeldende avtale med Rettighetshaver løper.
+   Denne bruksretten gir IKKE eiendomsrett til kildekoden.
+
+3. KUNDENS EGNE ENDRINGER (INNHOLD)
+   Kunden kan selv redigere innholdet på nettsiden — det vil si
+   tekst, bilder og priser — uten samtykke fra Rettighetshaver.
+   Denne retten gjelder kun innhold, og omfatter IKKE kildekode,
+   design, struktur, oppsett eller teknisk funksjonalitet.
+   Alle andre endringer (kode, design, funksjonalitet, drift,
+   integrasjoner m.m.) skal skje gjennom Rettighetshaver (T-Event).
+   Domenet eies av Kunden (Fellesforbundet Helgeland) og omfattes
+   ikke av denne begrensningen.
+
+4. FORBUD
+   Uten skriftlig forhåndssamtykke fra Rettighetshaver er det ikke
+   tillatt å:
+     a) kopiere, distribuere, publisere eller på annen måte gjøre
+        kildekoden tilgjengelig for tredjepart;
+     b) endre, videreutvikle eller lage avledede verk av kildekoden,
+        designet eller den tekniske strukturen (innholdsredigering
+        etter punkt 3 er unntatt);
+     c) overdra, selge, lisensiere, leie ut eller på annen måte
+        overføre Verket til andre;
+     d) la en annen leverandør eller tredjepart drifte, kopiere eller
+        videreføre Verket;
+     e) fjerne eller skjule opphavsrettsmerknader.
+
+5. OVERTAKELSE / KJØP
+   Eiendomsrett til kildekoden, eller en utvidet bruks- eller
+   videreføringsrett, kan kun erverves gjennom en egen skriftlig
+   avtale (kjøp/overdragelse) med Rettighetshaver.
+
+6. INGEN GARANTI
+   Verket leveres «som det er», uten garantier av noe slag.
+   Rettighetshaver er ikke ansvarlig for tap eller skade som følge
+   av bruk av Verket, i den grad gjeldende lov tillater det.
+
+7. LOVVALG
+   Norsk rett gjelder. Verneting er Rettighetshavers hjemting.
+
+───────────────────────────────────────────────────────────────────────
+
+ENGLISH (summary — the Norwegian text above prevails)
+
+This software and all related material in this repository (source code,
+design, configuration, text, graphics and documentation — the "Work")
+is copyrighted and owned by Tustervatn Eventservice (Norwegian org.
+no. 931 764 632), known as "T-Event", represented by Mathias
+Tustervatn (the "Owner"). All rights reserved.
+
+Fellesforbundet Helgeland avd. 143 (the "Client") holds a
+non-exclusive, non-transferable right to have the Work operated and
+displayed as the Client's website for the duration of the agreement
+with the Owner. This does NOT transfer ownership of the source code.
+
+The Client may edit the website's content — text, images and prices —
+without consent. This covers content only, not the source code,
+design, structure or technical functionality. All other changes
+(code, design, functionality, operations, integrations, etc.) must go
+through the Owner (T-Event). The domain is owned by the Client
+(Fellesforbundet Helgeland) and is not covered by this restriction.
+
+You may NOT, without the Owner's prior written consent: copy,
+distribute or publish the source code; modify or create derivative
+works of the code, design or technical structure (content editing as
+above excepted); transfer, sell, sub-license or lease the Work; let
+another vendor operate or continue the Work; or remove copyright
+notices.
+
+Ownership of the source code, or any extended right to use or continue
+it, can only be acquired through a separate written agreement
+(purchase/assignment) with the Owner.
+
+The Work is provided "AS IS", without warranty of any kind, to the
+extent permitted by applicable law. Governed by Norwegian law.
+
+───────────────────────────────────────────────────────────────────────
+
+Kontakt / Contact:  Tustervatn Eventservice («T-Event»)
+                    Org.nr. 931 764 632
+                    https://t-event.no
+                    https://virksomhet.brreg.no/nb/oppslag/enheter/931764632

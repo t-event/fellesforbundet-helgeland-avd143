@@ -2,6 +2,8 @@
   "name": "fellesforbundet-helgeland-hytteutleie",
   "version": "0.1.0",
   "private": true,
+  "license": "UNLICENSED",
+  "author": "Tustervatn Eventservice (org.nr. 931764632), «T-Event» — Mathias Tustervatn (https://t-event.no)",
   "type": "module",
   "scripts": {
     "dev": "astro dev",

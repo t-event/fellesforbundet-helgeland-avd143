@@ -344,3 +344,24 @@ Etter at siden er oppe og domenet er satt:
 Alt som gjelder selve nettsiden (feil, endringer, utvikling, domene, GitHub, secrets) håndteres av T-Event. Kontoret håndterer booking og hyttedrift.
 
 Sikkerhetssvakheter meldes privat til T-Event — se [SECURITY.md](SECURITY.md).
+
+---
+
+## Lisens og eierskap
+
+**Proprietær — med enerett.** © 2025–2026 Tustervatn Eventservice
+([org.nr. 931 764 632](https://virksomhet.brreg.no/nb/oppslag/enheter/931764632)),
+kjent som «T-Event», v/ Mathias Tustervatn.
+
+Kildekoden eies av T-Event. Fellesforbundet Helgeland avd. 143 har bruksrett til
+nettsiden så lenge avtalen løper, men **ikke** eiendomsrett til koden.
+
+Avdelingen kan selv redigere **innhold** — tekst, bilder og priser. **Alle andre
+endringer** (kode, design, funksjonalitet, drift, integrasjoner) skal gå gjennom
+T-Event. Domenet eies av avdelingen. Koden kan ikke kopieres, videreutvikles, overdras eller driftes av
+tredjepart uten skriftlig avtale med T-Event. Eierskap kan kun erverves gjennom egen
+kjøps-/overdragelsesavtale. Se [LICENSE](LICENSE) for fullstendige vilkår.
+
+> ⚠️ **Dette repoet er offentlig kun for innsyn.** At koden kan ses eller lastes
+> ned gir ingen rett til å bruke, kopiere, endre eller gjenbruke den. Dette er
+> **ikke** åpen kildekode — all bruk utover det lisensen uttrykkelig tillater er forbudt.
