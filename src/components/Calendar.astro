@@ -244,8 +244,15 @@ document.getElementById('cal-neste')?.addEventListener('click', (e) => {
   const iso = (e.currentTarget as HTMLElement).dataset.date;
   if (!iso) return;
   const d = parseIso(iso);
+  // Naviger til riktig måned OG velg datoen som startdato — gir synlig
+  // tilbakemelding (dagen markeres) også når vi allerede står på måneden,
+  // og starter bookingen på første ledige dag.
   viewYear = d.getFullYear(); viewMonth = d.getMonth();
+  selectedFrom = iso;
+  selectedTo = null;
   renderCalendar();
+  updateBookingForm();
+  document.getElementById('cal')?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 });
 
 // Nav-knapper

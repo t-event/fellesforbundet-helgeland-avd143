@@ -1,11 +1,8 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Icon from '../components/Icon.astro';
-import { KONTAKT, STYRE, FF_LENKER } from '../config.ts';
+import { KONTAKT, ANSATTE, FF_LENKER } from '../config.ts';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
-
-const initialer = (navn: string) =>
-  navn.split(/\s+/).map(d => d[0]).join('').slice(0, 2).toUpperCase();
 
 const fordeler = [
   { ikon: 'handshake', tittel: 'Lønn & tariff',     tittel_en: 'Pay & agreements', body: 'Vi forhandler tariffavtaler og sikrer deg riktig lønn og ordnede arbeidsforhold.', body_en: 'We negotiate collective agreements and secure fair pay and proper working conditions.' },
@@ -137,17 +134,19 @@ const fordeler = [
     <div style="display:flex; flex-wrap:wrap; align-items:end; justify-content:space-between; gap:16px; margin-bottom:24px;">
       <div>
         <span class="eyebrow" data-en="People in the branch">Folk i avdelingen</span>
-        <h2 class="h2" style="margin-top:6px;" data-en="Leadership and shop stewards">Ledelse og tillitsvalgte</h2>
+        <h2 class="h2" style="margin-top:6px;" data-en="The branch's staff">Avdelingens ansatte</h2>
       </div>
-      <a href={`${base}/tillitsvalgte`} class="btn-link" data-en="See the whole board →">Se hele styret →</a>
+      <a href={`${base}/tillitsvalgte`} class="btn-link" data-en="See staff and board →">Se ansatte og styret →</a>
     </div>
     <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:16px;">
-      {STYRE.slice(0, 4).map(p => (
+      {ANSATTE.slice(0, 4).map(a => (
         <div class="person">
-          <span class="person-avatar" aria-hidden="true">{initialer(p.navn)}</span>
+          <span class="person-avatar" aria-hidden="true" style="background:#e4e4ec; color:#6b6b76;">
+            <Icon name="user" size={20} />
+          </span>
           <div>
-            <b style="display:block; font-size:15px;">{p.navn}</b>
-            <span class="muted" style="font-size:13px;" data-en={p.rolle_en}>{p.rolle}</span>
+            <b style="display:block; font-size:15px; color:var(--tekst-svak);" data-en="Name coming">Navn kommer</b>
+            <span class="muted" style="font-size:13px;" data-en={a.rolle_en}>{a.rolle}</span>
           </div>
         </div>
       ))}

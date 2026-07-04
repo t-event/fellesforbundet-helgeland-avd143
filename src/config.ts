@@ -18,6 +18,10 @@ export const KONTAKT = {
   adresse: 'Søndre gate 13',
   postnummer: '8624',
   poststed: 'Mo i Rana',
+  // Omtrentlige koordinater for kontoret (Søndre gate 13, Mo i Rana) — brukt til
+  // kartmarkør. Finjuster ved behov mot faktisk inngang.
+  lat: 66.31249,
+  lon: 14.14260,
   apningstider: '08:00–15:30',
   orgnr: '943238049',
   facebookUrl: 'https://www.facebook.com/profile.php?id=100064457660890',
@@ -63,6 +67,18 @@ export const LENKER_GRUPPER = [
       { navn: 'Hovedavtalen',          navn_en: 'The Basic Agreement',   desc: '«Arbeidslivets grunnlov» mellom LO og NHO.',          desc_en: 'The «constitution of working life» between LO and NHO.', url: 'https://www.lo.no/hovedavtalen/' },
     ],
   },
+] as const;
+
+// Avdelingens ansatte (lønnede på kontoret). PLASSHOLDER: navn/bilder ikke
+// mottatt ennå — vises som «Navn kommer» med rolle. Fyll inn når avdelingen
+// sender dem. Egen gruppe fra STYRE (valgt). Brukt på forside + /tillitsvalgte.
+export const ANSATTE = [
+  { rolle: 'Daglig leder',          rolle_en: 'General manager' },
+  { rolle: 'Organisasjonsarbeider', rolle_en: 'Organiser' },
+  { rolle: 'Ungdomssekretær',       rolle_en: 'Youth secretary' },
+  { rolle: 'Medlemsservice',        rolle_en: 'Member services' },
+  { rolle: 'Regnskap og økonomi',   rolle_en: 'Accounting & finance' },
+  { rolle: 'Sekretariat',           rolle_en: 'Secretariat' },
 ] as const;
 
 // Avdelingens styre (offentlig registrert i Brønnøysund).
