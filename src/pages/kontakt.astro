@@ -3,8 +3,8 @@ import Layout from '../layouts/Layout.astro';
 import Icon from '../components/Icon.astro';
 import { KONTAKT } from '../config.ts';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
-const kartUrl = `https://www.openstreetmap.org/?mlat=${KONTAKT.lat}&mlon=${KONTAKT.lon}#map=17/${KONTAKT.lat}/${KONTAKT.lon}`;
-const osmSrc = `https://www.openstreetmap.org/export/embed.html?bbox=${(KONTAKT.lon - 0.008).toFixed(5)}%2C${(KONTAKT.lat - 0.004).toFixed(5)}%2C${(KONTAKT.lon + 0.008).toFixed(5)}%2C${(KONTAKT.lat + 0.004).toFixed(5)}&layer=mapnik&marker=${KONTAKT.lat}%2C${KONTAKT.lon}`;
+const googleMapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${KONTAKT.adresse}, ${KONTAKT.postnummer} ${KONTAKT.poststed}`)}`;
+const osmSrc = `https://www.openstreetmap.org/export/embed.html?bbox=${(KONTAKT.lon - 0.006).toFixed(5)}%2C${(KONTAKT.lat - 0.003).toFixed(5)}%2C${(KONTAKT.lon + 0.006).toFixed(5)}%2C${(KONTAKT.lat + 0.003).toFixed(5)}&layer=mapnik&marker=${KONTAKT.lat}%2C${KONTAKT.lon}`;
 ---
 
 <Layout
@@ -36,7 +36,7 @@ const osmSrc = `https://www.openstreetmap.org/export/embed.html?bbox=${(KONTAKT.
             <b style="font-size:14px;" data-en="Address">Adresse</b>
             <p class="muted" style="font-size:15px; margin-top:2px;">
               {KONTAKT.adresse}, {KONTAKT.postnummer} {KONTAKT.poststed}<br />
-              <a href={kartUrl} target="_blank" rel="noopener noreferrer" class="btn-link" style="font-size:14px;" data-en="Show on map ↗">Vis i kart ↗</a>
+              <a href={googleMapsUrl} target="_blank" rel="noopener noreferrer" class="btn-link" style="font-size:14px;" data-en="Show on map ↗">Vis i kart ↗</a>
             </p>
           </div>
           <div>
@@ -63,17 +63,15 @@ const osmSrc = `https://www.openstreetmap.org/export/embed.html?bbox=${(KONTAKT.
           </div>
         </div>
 
-        <!-- KART (klikk for å laste — personvennlig OpenStreetMap, ingen nøkkel/sporing) -->
+        <!-- KART — OpenStreetMap-embed (ingen nøkkel/sporing) + Google Maps-lenke for veibeskrivelse -->
         <div style="margin-top:26px;">
-          <div class="kart" id="kontakt-kart" data-src={osmSrc}>
-            <button type="button" class="kart-vis" id="kart-vis">
-              <span class="kart-pin" aria-hidden="true"><Icon name="map-pin" size={22} /></span>
-              <span style="font-weight:700;" data-en="Show map">Vis kart</span>
-              <small class="muted" style="font-size:12px;" data-en="Loads from OpenStreetMap">Lastes fra OpenStreetMap</small>
-            </button>
+          <div class="kart">
+            <iframe src={osmSrc} title="Kart over avdelingskontoret (OpenStreetMap)" loading="lazy" referrerpolicy="no-referrer"></iframe>
           </div>
-          <p class="muted" style="font-size:12.5px; margin-top:8px;">
-            <a href={kartUrl} target="_blank" rel="noopener noreferrer" class="btn-link" style="font-size:12.5px;" data-en="Open in OpenStreetMap ↗">Åpne i OpenStreetMap ↗</a>
+          <p class="muted" style="font-size:12.5px; margin-top:8px; display:flex; align-items:center; gap:6px;">
+            <span class="kart-pin" aria-hidden="true" style="display:inline-flex;"><Icon name="map-pin" size={15} /></span>
+            {KONTAKT.adresse}, {KONTAKT.postnummer} {KONTAKT.poststed} ·
+            <a href={googleMapsUrl} target="_blank" rel="noopener noreferrer" class="btn-link" style="font-size:12.5px;" data-en="Open in Google Maps ↗">Åpne i Google Maps ↗</a>
           </p>
         </div>
       </div>
@@ -194,27 +192,7 @@ const osmSrc = `https://www.openstreetmap.org/export/embed.html?bbox=${(KONTAKT.
 </script>
 
 <style>
-  .kart { position: relative; aspect-ratio: 16 / 10; border-radius: 14px; overflow: hidden; border: 1px solid var(--kantlinje); background: #eef0f3; }
-  .kart-vis { position: absolute; inset: 0; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; cursor: pointer; border: 0; color: var(--tekst-dempet);
-    background:
-      repeating-linear-gradient(0deg,  #e7eaef 0 21px, #eef0f3 21px 43px),
-      repeating-linear-gradient(90deg, #e7eaef 0 21px, #eef0f3 21px 43px); }
-  .kart-vis:hover { color: var(--rod); }
-  .kart-pin { color: var(--rod); }
+  .kart { aspect-ratio: 16 / 10; border-radius: 14px; overflow: hidden; border: 1px solid var(--kantlinje); background: #eef0f3; }
   .kart iframe { display: block; width: 100%; height: 100%; border: 0; }
+  .kart-pin { color: var(--rod); }
 </style>
-
-<script>
-  const kart = document.getElementById('kontakt-kart');
-  document.getElementById('kart-vis')?.addEventListener('click', () => {
-    if (!kart) return;
-    const src = kart.getAttribute('data-src') || '';
-    const ifr = document.createElement('iframe');
-    ifr.src = src;
-    ifr.title = 'Kart over avdelingskontoret (OpenStreetMap)';
-    ifr.setAttribute('loading', 'lazy');
-    ifr.setAttribute('referrerpolicy', 'no-referrer');
-    kart.innerHTML = '';
-    kart.appendChild(ifr);
-  });
-</script>
