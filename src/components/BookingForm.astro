@@ -40,6 +40,19 @@ const WEB3FORMS_KEY = import.meta.env.PUBLIC_WEB3FORMS_KEY ?? '';
       </div>
     </div>
 
+    <!-- Antall gjester -->
+    <div class="field">
+      <label for="booking-gjester" data-en="Number of guests">Antall gjester</label>
+      <select class="input" id="booking-gjester" name="antall_gjester" required aria-required="true">
+        <option value="" data-en="Choose…">Velg…</option>
+        {Array.from({ length: 12 }, (_, i) => i + 1).map(n => (
+          <option value={n}>{n}</option>
+        ))}
+      </select>
+      <div class="field-error" id="err-gjester" style="display:none;"></div>
+      <p class="muted" style="font-size:12px; margin-top:4px;" data-en="The cabin sleeps up to 12.">Hytta har inntil 12 sengeplasser.</p>
+    </div>
+
     <!-- Kontaktinfo -->
     <div class="field">
       <label for="booking-navn" data-i18n="form_name">Navn</label>
@@ -98,6 +111,15 @@ const WEB3FORMS_KEY = import.meta.env.PUBLIC_WEB3FORMS_KEY ?? '';
         <div style="font-size:12.5px; color:var(--tekst-svak);" id="pris-detalj"></div>
       </div>
       <div class="total" id="pris-total"></div>
+    </div>
+
+    <!-- Husregler-bekreftelse -->
+    <div class="field">
+      <label class="checkbox-row" for="booking-husregler">
+        <input type="checkbox" id="booking-husregler" name="husregler" required aria-required="true" />
+        <span data-en={`I have read and accept the <a href="${base}/vilkar" target="_blank" rel="noopener">rental terms and house rules</a>.`}>Jeg har lest og godtar <a href={`${base}/vilkar`} target="_blank" rel="noopener">vilkårene og husreglene</a>.</span>
+      </label>
+      <div class="field-error" id="err-husregler" style="display:none;"></div>
     </div>
 
     <!-- Send-knapp -->
@@ -240,7 +262,7 @@ function setFeil(id, tekst) {
   if (input) input.classList.toggle('error', !!tekst);
 }
 function clearFeil() {
-  ['err-fra','err-til','err-navn','err-epost','err-telefon','err-forbund'].forEach(id => setFeil(id, ''));
+  ['err-fra','err-til','err-navn','err-epost','err-telefon','err-forbund','err-gjester','err-husregler'].forEach(id => setFeil(id, ''));
   feilBoks.style.display = 'none';
 }
 
@@ -265,6 +287,8 @@ form?.addEventListener('submit', async (e) => {
   const telefon = telefonInput?.value?.trim() ?? '';
   const gruppe  = prisGruppeEl?.value ?? 'FFH';
   const forbund = forbundEl?.value ?? '';
+  const gjester = (document.getElementById('booking-gjester'))?.value ?? '';
+  const husregler = (document.getElementById('booking-husregler'))?.checked ?? false;
   const melding = (document.getElementById('booking-melding'))?.value?.trim() ?? '';
 
   if (!fra) { setFeil('err-fra', erEn() ? 'Choose a start date.' : 'Velg fra-dato.'); ok = false; }
@@ -275,6 +299,8 @@ form?.addEventListener('submit', async (e) => {
   if (!epost || !epost.includes('@')) { setFeil('err-epost', erEn() ? 'Enter a valid email address.' : 'Oppgi gyldig e-postadresse.'); ok = false; }
   if (!telefon) { setFeil('err-telefon', erEn() ? 'Enter a phone number.' : 'Oppgi telefonnummer.'); ok = false; }
   if (gruppe === 'ANNET_LO' && !forbund) { setFeil('err-forbund', erEn() ? 'Select an LO union.' : 'Velg LO-forbund.'); ok = false; }
+  if (!gjester) { setFeil('err-gjester', erEn() ? 'Select the number of guests.' : 'Velg antall gjester.'); ok = false; }
+  if (!husregler) { setFeil('err-husregler', erEn() ? 'You must accept the terms and house rules.' : 'Du må godta vilkårene og husreglene.'); ok = false; }
 
   if (!ok) return;
 
@@ -299,10 +325,12 @@ form?.addEventListener('submit', async (e) => {
     Innsjekk: fra,
     Utsjekk: til,
     'Antall døgn': String(dager),
+    'Antall gjester': gjester,
     Prisgruppe: prisLabel[gruppe],
     Totalpris: `${sum.toLocaleString('nb-NO')} kr`,
     Melding: melding || '—',
     Betalingsreferanse: ref,
+    'Husregler godtatt': 'Ja',
     Kontonummer: KONTONUMMER,
   };
 

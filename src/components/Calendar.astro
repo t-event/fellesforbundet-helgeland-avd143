@@ -11,6 +11,7 @@
       <button id="cal-next" aria-label="Neste måned">›</button>
     </div>
   </div>
+  <button type="button" id="cal-neste" class="cal-neste" style="display:none;"></button>
   <div class="cal-weekdays" aria-hidden="true">
     <span data-en="Mon">Man</span><span data-en="Tue">Tir</span><span data-en="Wed">Ons</span>
     <span data-en="Thu">Tor</span><span data-en="Fri">Fre</span><span data-en="Sat">Lør</span><span data-en="Sun">Søn</span>
@@ -213,6 +214,40 @@ function updateBookingForm() {
 (window as typeof window & { getCalSelection: () => {from:string|null; to:string|null} })
   .getCalSelection = () => ({ from: selectedFrom, to: selectedTo });
 
+// «Neste ledige»-hint: første dato fra i dag som verken er opptatt eller påske.
+function fmtDato(iso: string): string {
+  return parseIso(iso).toLocaleDateString(erEn() ? 'en-GB' : 'nb-NO', { weekday: 'short', day: 'numeric', month: 'long' });
+}
+function finnNesteLedige(): string | null {
+  const d = new Date(); d.setHours(0,0,0,0);
+  for (let i = 0; i < 400; i++) {
+    const iso = isoDate(d.getFullYear(), d.getMonth(), d.getDate());
+    if (!availability.bookedDates.includes(iso) && !easterDates.has(iso)) return iso;
+    d.setDate(d.getDate() + 1);
+  }
+  return null;
+}
+function oppdaterNesteLedige() {
+  const el = document.getElementById('cal-neste');
+  if (!el) return;
+  const iso = finnNesteLedige();
+  if (!iso) { el.style.display = 'none'; return; }
+  const today = new Date();
+  const todayIso = isoDate(today.getFullYear(), today.getMonth(), today.getDate());
+  el.style.display = '';
+  el.dataset.date = iso;
+  el.innerHTML = iso === todayIso
+    ? (erEn() ? 'Available from today →' : 'Ledig fra i dag →')
+    : (erEn() ? `Next available: <b>${fmtDato(iso)}</b> →` : `Neste ledige: <b>${fmtDato(iso)}</b> →`);
+}
+document.getElementById('cal-neste')?.addEventListener('click', (e) => {
+  const iso = (e.currentTarget as HTMLElement).dataset.date;
+  if (!iso) return;
+  const d = parseIso(iso);
+  viewYear = d.getFullYear(); viewMonth = d.getMonth();
+  renderCalendar();
+});
+
 // Nav-knapper
 btnPrev.addEventListener('click', () => {
   viewMonth--;
@@ -236,11 +271,12 @@ async function init() {
   easterDates = new Set(ep.allDates);
 
   renderCalendar();
+  oppdaterNesteLedige();
 }
 
 init();
 
 // Tegn kalenderen på nytt ved språkbytte (månedsnavn)
 document.querySelectorAll('.lang button').forEach(b =>
-  b.addEventListener('click', () => setTimeout(renderCalendar, 0)));
+  b.addEventListener('click', () => setTimeout(() => { renderCalendar(); oppdaterNesteLedige(); }, 0)));
 </script>

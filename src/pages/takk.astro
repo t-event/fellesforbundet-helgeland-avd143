@@ -74,13 +74,29 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
         </div>
       </div>
 
-      <div style="text-align:center;">
-        <a href={`${base}/`} class="btn btn-secondary" data-i18n="takk_back">← Tilbake til forsiden</a>
+      <div class="takk-actions" style="text-align:center; display:flex; gap:12px; justify-content:center; flex-wrap:wrap;">
+        <button type="button" id="takk-print" class="btn btn-secondary" data-en="Print / save as PDF">Skriv ut / lagre som PDF</button>
+        <button type="button" id="takk-ics" class="btn btn-secondary" style="display:none;" data-en="Add to calendar (.ics)">Legg i kalender (.ics)</button>
+        <a href={`${base}/`} class="btn btn-ghost-dark" data-i18n="takk_back">← Tilbake til forsiden</a>
       </div>
 
     </div>
   </div>
 </Layout>
+
+<style>
+  .btn-ghost-dark { background: transparent; color: var(--tekst); border: 1.5px solid var(--kantlinje); }
+  .btn-ghost-dark:hover { border-color: var(--rod); color: var(--rod); }
+
+  /* Print: rendyrk betalingsinstruksen (skjul chrome/knapper, hvit bakgrunn) */
+  @media print {
+    .site-header, .site-footer, #cookie-banner, .takk-actions, .receipt-check, .btn { display: none !important; }
+    :global(body) { background: #fff !important; }
+    .receipt, .card, .alert { box-shadow: none !important; }
+    .card, .alert { border: 1px solid #ccc !important; break-inside: avoid; }
+    a[href]::after { content: ""; }
+  }
+</style>
 
 <script define:vars={{ KONTONUMMER }}>
 // Les detaljer fra URL-params (satt av BookingForm.astro)
@@ -136,4 +152,32 @@ function fyll() {
 fyll();
 document.querySelectorAll('.lang button').forEach(b =>
   b.addEventListener('click', () => setTimeout(fyll, 0)));
+
+// Skriv ut / lagre som PDF
+document.getElementById('takk-print')?.addEventListener('click', () => window.print());
+
+// Legg i kalender (.ics) — kun når leieperioden er kjent
+const icsBtn = document.getElementById('takk-ics');
+if (icsBtn && fra && til) {
+  icsBtn.style.display = '';
+  icsBtn.addEventListener('click', () => {
+    const dt = (s) => s.replace(/-/g, '');
+    const stamp = new Date().toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
+    const uid = (ref || 'umbukta-' + dt(fra)) + '@ffh143.no';
+    const desc = `Betalingsreferanse: ${ref || '-'}. Kontonr: ${KONTONUMMER}.` + (sum ? ` Belop: ${sum} kr.` : '');
+    const ics = [
+      'BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//FFH avd 143//Hytte Umbukta//NO', 'CALSCALE:GREGORIAN',
+      'BEGIN:VEVENT', `UID:${uid}`, `DTSTAMP:${stamp}`,
+      `DTSTART;VALUE=DATE:${dt(fra)}`, `DTEND;VALUE=DATE:${dt(til)}`,
+      'SUMMARY:Hytte i Umbukta — Fellesforbundet Helgeland',
+      `DESCRIPTION:${desc}`, 'LOCATION:Umbukta', 'END:VEVENT', 'END:VCALENDAR',
+    ].join('\r\n');
+    const blob = new Blob([ics], { type: 'text/calendar;charset=utf-8' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = `umbukta-${dt(fra)}.ics`;
+    document.body.appendChild(a); a.click(); a.remove();
+    URL.revokeObjectURL(a.href);
+  });
+}
 </script>
