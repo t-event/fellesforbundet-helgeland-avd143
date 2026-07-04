@@ -105,8 +105,10 @@ export const STYRE = [
 
 export const UMBUKTA = {
   kart: 'https://maps.app.goo.gl/Q8f8DPbiG6TmMtpy6',
-  lat: 66.1659051,
-  lon: 14.5832452,
+  // Koordinater hentet fra avdelingens Google Maps-pin (kart-lenka over).
+  // Styrer kartmarkør, værvarsel (yr), GPS-visning og schema.org.
+  lat: 66.162769,
+  lon: 14.589775,
   sengeplasser: 12,
   soverom: '2 soverom, sovealkove og romslig hems',
 } as const;

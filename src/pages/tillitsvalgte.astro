@@ -8,10 +8,9 @@ const initialer = (navn: string) =>
   navn.split(/\s+/).map(d => d[0]).join('').slice(0, 2).toUpperCase();
 
 const verktoy = [
-  { ikon: 'book-open', tittel: 'Håndbok for tillitsvalgte', tittel_en: 'Shop steward handbook', body: 'Rettigheter, plikter og praktiske råd i tillitsvervet.', body_en: 'Rights, duties and practical advice in the role.' },
-  { ikon: 'graduation-cap', tittel: 'Grunnopplæring',            tittel_en: 'Basic training',         body: 'Kurs for nye tillitsvalgte gjennom Fellesforbundet.', body_en: 'Courses for new shop stewards through Fellesforbundet.' },
-  { ikon: 'file-text', tittel: 'Maler og skjema',           tittel_en: 'Templates & forms',      body: 'Protokoller, drøftinger og varsler.', body_en: 'Minutes, consultations and notices.' },
-  { ikon: 'phone', tittel: 'Rådgivningstelefon',        tittel_en: 'Advisory line',          body: 'Direkte støtte fra avdelingen når du står i en sak.', body_en: 'Direct support from the branch when you face a case.' },
+  { ikon: 'book-open',      tittel: 'Håndbok for tillitsvalgte', tittel_en: 'Shop steward handbook', body: 'Rettigheter, plikter og praktiske råd i tillitsvervet.', body_en: 'Rights, duties and practical advice in the role.', href: 'https://www.fellesforbundet.no/for-tillitsvalgte/', ekstern: true },
+  { ikon: 'graduation-cap', tittel: 'Grunnopplæring',            tittel_en: 'Basic training',        body: 'Kurs og arrangementer for tillitsvalgte hos Fellesforbundet.', body_en: 'Courses and events for shop stewards at Fellesforbundet.', href: 'https://www.fellesforbundet.no/aktuelt/kurs-og-arrangementer/', ekstern: true },
+  { ikon: 'phone',          tittel: 'Rådgivningstelefon',        tittel_en: 'Advisory line',         body: `Ring avdelingen på ${KONTAKT.telefonFormatert} når du står i en sak.`, body_en: `Call the branch on ${KONTAKT.telefonFormatert} when you face a case.`, href: `tel:+47${KONTAKT.telefon}`, ekstern: false },
 ];
 ---
 
@@ -115,11 +114,18 @@ const verktoy = [
       <h2 class="h2" style="margin:6px 0 32px;" data-en="Support in the role">Støtte i vervet</h2>
       <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:18px;">
         {verktoy.map(v => (
-          <div class="benefit">
+          <a
+            href={v.href}
+            class="benefit benefit-link"
+            target={v.ekstern ? '_blank' : undefined}
+            rel={v.ekstern ? 'noopener noreferrer' : undefined}
+          >
             <span class="benefit-ic" aria-hidden="true"><Icon name={v.ikon} size={22} /></span>
-            <h3 class="h3" style="font-size:17px; margin-bottom:6px;" data-en={v.tittel_en}>{v.tittel}</h3>
+            <h3 class="h3" style="font-size:17px; margin-bottom:6px; display:flex; align-items:center; gap:6px;" data-en={v.tittel_en}>
+              {v.tittel}<span class="benefit-pil" aria-hidden="true">{v.ekstern ? '↗' : '→'}</span>
+            </h3>
             <p class="muted" style="font-size:14px; line-height:1.6;" data-en={v.body_en}>{v.body}</p>
-          </div>
+          </a>
         ))}
       </div>
     </div>

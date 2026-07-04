@@ -323,8 +323,8 @@ const faq = [
     <div class="section grid" style="padding-top:0; grid-template-columns:1fr 1fr; gap:clamp(24px,4vw,44px); align-items:stretch;">
       <div style="border-radius:18px; overflow:hidden; display:flex; flex-direction:column;">
         <iframe
-          title="Kart til Umbukta-hytta"
-          src={`https://www.openstreetmap.org/export/embed.html?bbox=${(UMBUKTA.lon - 0.02).toFixed(4)}%2C${(UMBUKTA.lat - 0.009).toFixed(4)}%2C${(UMBUKTA.lon + 0.02).toFixed(4)}%2C${(UMBUKTA.lat + 0.009).toFixed(4)}&layer=mapnik&marker=${UMBUKTA.lat}%2C${UMBUKTA.lon}`}
+          title="Kart til Umbukta-hytta (Google Maps)"
+          src={`https://www.google.com/maps?q=${UMBUKTA.lat},${UMBUKTA.lon}&hl=no&z=14&output=embed`}
           width="100%"
           height="100%"
           style="border:0; display:block; flex:1; min-height:320px;"

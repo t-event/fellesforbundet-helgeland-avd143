@@ -3,8 +3,10 @@ import Layout from '../layouts/Layout.astro';
 import Icon from '../components/Icon.astro';
 import { KONTAKT } from '../config.ts';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
-const googleMapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${KONTAKT.adresse}, ${KONTAKT.postnummer} ${KONTAKT.poststed}`)}`;
-const osmSrc = `https://www.openstreetmap.org/export/embed.html?bbox=${(KONTAKT.lon - 0.006).toFixed(5)}%2C${(KONTAKT.lat - 0.003).toFixed(5)}%2C${(KONTAKT.lon + 0.006).toFixed(5)}%2C${(KONTAKT.lat + 0.003).toFixed(5)}&layer=mapnik&marker=${KONTAKT.lat}%2C${KONTAKT.lon}`;
+const mapQuery = `${KONTAKT.adresse}, ${KONTAKT.postnummer} ${KONTAKT.poststed}`;
+const googleMapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(mapQuery)}`;
+// Keyless Google Maps-embed (ingen API-nøkkel) — Google geokoder adressen presist.
+const googleEmbed = `https://www.google.com/maps?q=${encodeURIComponent(mapQuery)}&hl=no&z=16&output=embed`;
 ---
 
 <Layout
@@ -66,7 +68,7 @@ const osmSrc = `https://www.openstreetmap.org/export/embed.html?bbox=${(KONTAKT.
         <!-- KART — OpenStreetMap-embed (ingen nøkkel/sporing) + Google Maps-lenke for veibeskrivelse -->
         <div style="margin-top:26px;">
           <div class="kart">
-            <iframe src={osmSrc} title="Kart over avdelingskontoret (OpenStreetMap)" loading="lazy" referrerpolicy="no-referrer"></iframe>
+            <iframe src={googleEmbed} title="Kart over avdelingskontoret (Google Maps)" loading="lazy" referrerpolicy="no-referrer" allowfullscreen></iframe>
           </div>
           <p class="muted" style="font-size:12.5px; margin-top:8px; display:flex; align-items:center; gap:6px;">
             <span class="kart-pin" aria-hidden="true" style="display:inline-flex;"><Icon name="map-pin" size={15} /></span>

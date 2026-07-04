@@ -437,6 +437,9 @@ textarea.input { resize: vertical; min-height: 110px; }
 
 /* Fordel-/ikonkort */
 .benefit { background: #fff; border: 1px solid var(--kantlinje); border-radius: 16px; padding: 24px; }
+.benefit-link { display: block; text-decoration: none; color: inherit; transition: border-color .12s ease, box-shadow .12s ease, transform .12s ease; }
+.benefit-link:hover { border-color: var(--rod); box-shadow: 0 8px 24px rgba(0,0,0,.07); transform: translateY(-2px); }
+.benefit-link .benefit-pil { color: var(--rod); font-weight: 700; }
 .benefit-ic { display: inline-flex; align-items: center; justify-content: center; width: 48px; height: 48px; border-radius: 12px; background: #fbeceb; color: var(--rod); margin-bottom: 16px; }
 .ffh-icon { display: block; }
 
