@@ -42,7 +42,7 @@
   --sort:        #000000;
   --tekst:       #1A1836;
   --tekst-dempet:#56556a;
-  --tekst-svak:  #8a8a93;
+  --tekst-svak:  #6b6b76;
   --flate:       #f6f6f8;
   --kantlinje:   #E9E9E9;
   --font: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
@@ -68,6 +68,25 @@ body {
 img, svg { max-width: 100%; display: block; }
 button { font-family: inherit; background: none; border: 0; cursor: pointer; }
 input, select, textarea { font-family: inherit; }
+
+/* Synlig tastaturfokus på alle interaktive elementer (tilgjengelighet).
+   Vises kun ved tastaturnavigasjon (:focus-visible), ikke ved museklikk. */
+a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible,
+textarea:focus-visible, [tabindex]:focus-visible, summary:focus-visible {
+  outline: 3px solid var(--rod);
+  outline-offset: 2px;
+  border-radius: 3px;
+}
+
+/* Respekter «reduser bevegelse»-innstillingen (tilgjengelighet). */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
 h1, h2, h3, h4 { margin: 0; font-family: var(--font-display); letter-spacing: -0.02em; line-height: 1.05; }
 p { margin: 0; }
 a { color: inherit; text-decoration: none; }
@@ -97,7 +116,7 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
   transition: filter .15s, background .15s, color .15s;
 }
 .btn-primary  { background: var(--rod); color: var(--hvit); }
-.btn-primary:hover { filter: brightness(1.08); }
+.btn-primary:hover { background: #a80000; }
 .btn-secondary { background: var(--hvit); color: var(--morkbla); border: 1.5px solid var(--morkbla); }
 .btn-secondary:hover { background: var(--morkbla); color: var(--hvit); }
 .btn-ghost { background: transparent; color: var(--hvit); border: 1.5px solid rgba(255,255,255,.35); }

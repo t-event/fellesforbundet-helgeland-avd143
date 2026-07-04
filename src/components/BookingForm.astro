@@ -159,6 +159,13 @@ const form          = document.getElementById('booking-form');
 const RATE_MAP = { FFH: PRISER.FFH, FF: PRISER.FF, ANNET_LO: PRISER.ANNET_LO };
 const erEn = () => localStorage.getItem('lang') === 'en';
 
+// Sett min-dato klientside — attributtet settes ved bygg, og siden bygges kun
+// når ledigheten endres, så build-verdien kan være utdatert og slippe gjennom
+// fortids-datoer. Oppdater til dagens dato i nettleseren.
+const iDagIso = new Date().toISOString().split('T')[0];
+fraInput?.setAttribute('min', iDagIso);
+tilInput?.setAttribute('min', iDagIso);
+
 // Opptatte netter — samme kilde som kalenderen. Hindrer forespørsel på opptatte
 // datoer (de native dato-velgerne kan ikke deaktivere enkeltdatoer, så vi validerer).
 let bookedDates = new Set();
@@ -292,6 +299,7 @@ form?.addEventListener('submit', async (e) => {
   const melding = (document.getElementById('booking-melding'))?.value?.trim() ?? '';
 
   if (!fra) { setFeil('err-fra', erEn() ? 'Choose a start date.' : 'Velg fra-dato.'); ok = false; }
+  else if (fra < iDagIso) { setFeil('err-fra', erEn() ? 'Choose today or a later date.' : 'Velg en dato i dag eller senere.'); ok = false; }
   if (!til) { setFeil('err-til', erEn() ? 'Choose an end date.' : 'Velg til-dato.'); ok = false; }
   else if (til <= fra) { setFeil('err-til', erEn() ? 'End date must be after start date.' : 'Til-dato må være etter fra-dato.'); ok = false; }
   else if (opptattDatoIPerioden(fra, til)) { setFeil('err-til', erEn() ? 'One or more of the selected dates are already booked — please pick an available period.' : 'En eller flere av de valgte datoene er opptatt — velg en ledig periode.'); ok = false; }

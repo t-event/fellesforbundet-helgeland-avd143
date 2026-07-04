@@ -11,7 +11,6 @@ interface Props {
   ogType?: string;
   canonical?: string;
   lang?: string;
-  variant?: 'hytte' | 'hovedside';
   noindex?: boolean;
 }
 
@@ -21,7 +20,6 @@ const {
   ogImage = '/images/og-default.jpg',
   ogType = 'website',
   lang = 'no',
-  variant = 'hytte',
   noindex = false,
 } = Astro.props;
 
@@ -35,6 +33,7 @@ const ogImageUrl = siteUrl + base + ogImage;
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#1A1836" />
 
   <!-- Tittel og meta -->
   <title>{title}</title>
