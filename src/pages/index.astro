@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import Icon from '../components/Icon.astro';
 import { KONTAKT, STYRE, FF_LENKER } from '../config.ts';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
@@ -7,10 +8,10 @@ const initialer = (navn: string) =>
   navn.split(/\s+/).map(d => d[0]).join('').slice(0, 2).toUpperCase();
 
 const fordeler = [
-  { ikon: '🤝', tittel: 'Lønn & tariff',     tittel_en: 'Pay & agreements', body: 'Vi forhandler tariffavtaler og sikrer deg riktig lønn og ordnede arbeidsforhold.', body_en: 'We negotiate collective agreements and secure fair pay and proper working conditions.' },
-  { ikon: '⚖️', tittel: 'Juridisk hjelp',    tittel_en: 'Legal help',       body: 'Gratis bistand i saker om arbeidsforhold, oppsigelse, lønn og rettigheter.', body_en: 'Free assistance in matters of employment, dismissal, pay and rights.' },
-  { ikon: '🎓', tittel: 'Kurs & skolering',  tittel_en: 'Courses & training', body: 'Tilbud om kurs for medlemmer og tillitsvalgte gjennom hele året.', body_en: 'Courses for members and shop stewards throughout the year.' },
-  { ikon: '🏔️', tittel: 'Medlemsfordeler',   tittel_en: 'Member benefits',   body: 'Forsikring, rabatter og leie av forbundets fjellhytter til medlemspris.', body_en: 'Insurance, discounts and rental of the union\'s mountain cabins at member prices.' },
+  { ikon: 'handshake', tittel: 'Lønn & tariff',     tittel_en: 'Pay & agreements', body: 'Vi forhandler tariffavtaler og sikrer deg riktig lønn og ordnede arbeidsforhold.', body_en: 'We negotiate collective agreements and secure fair pay and proper working conditions.' },
+  { ikon: 'scale', tittel: 'Juridisk hjelp',    tittel_en: 'Legal help',       body: 'Gratis bistand i saker om arbeidsforhold, oppsigelse, lønn og rettigheter.', body_en: 'Free assistance in matters of employment, dismissal, pay and rights.' },
+  { ikon: 'graduation-cap', tittel: 'Kurs & skolering',  tittel_en: 'Courses & training', body: 'Tilbud om kurs for medlemmer og tillitsvalgte gjennom hele året.', body_en: 'Courses for members and shop stewards throughout the year.' },
+  { ikon: 'mountain', tittel: 'Medlemsfordeler',   tittel_en: 'Member benefits',   body: 'Forsikring, rabatter og leie av forbundets fjellhytter til medlemspris.', body_en: 'Insurance, discounts and rental of the union\'s mountain cabins at member prices.' },
 ];
 ---
 
@@ -66,7 +67,7 @@ const fordeler = [
       <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:18px;">
         {fordeler.map(f => (
           <div class="benefit">
-            <span class="benefit-ic" aria-hidden="true">{f.ikon}</span>
+            <span class="benefit-ic" aria-hidden="true"><Icon name={f.ikon} size={22} /></span>
             <h3 class="h3" style="font-size:18px; margin-bottom:6px;" data-en={f.tittel_en}>{f.tittel}</h3>
             <p class="muted" style="font-size:14.5px; line-height:1.6;" data-en={f.body_en}>{f.body}</p>
           </div>

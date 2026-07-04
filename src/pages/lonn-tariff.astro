@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import Icon from '../components/Icon.astro';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
 // Reelle avtaleområder i Fellesforbundet. MERK: hvilken overenskomst som
@@ -13,9 +14,9 @@ const avtaler = [
 ];
 
 const ressurser = [
-  { ikon: '📄', tittel: 'Hva er en tariffavtale?', tittel_en: 'What is a collective agreement?', body: 'En avtale mellom fagforening og arbeidsgiver om lønn, arbeidstid og rettigheter.', body_en: 'An agreement between union and employer on pay, working hours and rights.' },
-  { ikon: '✊', tittel: 'Krev tariffavtale',        tittel_en: 'Demand an agreement',             body: 'Mangler arbeidsplassen din avtale? Ta kontakt, så hjelper avdelingen deg videre.', body_en: 'No agreement at your workplace? Get in touch and the branch will help you.' },
-  { ikon: '💬', tittel: 'Spørsmål om lønn?',        tittel_en: 'Questions about pay?',            body: 'Usikker på om du får det du har krav på? Avdelingen svarer deg.', body_en: 'Unsure if you get what you are entitled to? The branch will answer you.' },
+  { ikon: 'file-text', tittel: 'Hva er en tariffavtale?', tittel_en: 'What is a collective agreement?', body: 'En avtale mellom fagforening og arbeidsgiver om lønn, arbeidstid og rettigheter.', body_en: 'An agreement between union and employer on pay, working hours and rights.' },
+  { ikon: 'heart-handshake', tittel: 'Krev tariffavtale',        tittel_en: 'Demand an agreement',             body: 'Mangler arbeidsplassen din avtale? Ta kontakt, så hjelper avdelingen deg videre.', body_en: 'No agreement at your workplace? Get in touch and the branch will help you.' },
+  { ikon: 'message-circle', tittel: 'Spørsmål om lønn?',        tittel_en: 'Questions about pay?',            body: 'Usikker på om du får det du har krav på? Avdelingen svarer deg.', body_en: 'Unsure if you get what you are entitled to? The branch will answer you.' },
 ];
 ---
 
@@ -80,7 +81,7 @@ const ressurser = [
       <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:18px;">
         {ressurser.map(r => (
           <div class="benefit">
-            <span class="benefit-ic" aria-hidden="true">{r.ikon}</span>
+            <span class="benefit-ic" aria-hidden="true"><Icon name={r.ikon} size={22} /></span>
             <h3 class="h3" style="font-size:18px; margin-bottom:6px;" data-en={r.tittel_en}>{r.tittel}</h3>
             <p class="muted" style="font-size:14.5px; line-height:1.6;" data-en={r.body_en}>{r.body}</p>
           </div>

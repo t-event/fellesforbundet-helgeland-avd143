@@ -18,7 +18,7 @@ import { UMBUKTA, YR_URL, VEGVESEN_KAMERA_URL } from '../config.ts';
     </div>
 
     <div class="weather-temp">
-      <span id="weather-icon" style="font-size:48px; line-height:1;" aria-hidden="true">–</span>
+      <span id="weather-icon" style="display:inline-flex; color:var(--lysgronn);" aria-hidden="true"></span>
       <div>
         <div class="deg" id="weather-temp">–</div>
         <div class="cond" id="weather-cond" style="font-size:15px;">–</div>
@@ -77,27 +77,41 @@ const DAGER_NB = ['søn','man','tir','ons','tor','fre','lør'];
 const DAYS_EN  = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
 const erEn = () => localStorage.getItem('lang') === 'en';
 
-const ICON_MAP = {
-  clearsky:            '☀️',
-  fair:                '🌤️',
-  partlycloudy:        '⛅',
-  cloudy:              '☁️',
-  fog:                 '🌫️',
-  rain:                '🌧️',
-  lightrain:           '🌦️',
-  heavyrain:           '🌧️',
-  sleet:               '🌨️',
-  lightsleet:          '🌨️',
-  heavysleet:          '🌨️',
-  snow:                '❄️',
-  lightsnow:           '🌨️',
-  heavysnow:           '❄️',
-  rainandthunder:      '⛈️',
-  lightrainandthunder: '⛈️',
-  heavyrainandthunder: '⛈️',
-  sleetandthunder:     '⛈️',
-  snowandthunder:      '⛈️',
+// Inline-SVG værsymboler (vendrede Lucide-ikoner) — erstatter emoji som
+// rendres ulikt per OS. Fargen arves via currentColor.
+const WX_ICONS = {
+  'sun': '<circle cx="12" cy="12" r="4" /><path d="M12 2v2" /><path d="M12 20v2" /><path d="m4.93 4.93 1.41 1.41" /><path d="m17.66 17.66 1.41 1.41" /><path d="M2 12h2" /><path d="M20 12h2" /><path d="m6.34 17.66-1.41 1.41" /><path d="m19.07 4.93-1.41 1.41" />',
+  'moon': '<path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401" />',
+  'cloud': '<path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z" />',
+  'cloud-sun': '<path d="M12 2v2" /><path d="m4.93 4.93 1.41 1.41" /><path d="M20 12h2" /><path d="m19.07 4.93-1.41 1.41" /><path d="M15.947 12.65a4 4 0 0 0-5.925-4.128" /><path d="M13 22H7a5 5 0 1 1 4.9-6H13a3 3 0 0 1 0 6Z" />',
+  'cloud-moon': '<path d="M13 16a3 3 0 0 1 0 6H7a5 5 0 1 1 4.9-6z" /><path d="M18.376 14.512a6 6 0 0 0 3.461-4.127c.148-.625-.659-.97-1.248-.714a4 4 0 0 1-5.259-5.26c.255-.589-.09-1.395-.716-1.248a6 6 0 0 0-4.594 5.36" />',
+  'cloud-rain': '<path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242" /><path d="M16 14v6" /><path d="M8 14v6" /><path d="M12 16v6" />',
+  'cloud-drizzle': '<path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242" /><path d="M8 19v1" /><path d="M8 14v1" /><path d="M16 19v1" /><path d="M16 14v1" /><path d="M12 21v1" /><path d="M12 16v1" />',
+  'cloud-snow': '<path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242" /><path d="M8 15h.01" /><path d="M8 19h.01" /><path d="M12 17h.01" /><path d="M12 21h.01" /><path d="M16 15h.01" /><path d="M16 19h.01" />',
+  'cloud-fog': '<path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242" /><path d="M16 17H7" /><path d="M17 21H9" />',
+  'cloud-lightning': '<path d="M6 16.326A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 .5 8.973" /><path d="m13 12-3 5h4l-3 5" />',
+  'thermometer': '<path d="M14 4v10.54a4 4 0 1 1-4 0V4a2 2 0 0 1 4 0Z" />',
 };
+function wxSvg(name, size) {
+  const inner = WX_ICONS[name] || WX_ICONS.thermometer;
+  return `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${inner}</svg>`;
+}
+const WX_BASE = {
+  clearsky:'sun', fair:'cloud-sun', partlycloudy:'cloud-sun', cloudy:'cloud', fog:'cloud-fog',
+  rain:'cloud-rain', lightrain:'cloud-drizzle', heavyrain:'cloud-rain',
+  sleet:'cloud-snow', lightsleet:'cloud-snow', heavysleet:'cloud-snow',
+  snow:'cloud-snow', lightsnow:'cloud-snow', heavysnow:'cloud-snow',
+  rainandthunder:'cloud-lightning', lightrainandthunder:'cloud-lightning', heavyrainandthunder:'cloud-lightning',
+  sleetandthunder:'cloud-lightning', snowandthunder:'cloud-lightning',
+};
+function iconName(code) {
+  const b = symbolBase(code);
+  if (/_night/.test(code || '')) {
+    if (b === 'clearsky') return 'moon';
+    if (b === 'fair' || b === 'partlycloudy') return 'cloud-moon';
+  }
+  return WX_BASE[b] || WX_BASE[b.replace(/andthunder$/, '')] || 'thermometer';
+}
 
 const SYMBOL_MAP = {
   clearsky: 'Sol', fair: 'Lettskyet', partlycloudy: 'Delvis skyet',
@@ -117,10 +131,6 @@ const SYMBOL_MAP_EN = {
 
 function symbolBase(code) {
   return code ? code.replace(/_day|_night|_polartwilight/,'') : '';
-}
-function symbolIcon(code) {
-  const b = symbolBase(code);
-  return ICON_MAP[b] ?? ICON_MAP[b.replace(/andthunder$|andrain$/, '')] ?? '🌡️';
 }
 function symbolLabel(code) {
   const b = symbolBase(code);
@@ -175,7 +185,7 @@ async function fetchWeather() {
         ? String(Math.round(inst.air_pressure_at_sea_level)) : '–';
 
     const sym = d?.next_1_hours?.summary?.symbol_code ?? d?.next_6_hours?.summary?.symbol_code;
-    document.getElementById('weather-icon').textContent = symbolIcon(sym);
+    document.getElementById('weather-icon').innerHTML = wxSvg(iconName(sym), 44);
     document.getElementById('weather-cond').textContent = sym ? symbolLabel(sym) : '–';
     document.getElementById('weather-dato').textContent =
       now.toLocaleDateString(erEn() ? 'en-GB' : 'nb-NO', { weekday:'long', hour:'2-digit', minute:'2-digit' });
@@ -200,7 +210,7 @@ async function fetchWeather() {
       const sym2  = data?.next_6_hours?.summary?.symbol_code ?? data?.next_1_hours?.summary?.symbol_code;
       return `<div class="weather-day">
         <div class="wd-dag">${(erEn() ? DAYS_EN : DAGER_NB)[date.getDay()]}</div>
-        <div style="font-size:22px; line-height:1.2;" aria-hidden="true">${symbolIcon(sym2)}</div>
+        <div class="wd-ic" aria-hidden="true">${wxSvg(iconName(sym2), 26)}</div>
         <div class="wd-temp">${t2 != null ? Math.round(t2) + '°' : '–'}</div>
         <div class="wd-prec">${prec > 0 ? prec + ' mm' : ''}</div>
       </div>`;

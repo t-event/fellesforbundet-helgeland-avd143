@@ -277,6 +277,7 @@ textarea.input { resize: vertical; min-height: 110px; }
 .weather-days { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin-top: 18px; padding-top: 18px; border-top: 1px solid rgba(255,255,255,.12); }
 .weather-day { text-align: center; }
 .weather-day .wd-dag { font-size: 11px; font-weight: 700; color: #bcbcd0; text-transform: uppercase; letter-spacing: .04em; }
+.weather-day .wd-ic { display: flex; justify-content: center; color: var(--lysgronn); margin: 4px 0; }
 .weather-day .wd-temp { font-size: 16px; font-weight: 800; margin: 4px 0; }
 .weather-day .wd-prec { font-size: 11px; color: #8a8aa0; }
 
@@ -406,7 +407,9 @@ textarea.input { resize: vertical; min-height: 110px; }
 @keyframes spin { to { transform: rotate(360deg); } }
 
 /* ── Hovedside-komponenter (avdelingens hjemmeside) ──────────── */
-.eyebrow { display: inline-block; font-size: 12px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: var(--rod); }
+.eyebrow { display: inline-flex; align-items: center; gap: 9px; font-size: 12px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: var(--rod); }
+/* Fane-signatur: kort rød strek foran seksjonsetiketter — et gjennomgående merkevare-element (jf. rød bunnlinje i header og rød venstrekant på sitatboks). */
+.eyebrow::before { content: ""; flex: none; width: 22px; height: 3px; background: var(--rod); border-radius: 2px; }
 
 /* Hero-statistikk (mørk hero) */
 .hero-stats { display: flex; flex-wrap: wrap; gap: clamp(24px, 5vw, 56px); margin-top: 36px; padding-top: 28px; border-top: 1px solid rgba(255,255,255,0.15); }
@@ -416,7 +419,8 @@ textarea.input { resize: vertical; min-height: 110px; }
 
 /* Fordel-/ikonkort */
 .benefit { background: #fff; border: 1px solid var(--kantlinje); border-radius: 16px; padding: 24px; }
-.benefit-ic { display: inline-flex; align-items: center; justify-content: center; width: 48px; height: 48px; border-radius: 12px; background: #fbeceb; font-size: 24px; margin-bottom: 16px; }
+.benefit-ic { display: inline-flex; align-items: center; justify-content: center; width: 48px; height: 48px; border-radius: 12px; background: #fbeceb; color: var(--rod); margin-bottom: 16px; }
+.ffh-icon { display: block; }
 
 /* Sitatboks */
 .about-quote { background: var(--morkbla); color: #fff; border-radius: 20px; padding: clamp(28px, 4vw, 44px); display: flex; align-items: center; border-left: 6px solid var(--rod); }

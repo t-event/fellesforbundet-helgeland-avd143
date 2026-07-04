@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import Icon from '../components/Icon.astro';
 import Calendar from '../components/Calendar.astro';
 import BookingForm from '../components/BookingForm.astro';
 import WeatherWidget from '../components/WeatherWidget.astro';
@@ -23,16 +24,16 @@ const bilder = [
 ];
 
 const fasiliteter = [
-  { ikon: '🛏', tittel: 'Inntil 12 sengeplasser', tittel_en: 'Up to 12 beds', beskrivelse: '2 soverom, sovealkove og romslig hems. Dyner og puter medfølger.', beskrivelse_en: '2 bedrooms, sleeping alcove and a spacious loft. Duvets and pillows included.' },
-  { ikon: '🍳', tittel: 'Fullt kjøkken', tittel_en: 'Full kitchen', beskrivelse: 'Komfyr, kjøleskap med fryser og kokeutstyr.', beskrivelse_en: 'Stove, fridge with freezer and cookware.' },
-  { ikon: '⚡', tittel: 'Innlagt strøm', tittel_en: 'Electricity', beskrivelse: '230V i hele hytta.', beskrivelse_en: '230V throughout the cabin.' },
-  { ikon: '💧', tittel: 'Innlagt vann', tittel_en: 'Running water', beskrivelse: 'Kaldt og varmt vann, dusj og toalett.', beskrivelse_en: 'Cold and hot water, shower and toilet.' },
-  { ikon: '🔥', tittel: 'Oppvarming', tittel_en: 'Heating', beskrivelse: 'Varmepumpe og vedovn.', beskrivelse_en: 'Heat pump and wood stove.' },
-  { ikon: '📺', tittel: 'WiFi og TV', tittel_en: 'WiFi and TV', beskrivelse: 'Mobildekning og internettilgang.', beskrivelse_en: 'Mobile coverage and internet access.' },
-  { ikon: '🚗', tittel: 'Parkering', tittel_en: 'Parking', beskrivelse: 'Gratis — plass til 4–5 biler.', beskrivelse_en: 'Free — space for 4–5 cars.' },
-  { ikon: '🚤', tittel: 'Naust med båt', tittel_en: 'Boathouse with boat', beskrivelse: 'Aluminiumsbåt med liten motor — ta med eget drivstoff.', beskrivelse_en: 'Aluminium boat with small motor — bring your own fuel.' },
-  { ikon: '🐕', tittel: 'Hunder tillatt', tittel_en: 'Dogs allowed', beskrivelse: 'Hunder er velkomne — men ikke i sofa eller senger.', beskrivelse_en: 'Dogs are welcome — but not on the sofa or beds.' },
-  { ikon: '🃏', tittel: 'Spill og fritid', tittel_en: 'Games & leisure', beskrivelse: 'Kortstokk og yatzy finnes på hytta.', beskrivelse_en: 'Playing cards and Yahtzee are available at the cabin.' },
+  { ikon: 'bed-double', tittel: 'Inntil 12 sengeplasser', tittel_en: 'Up to 12 beds', beskrivelse: '2 soverom, sovealkove og romslig hems. Dyner og puter medfølger.', beskrivelse_en: '2 bedrooms, sleeping alcove and a spacious loft. Duvets and pillows included.' },
+  { ikon: 'cooking-pot', tittel: 'Fullt kjøkken', tittel_en: 'Full kitchen', beskrivelse: 'Komfyr, kjøleskap med fryser og kokeutstyr.', beskrivelse_en: 'Stove, fridge with freezer and cookware.' },
+  { ikon: 'zap', tittel: 'Innlagt strøm', tittel_en: 'Electricity', beskrivelse: '230V i hele hytta.', beskrivelse_en: '230V throughout the cabin.' },
+  { ikon: 'droplet', tittel: 'Innlagt vann', tittel_en: 'Running water', beskrivelse: 'Kaldt og varmt vann, dusj og toalett.', beskrivelse_en: 'Cold and hot water, shower and toilet.' },
+  { ikon: 'flame', tittel: 'Oppvarming', tittel_en: 'Heating', beskrivelse: 'Varmepumpe og vedovn.', beskrivelse_en: 'Heat pump and wood stove.' },
+  { ikon: 'tv', tittel: 'WiFi og TV', tittel_en: 'WiFi and TV', beskrivelse: 'Mobildekning og internettilgang.', beskrivelse_en: 'Mobile coverage and internet access.' },
+  { ikon: 'car-front', tittel: 'Parkering', tittel_en: 'Parking', beskrivelse: 'Gratis — plass til 4–5 biler.', beskrivelse_en: 'Free — space for 4–5 cars.' },
+  { ikon: 'sailboat', tittel: 'Naust med båt', tittel_en: 'Boathouse with boat', beskrivelse: 'Aluminiumsbåt med liten motor — ta med eget drivstoff.', beskrivelse_en: 'Aluminium boat with small motor — bring your own fuel.' },
+  { ikon: 'dog', tittel: 'Hunder tillatt', tittel_en: 'Dogs allowed', beskrivelse: 'Hunder er velkomne — men ikke i sofa eller senger.', beskrivelse_en: 'Dogs are welcome — but not on the sofa or beds.' },
+  { ikon: 'ticket', tittel: 'Spill og fritid', tittel_en: 'Games & leisure', beskrivelse: 'Kortstokk og yatzy finnes på hytta.', beskrivelse_en: 'Playing cards and Yahtzee are available at the cabin.' },
 ];
 
 const faq = [
@@ -302,7 +303,7 @@ const faq = [
       <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:16px;">
         {fasiliteter.map(f => (
           <div class="facility">
-            <span class="facility-ic" aria-hidden="true">{f.ikon}</span>
+            <span class="facility-ic" aria-hidden="true"><Icon name={f.ikon} size={22} /></span>
             <div>
               <b data-en={f.tittel_en}>{f.tittel}</b>
               <span data-en={f.beskrivelse_en}>{f.beskrivelse}</span>

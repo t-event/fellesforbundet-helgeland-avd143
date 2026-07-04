@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import Icon from '../components/Icon.astro';
 import { STYRE, KONTAKT } from '../config.ts';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
@@ -18,10 +19,10 @@ const ansattePlassholder = [
 ];
 
 const verktoy = [
-  { ikon: '📘', tittel: 'Håndbok for tillitsvalgte', tittel_en: 'Shop steward handbook', body: 'Rettigheter, plikter og praktiske råd i tillitsvervet.', body_en: 'Rights, duties and practical advice in the role.' },
-  { ikon: '🎓', tittel: 'Grunnopplæring',            tittel_en: 'Basic training',         body: 'Kurs for nye tillitsvalgte gjennom Fellesforbundet.', body_en: 'Courses for new shop stewards through Fellesforbundet.' },
-  { ikon: '📄', tittel: 'Maler og skjema',           tittel_en: 'Templates & forms',      body: 'Protokoller, drøftinger og varsler.', body_en: 'Minutes, consultations and notices.' },
-  { ikon: '☎️', tittel: 'Rådgivningstelefon',        tittel_en: 'Advisory line',          body: 'Direkte støtte fra avdelingen når du står i en sak.', body_en: 'Direct support from the branch when you face a case.' },
+  { ikon: 'book-open', tittel: 'Håndbok for tillitsvalgte', tittel_en: 'Shop steward handbook', body: 'Rettigheter, plikter og praktiske råd i tillitsvervet.', body_en: 'Rights, duties and practical advice in the role.' },
+  { ikon: 'graduation-cap', tittel: 'Grunnopplæring',            tittel_en: 'Basic training',         body: 'Kurs for nye tillitsvalgte gjennom Fellesforbundet.', body_en: 'Courses for new shop stewards through Fellesforbundet.' },
+  { ikon: 'file-text', tittel: 'Maler og skjema',           tittel_en: 'Templates & forms',      body: 'Protokoller, drøftinger og varsler.', body_en: 'Minutes, consultations and notices.' },
+  { ikon: 'phone', tittel: 'Rådgivningstelefon',        tittel_en: 'Advisory line',          body: 'Direkte støtte fra avdelingen når du står i en sak.', body_en: 'Direct support from the branch when you face a case.' },
 ];
 ---
 
@@ -124,7 +125,7 @@ const verktoy = [
       <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:18px;">
         {verktoy.map(v => (
           <div class="benefit">
-            <span class="benefit-ic" aria-hidden="true">{v.ikon}</span>
+            <span class="benefit-ic" aria-hidden="true"><Icon name={v.ikon} size={22} /></span>
             <h3 class="h3" style="font-size:17px; margin-bottom:6px;" data-en={v.tittel_en}>{v.tittel}</h3>
             <p class="muted" style="font-size:14px; line-height:1.6;" data-en={v.body_en}>{v.body}</p>
           </div>
