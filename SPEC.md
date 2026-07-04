@@ -21,7 +21,9 @@ Statisk nettside for Fellesforbundet Helgeland (avd. 143): **avdelingens hjemmes
 |---|---|---|
 | Framework | **Astro 6** (statisk eksport, Node ≥ 22) | Fleksibel SSG, glimrende for innholdsside med komponenter, støttes av GitHub Pages |
 | Styling | **Egen CSS + CSS-variabler** fra designfilen (Tailwind fjernet — ingen utility-klasser i bruk, kun preflight) | Mobil-først, designsystemet følges nøyaktig |
-| Skrift | **Inter — selv-hostet woff2** (`src/fonts/`) | Ingen ekstern Google Fonts: raskere bygg/last, ingen IP-deling med Google (personvern) |
+| Skrift | **Inter** (brødtekst) + **Space Grotesk** (overskrifter) — begge **selv-hostet woff2** (`src/fonts/`) | Ingen ekstern Google Fonts (personvern). Space Grotesk = fri erstatning for merkevarefonten Monument Grotesk (som aldri lastet) |
+| Ikoner | **Lucide** vendret inn som SVG (`src/icons/`), inlines via `Icon.astro` | Erstatter emoji (rendret ulikt per OS); `currentColor` gir merkefarge. Ingen CDN/dependency |
+| Kart | **Google Maps keyless embed** (`?q=…&output=embed`) på Kontakt + Umbukta | Ingen API-nøkkel (ingenting å lekke), presis geokoding |
 | Skjema → e-post | **Web3Forms** (gratis, ingen backend) | Stateless POST, autosvar-funksjon, trygg public key |
 | Kalender-data | **GitHub Actions → `availability.json`** | CORS-fri henting av .ics, statisk JSON leses av klienten |
 | Vær | **MET Norway Locationforecast API** | Gratis, CORS-tillatt, `User-Agent`-krav følges |
@@ -54,7 +56,7 @@ Statisk nettside for Fellesforbundet Helgeland (avd. 143): **avdelingens hjemmes
 
 Avdelingens hovedside er nå **den offentlige fronten** (rot `/`), bygget fra designet `Hovedside design/Fellesforbundet avd 143 - Hovedside.html` (Vue-mockup) i designsystemet (profilhåndbok-CSS + `data-en`-i18n + offisielle FF-illustrasjoner). Hytteutleia er en **seksjon** under «Hytteutleie ▾» i menyen.
 
-- **Én felles meny** (`Header.astro`): Hjem · Medlem ▾ (Bli medlem, Lønn & tariff, Tillitsvalgte) · Aktuelt · Kontakt · Hytteutleie ▾ (Begge hyttene, Umbukta, Øvre Elsvatn ↗, Turtips, Hjelpesenter). Ingen variant-splitt lenger.
+- **Én felles meny** (`Header.astro`): Hjem · Medlem ▾ (Bli medlem, Lønn & tariff, Tillitsvalgte, Nyttige lenker) · Aktuelt · Om oss · Kontakt · Hytteutleie ▾ (Begge hyttene, Hytte i Umbukta, Hytte i Øvre Elsvatn ↗, Turtips Umbukta, Hjelp – hytteutleie). Ingen variant-splitt lenger.
 - **Én felles footer** (`Footer.astro`): Avdelingen, Hyttene, Kontakt + juridisk bunnlinje.
 - Tidligere skjult `/forhandsvisning`-struktur er fjernet (sidene flyttet til rot, `noindex` + sitemap-filter borte).
 
@@ -134,7 +136,7 @@ export const PRISER = { FFH: 700, FF: 1050, ANNET_LO: 1200 } as const;
 2. **Om hytta** — inntil 12 sengeplasser, 2 soverom + sovealkove + romslig hems, 3,5 mil fra Mo i Rana, 3 km fra Sverige
 3. **Bildegalleri** — sommerbilder fra Rikke (`public/images/umbukta/umbukta-*.jpg`): eksteriør, stue, kjøkken, spisestue med utsikt, soverom, hems, bad, naust med båt
 4. **Fasiliteter** — SVG-ikoner: innlagt vann + strøm, varmepumpe, vedovn, dusj, fullt kjøkken, mobildekning, WiFi, TV, parkering (4–5 biler), naust med aluminiumsbåt
-5. **Beliggenhet** — innebygd **OpenStreetMap**-kart + «Åpne i Google Maps»-lenke, veibeskrivelse, parkering, vinteradkomst (vei brøytes — bilvei helt fram hele året). *Merk: Google Maps-embed ble droppet pga. API-nøkkel; OSM krever ingen nøkkel.*
+5. **Beliggenhet** — innebygd **Google Maps keyless embed** (`?q=lat,lon&output=embed`, ingen API-nøkkel) + «Åpne i Google Maps»-lenke, veibeskrivelse, parkering, vinteradkomst (vei brøytes — bilvei helt fram hele året). Koordinater fra `UMBUKTA.lat/lon` (hentet fra avdelingens Maps-pin), som også styrer værvarsel + GPS-visning.
 6. **Vær & webkamera** — MET API + Vegvesen-kamera (side ved side)
 7. **Priser** — tre prisskort (FFH 700 / FF 1050 / Annet LO 1200 kr/døgn)
 8. **Ledighetskalender + bookingskjema** — side ved side (stakkede på mobil)
@@ -294,8 +296,9 @@ Vises tydelig på Umbukta-siden og kvitteringssiden:
 - GDPR: Nettsiden lagrer ingenting — data finnes kun hos avdelingen og Web3Forms
 - Samtykketekst vises i booking- og kontaktskjema
 - Dørkode: håndteres utelukkende av avdelingen, ALDRI i kode, e-poster eller nettsted
-- **Skrift selv-hostet** (Inter woff2 i `src/fonts/`) — ingen ekstern Google Fonts-forespørsel, så besøkendes IP deles ikke med Google
-- **Google Maps API-nøkkel** (fra tidlig versjon) ble lekket i git-historikk → **revokert i Google Cloud Console og fjernet fra historikken** (filter-branch + force-push). Kart bruker nå OpenStreetMap (ingen nøkkel). Ikke gjeninnfør Google Maps-embed.
+- **Skrift selv-hostet** (Inter + Space Grotesk woff2 i `src/fonts/`) — ingen ekstern Google Fonts-forespørsel, så besøkendes IP deles ikke med Google
+- **Google Maps API-nøkkel** (fra tidlig versjon) ble lekket i git-historikk → **revokert i Google Cloud Console og fjernet fra historikken** (filter-branch + force-push). Kartene bruker nå **keyless Google Maps embed** (`?q=…&output=embed`) — helt uten API-nøkkel, så det finnes ingenting å lekke. **Ikke gjeninnfør en NØKKEL-basert Google Maps-embed (Maps JS/Embed API); den keyless varianten er trygg.**
+- **DOM-XSS** på takk-siden (navn fra URL i `innerHTML`) er lukket — bygges nå med `createTextNode`/`replaceChildren`.
 - Sårbarhetsrapportering: se [SECURITY.md](SECURITY.md) (privat melding til T-Event)
 
 ---
