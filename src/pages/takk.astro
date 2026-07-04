@@ -118,9 +118,19 @@ function fyll() {
     const fmtFra = new Date(fra).toLocaleDateString(loc, { day:'numeric', month:'long' });
     const fmtTil = new Date(til).toLocaleDateString(loc, { day:'numeric', month:'long', year:'numeric' });
     const lead = document.getElementById('takk-lead-tekst');
-    if (lead) lead.innerHTML = erEn()
-      ? `We have received your request for the <strong>Umbukta cabin</strong> for <strong>${fmtFra}–${fmtTil}</strong>, ${navn}. The office will review it and contact you by email.`
-      : `Vi har mottatt forespørselen din om <strong>Hytte i Umbukta</strong> for <strong>${fmtFra}–${fmtTil}</strong>, ${navn}. Avdelingen ser over og tar kontakt på e-post.`;
+    if (lead) {
+      // Bygg med DOM-noder — navn fra URL settes som tekstnode og kan derfor
+      // aldri tolkes som HTML/skript (hindrer DOM-basert XSS).
+      const strong = (t) => { const s = document.createElement('strong'); s.textContent = t; return s; };
+      lead.replaceChildren(
+        document.createTextNode(erEn() ? 'We have received your request for the ' : 'Vi har mottatt forespørselen din om '),
+        strong(erEn() ? 'Umbukta cabin' : 'Hytte i Umbukta'),
+        document.createTextNode(erEn() ? ' for ' : ' for '),
+        strong(`${fmtFra}–${fmtTil}`),
+        document.createTextNode(`, ${navn}`),
+        document.createTextNode(erEn() ? '. The office will review it and contact you by email.' : '. Avdelingen ser over og tar kontakt på e-post.'),
+      );
+    }
   }
 }
 fyll();
