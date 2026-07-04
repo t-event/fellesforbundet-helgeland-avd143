@@ -7,10 +7,12 @@ Avdelingens nettside: **avdelingens hjemmeside** (forside, medlemskap, aktuelt, 
 | Rute | Innhold |
 |------|---------|
 | `/` | **Avdelingens forside** (hovedside) |
-| `/bli-medlem`, `/lonn-tariff`, `/tillitsvalgte`, `/aktuelt`, `/kontakt` | Avdelingssider |
+| `/bli-medlem`, `/lonn-tariff`, `/tillitsvalgte`, `/aktuelt`, `/om-oss`, `/kontakt` | Avdelingssider |
+| `/nyttige-lenker` | Samlede lenker til Fellesforbundet og LO |
 | `/hytter` | Hytteoversikt (seksjonsforside for «Hytteutleie») |
 | `/umbukta` | Full hytteside med booking |
-| `/turtips`, `/hjelp`, `/om-oss` | Turtips, hjelpesenter, om avdelingen |
+| `/turtips`, `/hjelp`, `/vilkar` | Turtips, hjelpesenter, vilkår for hytteleie |
+| `/personvern`, `/cookies`, `/tilgjengelighet` | Personvern, cookies, tilgjengelighetserklæring |
 
 - Avdelingens hovedside er **fronten** på rot. Hytteutleia er en seksjon under «Hytteutleie ▾» i menyen. Én felles meny + footer for hele sida.
 - **Planlagt domene:** `ffh143.no` (ikke aktivt ennå — se seksjon 5). Ev. `hyttebooking.ffh143.no` som videresending til hytteseksjonen.
@@ -322,7 +324,9 @@ Etter at siden er oppe og domenet er satt:
 |-----------|-----------|
 | Rammeverk | [Astro 6](https://astro.build) (statisk, Node ≥ 22) |
 | Styling | Egen CSS + CSS-variabler (Tailwind fjernet — var ubrukt) |
-| Skrift | Inter — **selv-hostet** woff2 (`src/fonts/`), ingen ekstern Google Fonts |
+| Skrift | **Inter** (brødtekst) + **Space Grotesk** (overskrifter) — begge **selv-hostet** woff2 (`src/fonts/`), ingen Google Fonts. Space Grotesk er fri erstatning for merkevarefonten Monument Grotesk |
+| Ikoner | [Lucide](https://lucide.dev) — vendret inn som SVG (`src/icons/`), inlines via `Icon.astro` (ingen emoji, ingen CDN) |
+| Kart | Google Maps **keyless embed** (`?q=…&output=embed`, ingen API-nøkkel) på Kontakt + Umbukta |
 | Skjema-til-e-post | [Web3Forms](https://web3forms.com) |
 | Hosting | GitHub Pages |
 | CI/CD | GitHub Actions |

@@ -92,16 +92,20 @@ const fordeler = [
           medlemsfordeler — inkludert leie av forbundets fjellhytter til medlemspris.
         </p>
       </div>
-      <div style="border-radius:18px; overflow:hidden; aspect-ratio:16/13;">
-        <img
-          src={`${base}/images/hovedside/markering-mo-i-rana.jpg`}
-          alt="Markering i Mo i Rana med avdelingens fane og banner «Oljeindustrien sikrer arbeid og velferd»"
-          width="960"
-          height="720"
-          loading="lazy"
-          style="width:100%; height:100%; object-fit:cover;"
-        />
-      </div>
+      <figure class="testimonial">
+        <span class="testimonial-mark" aria-hidden="true">&ldquo;</span>
+        <blockquote class="testimonial-quote" data-en="Here we'll feature a quote from a member — about what it has meant to stand together in the union.">
+          Her kommer et sitat fra et medlem — om hva det har betydd å stå sammen i fagforeningen.
+        </blockquote>
+        <figcaption class="testimonial-by">
+          <span class="testimonial-avatar" aria-hidden="true"><Icon name="user" size={20} /></span>
+          <span>
+            <b data-en="Name coming">Navn kommer</b>
+            <span class="muted" data-en="Member of the branch">Medlem i avdelingen</span>
+          </span>
+        </figcaption>
+        <span class="testimonial-flag" data-en="Placeholder — a real member quote will be added">Plassholder — ekte medlemssitat kommer</span>
+      </figure>
     </div>
   </div>
 

@@ -464,6 +464,16 @@ textarea.input { resize: vertical; min-height: 110px; }
 
 /* Sitatboks */
 .about-quote { background: var(--morkbla); color: #fff; border-radius: 20px; padding: clamp(28px, 4vw, 44px); display: flex; align-items: center; border-left: 6px solid var(--rod); }
+
+/* Medlemssitat (testimonial) — navy boks med attribusjon. */
+.testimonial { position: relative; background: var(--morkbla); color: #fff; border-radius: 20px; padding: clamp(28px, 4vw, 44px); border-left: 6px solid var(--rod); display: flex; flex-direction: column; gap: 16px; margin: 0; }
+.testimonial-mark { font-family: var(--font-display); font-size: 56px; line-height: .4; color: var(--rod); height: 26px; }
+.testimonial-quote { font-size: clamp(17px, 2vw, 20px); line-height: 1.55; font-weight: 600; margin: 0; }
+.testimonial-by { display: flex; align-items: center; gap: 12px; }
+.testimonial-avatar { flex: none; width: 42px; height: 42px; border-radius: 50%; background: rgba(255,255,255,.12); color: #fff; display: flex; align-items: center; justify-content: center; }
+.testimonial-by b { display: block; font-size: 14.5px; }
+.testimonial-by .muted { font-size: 13px; color: #b9bad0; }
+.testimonial-flag { align-self: flex-start; font-size: 12px; font-weight: 700; color: var(--gul); background: rgba(252,203,0,.12); border: 1px solid rgba(252,203,0,.35); border-radius: 8px; padding: 5px 10px; }
 .about-quote p { font-size: clamp(20px, 2.4vw, 28px); font-weight: 800; letter-spacing: -0.02em; line-height: 1.25; }
 
 /* Nyhetskort */
