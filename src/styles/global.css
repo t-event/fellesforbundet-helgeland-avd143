@@ -474,6 +474,13 @@ textarea.input { resize: vertical; min-height: 110px; }
 .testimonial-by b { display: block; font-size: 14.5px; }
 .testimonial-by .muted { font-size: 13px; color: #b9bad0; }
 .testimonial-flag { align-self: flex-start; font-size: 12px; font-weight: 700; color: var(--gul); background: rgba(252,203,0,.12); border: 1px solid rgba(252,203,0,.35); border-radius: 8px; padding: 5px 10px; }
+
+/* Samtykke-styrt kart-embed (Google Maps lastes først etter cookie-samtykke). */
+.map-embed { position: relative; width: 100%; height: 100%; min-height: 320px; background: #eef0f3; overflow: hidden; }
+.map-embed iframe { width: 100%; height: 100%; border: 0; display: block; }
+.map-embed .kart-pin { color: var(--rod); }
+.map-consent { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 24px;
+  background: repeating-linear-gradient(0deg, #e7eaef 0 21px, #eef0f3 21px 43px), repeating-linear-gradient(90deg, #e7eaef 0 21px, #eef0f3 21px 43px); }
 .about-quote p { font-size: clamp(20px, 2.4vw, 28px); font-weight: 800; letter-spacing: -0.02em; line-height: 1.25; }
 
 /* Nyhetskort */

@@ -5,6 +5,7 @@ import Calendar from '../components/Calendar.astro';
 import BookingForm from '../components/BookingForm.astro';
 import WeatherWidget from '../components/WeatherWidget.astro';
 import EasterSection from '../components/EasterSection.astro';
+import MapEmbed from '../components/MapEmbed.astro';
 import { PRISER, KONTAKT, UMBUKTA } from '../config.ts';
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
@@ -322,16 +323,9 @@ const faq = [
     <!-- BELIGGENHET -->
     <div class="section grid" style="padding-top:0; grid-template-columns:1fr 1fr; gap:clamp(24px,4vw,44px); align-items:stretch;">
       <div style="border-radius:18px; overflow:hidden; display:flex; flex-direction:column;">
-        <iframe
-          title="Kart til Umbukta-hytta (Google Maps)"
-          src={`https://www.google.com/maps?q=${UMBUKTA.lat},${UMBUKTA.lon}&hl=no&z=14&output=embed`}
-          width="100%"
-          height="100%"
-          style="border:0; display:block; flex:1; min-height:320px;"
-          allowfullscreen
-          loading="lazy"
-          aria-label="Kart — Umbukta-hytta"
-        ></iframe>
+        <div style="flex:1; min-height:320px;">
+          <MapEmbed src={`https://www.google.com/maps?q=${UMBUKTA.lat},${UMBUKTA.lon}&hl=no&z=14&output=embed`} title="Kart til Umbukta-hytta (Google Maps)" />
+        </div>
         <div style="padding:12px 16px; background:var(--flate); border-top:1px solid var(--kantlinje);">
           <a
             href={UMBUKTA.kart}

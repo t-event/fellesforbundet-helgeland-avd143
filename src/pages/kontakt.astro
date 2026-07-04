@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Icon from '../components/Icon.astro';
+import MapEmbed from '../components/MapEmbed.astro';
 import { KONTAKT } from '../config.ts';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const mapQuery = `${KONTAKT.adresse}, ${KONTAKT.postnummer} ${KONTAKT.poststed}`;
@@ -68,10 +69,10 @@ const googleEmbed = `https://www.google.com/maps?q=${encodeURIComponent(mapQuery
         <!-- KART — OpenStreetMap-embed (ingen nøkkel/sporing) + Google Maps-lenke for veibeskrivelse -->
         <div style="margin-top:26px;">
           <div class="kart">
-            <iframe src={googleEmbed} title="Kart over avdelingskontoret (Google Maps)" loading="lazy" referrerpolicy="no-referrer" allowfullscreen></iframe>
+            <MapEmbed src={googleEmbed} title="Kart over avdelingskontoret (Google Maps)" />
           </div>
           <p class="muted" style="font-size:12.5px; margin-top:8px; display:flex; align-items:center; gap:6px;">
-            <span class="kart-pin" aria-hidden="true" style="display:inline-flex;"><Icon name="map-pin" size={15} /></span>
+            <span aria-hidden="true" style="display:inline-flex; color:var(--rod);"><Icon name="map-pin" size={15} /></span>
             {KONTAKT.adresse}, {KONTAKT.postnummer} {KONTAKT.poststed} ·
             <a href={googleMapsUrl} target="_blank" rel="noopener noreferrer" class="btn-link" style="font-size:12.5px;" data-en="Open in Google Maps ↗">Åpne i Google Maps ↗</a>
           </p>
@@ -194,7 +195,5 @@ const googleEmbed = `https://www.google.com/maps?q=${encodeURIComponent(mapQuery
 </script>
 
 <style>
-  .kart { aspect-ratio: 16 / 10; border-radius: 14px; overflow: hidden; border: 1px solid var(--kantlinje); background: #eef0f3; }
-  .kart iframe { display: block; width: 100%; height: 100%; border: 0; }
-  .kart-pin { color: var(--rod); }
+  .kart { aspect-ratio: 16 / 10; border-radius: 14px; overflow: hidden; border: 1px solid var(--kantlinje); }
 </style>

@@ -11,9 +11,9 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       Informasjonskapsler (cookies)
     </h1>
     <div style="display:flex; flex-direction:column; gap:24px; font-size:16px; line-height:1.75; color:var(--tekst-dempet);">
-      <p data-en="This website uses very few cookies and no analytics or advertising. We only load embedded content from Facebook if you accept all cookies.">
+      <p data-en="This website uses very few cookies and no analytics or advertising. We only load embedded content from Facebook and Google Maps if you accept all cookies.">
         Denne nettsiden bruker svært få informasjonskapsler, og ingen analyse eller reklame. Vi laster kun
-        innebygd innhold fra Facebook dersom du godtar alle informasjonskapsler.
+        innebygd innhold fra Facebook og Google Maps dersom du godtar alle informasjonskapsler.
       </p>
 
       <h2 class="h3" data-en="Necessary cookies">Nødvendige informasjonskapsler</h2>
@@ -44,13 +44,14 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
         </table>
       </div>
 
-      <h2 class="h3" data-en="Embedded content from Facebook">Innebygd innhold fra Facebook</h2>
+      <h2 class="h3" data-en="Embedded content (Facebook and Google Maps)">Innebygd innhold (Facebook og Google Maps)</h2>
       <p style="margin-top:-12px;"
-         data-en="On the news page we can embed the branch's latest Facebook posts. This content comes from facebook.com and sets Facebook's own cookies, which may be used for tracking. It is therefore loaded only if you choose «Accept all». If you choose «Necessary only», no Facebook content or cookies are loaded.">
-        På aktuelt-sida kan vi bygge inn avdelingens siste Facebook-innlegg. Dette innholdet kommer fra
-        facebook.com og setter Facebooks egne informasjonskapsler, som kan brukes til sporing. Det lastes
-        derfor kun hvis du velger «Godta alle». Velger du «Bare nødvendige», lastes verken Facebook-innhold
-        eller -informasjonskapsler.
+         data-en="On the news page we can embed the branch's latest Facebook posts, and on the contact and cabin pages we can embed a map from Google Maps. This third-party content sets the providers' own cookies, which may be used for tracking. It is therefore loaded only if you choose «Accept all» — shown as a placeholder with an «Accept & show» button until then. If you choose «Necessary only», neither Facebook, Google Maps nor their cookies are loaded.">
+        På aktuelt-sida kan vi bygge inn avdelingens siste Facebook-innlegg, og på kontakt- og hyttesidene
+        kan vi bygge inn et kart fra Google Maps. Dette tredjepartsinnholdet setter leverandørenes egne
+        informasjonskapsler, som kan brukes til sporing. Det lastes derfor kun hvis du velger «Godta alle»
+        — fram til da vises en plassholder med en «godta og vis»-knapp. Velger du «Bare nødvendige», lastes
+        verken Facebook, Google Maps eller deres informasjonskapsler.
       </p>
 
       <div class="card card-pad" style="display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:16px;">

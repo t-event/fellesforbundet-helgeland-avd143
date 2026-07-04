@@ -1,0 +1,53 @@
+---
+import Icon from './Icon.astro';
+// Samtykke-styrt kart-embed. Google Maps setter informasjonskapsler, så iframen
+// lastes IKKE før brukeren har godtatt alle cookies (samme mønster som Facebook-
+// innbyggingen). Uten samtykke vises en plassholder med «godta og vis»-knapp.
+interface Props { src: string; title: string; }
+const { src, title } = Astro.props;
+---
+<div class="map-embed" data-src={src} data-title={title}>
+  <div class="map-consent">
+    <span class="kart-pin" aria-hidden="true"><Icon name="map-pin" size={28} /></span>
+    <p style="font-weight:700; margin:10px 0 2px;" data-en="Map requires cookies">Kartet krever informasjonskapsler</p>
+    <p class="muted" style="font-size:13px; max-width:34ch; margin:0 auto 14px; line-height:1.5;"
+       data-en="The map loads from Google Maps, which sets cookies. Accept to show it here.">
+      Kartet lastes fra Google Maps, som setter informasjonskapsler. Godta for å vise det her.
+    </p>
+    <button class="btn btn-secondary" type="button" data-map-load data-en="Accept & show map">Godta og vis kart</button>
+  </div>
+</div>
+
+<script>
+  function lastKart(el: HTMLElement) {
+    if (el.dataset.loaded) return;
+    el.dataset.loaded = '1';
+    const ifr = document.createElement('iframe');
+    ifr.src = el.dataset.src || '';
+    ifr.title = el.dataset.title || 'Kart';
+    ifr.loading = 'lazy';
+    ifr.referrerPolicy = 'no-referrer';
+    ifr.setAttribute('allowfullscreen', '');
+    ifr.style.cssText = 'width:100%;height:100%;border:0;display:block;';
+    el.innerHTML = '';
+    el.appendChild(ifr);
+  }
+  function harSamtykke() {
+    try { return localStorage.getItem('samtykke') === 'alle'; } catch { return false; }
+  }
+
+  const kart = Array.from(document.querySelectorAll<HTMLElement>('.map-embed[data-src]'));
+  if (harSamtykke()) kart.forEach(lastKart);
+
+  // Last når samtykke gis (via banner eller knappen under).
+  document.addEventListener('samtykke-endret', (e) => {
+    if ((e as CustomEvent).detail === 'alle') kart.forEach(lastKart);
+  });
+
+  // «Godta og vis kart»-knappen: godta alle + last (som Facebook-knappen).
+  document.querySelectorAll('[data-map-load]').forEach(btn =>
+    btn.addEventListener('click', () => {
+      try { localStorage.setItem('samtykke', 'alle'); } catch (e) {}
+      document.dispatchEvent(new CustomEvent('samtykke-endret', { detail: 'alle' }));
+    }));
+</script>
