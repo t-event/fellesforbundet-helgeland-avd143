@@ -1,0 +1,32 @@
+---
+// Dekorativt sirkel-/prikk-motiv — henter merkevare-uttrykket fra fellesforbundet.no
+// (rutenett av sirkler i merkefarger). Rent dekorativt, derfor aria-hidden.
+// Variant styrer paletten så motivet passer bakgrunnen det ligger på.
+interface Props {
+  variant?: 'mork' | 'lys' | 'gronn';
+  class?: string;
+}
+const { variant = 'mork', class: klass = '' } = Astro.props;
+
+// 2 kolonner × 3 rader med sirkler som så vidt tangerer hverandre.
+const sentre = [
+  [50, 50], [150, 50],
+  [50, 150], [150, 150],
+  [50, 250], [150, 250],
+];
+
+// Farger per posisjon, per variant. Merkefargene (rød/grønn/marineblå) som
+// aksenter, resten dempet så motivet er tekstur – ikke støy.
+const paletter: Record<string, string[]> = {
+  mork:  ['rgba(255,255,255,.06)', 'var(--lysgronn)', 'rgba(255,255,255,.06)', 'rgba(255,255,255,.10)', 'var(--rod)', 'rgba(255,255,255,.06)'],
+  lys:   ['var(--gra)', 'var(--lysgronn)', 'var(--gra)', 'var(--gra)', 'var(--rod)', 'var(--gra)'],
+  gronn: ['var(--beige)', 'var(--rod)', 'var(--beige)', 'var(--morkbla)', 'var(--beige)', 'var(--beige)'],
+};
+const farger = paletter[variant] ?? paletter.mork;
+---
+<svg class={`circle-motif ${klass}`} viewBox="0 0 200 300" width="200" height="300"
+     aria-hidden="true" focusable="false" preserveAspectRatio="xMidYMid meet">
+  {sentre.map(([cx, cy], i) => (
+    <circle cx={cx} cy={cy} r="49" style={`fill:${farger[i]}`} />
+  ))}
+</svg>

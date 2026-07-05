@@ -183,7 +183,11 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .nav-mobile a.btn { display: flex; justify-content: center; margin-top: 20px; padding: 14px 20px; color: #fff; border: none; font-size: 16px; }
 
 /* ── Hero ────────────────────────────────────────────────────── */
-.hero-dark { background: linear-gradient(180deg, var(--morkbla) 0%, #221f43 100%); color: #fff; }
+.hero-dark { background: linear-gradient(180deg, var(--morkbla) 0%, #221f43 100%); color: #fff; position: relative; overflow: hidden; }
+.hero-dark .container { position: relative; z-index: 1; }
+/* Sirkel-motiv (merkevare-dekor) — blør ut av øvre høyre hjørne, bak innholdet */
+.circle-motif { display: block; height: auto; }
+.hero-motif { position: absolute; top: -64px; right: -48px; width: clamp(140px, 15vw, 210px); opacity: .9; z-index: 0; pointer-events: none; }
 .hero-dark .lead { color: #dcdce8; }
 .hero-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(32px, 5vw, 56px); align-items: center; }
 .hero-pill { display: inline-block; background: rgba(196,211,164,.22); color: var(--lysgronn); font-weight: 700; font-size: 13px; padding: 7px 14px; border-radius: var(--radius-pill); margin-bottom: 22px; }
