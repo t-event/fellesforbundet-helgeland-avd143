@@ -26,10 +26,11 @@
   <p class="cal-note" data-i18n="cal_note">
     Gule dager = påske (loddtrekning). Kalender oppdateres ca. én gang i timen.
   </p>
+  <p id="cal-lodd-melding" class="cal-lodd-melding" role="status" aria-live="polite" style="display:none;"></p>
 </div>
 
 <script>
-import { getRelevantEaster } from '../utils/easter.ts';
+import { getRelevantEaster, isEasterSectionVisible } from '../utils/easter.ts';
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
@@ -175,12 +176,42 @@ function renderCalendar() {
   });
 }
 
+// Info-melding for gule (loddtrekning) dager når påmelding ikke er åpnet ennå.
+let loddMeldingVist = false;
+function visLoddMelding(now: Date) {
+  const el = document.getElementById('cal-lodd-melding');
+  if (!el) return;
+  const ep = getRelevantEaster(now);
+  const dato = ep.registrationStart.toLocaleDateString(erEn() ? 'en-GB' : 'nb-NO',
+    { day: 'numeric', month: 'long', year: 'numeric' });
+  el.textContent = erEn()
+    ? `The Easter draw is not open yet. Registration for ${ep.year} opens ${dato}.`
+    : `Loddtrekningen er ikke åpen ennå. Påmelding for ${ep.year} åpner ${dato}.`;
+  el.style.display = '';
+  loddMeldingVist = true;
+}
+function skjulLoddMelding() {
+  const el = document.getElementById('cal-lodd-melding');
+  if (el) el.style.display = 'none';
+  loddMeldingVist = false;
+}
+
 function handleDayClick(iso: string) {
   if (easterDates.has(iso)) {
-    // Scroll til påskeregistreringsskjema
-    document.getElementById('paske-seksjon')?.scrollIntoView({ behavior: 'smooth' });
+    const now = new Date();
+    if (isEasterSectionVisible(now)) {
+      // Loddtrekning-seksjonen er synlig (påmelding åpen, eller frist passert med
+      // beskjed i seksjonen) — scroll dit.
+      skjulLoddMelding();
+      document.getElementById('paske-seksjon')?.scrollIntoView({ behavior: 'smooth' });
+    } else {
+      // Påmelding er ikke åpnet ennå (seksjonen er skjult) — fortell når den åpner,
+      // så et klikk på en gul dag ikke bare scroller til et kollapset element.
+      visLoddMelding(now);
+    }
     return;
   }
+  skjulLoddMelding();
 
   if (!selectedFrom || (selectedFrom && selectedTo)) {
     // Start ny valg
@@ -285,5 +316,9 @@ init();
 
 // Tegn kalenderen på nytt ved språkbytte (månedsnavn)
 document.querySelectorAll('.lang button').forEach(b =>
-  b.addEventListener('click', () => setTimeout(() => { renderCalendar(); oppdaterNesteLedige(); }, 0)));
+  b.addEventListener('click', () => setTimeout(() => {
+    renderCalendar();
+    oppdaterNesteLedige();
+    if (loddMeldingVist) visLoddMelding(new Date()); // hold meldingen i valgt språk
+  }, 0)));
 </script>
