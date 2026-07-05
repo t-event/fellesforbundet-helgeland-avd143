@@ -283,13 +283,13 @@ const faq = [
       <BookingForm />
     </div>
 
-    <!-- PÅSKE / LODDTREKNING -->
-    <div class="section" style="padding-top:0;">
-      <EasterSection />
-    </div>
+    <!-- PÅSKE / LODDTREKNING — skjult utenom påske. Ingen .section-wrapper her:
+         luften ligger på #paske-seksjon selv, så en skjult seksjon ikke etterlater
+         dødrom mellom skjemaet og «Bra å vite». -->
+    <EasterSection />
 
     <!-- ── BRA Å VITE ─────────────────────────────────────────── -->
-    <div class="section section-divider" style="padding-bottom:0; margin-top:clamp(32px,5vw,56px);">
+    <div class="section section-divider" style="padding-bottom:0;">
       <span class="eyebrow" data-en="Good to know">Bra å vite</span>
       <h2 class="h2" style="font-size:clamp(22px,2.8vw,32px); margin-top:6px;" data-en="Facilities, location and house rules">
         Fasiliteter, beliggenhet og husregler
@@ -324,7 +324,7 @@ const faq = [
     <div class="section grid grid-2" style="padding-top:0; gap:clamp(24px,4vw,44px); align-items:stretch;">
       <div style="border-radius:18px; overflow:hidden; display:flex; flex-direction:column;">
         <div style="flex:1; min-height:320px;">
-          <MapEmbed src={`https://www.google.com/maps?q=${UMBUKTA.lat},${UMBUKTA.lon}&hl=no&z=14&output=embed`} title="Kart til Umbukta-hytta (Google Maps)" />
+          <MapEmbed src={`https://www.google.com/maps?q=${UMBUKTA.lat},${UMBUKTA.lon}&hl=no&z=14&t=k&output=embed`} title="Kart til Umbukta-hytta (Google Maps)" />
         </div>
         <div style="padding:12px 16px; background:var(--flate); border-top:1px solid var(--kantlinje);">
           <a
@@ -458,7 +458,7 @@ const faq = [
 
 <style>
   @media (max-width: 768px) {
-    .section.grid[style*="grid-template-columns:1fr 1fr"] {
+    .section.grid-2 {
       grid-template-columns: 1fr !important;
     }
   }

@@ -7,7 +7,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const mapQuery = `${KONTAKT.adresse}, ${KONTAKT.postnummer} ${KONTAKT.poststed}`;
 const googleMapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(mapQuery)}`;
 // Keyless Google Maps-embed (ingen API-nøkkel) — Google geokoder adressen presist.
-const googleEmbed = `https://www.google.com/maps?q=${encodeURIComponent(mapQuery)}&hl=no&z=16&output=embed`;
+const googleEmbed = `https://www.google.com/maps?q=${encodeURIComponent(mapQuery)}&hl=no&z=16&t=k&output=embed`;
 ---
 
 <Layout

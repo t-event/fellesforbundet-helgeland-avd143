@@ -198,7 +198,7 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .media-hero-overlay .container { width: 100%; padding-bottom: 40px; color: #fff; }
 
 /* ── Fasiliteter ─────────────────────────────────────────────── */
-.facilities { background: var(--lysgronn); border-radius: 22px; padding: clamp(28px, 5vw, 56px); }
+.facilities { background: var(--lysgronn); border-radius: 22px; padding: clamp(28px, 5vw, 56px); margin-top: clamp(18px, 3vw, 28px); }
 .facilities h2 { color: #26301a; margin-bottom: 28px; }
 .facility { display: flex; gap: 14px; background: #fff; border-radius: 14px; padding: 18px; align-items: flex-start; }
 .facility-ic { flex: none; width: 42px; height: 42px; border-radius: 10px; background: #fbeceb; color: var(--rod); display: flex; align-items: center; justify-content: center; }
