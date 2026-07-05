@@ -16,15 +16,24 @@ if (!ICS_URL) {
   process.exit(1);
 }
 
-function fetch(url) {
+const MAKS_REDIRECTS = 5;
+
+function fetch(url, redirectsIgjen = MAKS_REDIRECTS) {
   return new Promise((resolve, reject) => {
     const lib = url.startsWith('https') ? https : http;
     lib.get(url, { headers: { 'User-Agent': 'FFH-Availability-Bot/1.0' } }, (res) => {
-      // Følg redirect
+      // Følg redirect — men med et tak, så en redirect-loop ikke kjører i det uendelige.
       if (res.statusCode >= 300 && res.statusCode < 400 && res.headers.location) {
-        return fetch(res.headers.location).then(resolve).catch(reject);
+        res.resume(); // tøm responsen så socketen kan gjenbrukes
+        if (redirectsIgjen <= 0) {
+          return reject(new Error('For mange redirects (mulig loop)'));
+        }
+        // Location kan være relativ — løs den mot gjeldende URL.
+        const neste = new URL(res.headers.location, url).toString();
+        return fetch(neste, redirectsIgjen - 1).then(resolve).catch(reject);
       }
       if (res.statusCode !== 200) {
+        res.resume();
         return reject(new Error(`HTTP ${res.statusCode}`));
       }
       let data = '';

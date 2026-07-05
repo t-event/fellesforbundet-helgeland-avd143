@@ -97,12 +97,15 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .section    { padding: clamp(44px, 6vw, 72px) 0; }
 .grid       { display: grid; gap: 24px; }
 .cols-auto  { grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); }
+/* Eksplisitt 2-kolonners grid. Egen klasse (ikke [style*="1fr 1fr"]) så det
+   responsive oppsettet ikke er avhengig av en skjør inline-style-substring. */
+.grid-2     { grid-template-columns: 1fr 1fr; }
 
 /* ── Typografi ───────────────────────────────────────────────── */
 .h1, .h2, .h3 { font-family: var(--font-display); }
-.h1 { font-size: clamp(32px, 5vw, 52px); font-weight: 900; letter-spacing: -0.03em; text-wrap: balance; }
-.h2 { font-size: clamp(26px, 3.4vw, 40px); font-weight: 800; }
-.h3 { font-size: 21px; font-weight: 800; letter-spacing: -0.01em; }
+.h1 { font-size: clamp(32px, 5vw, 52px); font-weight: 700; letter-spacing: -0.03em; text-wrap: balance; }
+.h2 { font-size: clamp(26px, 3.4vw, 40px); font-weight: 700; }
+.h3 { font-size: 21px; font-weight: 700; letter-spacing: -0.01em; }
 .lead { font-size: clamp(16px, 1.6vw, 19px); color: var(--tekst-dempet); line-height: 1.6; }
 .eyebrow { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--tekst-svak); }
 .muted { color: var(--tekst-dempet); }
@@ -347,6 +350,13 @@ textarea.input { resize: vertical; min-height: 110px; }
 .tur-card { background: #fff; border: 1px solid var(--kantlinje); border-radius: 18px; overflow: hidden; display: flex; flex-direction: column; }
 .tur-card .tur-img { height: 170px; overflow: hidden; }
 .tur-card .tur-img img { width: 100%; height: 100%; object-fit: cover; }
+/* Plassholder til egne turbilder er på plass (se PLACEHOLDERS.md) */
+.tur-card .tur-img.placeholder {
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px;
+  color: var(--tekst-svak); background: linear-gradient(135deg, #eef1f5, #e2e7ee);
+  border-bottom: 1px solid var(--kantlinje);
+}
+.tur-card .tur-img.placeholder span { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; }
 .tur-card .body { padding: 22px; display: flex; flex-direction: column; flex: 1; }
 .tur-card .meta { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; color: var(--rod); margin-bottom: 8px; }
 
@@ -387,7 +397,7 @@ textarea.input { resize: vertical; min-height: 110px; }
 
 /* ── Nettbrett (641–900px) ─────────────────────────────────── */
 @media (min-width: 641px) and (max-width: 900px) {
-  .grid[style*="1fr 1fr"] { gap: 20px !important; }
+  .grid-2 { gap: 20px !important; }
 }
 
 /* Mer luft i sidene på nettbrett (iPad o.l.) — unngå at innholdet
@@ -403,7 +413,7 @@ textarea.input { resize: vertical; min-height: 110px; }
 /* ── Mobil (≤640px) ────────────────────────────────────────── */
 @media (max-width: 640px) {
   /* Stabel alle eksplisitte 2-kol grids */
-  .grid[style*="1fr 1fr"] { grid-template-columns: 1fr !important; }
+  .grid-2 { grid-template-columns: 1fr !important; }
 
   /* Begrens hero-bildet på mobil */
   .hero-img { height: clamp(200px, 55vw, 260px); }

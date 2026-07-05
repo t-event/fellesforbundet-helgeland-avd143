@@ -151,7 +151,7 @@ const faq = [
   <div class="container">
 
     <!-- OM HYTTA -->
-    <div class="section grid" style="grid-template-columns:1fr 1fr; align-items:center; gap:clamp(32px,5vw,56px);">
+    <div class="section grid grid-2" style="align-items:center; gap:clamp(32px,5vw,56px);">
       <div>
         <h2 class="h2" style="margin-bottom:16px;" data-i18n="umbukta_about_title">Om hytta</h2>
         <p class="muted" style="font-size:16.5px; line-height:1.7; margin-bottom:16px;"
@@ -268,7 +268,7 @@ const faq = [
     </div>
 
     <!-- KALENDER + BOOKINGSKJEMA -->
-    <div id="ledige-datoer" class="section grid" style="scroll-margin-top:90px; padding-top:0; grid-template-columns:1fr 1fr; align-items:start; gap:clamp(20px,4vw,36px);">
+    <div id="ledige-datoer" class="section grid grid-2" style="scroll-margin-top:90px; padding-top:0; align-items:start; gap:clamp(20px,4vw,36px);">
       <div>
         <h2 class="h2" style="font-size:clamp(22px,2.6vw,28px); margin-bottom:18px;" data-i18n="umbukta_calendar_title">
           Ledige datoer
@@ -321,7 +321,7 @@ const faq = [
     </div>
 
     <!-- BELIGGENHET -->
-    <div class="section grid" style="padding-top:0; grid-template-columns:1fr 1fr; gap:clamp(24px,4vw,44px); align-items:stretch;">
+    <div class="section grid grid-2" style="padding-top:0; gap:clamp(24px,4vw,44px); align-items:stretch;">
       <div style="border-radius:18px; overflow:hidden; display:flex; flex-direction:column;">
         <div style="flex:1; min-height:320px;">
           <MapEmbed src={`https://www.google.com/maps?q=${UMBUKTA.lat},${UMBUKTA.lon}&hl=no&z=14&output=embed`} title="Kart til Umbukta-hytta (Google Maps)" />
@@ -390,7 +390,7 @@ const faq = [
     </div>
 
     <!-- HUSREGLER + FAQ -->
-    <div class="section grid" style="padding-top:0; grid-template-columns:1fr 1fr; align-items:start; gap:clamp(20px,4vw,36px);">
+    <div class="section grid grid-2" style="padding-top:0; align-items:start; gap:clamp(20px,4vw,36px);">
 
       <div class="rules" aria-label="Husregler">
         <h2 class="h2" style="font-size:24px;" data-i18n="umbukta_rules_title">

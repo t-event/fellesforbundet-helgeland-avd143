@@ -156,15 +156,19 @@ document.querySelectorAll('.lang button').forEach(b =>
 // Skriv ut / lagre som PDF
 document.getElementById('takk-print')?.addEventListener('click', () => window.print());
 
-// Legg i kalender (.ics) — kun når leieperioden er kjent
+// Legg i kalender (.ics) — kun når leieperioden er kjent.
+// URL-params kan manipuleres i en delt lenke, så datoer valideres strengt og
+// tekstfelt renses (CR/LF fjernes, ICS-spesialtegn escapes) før de legges i fila.
+const isIsoDato = (s) => /^\d{4}-\d{2}-\d{2}$/.test(s);
+const icsTekst = (s) => String(s).replace(/[\r\n]+/g, ' ').replace(/([\\;,])/g, '\\$1');
 const icsBtn = document.getElementById('takk-ics');
-if (icsBtn && fra && til) {
+if (icsBtn && isIsoDato(fra) && isIsoDato(til)) {
   icsBtn.style.display = '';
   icsBtn.addEventListener('click', () => {
     const dt = (s) => s.replace(/-/g, '');
     const stamp = new Date().toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
-    const uid = (ref || 'umbukta-' + dt(fra)) + '@ffh143.no';
-    const desc = `Betalingsreferanse: ${ref || '-'}. Kontonr: ${KONTONUMMER}.` + (sum ? ` Belop: ${sum} kr.` : '');
+    const uid = (ref || 'umbukta-' + dt(fra)).replace(/[^A-Za-z0-9-]/g, '') + '@ffh143.no';
+    const desc = icsTekst(`Betalingsreferanse: ${ref || '-'}. Kontonr: ${KONTONUMMER}.` + (sum ? ` Belop: ${sum} kr.` : ''));
     const ics = [
       'BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//FFH avd 143//Hytte Umbukta//NO', 'CALSCALE:GREGORIAN',
       'BEGIN:VEVENT', `UID:${uid}`, `DTSTAMP:${stamp}`,
