@@ -162,18 +162,31 @@ const ogImageUrl = siteUrl + base + ogImage;
     });
   </script>
 
-  <!-- Hamburger-meny (mobil) -->
+  <!-- «Meny»-knapp → full meny (alle skjermstørrelser) -->
   <script>
     const toggle = document.getElementById('nav-toggle');
     const navMobile = document.getElementById('nav-mobile');
+    const header = document.querySelector('.site-header');
+
+    // Full-menyen starter rett under headeren — sett høyden dynamisk (topp-rad
+    // + hovedrad varierer med skjermbredde).
+    function settHeaderHoyde() {
+      if (header) document.documentElement.style.setProperty('--header-h', header.offsetHeight + 'px');
+    }
+    settHeaderHoyde();
+    window.addEventListener('resize', settHeaderHoyde);
+
+    function lukkMeny() {
+      navMobile?.classList.remove('open');
+      toggle?.setAttribute('aria-expanded', 'false');
+    }
     toggle?.addEventListener('click', () => {
-      navMobile?.classList.toggle('open');
-      const expanded = navMobile?.classList.contains('open');
-      toggle.setAttribute('aria-expanded', String(expanded));
+      settHeaderHoyde();
+      const open = navMobile?.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', String(!!open));
     });
-    navMobile?.querySelectorAll('a').forEach(a => {
-      a.addEventListener('click', () => navMobile.classList.remove('open'));
-    });
+    navMobile?.querySelectorAll('a').forEach(a => a.addEventListener('click', lukkMeny));
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') lukkMeny(); });
   </script>
 </body>
 </html>

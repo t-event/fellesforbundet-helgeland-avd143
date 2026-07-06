@@ -15,12 +15,17 @@ const sentre = [
   [50, 250], [150, 250],
 ];
 
-// Farger per posisjon, per variant. Merkefargene (rød/grønn/marineblå) som
-// aksenter, resten dempet så motivet er tekstur – ikke støy.
+// Farger per posisjon, per variant. Følger profilhåndbokas regel for «punktet»:
+// ÉN primærfarge dominant, hvit som nøytral fyll, primær-aksenter — aldri en
+// sekundærfarge (beige/gul/rosa …) som hovedfarge. Maks 5 farger per oppsett.
+// Primærfarger: mørk blå #1A1836, rød #CF0000, grå #E9E9E9, lys grønn #C4D3A4.
 const paletter: Record<string, string[]> = {
-  mork:  ['rgba(255,255,255,.06)', 'var(--lysgronn)', 'rgba(255,255,255,.06)', 'rgba(255,255,255,.10)', 'var(--rod)', 'rgba(255,255,255,.06)'],
-  lys:   ['var(--gra)', 'var(--lysgronn)', 'var(--gra)', 'var(--gra)', 'var(--rod)', 'var(--gra)'],
-  gronn: ['var(--beige)', 'var(--rod)', 'var(--beige)', 'var(--morkbla)', 'var(--beige)', 'var(--beige)'],
+  // På mørk bakgrunn: lys grønn (primær) dominant + hvit nøytral + rød aksent.
+  mork:  ['var(--lysgronn)', 'var(--hvit)', 'var(--lysgronn)', 'var(--hvit)', 'var(--rod)', 'var(--lysgronn)'],
+  // På hvit/lys bakgrunn: lys grønn (primær) dominant + rød/mørk blå aksenter.
+  lys:   ['var(--lysgronn)', 'var(--rod)', 'var(--lysgronn)', 'var(--morkbla)', 'var(--lysgronn)', 'var(--lysgronn)'],
+  // På grønt band: hvit nøytral dominant + rød + mørk blå (primær) — som håndbokas nettside.
+  gronn: ['var(--hvit)', 'var(--rod)', 'var(--hvit)', 'var(--morkbla)', 'var(--hvit)', 'var(--rod)'],
 };
 const farger = paletter[variant] ?? paletter.mork;
 ---
