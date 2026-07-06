@@ -518,6 +518,21 @@ textarea.input { resize: vertical; min-height: 110px; }
 /* CTA-band */
 .cta-band { background: linear-gradient(135deg, var(--morkbla) 0%, #2a2657 100%); border-radius: 22px; padding: clamp(32px, 5vw, 56px); display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 28px; }
 
+/* Grønt fremhevingsband — merkevare-uttrykk fra fellesforbundet.no
+   (grønt panel, mørk overskrift, rød CTA, sirkel-motiv). */
+.feature-band { position: relative; overflow: hidden; background: var(--lysgronn); border-radius: 22px; padding: clamp(24px, 4vw, 44px); display: grid; grid-template-columns: 1fr 1fr; gap: clamp(26px, 4vw, 48px); align-items: center; }
+.feature-band-media { border-radius: 16px; overflow: hidden; aspect-ratio: 16/11; }
+.feature-band-media img { width: 100%; height: 100%; object-fit: cover; }
+.feature-band-body { position: relative; z-index: 1; }
+.feature-band-body .h2 { color: #223018; }
+.feature-band-body p { color: #3a4a2c; }
+.feature-band-motif { position: absolute; top: -44px; right: -34px; width: clamp(120px, 13vw, 178px); opacity: .85; z-index: 0; pointer-events: none; }
+@media (max-width: 720px) {
+  .feature-band { grid-template-columns: 1fr; }
+  /* Stacket legger motivet oppå bildet — skjul det (ren dekor) på mobil. */
+  .feature-band-motif { display: none; }
+}
+
 /* Nummererte steg */
 .step { background: #fff; border: 1px solid var(--kantlinje); border-radius: 16px; padding: 24px; }
 .step-n { display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 50%; background: var(--rod); color: #fff; font-weight: 900; font-size: 18px; margin-bottom: 14px; }

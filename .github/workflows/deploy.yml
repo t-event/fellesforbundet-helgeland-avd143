@@ -50,8 +50,21 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+      url: ${{ steps.deployment.outputs.page_url || steps.deployment_retry.outputs.page_url }}
     steps:
+      # Deploy-steget feiler av og til på forbigående Pages-glitcher (ikke koden,
+      # jf. run #58). Forsøk 1 svelger en slik feil (continue-on-error); ved feil
+      # venter vi litt og prøver én gang til. Jobben feiler bare hvis BEGGE feiler.
       - name: Deploy til GitHub Pages
-        uses: actions/deploy-pages@v4
         id: deployment
+        uses: actions/deploy-pages@v4
+        continue-on-error: true
+
+      - name: Vent før nytt forsøk
+        if: steps.deployment.outcome == 'failure'
+        run: sleep 20
+
+      - name: Deploy til GitHub Pages (forsøk 2)
+        id: deployment_retry
+        if: steps.deployment.outcome == 'failure'
+        uses: actions/deploy-pages@v4

@@ -178,32 +178,30 @@ const fordeler = [
     </div>
   </div>
 
-  <!-- HYTTE-TEASER (medlemsfordel) -->
-  <div id="hytte" style="background:var(--flate); border-top:1px solid var(--kantlinje);">
-    <div class="container section">
-      <div class="grid grid-2" style="gap:clamp(28px,4vw,48px); align-items:center;">
-        <div style="border-radius:18px; overflow:hidden; aspect-ratio:16/11;">
-          <img
-            src={`${base}/images/umbukta/umbukta-eksterior-terrasse.jpg`}
-            alt="Fjellhytta i Umbukta — eksteriør med terrasse i solskinn"
-            width="800"
-            height="550"
-            loading="lazy"
-            style="width:100%; height:100%; object-fit:cover;"
-          />
-        </div>
-        <div>
-          <span class="eyebrow" data-en="Member benefit">Medlemsfordel</span>
-          <h2 class="h2" style="margin:6px 0 16px;" data-en="Rent a mountain cabin at member price">
-            Leie fjellhytte til medlemspris
-          </h2>
-          <p class="muted" style="font-size:16.5px; line-height:1.7; margin-bottom:22px;"
-             data-en="The branch has cabins at Umbukta and Øvre Elsvatn, available to LO members. Check availability and book directly.">
-            Avdelingen disponerer hytter ved Umbukta og Øvre Elsvatn, til leie for LO-medlemmer.
-            Sjekk ledige datoer og book direkte.
-          </p>
-          <a href={`${base}/hytter`} class="btn btn-primary" data-en="See the cabins →">Se hyttene →</a>
-        </div>
+  <!-- HYTTE-TEASER (medlemsfordel) — grønt fremhevingsband (fellesforbundet.no-stil) -->
+  <div id="hytte" class="container section">
+    <div class="feature-band">
+      <CircleMotif variant="gronn" class="feature-band-motif" />
+      <div class="feature-band-media">
+        <img
+          src={`${base}/images/umbukta/umbukta-eksterior-terrasse.jpg`}
+          alt="Fjellhytta i Umbukta — eksteriør med terrasse i solskinn"
+          width="800"
+          height="550"
+          loading="lazy"
+        />
+      </div>
+      <div class="feature-band-body">
+        <span class="eyebrow" data-en="Member benefit">Medlemsfordel</span>
+        <h2 class="h2" style="margin:6px 0 16px;" data-en="Rent a mountain cabin at member price">
+          Leie fjellhytte til medlemspris
+        </h2>
+        <p style="font-size:16.5px; line-height:1.7; margin-bottom:22px;"
+           data-en="The branch has cabins at Umbukta and Øvre Elsvatn, available to LO members. Check availability and book directly.">
+          Avdelingen disponerer hytter ved Umbukta og Øvre Elsvatn, til leie for LO-medlemmer.
+          Sjekk ledige datoer og book direkte.
+        </p>
+        <a href={`${base}/hytter`} class="btn btn-primary" data-en="See the cabins →">Se hyttene →</a>
       </div>
     </div>
   </div>
