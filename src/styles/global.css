@@ -185,6 +185,9 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 /* ── Hero ────────────────────────────────────────────────────── */
 .hero-dark { background: linear-gradient(180deg, var(--morkbla) 0%, #221f43 100%); color: #fff; position: relative; overflow: hidden; }
 .hero-dark .container { position: relative; z-index: 1; }
+/* Versal hero-overskrift — sterkere merkevare-trykk (fellesforbundet.no-stil).
+   Litt løsere tegnavstand enn små bokstaver, som ellers blir trange i versaler. */
+.hero-dark .h1 { text-transform: uppercase; letter-spacing: -0.005em; }
 /* Sirkel-motiv (merkevare-dekor) — blør ut av øvre høyre hjørne, bak innholdet */
 .circle-motif { display: block; height: auto; }
 .hero-motif { position: absolute; top: -64px; right: -48px; width: clamp(140px, 15vw, 210px); opacity: .9; z-index: 0; pointer-events: none; }
