@@ -171,7 +171,7 @@ const faq = [
           Veien inn til hytta brøytes om vinteren, så du kan kjøre helt fram hele året.
         </p>
       </div>
-      <div style="height:clamp(240px,28vw,340px); border-radius:18px; overflow:hidden;">
+      <div style="height:clamp(240px,28vw,340px); border-radius:4px; overflow:hidden;">
         <img
           src={`${base}/images/umbukta/umbukta-stue.jpg`}
           alt="Lys stue med hjørnesofa og vedovn inne i Umbukta-hytta"
@@ -230,7 +230,7 @@ const faq = [
       <button id="lb-prev" aria-label="Forrige bilde" style="position:absolute; left:16px; top:50%; transform:translateY(-50%); background:rgba(255,255,255,0.12); border:none; color:#fff; font-size:28px; width:48px; height:48px; border-radius:50%; cursor:pointer; display:flex; align-items:center; justify-content:center;">‹</button>
       <button id="lb-next" aria-label="Neste bilde" style="position:absolute; right:16px; top:50%; transform:translateY(-50%); background:rgba(255,255,255,0.12); border:none; color:#fff; font-size:28px; width:48px; height:48px; border-radius:50%; cursor:pointer; display:flex; align-items:center; justify-content:center;">›</button>
       <button id="lb-close" aria-label="Lukk" style="position:absolute; top:16px; right:16px; background:rgba(255,255,255,0.12); border:none; color:#fff; font-size:22px; width:44px; height:44px; border-radius:50%; cursor:pointer; display:flex; align-items:center; justify-content:center;">✕</button>
-      <img id="lb-img" src="" alt="" style="max-width:min(90vw,1200px); max-height:85vh; object-fit:contain; border-radius:8px; display:block;" />
+      <img id="lb-img" src="" alt="" style="max-width:min(90vw,1200px); max-height:85vh; object-fit:contain; border-radius:4px; display:block;" />
       <p id="lb-caption" style="position:absolute; bottom:20px; left:50%; transform:translateX(-50%); color:#ccc; font-size:14px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:80vw;"></p>
     </div>
 
@@ -322,7 +322,7 @@ const faq = [
 
     <!-- BELIGGENHET -->
     <div class="section grid grid-2" style="padding-top:0; gap:clamp(24px,4vw,44px); align-items:stretch;">
-      <div style="border-radius:18px; overflow:hidden; display:flex; flex-direction:column;">
+      <div style="border-radius:4px; overflow:hidden; display:flex; flex-direction:column;">
         <div style="flex:1; min-height:320px;">
           <MapEmbed src={`https://www.google.com/maps?q=${UMBUKTA.lat},${UMBUKTA.lon}&hl=no&z=14&t=k&output=embed`} title="Kart til Umbukta-hytta (Google Maps)" />
         </div>
@@ -500,7 +500,7 @@ const faq = [
     padding: 0;
     border: none;
     background: none;
-    border-radius: 14px;
+    border-radius: 4px;
     overflow: hidden;
     cursor: zoom-in;
     position: relative;
@@ -533,7 +533,7 @@ const faq = [
     padding: 0;
     border: 2px solid transparent;
     background: none;
-    border-radius: 10px;
+    border-radius: 4px;
     overflow: hidden;
     cursor: pointer;
   }

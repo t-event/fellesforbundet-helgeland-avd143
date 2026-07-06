@@ -48,8 +48,10 @@
   --font: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
   --font-display: 'Space Grotesk Variable', 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
   --font-mono: ui-monospace, 'SFMono-Regular', Menlo, monospace;
-  --radius:      16px;
-  --radius-sm:   10px;
+  /* Firkantet uttrykk (fellesforbundet.no): skarpe hjørner på bokser/kort,
+     men fulle pill på knapper. */
+  --radius:      4px;
+  --radius-sm:   3px;
   --radius-pill: 100px;
   --maks-bredde: 1180px;
 }
@@ -115,7 +117,7 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
   display: inline-flex; align-items: center; justify-content: center; gap: 9px;
   font-weight: 700; font-size: 16px; line-height: 1;
   padding: 15px 26px; min-height: 50px;
-  border: none; border-radius: 11px; cursor: pointer; text-decoration: none;
+  border: none; border-radius: var(--radius-pill); cursor: pointer; text-decoration: none;
   transition: filter .15s, background .15s, color .15s;
 }
 .btn-primary  { background: var(--rod); color: var(--hvit); }
@@ -129,7 +131,7 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .btn-block { width: 100%; }
 
 /* ── Kort ────────────────────────────────────────────────────── */
-.card     { background: var(--hvit); border: 1px solid var(--kantlinje); border-radius: 18px; }
+.card     { background: var(--hvit); border: 1px solid var(--kantlinje); border-radius: 4px; }
 .card-pad { padding: 26px; }
 
 /* ── Badge ───────────────────────────────────────────────────── */
@@ -146,26 +148,26 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .brand-sub { font-size: 12px; font-weight: 600; color: var(--lysbla); letter-spacing: 0.04em; text-transform: uppercase; white-space: nowrap; }
 .nav-right { display: flex; align-items: center; gap: 16px; flex-wrap: nowrap; justify-content: flex-end; }
 .nav { display: flex; align-items: center; gap: 4px; flex-wrap: nowrap; }
-.nav a { background: transparent; color: #cfd0e0; font-weight: 600; font-size: 14px; padding: 9px 15px; border: none; border-radius: 9px; cursor: pointer; white-space: nowrap; text-decoration: none; }
+.nav a { background: transparent; color: #cfd0e0; font-weight: 600; font-size: 14px; padding: 9px 15px; border: none; border-radius: 4px; cursor: pointer; white-space: nowrap; text-decoration: none; }
 .nav a:hover { color: #fff; }
 .nav a.active, .nav a[aria-current="page"] { background: var(--rod); color: #fff; }
 /* Nedtrekksmeny (hovedside-variant) */
 .nav-group { position: relative; display: inline-flex; }
-.nav-group-btn { display: inline-flex; align-items: center; gap: 5px; background: transparent; color: #cfd0e0; font-weight: 600; font-size: 14px; font-family: inherit; padding: 9px 15px; border: none; border-radius: 9px; cursor: pointer; white-space: nowrap; }
+.nav-group-btn { display: inline-flex; align-items: center; gap: 5px; background: transparent; color: #cfd0e0; font-weight: 600; font-size: 14px; font-family: inherit; padding: 9px 15px; border: none; border-radius: 4px; cursor: pointer; white-space: nowrap; }
 .nav-group-btn:hover { color: #fff; }
 .nav-group .caret { font-size: 10px; opacity: .7; }
 /* Usynlig «bro» over mellomrommet slik at menyen ikke lukkes når musa beveger seg sakte fra knappen ned til menyen */
 .nav-group::after { content: ''; position: absolute; top: 100%; left: 0; right: 0; height: 14px; }
-.nav-menu { position: absolute; top: calc(100% + 8px); left: 0; min-width: 200px; background: #221f43; border: 1px solid rgba(255,255,255,.12); border-radius: 12px; padding: 8px; display: flex; flex-direction: column; gap: 2px; box-shadow: 0 14px 34px rgba(0,0,0,.35); z-index: 60; opacity: 0; visibility: hidden; transform: translateY(-6px); transition: opacity .16s ease, visibility .16s ease, transform .16s ease; }
+.nav-menu { position: absolute; top: calc(100% + 8px); left: 0; min-width: 200px; background: #221f43; border: 1px solid rgba(255,255,255,.12); border-radius: 4px; padding: 8px; display: flex; flex-direction: column; gap: 2px; box-shadow: 0 14px 34px rgba(0,0,0,.35); z-index: 60; opacity: 0; visibility: hidden; transform: translateY(-6px); transition: opacity .16s ease, visibility .16s ease, transform .16s ease; }
 .nav-group:hover .nav-menu, .nav-group:focus-within .nav-menu { opacity: 1; visibility: visible; transform: none; }
-.nav-menu a { display: block; color: #cfd0e0; font-weight: 600; font-size: 14px; padding: 9px 12px; border-radius: 8px; white-space: nowrap; text-decoration: none; }
+.nav-menu a { display: block; color: #cfd0e0; font-weight: 600; font-size: 14px; padding: 9px 12px; border-radius: 4px; white-space: nowrap; text-decoration: none; }
 .nav-menu a:hover { color: #fff; background: rgba(255,255,255,.08); }
 .nav-menu a.active { background: var(--rod); color: #fff; }
 /* Gruppe-etikett + underpunkt i mobilmenyen */
 .nav-mobile .nav-m-label { color: var(--lysbla); font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; padding: 16px 0 6px; }
 .nav-mobile a.nav-m-sub { padding-left: 16px; font-size: 16px; }
-.lang { display: flex; background: rgba(255,255,255,.1); border-radius: 9px; padding: 3px; flex: none; }
-.lang button { display: flex; align-items: center; border: none; cursor: pointer; padding: 5px 8px; border-radius: 7px; background: transparent; }
+.lang { display: flex; background: rgba(255,255,255,.1); border-radius: 4px; padding: 3px; flex: none; }
+.lang button { display: flex; align-items: center; border: none; cursor: pointer; padding: 5px 8px; border-radius: 4px; background: transparent; }
 .lang .flag { width: 22px; height: 16px; display: block; border-radius: 2px; box-shadow: 0 0 0 1px rgba(255,255,255,.25); }
 .lang button:not(.active) .flag { opacity: .5; }
 .lang button:hover .flag { opacity: .85; }
@@ -195,7 +197,7 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .hero-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(32px, 5vw, 56px); align-items: center; }
 .hero-pill { display: inline-block; background: rgba(196,211,164,.22); color: var(--lysgronn); font-weight: 700; font-size: 13px; padding: 7px 14px; border-radius: var(--radius-pill); margin-bottom: 22px; }
 .hero-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 30px; }
-.hero-img { height: clamp(240px, 32vw, 380px); border-radius: 18px; overflow: hidden; }
+.hero-img { height: clamp(240px, 32vw, 380px); border-radius: 4px; overflow: hidden; }
 .hero-img img { width: 100%; height: 100%; object-fit: cover; }
 
 /* Stor bilde-hero med overlay-tittel (Umbukta) */
@@ -205,19 +207,19 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .media-hero-overlay .container { width: 100%; padding-bottom: 40px; color: #fff; }
 
 /* ── Fasiliteter ─────────────────────────────────────────────── */
-.facilities { background: var(--lysgronn); border-radius: 22px; padding: clamp(28px, 5vw, 56px); margin-top: clamp(18px, 3vw, 28px); }
+.facilities { background: var(--lysgronn); border-radius: 4px; padding: clamp(28px, 5vw, 56px); margin-top: clamp(18px, 3vw, 28px); }
 .facilities h2 { color: #26301a; margin-bottom: 28px; }
-.facility { display: flex; gap: 14px; background: #fff; border-radius: 14px; padding: 18px; align-items: flex-start; }
-.facility-ic { flex: none; width: 42px; height: 42px; border-radius: 10px; background: #fbeceb; color: var(--rod); display: flex; align-items: center; justify-content: center; }
+.facility { display: flex; gap: 14px; background: #fff; border-radius: 4px; padding: 18px; align-items: flex-start; }
+.facility-ic { flex: none; width: 42px; height: 42px; border-radius: 4px; background: #fbeceb; color: var(--rod); display: flex; align-items: center; justify-content: center; }
 .facility b  { display: block; font-size: 15.5px; }
 .facility span { font-size: 14px; color: var(--tekst-dempet); }
 
 /* ── Galleri ─────────────────────────────────────────────────── */
 .gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
-.gallery img { height: 200px; width: 100%; object-fit: cover; border-radius: 12px; }
+.gallery img { height: 200px; width: 100%; object-fit: cover; border-radius: 4px; }
 
 /* ── Priser ──────────────────────────────────────────────────── */
-.price-card { background: #fff; border: 1px solid var(--kantlinje); border-radius: 18px; padding: 26px; position: relative; }
+.price-card { background: #fff; border: 1px solid var(--kantlinje); border-radius: 4px; padding: 26px; position: relative; }
 .price-card.featured { border: 2px solid var(--rod); }
 .price-card .tag { position: absolute; top: -12px; left: 24px; background: var(--rod); color: #fff; font-size: 12px; font-weight: 700; padding: 5px 12px; border-radius: var(--radius-pill); }
 .price-card .label { font-size: 15px; font-weight: 700; margin-bottom: 10px; }
@@ -226,18 +228,18 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .price-card .amount small { font-size: 15px; font-weight: 600; color: var(--tekst-svak); }
 
 /* ── Kalender ────────────────────────────────────────────────── */
-.cal { background: #fff; border: 1px solid var(--kantlinje); border-radius: 16px; padding: clamp(16px, 3vw, 24px); }
+.cal { background: #fff; border: 1px solid var(--kantlinje); border-radius: 4px; padding: clamp(16px, 3vw, 24px); }
 .cal-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; }
 .cal-head b { font-size: 18px; font-weight: 800; }
 .cal-neste { width: 100%; display: inline-flex; align-items: center; justify-content: center; gap: 6px; margin-bottom: 14px; padding: 8px 12px; background: #fbeceb; color: var(--rod); border: 1px solid rgba(207,0,0,.22); border-radius: var(--radius-pill); font-size: 13px; font-weight: 600; cursor: pointer; transition: background .12s ease; }
 .cal-neste:hover { background: #f6d6d2; }
 .cal-nav { display: flex; gap: 8px; }
-.cal-nav button { width: 40px; height: 40px; border: 1px solid var(--kantlinje); background: #fff; border-radius: 10px; color: var(--morkbla); font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+.cal-nav button { width: 40px; height: 40px; border: 1px solid var(--kantlinje); background: #fff; border-radius: 4px; color: var(--morkbla); font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
 .cal-nav button:hover { background: var(--flate); }
 .cal-weekdays, .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; }
 .cal-weekdays { margin-bottom: 6px; }
 .cal-weekdays span { text-align: center; font-size: 12px; font-weight: 700; color: var(--tekst-svak); text-transform: uppercase; letter-spacing: .04em; padding: 4px 0; }
-.day { display: flex; align-items: center; justify-content: center; height: 46px; border-radius: 10px; font-size: 15px; font-weight: 600; cursor: default; }
+.day { display: flex; align-items: center; justify-content: center; height: 46px; border-radius: 4px; font-size: 15px; font-weight: 600; cursor: default; }
 .day.tom { background: none; }
 .day.ledig { background: #fff; border: 1px solid var(--kantlinje); color: var(--morkbla); cursor: pointer; }
 .day.ledig:hover { border-color: var(--morkbla); background: var(--flate); }
@@ -253,7 +255,7 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 /* Info-melding når en gul (loddtrekning) dag klikkes før påmelding er åpnet */
 .cal-lodd-melding { font-size: 13px; font-weight: 600; color: var(--morkbla); line-height: 1.5;
   margin-top: 10px; padding: 10px 12px; background: rgba(252,203,0,.14);
-  border: 1px solid rgba(252,203,0,.45); border-radius: 10px; }
+  border: 1px solid rgba(252,203,0,.45); border-radius: 4px; }
 
 /* ── Skjema ──────────────────────────────────────────────────── */
 /* min-width:0 lar feltene krympe i grid/flex slik at f.eks. dato-input på iOS
@@ -263,7 +265,7 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .input {
   width: 100%; max-width: 100%; min-width: 0; box-sizing: border-box;
   padding: 13px 15px; font-size: 15px; font-family: inherit; color: var(--tekst);
-  border: 1.5px solid var(--kantlinje); border-radius: 10px; background: #fff; outline: none;
+  border: 1.5px solid var(--kantlinje); border-radius: 4px; background: #fff; outline: none;
   appearance: auto;
 }
 .input:focus { border-color: var(--rod); box-shadow: 0 0 0 4px rgba(207,0,0,.12); }
@@ -287,15 +289,15 @@ textarea.input { resize: vertical; min-height: 110px; }
 .checkbox-row { display: flex; align-items: flex-start; gap: 14px; font-size: 14px; line-height: 1.55; color: var(--tekst-dempet); cursor: pointer; padding: 4px 0; }
 .checkbox-row input[type="checkbox"] { flex: none; width: 22px; height: 22px; margin-top: 0; accent-color: var(--rod); cursor: pointer; }
 .checkbox-row a { white-space: nowrap; }
-.check { display: flex; gap: 12px; align-items: center; border: 1.5px solid var(--kantlinje); border-radius: 11px; padding: 14px 16px; cursor: pointer; }
+.check { display: flex; gap: 12px; align-items: center; border: 1.5px solid var(--kantlinje); border-radius: 4px; padding: 14px 16px; cursor: pointer; }
 .check input { width: 20px; height: 20px; accent-color: var(--rod); flex: none; }
 .check b { display: block; font-size: 15px; }
 .check span.desc { font-size: 13px; color: var(--tekst-dempet); }
-.price-summary { background: var(--flate); border-radius: 12px; padding: 16px 18px; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.price-summary { background: var(--flate); border-radius: 4px; padding: 16px 18px; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
 .price-summary .total { font-size: 26px; font-weight: 900; letter-spacing: -0.02em; }
 
 /* ── Varsler ─────────────────────────────────────────────────── */
-.alert { display: flex; gap: 14px; align-items: flex-start; border-radius: 16px; padding: 18px 22px; }
+.alert { display: flex; gap: 14px; align-items: flex-start; border-radius: 4px; padding: 18px 22px; }
 .alert .ic { flex: none; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; color: #fff; }
 .alert-warn  { background: var(--beige); border: 1px solid #f3d9a8; color: #5a4218; }
 .alert-warn .ic  { background: var(--oransje); }
@@ -306,22 +308,22 @@ textarea.input { resize: vertical; min-height: 110px; }
 
 /* ── Accordion (FAQ) ─────────────────────────────────────────── */
 .accordion { display: flex; flex-direction: column; gap: 12px; }
-.acc-item { border: 1px solid var(--kantlinje); border-radius: 14px; overflow: hidden; background: #fff; }
+.acc-item { border: 1px solid var(--kantlinje); border-radius: 4px; overflow: hidden; background: #fff; }
 .acc-head { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 16px; background: none; border: none; padding: 18px 20px; cursor: pointer; text-align: left; }
 .acc-head b { font-weight: 700; font-size: 15.5px; }
-.acc-icon { flex: none; width: 28px; height: 28px; border-radius: 8px; background: #fff; border: 1px solid var(--kantlinje); color: var(--morkbla); display: flex; align-items: center; justify-content: center; font-size: 20px; line-height: 1; transition: transform .15s; }
+.acc-icon { flex: none; width: 28px; height: 28px; border-radius: 4px; background: #fff; border: 1px solid var(--kantlinje); color: var(--morkbla); display: flex; align-items: center; justify-content: center; font-size: 20px; line-height: 1; transition: transform .15s; }
 .acc-item.open .acc-icon { background: var(--rod); color: #fff; border: none; transform: rotate(45deg); }
 .acc-body { padding: 0 20px 18px; font-size: 14.5px; line-height: 1.65; color: var(--tekst-dempet); display: none; }
 .acc-item.open .acc-body { display: block; }
 
 /* ── Vær ─────────────────────────────────────────────────────── */
-.weather { background: var(--morkbla); color: #fff; border-radius: 18px; padding: 26px; display: flex; flex-direction: column; min-height: 280px; }
+.weather { background: var(--morkbla); color: #fff; border-radius: 4px; padding: 26px; display: flex; flex-direction: column; min-height: 280px; }
 .weather-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; }
 .weather-temp { display: flex; align-items: flex-end; gap: 14px; margin-bottom: 22px; }
 .weather-temp .deg { font-size: 54px; font-weight: 900; letter-spacing: -0.03em; line-height: 1; }
 .weather-temp .cond { font-size: 15px; color: #cfd0e0; padding-bottom: 8px; }
 .weather-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: auto; }
-.weather-stat { background: rgba(255,255,255,.08); border-radius: 12px; padding: 14px; }
+.weather-stat { background: rgba(255,255,255,.08); border-radius: 4px; padding: 14px; }
 .weather-stat .k { font-size: 12px; color: #bcbcd0; margin-bottom: 4px; }
 .weather-stat .v { font-weight: 800; font-size: 18px; }
 .weather-stat .u { font-size: 11px; color: #8a8aa0; }
@@ -333,7 +335,7 @@ textarea.input { resize: vertical; min-height: 110px; }
 .weather-day .wd-prec { font-size: 11px; color: #8a8aa0; }
 
 /* ── Webkamera ───────────────────────────────────────────────── */
-.webcam { background: #fff; border: 1px solid var(--kantlinje); border-radius: 18px; overflow: hidden; display: flex; flex-direction: column; }
+.webcam { background: #fff; border: 1px solid var(--kantlinje); border-radius: 4px; overflow: hidden; display: flex; flex-direction: column; }
 .webcam .frame { position: relative; flex: 1; min-height: 240px; overflow: hidden; }
 .webcam .frame img { width: 100%; height: 100%; object-fit: cover; }
 .webcam .live { position: absolute; top: 14px; left: 14px; background: var(--rod); color: #fff; font-size: 12px; font-weight: 700; padding: 5px 11px; border-radius: var(--radius-pill); display: inline-flex; align-items: center; gap: 7px; }
@@ -342,20 +344,20 @@ textarea.input { resize: vertical; min-height: 110px; }
 @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: .3; } }
 
 /* ── Påske / Loddtrekning ────────────────────────────────────── */
-.lodd-wrap { background: var(--beige); border: 1px solid #f3d9a8; border-radius: 22px; padding: clamp(26px, 4vw, 40px); display: grid; grid-template-columns: 1fr 1fr; gap: clamp(28px, 4vw, 44px); align-items: start; }
-.lodd-frist { display: inline-flex; align-items: center; gap: 12px; background: #fff; border-radius: 12px; padding: 14px 18px; }
-.lodd-frist .ic { flex: none; width: 38px; height: 38px; border-radius: 10px; background: var(--rod); color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 18px; }
+.lodd-wrap { background: var(--beige); border: 1px solid #f3d9a8; border-radius: 4px; padding: clamp(26px, 4vw, 40px); display: grid; grid-template-columns: 1fr 1fr; gap: clamp(28px, 4vw, 44px); align-items: start; }
+.lodd-frist { display: inline-flex; align-items: center; gap: 12px; background: #fff; border-radius: 4px; padding: 14px 18px; }
+.lodd-frist .ic { flex: none; width: 38px; height: 38px; border-radius: 4px; background: var(--rod); color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 18px; }
 .lodd-frist .k { font-size: 12.5px; color: var(--tekst-svak); font-weight: 600; }
 .lodd-frist .v { font-size: 17px; font-weight: 800; }
 
 /* Dato-badge — merkevare-uttrykk fra fellesforbundet.no (rød måned + stort
    dagtall). Gjenbrukbar; brukes i påske-fristen. */
-.date-badge { flex: none; width: 52px; border-radius: 10px; overflow: hidden; text-align: center; background: #fff; border: 1px solid var(--kantlinje); line-height: 1; }
+.date-badge { flex: none; width: 52px; border-radius: 4px; overflow: hidden; text-align: center; background: #fff; border: 1px solid var(--kantlinje); line-height: 1; }
 .date-badge-mnd { display: block; background: var(--rod); color: #fff; font-size: 11px; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; padding: 4px 0; }
 .date-badge-dag { display: block; font-size: 22px; font-weight: 800; color: var(--morkbla); padding: 6px 0 7px; }
 
 /* ── Husregler ───────────────────────────────────────────────── */
-.rules { background: var(--morkbla); color: #fff; border-radius: 18px; padding: 30px; }
+.rules { background: var(--morkbla); color: #fff; border-radius: 4px; padding: 30px; }
 .rules h2 { margin-bottom: 20px; }
 .rule-row { display: flex; justify-content: space-between; gap: 16px; border-bottom: 1px solid rgba(255,255,255,.12); padding: 0 0 14px; }
 .rule-row + .rule-row { padding-top: 14px; }
@@ -364,7 +366,7 @@ textarea.input { resize: vertical; min-height: 110px; }
 .rules .note { font-size: 14px; line-height: 1.6; color: #cfd0e0; padding-top: 14px; }
 
 /* ── Turtips ─────────────────────────────────────────────────── */
-.tur-card { background: #fff; border: 1px solid var(--kantlinje); border-radius: 18px; overflow: hidden; display: flex; flex-direction: column; }
+.tur-card { background: #fff; border: 1px solid var(--kantlinje); border-radius: 4px; overflow: hidden; display: flex; flex-direction: column; }
 .tur-card .tur-img { height: 170px; overflow: hidden; }
 .tur-card .tur-img img { width: 100%; height: 100%; object-fit: cover; }
 /* Plassholder til egne turbilder er på plass (se PLACEHOLDERS.md) */
@@ -463,7 +465,7 @@ textarea.input { resize: vertical; min-height: 110px; }
 .skip-link:focus { position: fixed; top: 0; left: 0; width: auto; height: auto; background: var(--rod); color: #fff; padding: 12px 20px; z-index: 9999; font-weight: 700; }
 
 /* ── Cookie-samtykke ─────────────────────────────────────────── */
-.cookie-banner { position: fixed; left: 16px; right: 16px; bottom: 16px; z-index: 200; display: none; gap: 18px; align-items: center; justify-content: space-between; flex-wrap: wrap; max-width: 940px; margin: 0 auto; background: var(--morkbla); color: #fff; border: 1px solid rgba(255,255,255,.14); border-radius: 16px; padding: 18px 22px; box-shadow: 0 16px 40px rgba(0,0,0,.4); }
+.cookie-banner { position: fixed; left: 16px; right: 16px; bottom: 16px; z-index: 200; display: none; gap: 18px; align-items: center; justify-content: space-between; flex-wrap: wrap; max-width: 940px; margin: 0 auto; background: var(--morkbla); color: #fff; border: 1px solid rgba(255,255,255,.14); border-radius: 4px; padding: 18px 22px; box-shadow: 0 16px 40px rgba(0,0,0,.4); }
 .cookie-banner.show { display: flex; }
 .cookie-text strong { display: block; font-size: 15px; margin-bottom: 4px; }
 .cookie-text p { font-size: 13.5px; color: #cfd0e0; max-width: 62ch; line-height: 1.55; }
@@ -487,25 +489,25 @@ textarea.input { resize: vertical; min-height: 110px; }
 .hero-stats span { font-size: 13.5px; color: #b9bad0; margin-top: 2px; }
 
 /* Fordel-/ikonkort */
-.benefit { background: #fff; border: 1px solid var(--kantlinje); border-radius: 16px; padding: 24px; }
+.benefit { background: #fff; border: 1px solid var(--kantlinje); border-radius: 4px; padding: 24px; }
 .benefit-link { display: block; text-decoration: none; color: inherit; transition: border-color .12s ease, box-shadow .12s ease, transform .12s ease; }
 .benefit-link:hover { border-color: var(--rod); box-shadow: 0 8px 24px rgba(0,0,0,.07); transform: translateY(-2px); }
 .benefit-link .benefit-pil { color: var(--rod); font-weight: 700; }
-.benefit-ic { display: inline-flex; align-items: center; justify-content: center; width: 48px; height: 48px; border-radius: 12px; background: #fbeceb; color: var(--rod); margin-bottom: 16px; }
+.benefit-ic { display: inline-flex; align-items: center; justify-content: center; width: 48px; height: 48px; border-radius: 4px; background: #fbeceb; color: var(--rod); margin-bottom: 16px; }
 .ffh-icon { display: block; }
 
 /* Sitatboks */
-.about-quote { background: var(--morkbla); color: #fff; border-radius: 20px; padding: clamp(28px, 4vw, 44px); display: flex; align-items: center; border-left: 6px solid var(--rod); }
+.about-quote { background: var(--morkbla); color: #fff; border-radius: 4px; padding: clamp(28px, 4vw, 44px); display: flex; align-items: center; border-left: 6px solid var(--rod); }
 
 /* Medlemssitat (testimonial) — navy boks med attribusjon. */
-.testimonial { position: relative; background: var(--morkbla); color: #fff; border-radius: 20px; padding: clamp(28px, 4vw, 44px); border-left: 6px solid var(--rod); display: flex; flex-direction: column; gap: 16px; margin: 0; }
+.testimonial { position: relative; background: var(--morkbla); color: #fff; border-radius: 4px; padding: clamp(28px, 4vw, 44px); border-left: 6px solid var(--rod); display: flex; flex-direction: column; gap: 16px; margin: 0; }
 .testimonial-mark { font-family: var(--font-display); font-size: 56px; line-height: .4; color: var(--rod); height: 26px; }
 .testimonial-quote { font-size: clamp(17px, 2vw, 20px); line-height: 1.55; font-weight: 600; margin: 0; }
 .testimonial-by { display: flex; align-items: center; gap: 12px; }
 .testimonial-avatar { flex: none; width: 42px; height: 42px; border-radius: 50%; background: rgba(255,255,255,.12); color: #fff; display: flex; align-items: center; justify-content: center; }
 .testimonial-by b { display: block; font-size: 14.5px; }
 .testimonial-by .muted { font-size: 13px; color: #b9bad0; }
-.testimonial-flag { align-self: flex-start; font-size: 12px; font-weight: 700; color: var(--gul); background: rgba(252,203,0,.12); border: 1px solid rgba(252,203,0,.35); border-radius: 8px; padding: 5px 10px; }
+.testimonial-flag { align-self: flex-start; font-size: 12px; font-weight: 700; color: var(--gul); background: rgba(252,203,0,.12); border: 1px solid rgba(252,203,0,.35); border-radius: 4px; padding: 5px 10px; }
 
 /* Samtykke-styrt kart-embed (Google Maps lastes først etter cookie-samtykke). */
 .map-embed { position: relative; width: 100%; height: 100%; min-height: 320px; background: #eef0f3; overflow: hidden; }
@@ -516,21 +518,21 @@ textarea.input { resize: vertical; min-height: 110px; }
 .about-quote p { font-size: clamp(20px, 2.4vw, 28px); font-weight: 800; letter-spacing: -0.02em; line-height: 1.25; }
 
 /* Nyhetskort */
-.news-card { background: #fff; border: 1px solid var(--kantlinje); border-radius: 16px; padding: 22px; display: flex; flex-direction: column; }
+.news-card { background: #fff; border: 1px solid var(--kantlinje); border-radius: 4px; padding: 22px; display: flex; flex-direction: column; }
 .news-meta { display: flex; align-items: center; gap: 12px; }
 .news-tag { font-size: 11.5px; font-weight: 800; letter-spacing: 0.04em; text-transform: uppercase; color: var(--rod); background: #fbeceb; padding: 4px 10px; border-radius: 100px; }
 
 /* Person-/tillitsvalgtkort */
-.person { display: flex; gap: 14px; align-items: flex-start; background: var(--flate); border: 1px solid var(--kantlinje); border-radius: 16px; padding: 18px; }
+.person { display: flex; gap: 14px; align-items: flex-start; background: var(--flate); border: 1px solid var(--kantlinje); border-radius: 4px; padding: 18px; }
 .person-avatar { flex: none; width: 46px; height: 46px; border-radius: 50%; background: var(--morkbla); color: #fff; font-weight: 800; font-size: 15px; display: flex; align-items: center; justify-content: center; }
 
 /* CTA-band */
-.cta-band { background: linear-gradient(135deg, var(--morkbla) 0%, #2a2657 100%); border-radius: 22px; padding: clamp(32px, 5vw, 56px); display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 28px; }
+.cta-band { background: linear-gradient(135deg, var(--morkbla) 0%, #2a2657 100%); border-radius: 4px; padding: clamp(32px, 5vw, 56px); display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 28px; }
 
 /* Grønt fremhevingsband — merkevare-uttrykk fra fellesforbundet.no
    (grønt panel, mørk overskrift, rød CTA, sirkel-motiv). */
-.feature-band { position: relative; overflow: hidden; background: var(--lysgronn); border-radius: 22px; padding: clamp(24px, 4vw, 44px); display: grid; grid-template-columns: 1fr 1fr; gap: clamp(26px, 4vw, 48px); align-items: center; }
-.feature-band-media { border-radius: 16px; overflow: hidden; aspect-ratio: 16/11; }
+.feature-band { position: relative; overflow: hidden; background: var(--lysgronn); border-radius: 4px; padding: clamp(24px, 4vw, 44px); display: grid; grid-template-columns: 1fr 1fr; gap: clamp(26px, 4vw, 48px); align-items: center; }
+.feature-band-media { border-radius: 4px; overflow: hidden; aspect-ratio: 16/11; }
 .feature-band-media img { width: 100%; height: 100%; object-fit: cover; }
 .feature-band-body { position: relative; z-index: 1; }
 .feature-band-body .h2 { color: #223018; }
@@ -543,7 +545,7 @@ textarea.input { resize: vertical; min-height: 110px; }
 }
 
 /* Nummererte steg */
-.step { background: #fff; border: 1px solid var(--kantlinje); border-radius: 16px; padding: 24px; }
+.step { background: #fff; border: 1px solid var(--kantlinje); border-radius: 4px; padding: 24px; }
 .step-n { display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 50%; background: var(--rod); color: #fff; font-weight: 900; font-size: 18px; margin-bottom: 14px; }
 
 /* Liste-rad (tariffavtaler o.l.) */
