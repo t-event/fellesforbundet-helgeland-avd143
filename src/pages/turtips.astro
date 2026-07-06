@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import CircleMotif from '../components/CircleMotif.astro';
 import Icon from '../components/Icon.astro';
 import { TURTIPS } from '../config.ts';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
@@ -19,6 +20,7 @@ const vanskelighetFarge = {
 
   <!-- HERO -->
   <div class="hero-dark">
+    <CircleMotif variant="mork" class="hero-motif" />
     <div class="container section">
       <span class="hero-pill" data-i18n="nav_turtips">Turtips</span>
       <h1 class="h1" style="font-size:clamp(28px,3.8vw,46px); margin-bottom:12px;"

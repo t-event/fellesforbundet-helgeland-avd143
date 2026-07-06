@@ -426,6 +426,10 @@ textarea.input { resize: vertical; min-height: 110px; }
   /* Begrens hero-bildet på mobil */
   .hero-img { height: clamp(200px, 55vw, 260px); }
 
+  /* Sirkel-motivet: krymp og tuck inn i topphjørnet så det ikke kolliderer
+     med overskriften (min-bredden 140px slår ellers inn på smale skjermer). */
+  .hero-motif { width: 92px; top: -44px; right: -30px; opacity: .8; }
+
   /* Skjul "HYTTEUTLEIE"-teksten i header — logoen er bred nok */
   .brand-sub { display: none; }
 
