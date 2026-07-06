@@ -50,6 +50,16 @@ export const LENKER_GRUPPER = [
     ],
   },
   {
+    // De viktigste verktøyene for tillitsvalgte (jf. styrets innspill):
+    // tariffavtaler, Hovedavtalen og arbeidsmiljøloven.
+    tittel: 'Lov- og avtaleverk', tittel_en: 'Laws & agreements',
+    lenker: [
+      { navn: 'Arbeidsmiljøloven (AML)', navn_en: 'Working Environment Act', desc: 'Loven om arbeidsmiljø, arbeidstid og stillingsvern.', desc_en: 'The act on working environment, hours and job protection.', url: 'https://lovdata.no/dokument/NL/lov/2005-06-17-62' },
+      { navn: 'Hovedavtalen LO–NHO',     navn_en: 'The Basic Agreement',      desc: '«Arbeidslivets grunnlov» mellom LO og NHO.',        desc_en: 'The «constitution of working life» between LO and NHO.',   url: 'https://www.lo.no/hovedavtalen/' },
+      { navn: 'Tariffavtaler',           navn_en: 'Collective agreements',    desc: 'Fellesforbundets tariffavtaler og lønnsvilkår.',    desc_en: 'Fellesforbundet\'s collective agreements and pay terms.', url: 'https://www.fellesforbundet.no/lonn-og-tariff/' },
+    ],
+  },
+  {
     tittel: 'Medlemsfordeler og forsikring', tittel_en: 'Member benefits & insurance',
     lenker: [
       { navn: 'LO Favør',                 navn_en: 'LO Favør',              desc: 'Medlemsfordeler, rabatter og forsikringer.',     desc_en: 'Member benefits, discounts and insurance.',     url: 'https://www.lofavor.no' },
