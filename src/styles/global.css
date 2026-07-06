@@ -345,6 +345,12 @@ textarea.input { resize: vertical; min-height: 110px; }
 .lodd-frist .k { font-size: 12.5px; color: var(--tekst-svak); font-weight: 600; }
 .lodd-frist .v { font-size: 17px; font-weight: 800; }
 
+/* Dato-badge — merkevare-uttrykk fra fellesforbundet.no (rød måned + stort
+   dagtall). Gjenbrukbar; brukes i påske-fristen. */
+.date-badge { flex: none; width: 52px; border-radius: 10px; overflow: hidden; text-align: center; background: #fff; border: 1px solid var(--kantlinje); line-height: 1; }
+.date-badge-mnd { display: block; background: var(--rod); color: #fff; font-size: 11px; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; padding: 4px 0; }
+.date-badge-dag { display: block; font-size: 22px; font-weight: 800; color: var(--morkbla); padding: 6px 0 7px; }
+
 /* ── Husregler ───────────────────────────────────────────────── */
 .rules { background: var(--morkbla); color: #fff; border-radius: 18px; padding: 30px; }
 .rules h2 { margin-bottom: 20px; }

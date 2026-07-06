@@ -15,7 +15,7 @@ const fordeler = [
 
 <Layout
   title="Fellesforbundet Helgeland avd. 143 — fagforening for arbeidsfolk på Helgeland"
-  description="Avdeling 143 organiserer medlemmer i industri, bygg, transport og service fra Mo i Rana til kysten. Bli medlem, få juridisk hjelp, tariffavtaler og medlemsfordeler."
+  description="Avdeling 143 organiserer medlemmer i industri, bygg, transport og service i hele Helgeland — fra Mo i Rana og innlandet til Helgelandskysten. Bli medlem, få juridisk hjelp, tariffavtaler og medlemsfordeler."
   ogImage="/images/og-default.jpg"
 >
 
@@ -30,9 +30,10 @@ const fordeler = [
             Vi står sammen — for et trygt arbeidsliv på Helgeland
           </h1>
           <p class="lead" style="max-width:54ch; margin-top:20px;"
-             data-en="Fellesforbundet branch 143 organises members in industry, construction, transport and service from Mo i Rana to the coast. We negotiate pay, give legal help and stand together when it matters.">
+             data-en="Fellesforbundet branch 143 organises members in industry, construction, transport and service across all of Helgeland — from Mo i Rana and the inland out to the Helgeland coast. We negotiate pay, give legal help and stand together when it matters.">
             Fellesforbundet avdeling 143 organiserer medlemmer i industri, bygg, transport og service
-            fra Mo i Rana til kysten. Vi forhandler lønn, gir juridisk hjelp og står sammen når det gjelder.
+            i hele Helgeland — fra Mo i Rana og innlandet ut til Helgelandskysten. Vi forhandler lønn,
+            gir juridisk hjelp og står sammen når det gjelder.
           </p>
           <div class="hero-actions" style="margin-top:26px;">
             <a href={`${base}/bli-medlem`} class="btn btn-primary" data-en="Become a member today">Bli medlem i dag</a>
@@ -52,7 +53,7 @@ const fordeler = [
       </div>
       <div class="hero-stats">
         <div><b>160 000+</b><span data-en="members in Fellesforbundet">medlemmer i Fellesforbundet</span></div>
-        <div><b>Helgeland</b><span data-en="from Mo i Rana to the coast">fra Mo i Rana til kysten</span></div>
+        <div><b>Helgeland</b><span data-en="from inland to coast">fra innland til kyst</span></div>
         <div><b>Avd. 143</b><span data-en="your local branch">din lokale avdeling</span></div>
       </div>
     </div>
@@ -143,6 +144,13 @@ const fordeler = [
         <h2 class="h2" style="margin-top:6px;" data-en="The branch's staff">Avdelingens ansatte</h2>
       </div>
       <a href={`${base}/tillitsvalgte`} class="btn-link" data-en="See staff and board →">Se ansatte og styret →</a>
+    </div>
+    <div class="alert alert-warn" style="margin:0 0 20px; max-width:680px;">
+      <span class="ic">!</span>
+      <div style="font-size:14px; line-height:1.6;"
+           data-en="Placeholder — staff names and photos are added when the branch provides them. This only shows the layout.">
+        Plassholder — navn og bilder på de ansatte fylles inn når avdelingen sender dem. Dette viser kun oppsettet.
+      </div>
     </div>
     <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:16px;">
       {ANSATTE.slice(0, 4).map(a => (

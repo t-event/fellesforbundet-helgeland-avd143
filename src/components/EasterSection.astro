@@ -15,7 +15,12 @@
         Meld deg på, så trekkes plassene blant alle påmeldte.
       </p>
       <div class="lodd-frist">
-        <span class="ic">!</span>
+        <!-- Dato-badge (fellesforbundet.no-stil): rød måned + stort dagtall.
+             Populeres av JS med påmeldingsfristen. -->
+        <div class="date-badge" aria-hidden="true">
+          <span class="date-badge-mnd" id="paske-frist-mnd">–</span>
+          <span class="date-badge-dag" id="paske-frist-dag">–</span>
+        </div>
         <div>
           <div class="k" data-i18n="paske_frist_label">Påmeldingsfrist</div>
           <div class="v" id="paske-frist-dato">–</div>
@@ -120,6 +125,8 @@ function fmtKort(d) {
 
 // Fyll inn datoer
 const fristEl  = document.getElementById('paske-frist-dato');
+const fristMndEl = document.getElementById('paske-frist-mnd');
+const fristDagEl = document.getElementById('paske-frist-dag');
 const p1InfoEl = document.getElementById('paske-p1-info');
 const p2InfoEl = document.getElementById('paske-p2-info');
 const p1LblEl  = document.getElementById('paske-p1-label');
@@ -127,6 +134,9 @@ const p2LblEl  = document.getElementById('paske-p2-label');
 
 function fyllDatoer() {
   if (fristEl)  fristEl.textContent = `${fmt(ep.registrationDeadline)}${erEn() ? ', 23:59' : ', kl. 23:59'}`;
+  if (fristMndEl) fristMndEl.textContent = ep.registrationDeadline
+    .toLocaleDateString(erEn() ? 'en-GB' : 'nb-NO', { month: 'short' }).replace('.', '').toUpperCase();
+  if (fristDagEl) fristDagEl.textContent = String(ep.registrationDeadline.getDate());
   if (p1InfoEl) p1InfoEl.textContent = erEn()
     ? `Period 1: ${fmtKort(ep.p1Start)} → ${fmtKort(ep.p1End)} (checkout 12:00)`
     : `Periode 1: ${fmtKort(ep.p1Start)} → ${fmtKort(ep.p1End)} (kl. 12:00 utsjekk)`;
