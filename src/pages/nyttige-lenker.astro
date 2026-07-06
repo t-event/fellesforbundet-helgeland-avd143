@@ -17,15 +17,18 @@ import { LENKER_GRUPPER } from '../config.ts';
     <div style="display:flex; flex-direction:column; gap:40px;">
       {LENKER_GRUPPER.map(gruppe => (
         <section>
-          <h2 class="h2" style="font-size:clamp(20px,2.4vw,26px); margin-bottom:18px;" data-en={gruppe.tittel_en}>{gruppe.tittel}</h2>
-          <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:14px;">
+          <h2 class="h2" style="font-size:clamp(20px,2.4vw,26px); margin-bottom:10px;" data-en={gruppe.tittel_en}>{gruppe.tittel}</h2>
+          <span class="tripp" aria-hidden="true"><i></i><i></i><i></i></span>
+          <div style="display:flex; flex-direction:column; gap:10px; margin-top:16px;">
             {gruppe.lenker.map(l => (
-              <a href={l.url} target="_blank" rel="noopener noreferrer" class="card card-pad lenkkort">
-                <div style="display:flex; align-items:baseline; gap:8px;">
-                  <b style="font-size:16px; color:var(--tekst);" data-en={l.navn_en}>{l.navn}</b>
-                  <span class="lenkkort-pil" aria-hidden="true">↗</span>
+              <a href={l.url} target="_blank" rel="noopener noreferrer" class="lenkbar">
+                <div class="lenkbar-tekst">
+                  <b data-en={l.navn_en}>{l.navn}</b>
+                  <span class="muted" data-en={l.desc_en}>{l.desc}</span>
                 </div>
-                <p class="muted" style="font-size:14px; line-height:1.55; margin-top:4px;" data-en={l.desc_en}>{l.desc}</p>
+                <span class="pil-knapp" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg>
+                </span>
               </a>
             ))}
           </div>
@@ -40,9 +43,3 @@ import { LENKER_GRUPPER } from '../config.ts';
   </div>
 </Layout>
 
-<style>
-  .lenkkort { display:block; text-decoration:none; transition:transform .12s ease, border-color .12s ease, box-shadow .12s ease; }
-  .lenkkort:hover { transform:translateY(-2px); border-color:var(--rod); box-shadow:0 8px 24px rgba(0,0,0,.08); }
-  .lenkkort:hover .lenkkort-pil { transform:translate(2px,-2px); }
-  .lenkkort-pil { color:var(--rod); font-weight:700; transition:transform .12s ease; }
-</style>

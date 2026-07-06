@@ -134,6 +134,20 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .card     { background: var(--hvit); border: 1px solid var(--kantlinje); border-radius: 4px; }
 .card-pad { padding: 26px; }
 
+/* ── Lenke-bar + oransje rund pil-knapp (fellesforbundet.no) ────── */
+.lenkbar { display: flex; align-items: center; justify-content: space-between; gap: 16px; background: var(--hvit); border: 1px solid var(--kantlinje); border-radius: 4px; padding: 15px 18px; text-decoration: none; transition: border-color .12s ease, box-shadow .12s ease; }
+.lenkbar:hover { border-color: var(--rod); box-shadow: 0 4px 16px rgba(0,0,0,.06); }
+.lenkbar-tekst b { display: block; font-size: 16px; color: var(--tekst); }
+.lenkbar-tekst .muted { display: block; font-size: 13.5px; line-height: 1.5; margin-top: 2px; }
+/* Oransje rund pil-knapp — gjenbrukbar merkevare-CTA */
+.pil-knapp { flex: none; width: 38px; height: 38px; border-radius: 50%; background: var(--oransje); color: #fff; display: inline-flex; align-items: center; justify-content: center; transition: transform .12s ease, filter .12s ease; }
+.pil-knapp:hover { filter: brightness(1.05); }
+.lenkbar:hover .pil-knapp { transform: translateX(2px); }
+
+/* Trippel-prikk-aksent — merkevare-dekor fra fellesforbundet.no (megameny) */
+.tripp { display: flex; gap: 7px; }
+.tripp i { width: 8px; height: 8px; border-radius: 50%; background: var(--morkbla); }
+
 /* ── Badge ───────────────────────────────────────────────────── */
 .badge { display: inline-flex; align-items: center; gap: 7px; font-size: 12px; font-weight: 700; padding: 6px 12px; border-radius: var(--radius-pill); }
 .badge-dark  { background: var(--morkbla); color: var(--hvit); }
