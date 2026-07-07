@@ -218,6 +218,10 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .brodsmule a:hover { color: var(--rod); }
 .brodsmule-sep { color: var(--tekst-svak); }
 .brodsmule-na { color: var(--tekst); font-weight: 600; }
+/* Representantskap-liste — flerkolonne så lange navnelister ikke blir én kolonne */
+.rep-liste { columns: 3 210px; column-gap: 28px; }
+.rep-liste li { break-inside: avoid; }
+
 /* Mørk variant — brødsmula legger seg oppå den mørke heroen (sømløst). */
 .brodsmule--mork { background: var(--morkbla); }
 .brodsmule--mork a { color: rgba(255,255,255,.72); }
@@ -229,7 +233,7 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 /* Avdelingsnavn-lockup (profilhåndbok 2.1): display-font, første linje uthevet
    (heavy), andre linje regular i SAMME størrelse. Plassert UNDER FF-logoen (som
    viser «Fellesforbundet»), så avdelingsnavnet står i kortform (ikke gjentatt). */
-.brand-avd { display: flex; flex-direction: column; line-height: 1.04; font-family: var(--font-display); color: #fff; white-space: nowrap; }
+.brand-avd { display: flex; flex-direction: row; align-items: baseline; gap: 6px; line-height: 1.04; font-family: var(--font-display); color: #fff; white-space: nowrap; }
 .brand-avd-1 { font-weight: 700; font-size: 16px; letter-spacing: -0.01em; }
 .brand-avd-2 { font-weight: 400; font-size: 16px; letter-spacing: -0.01em; }
 .nav-right { display: flex; align-items: center; gap: 16px; flex-wrap: nowrap; justify-content: flex-end; }

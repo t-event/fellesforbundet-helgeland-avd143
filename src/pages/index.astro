@@ -2,7 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 import Icon from '../components/Icon.astro';
 import CircleMotif from '../components/CircleMotif.astro';
-import { KONTAKT, ANSATTE, FF_LENKER } from '../config.ts';
+import { KONTAKT, ANSATTE, STYRE, FF_LENKER } from '../config.ts';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
 const fordeler = [
@@ -146,7 +146,15 @@ const fordeler = [
       <a href={`${base}/tillitsvalgte`} class="btn-link" data-en="See staff and board →">Se ansatte og styret →</a>
     </div>
     <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:16px;">
-      {ANSATTE.slice(0, 4).map(a => (
+      <div class="person">
+        <span class="person-avatar" aria-hidden="true">{STYRE[0].navn.split(/\s+/).map(d => d[0]).join('').slice(0,2).toUpperCase()}</span>
+        <div>
+          <b style="display:block; font-size:15px;">{STYRE[0].navn}</b>
+          <span class="muted" style="font-size:13px;" data-en="Leader – day-to-day operations">Leder – daglig drift</span>
+          <span class="muted" style="display:block; font-size:12.5px;">{STYRE[0].klubb}</span>
+        </div>
+      </div>
+      {ANSATTE.map(a => (
         <div class="person">
           <span class="person-avatar" aria-hidden="true">{a.navn.split(/\s+/).map(d => d[0]).join('').slice(0,2).toUpperCase()}</span>
           <div>

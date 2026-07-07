@@ -2,7 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 import CircleMotif from '../components/CircleMotif.astro';
 import Icon from '../components/Icon.astro';
-import { STYRE, ANSATTE, KONTROLLKOMITE, STUDIEUTVALG, UNGDOMSUTVALG, KONTAKT } from '../config.ts';
+import { STYRE, ANSATTE, KONTROLLKOMITE, STUDIEUTVALG, VALGKOMITE, UNGDOMSUTVALG, UNGDOMSSEKRETAR, REPRESENTANTSKAP, KONTAKT } from '../config.ts';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
 const initialer = (navn: string) =>
@@ -52,6 +52,14 @@ const verktoy = [
         Avdelingens organisasjonsarbeidere og kontoransatte er spredt over Helgeland og er her for medlemmer og tillitsvalgte.
       </p>
       <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:14px;">
+        <div class="person">
+          <span class="person-avatar" aria-hidden="true">{initialer(STYRE[0].navn)}</span>
+          <div>
+            <b style="display:block; font-size:15px;">{STYRE[0].navn}</b>
+            <span class="muted" style="font-size:13px;" data-en="Leader – day-to-day operations">Leder – daglig drift</span>
+            <span class="muted" style="display:block; font-size:12.5px;">{STYRE[0].klubb}</span>
+          </div>
+        </div>
         {ANSATTE.map(a => (
           <div class="person">
             <span class="person-avatar" aria-hidden="true">{initialer(a.navn)}</span>
@@ -113,7 +121,7 @@ const verktoy = [
         ))}
       </div>
 
-      <!-- Ungdomsutvalg -->
+      <!-- Ungdomsutvalg (valgte) -->
       <h3 class="h3" style="font-size:16px; margin:32px 0 14px;" data-en="Youth committee">Ungdomsutvalg</h3>
       <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); gap:14px;">
         {UNGDOMSUTVALG.map(p => (
@@ -122,12 +130,21 @@ const verktoy = [
             <div>
               <b style="display:block; font-size:15px;">{p.navn}</b>
               <span class="muted" style="font-size:13px;" data-en={p.rolle_en}>{p.rolle}</span>
-              {'merknad' in p && (
-                <span class="muted" style="display:block; font-size:12.5px;" data-en={(p as any).merknad_en}>{(p as any).merknad}</span>
-              )}
             </div>
           </div>
         ))}
+      </div>
+
+      <!-- Ungdomssekretær (regionansatt) — eget felt, ikke medlem av utvalget -->
+      <div style="margin-top:16px; max-width:340px;">
+        <div class="person">
+          <span class="person-avatar" aria-hidden="true">{initialer(UNGDOMSSEKRETAR.navn)}</span>
+          <div>
+            <b style="display:block; font-size:15px;">{UNGDOMSSEKRETAR.navn}</b>
+            <span class="muted" style="font-size:13px;" data-en={UNGDOMSSEKRETAR.rolle_en}>{UNGDOMSSEKRETAR.rolle}</span>
+            <span class="muted" style="display:block; font-size:12.5px;" data-en={UNGDOMSSEKRETAR.merknad_en}>{UNGDOMSSEKRETAR.merknad}</span>
+          </div>
+        </div>
       </div>
 
       <!-- Kontrollkomité + studieutvalg -->
@@ -151,6 +168,28 @@ const verktoy = [
             ))}
           </ul>
         </div>
+        <div>
+          <h3 class="h3" style="font-size:16px; margin:0 0 12px;" data-en="Election committee">Valgkomité</h3>
+          <ul class="muted" style="font-size:14px; line-height:1.7; list-style:none; padding:0; margin:0;">
+            {VALGKOMITE.map(v => (
+              <li><b style="color:var(--tekst);">{v.navn}</b> · <span data-en={v.rolle_en}>{v.rolle}</span>, {v.sted}</li>
+            ))}
+          </ul>
+        </div>
+      </div>
+
+      <!-- Representantskapet (uten varamedlemmer) -->
+      <div style="margin-top:32px;">
+        <h3 class="h3" style="font-size:16px; margin:0 0 6px;" data-en="The representative assembly">Representantskapet</h3>
+        <p class="muted" style="font-size:14px; max-width:62ch; margin:0 0 12px;"
+           data-en="The branch's highest body between annual meetings.">
+          Avdelingens øverste organ mellom årsmøtene.
+        </p>
+        <ul class="muted rep-liste" style="font-size:14px; line-height:1.7; list-style:none; padding:0; margin:0;">
+          {REPRESENTANTSKAP.map(navn => (
+            <li><b style="color:var(--tekst); font-weight:600;">{navn}</b></li>
+          ))}
+        </ul>
       </div>
     </div>
 
