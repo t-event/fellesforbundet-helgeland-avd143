@@ -27,6 +27,28 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const siteUrl = Astro.site?.toString().replace(/\/$/, '') ?? '';
 const canonicalUrl = siteUrl + Astro.url.pathname;
 const ogImageUrl = siteUrl + base + ogImage;
+
+// Brødsmule: «Forsiden / [side]» på undersider (fellesforbundet.no-mønster).
+const sti = Astro.url.pathname.replace(base, '').replace(/^\/|\/$/g, '');
+const sideNavn: Record<string, { no: string; en: string }> = {
+  'bli-medlem':      { no: 'Bli medlem',          en: 'Join' },
+  'lonn-tariff':     { no: 'Lønn & tariff',       en: 'Pay & agreements' },
+  'tillitsvalgte':   { no: 'Tillitsvalgte',       en: 'Shop stewards' },
+  'nyttige-lenker':  { no: 'Nyttige lenker',      en: 'Useful links' },
+  'aktuelt':         { no: 'Aktuelt',             en: 'News' },
+  'om-oss':          { no: 'Om oss',              en: 'About us' },
+  'kontakt':         { no: 'Kontakt',             en: 'Contact' },
+  'hytter':          { no: 'Hytteutleie',         en: 'Cabin rental' },
+  'umbukta':         { no: 'Hytte i Umbukta',     en: 'Umbukta cabin' },
+  'turtips':         { no: 'Turtips Umbukta',     en: 'Hiking tips (Umbukta)' },
+  'hjelp':           { no: 'Hjelp – hytteutleie', en: 'Help – cabin rental' },
+  'personvern':      { no: 'Personvern',          en: 'Privacy' },
+  'cookies':         { no: 'Cookies',             en: 'Cookies' },
+  'vilkar':          { no: 'Vilkår',              en: 'Terms' },
+  'tilgjengelighet': { no: 'Tilgjengelighet',     en: 'Accessibility' },
+  'takk':            { no: 'Takk',                en: 'Thank you' },
+};
+const brodsmule = sideNavn[sti];
 ---
 <!doctype html>
 <html lang={lang}>
@@ -97,6 +119,15 @@ const ogImageUrl = siteUrl + base + ogImage;
 <body>
   <a class="skip-link" href="#main-content" data-en="Skip to content">Hopp til innhold</a>
   <Header />
+  {brodsmule && (
+    <nav class="brodsmule" aria-label="Du er her">
+      <div class="container">
+        <a href={`${base}/`} data-en="Home">Forsiden</a>
+        <span class="brodsmule-sep" aria-hidden="true">/</span>
+        <span class="brodsmule-na" data-en={brodsmule.en}>{brodsmule.no}</span>
+      </div>
+    </nav>
+  )}
   <main id="main-content">
     <slot />
   </main>

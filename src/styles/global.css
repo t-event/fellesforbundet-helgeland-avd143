@@ -159,7 +159,9 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .badge-gul   { background: var(--gul); color: var(--morkbla); }
 
 /* ── Header / Nav ────────────────────────────────────────────── */
-.site-header { position: sticky; top: 0; z-index: 50; background: var(--morkbla); color: var(--hvit); border-bottom: 3px solid var(--rod); }
+/* Ikke sticky — den to-raders headeren er høy og skal ikke følge ved scroll
+   (bruker ba om at den ikke spiser skjermplass nedover sida). */
+.site-header { position: relative; z-index: 50; background: var(--morkbla); color: var(--hvit); border-bottom: 3px solid var(--rod); }
 /* Topp-rad: språk + avdelings-snarveier + Min Side (fellesforbundet.no-mønster) */
 .topbar { background: rgba(0,0,0,.18); border-bottom: 1px solid rgba(255,255,255,.08); }
 .topbar-inner { display: flex; align-items: center; justify-content: flex-end; gap: 18px; min-height: 38px; }
@@ -172,11 +174,43 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .nav-shortcuts a { color: #cfd0e0; font-weight: 600; font-size: 14px; padding: 9px 15px; border-radius: 4px; text-decoration: none; white-space: nowrap; }
 .nav-shortcuts a:hover { color: #fff; }
 .nav-shortcuts a.active { background: var(--rod); color: #fff; }
-.meny-btn { display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,.1); color: #fff; border: 1px solid rgba(255,255,255,.2); border-radius: var(--radius-pill); padding: 9px 16px; font-weight: 700; font-size: 14px; font-family: inherit; cursor: pointer; white-space: nowrap; }
-.meny-btn:hover { background: rgba(255,255,255,.18); }
+/* Meny-knapp: blå (lys blå) når lukket, rød når åpen (bruker ba om dette). */
+.meny-btn { display: inline-flex; align-items: center; gap: 8px; background: var(--lysbla); color: var(--morkbla); border: 1px solid transparent; border-radius: var(--radius-pill); padding: 9px 16px; font-weight: 700; font-size: 14px; font-family: inherit; cursor: pointer; white-space: nowrap; transition: background .12s ease, color .12s ease; }
+.meny-btn:hover { background: #aec6fb; }
+/* «Meny» veksler til rød «Lukk» når megamenyen er åpen (aria-expanded) */
+.meny-btn .meny-ic-lukk, .meny-btn .meny-txt-lukk { display: none; }
+.meny-btn[aria-expanded="true"] { background: var(--rod); border-color: var(--rod); color: #fff; }
+.meny-btn[aria-expanded="true"]:hover { background: #a80000; }
+.meny-btn[aria-expanded="true"] .meny-ic-apne, .meny-btn[aria-expanded="true"] .meny-txt-apne { display: none; }
+.meny-btn[aria-expanded="true"] .meny-ic-lukk { display: inline-flex; }
+.meny-btn[aria-expanded="true"] .meny-txt-lukk { display: inline; }
+
+/* Megameny — hvit flerkolonne-meny (fellesforbundet.no), åpnes av «Meny». */
+.megameny { display: none; position: fixed; inset: var(--header-h, 104px) 0 0 0; background: #fff; color: var(--morkbla); z-index: 49; overflow-y: auto; padding: clamp(28px, 4vw, 48px) 0; }
+.megameny.open { display: block; }
+.megameny-inner { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: clamp(28px, 4vw, 44px) 32px; align-items: start; }
+.megameny-tittel { font-family: var(--font-display); font-weight: 700; font-size: 19px; color: var(--morkbla); }
+.megameny-kol .tripp { margin: 10px 0 16px; }
+.megameny-lenker { display: flex; flex-direction: column; gap: 0; }
+.megameny-lenker a { display: block; color: var(--tekst-dempet); font-size: 16px; padding: 10px 0; text-decoration: none; border-bottom: 1px solid var(--kantlinje); }
+.megameny-lenker a:hover { color: var(--rod); }
+.megameny-lenker a.active { color: var(--rod); font-weight: 700; }
+
+/* Brødsmule — «Forsiden / [side]» på undersider (fellesforbundet.no) */
+.brodsmule { background: var(--flate); border-bottom: 1px solid var(--kantlinje); }
+.brodsmule .container { display: flex; align-items: center; gap: 9px; padding-top: 11px; padding-bottom: 11px; font-size: 13.5px; }
+.brodsmule a { color: var(--tekst-dempet); text-decoration: none; }
+.brodsmule a:hover { color: var(--rod); }
+.brodsmule-sep { color: var(--tekst-svak); }
+.brodsmule-na { color: var(--tekst); font-weight: 600; }
 .brand { display: flex; align-items: center; gap: 10px; background: none; border: none; cursor: pointer; padding: 0; color: inherit; text-decoration: none; }
 .brand-logo { height: 40px; width: auto; display: block; }
-.brand-sub { font-size: 12px; font-weight: 600; color: var(--lysbla); letter-spacing: 0.04em; text-transform: uppercase; white-space: nowrap; }
+/* Avdelingsnavn-lockup (profilhåndbok 2.1): display-font, første linje uthevet
+   (heavy), andre linje regular i SAMME størrelse. FF-logoen viser allerede
+   «Fellesforbundet», så avdelingsnavnet står i kortform (ikke gjentatt). */
+.brand-avd { display: flex; flex-direction: column; line-height: 1.06; font-family: var(--font-display); color: #fff; padding-left: 13px; margin-left: 13px; border-left: 1px solid rgba(255,255,255,.28); white-space: nowrap; }
+.brand-avd-1 { font-weight: 700; font-size: 16px; letter-spacing: -0.01em; }
+.brand-avd-2 { font-weight: 400; font-size: 16px; letter-spacing: -0.01em; }
 .nav-right { display: flex; align-items: center; gap: 16px; flex-wrap: nowrap; justify-content: flex-end; }
 .nav { display: flex; align-items: center; gap: 4px; flex-wrap: nowrap; }
 .nav a { background: transparent; color: #cfd0e0; font-weight: 600; font-size: 14px; padding: 9px 15px; border: none; border-radius: 4px; cursor: pointer; white-space: nowrap; text-decoration: none; }
