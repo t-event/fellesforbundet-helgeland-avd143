@@ -295,8 +295,9 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .brodsmule--mork ~ main .hero-motif { top: -40px; }
 /* Brødsmula gir allerede topp-luft på undersidene — dropp heroens doble padding. */
 .brodsmule--mork ~ main .hero-dark > .container.section { padding-top: clamp(16px, 2.4vw, 26px); }
-/* Forsiden har ingen brødsmule å blø opp over — plassér motivet så det ikke kuttes. */
-.hero-motif--forside { top: 0; }
+/* Forsiden har ingen brødsmule å blø opp over — plassér motivet så det ikke kuttes.
+   Høyere spesifisitet (to klasser) så den vinner over .hero-motif under. */
+.hero-motif.hero-motif--forside { top: 0; }
 /* Versal hero-overskrift — sterkere merkevare-trykk (fellesforbundet.no-stil).
    Litt løsere tegnavstand enn små bokstaver, som ellers blir trange i versaler. */
 .hero-dark .h1 { text-transform: uppercase; letter-spacing: -0.005em; }
@@ -653,8 +654,9 @@ textarea.input { resize: vertical; min-height: 110px; }
 .feature-band-motif { position: absolute; top: -44px; right: -34px; width: clamp(120px, 13vw, 178px); opacity: .85; z-index: 0; pointer-events: none; }
 @media (max-width: 720px) {
   .feature-band { grid-template-columns: 1fr; }
-  /* Stacket legger motivet oppå bildet — skjul det (ren dekor) på mobil. */
-  .feature-band-motif { display: none; }
+  /* Stacket ville lagt motivet oppå bildet (øverst) — flytt det til nederste
+     høyre hjørne over grønn bakgrunn, bak teksten, så sirklene fortsatt vises. */
+  .feature-band-motif { top: auto; bottom: -26px; right: -20px; width: 100px; opacity: .8; }
 }
 
 /* Nummererte steg */

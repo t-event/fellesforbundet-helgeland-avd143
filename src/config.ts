@@ -184,9 +184,9 @@ export const UMBUKTA = {
   sengeplasser: 12,
   soverom: '2 soverom, sovealkove og romslig hems',
   // Naustet med båten ligger ved vannet, sør for hytta (egen Maps-lenke fra avd.).
-  naustKart: 'https://maps.app.goo.gl/8oinp1Ko11MABs8c6',
-  naustLat: 66.1600368,
-  naustLon: 14.5870495,
+  naustKart: 'https://maps.app.goo.gl/ZsSs91eueZRi7WNZ7',
+  naustLat: 66.15991,
+  naustLon: 14.58721,
 } as const;
 
 export const ELSVATN_INATUR_URL =
