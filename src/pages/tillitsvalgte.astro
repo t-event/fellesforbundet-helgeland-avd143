@@ -72,9 +72,14 @@ const verktoy = [
     <div class="section">
       <span class="eyebrow" data-en="The board">Styret</span>
       <h2 class="h2" style="margin:6px 0 10px;" data-en="The branch board">Avdelingens styre</h2>
-      <p class="muted" style="font-size:16px; max-width:62ch; margin-bottom:18px;"
-         data-en="The board is elected by the members and leads the branch's work. Reach the board through the branch office.">
-        Styret velges av medlemmene og leder avdelingens arbeid. Du når styret gjennom avdelingskontoret.
+      <p class="muted" style="font-size:16px; max-width:62ch; margin-bottom:10px;"
+         data-en="The board is elected by the members and leads the branch's work.">
+        Styret velges av medlemmene og leder avdelingens arbeid.
+      </p>
+      <p style="font-size:15px; margin-bottom:18px;" data-en="Branch office: ">
+        Avdelingskontoret: <a href={`tel:+47${KONTAKT.telefon}`} class="btn-link" style="font-size:15px;">{KONTAKT.telefonFormatert}</a>
+        <span class="muted"> · </span>
+        <a href={`mailto:${KONTAKT.epost}`} class="btn-link" style="font-size:15px;">{KONTAKT.epost}</a>
       </p>
       <!-- Leder -->
       <div class="person" style="max-width:400px; margin-bottom:22px;">
@@ -87,11 +92,6 @@ const verktoy = [
             <a href={`tel:+47${STYRE[0].tlf}`} class="btn-link" style="font-size:13.5px;">{STYRE[0].tlfFormatert}</a>
             <span class="muted"> · </span>
             <a href={`mailto:${STYRE[0].epost}`} class="btn-link" style="font-size:13.5px;">{STYRE[0].epost}</a>
-          </div>
-          <div class="muted" style="font-size:12.5px; margin-top:4px;" data-en="Branch office: ">
-            Avdelingskontoret: <a href={`tel:+47${KONTAKT.telefon}`} class="btn-link" style="font-size:12.5px;">{KONTAKT.telefonFormatert}</a>
-            <span> · </span>
-            <a href={`mailto:${KONTAKT.epost}`} class="btn-link" style="font-size:12.5px;">{KONTAKT.epost}</a>
           </div>
         </div>
       </div>
