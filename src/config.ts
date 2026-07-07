@@ -79,38 +79,50 @@ export const LENKER_GRUPPER = [
   },
 ] as const;
 
-// Avdelingens ansatte (lønnede på kontoret). PLASSHOLDER: navn/bilder ikke
-// mottatt ennå — vises som «Navn kommer» med rolle. Fyll inn når avdelingen
-// sender dem. Egen gruppe fra STYRE (valgt). Brukt på forside + /tillitsvalgte.
+// Avdelingens ansatte (lønnede/valgte i FFH). sted = kommune, stilling = stillingsprosent.
+// Brukt på forside + /tillitsvalgte. NB: Eva-Maria er utleid til Transport Nord 33 % av
+// tiden — utelatt fra offentlig visning (operativ detalj); ta med om det ønskes.
 export const ANSATTE = [
-  { rolle: 'Daglig leder',          rolle_en: 'General manager' },
-  { rolle: 'Organisasjonsarbeider', rolle_en: 'Organiser' },
-  { rolle: 'Ungdomssekretær',       rolle_en: 'Youth secretary' },
-  { rolle: 'Medlemsservice',        rolle_en: 'Member services' },
-  { rolle: 'Regnskap og økonomi',   rolle_en: 'Accounting & finance' },
-  { rolle: 'Sekretariat',           rolle_en: 'Secretariat' },
+  { navn: 'Cicilie Dahl Løkås',  rolle: 'Organisasjonsarbeider', rolle_en: 'Organiser',    sted: 'Rana',      stilling: '100 %' },
+  { navn: 'Tommy Vistnes',       rolle: 'Organisasjonsarbeider', rolle_en: 'Organiser',    sted: 'Alstahaug', stilling: '100 %' },
+  { navn: 'Trond Brattbakk',     rolle: 'Organisasjonsarbeider', rolle_en: 'Organiser',    sted: 'Vefsn',     stilling: '100 %' },
+  { navn: 'Frank Stuvland',      rolle: 'Organisasjonsarbeider', rolle_en: 'Organiser',    sted: 'Vefsn',     stilling: '50 %'  },
+  { navn: 'Eva-Maria Svartvatn', rolle: 'Kontoransatt',          rolle_en: 'Office staff', sted: 'Rana',      stilling: '100 %' },
 ] as const;
 
-// Avdelingens styre (offentlig registrert i Brønnøysund).
-// Verv: Tommy Rannov Nystad = leder (daglig leder + styreleder); øvrige = styremedlemmer.
-// Avregistrerte er utelatt. MERK: dette er STYRET (valgt) — de 6 ANSATTE (lønnede
-// på kontoret) er en egen gruppe som ikke er lagt inn ennå (navn ikke mottatt).
+// Avdelingsstyret (valgt av medlemmene). klubb = klubb/bransje personen representerer.
+// Rekkefølge: ledelse først (leder, nestleder, sekretær, ungdomsleder, nest-ungdomsleder),
+// deretter styremedlemmer. Roster oppdatert per styrets sammensetning fra avdelingen.
 export const STYRE = [
-  { navn: 'Tommy Rannov Nystad',             rolle: 'Leder',       rolle_en: 'Leader' },
-  { navn: 'Kjell Arne Olsen',                rolle: 'Styremedlem', rolle_en: 'Board member' },
-  { navn: 'Roger Eugen Ranfjordnes',         rolle: 'Styremedlem', rolle_en: 'Board member' },
-  { navn: 'Ulrikke Bergitte Hansen Skjevik', rolle: 'Styremedlem', rolle_en: 'Board member' },
-  { navn: 'Mathias Erlandsen Tustervatn',    rolle: 'Styremedlem', rolle_en: 'Board member' },
-  { navn: 'Mary-Linn Kümmel',                rolle: 'Styremedlem', rolle_en: 'Board member' },
-  { navn: 'Arnt Ove Kirknes',                rolle: 'Styremedlem', rolle_en: 'Board member' },
-  { navn: 'Ann Kristin Sletvold',            rolle: 'Styremedlem', rolle_en: 'Board member' },
-  { navn: 'Remi Andre Knapstad',             rolle: 'Styremedlem', rolle_en: 'Board member' },
-  { navn: 'Johan Hovind',                    rolle: 'Styremedlem', rolle_en: 'Board member' },
-  { navn: 'Andreas Bech Stene',              rolle: 'Styremedlem', rolle_en: 'Board member' },
-  { navn: 'Stein André Olsen',               rolle: 'Styremedlem', rolle_en: 'Board member' },
-  { navn: 'Jon Arne Myrvold Nygård',         rolle: 'Styremedlem', rolle_en: 'Board member' },
-  { navn: 'Matz Petter Johansen',            rolle: 'Styremedlem', rolle_en: 'Board member' },
-  { navn: 'Bjørn Tore Isaksen',              rolle: 'Styremedlem', rolle_en: 'Board member' },
+  { navn: 'Tommy Rannov Nystad',          rolle: 'Leder',              rolle_en: 'Leader',              klubb: 'Rana FOB' },
+  { navn: 'Kjell Arne Olsen',             rolle: 'Nestleder',          rolle_en: 'Deputy leader',       klubb: 'Rana Industri' },
+  { navn: 'Roger Eugen Ranfjordnes',      rolle: 'Sekretær',           rolle_en: 'Secretary',           klubb: 'Rana Industri' },
+  { navn: 'Linn Amalie Hansen',           rolle: 'Ungdomsleder',       rolle_en: 'Youth leader',        klubb: 'Rana Riks' },
+  { navn: 'Mathias Erlandsen Tustervatn', rolle: 'Nestungdomsleder',   rolle_en: 'Deputy youth leader', klubb: 'Rana Industri' },
+  { navn: 'Arnt Ove Kirknes',             rolle: 'Styremedlem',        rolle_en: 'Board member',        klubb: 'Grane – Byggeindustrien' },
+  { navn: 'Ann Kristin Sletvold',         rolle: 'Styremedlem',        rolle_en: 'Board member',        klubb: 'Brønnøy – Riksavtalen' },
+  { navn: 'Remi Andre Knapstad',          rolle: 'Styremedlem',        rolle_en: 'Board member',        klubb: 'Rana Industri' },
+  { navn: 'Johan Hovind',                 rolle: 'Styremedlem',        rolle_en: 'Board member',        klubb: 'Rana Industri' },
+  { navn: 'Andreas Bech Stene',           rolle: 'Styremedlem',        rolle_en: 'Board member',        klubb: 'Vefsn Bil' },
+  { navn: 'Bjørn Tore Isaksen',           rolle: 'Styremedlem',        rolle_en: 'Board member',        klubb: 'Rana Industri' },
+  { navn: 'Mary-Linn Kümmel',             rolle: 'Styremedlem',        rolle_en: 'Board member',        klubb: 'Alstadhaug – Riksavtalen' },
+  { navn: 'Stein André Olsen',            rolle: 'Styremedlem',        rolle_en: 'Board member',        klubb: 'Rana Industri TD' },
+  { navn: 'Erik Rauø',                    rolle: 'Styremedlem',        rolle_en: 'Board member',        klubb: 'Vega Havbruk' },
+  { navn: 'Jim Ruben Toven',              rolle: 'Styremedlem',        rolle_en: 'Board member',        klubb: 'Vefsn FOB' },
+  { navn: 'Hedvig Oddøy',                 rolle: 'Styremedlem',        rolle_en: 'Board member',        klubb: 'Lovund Havbruk' },
+] as const;
+
+// Kontrollkomité (velges av medlemmene) med vararepresentant.
+export const KONTROLLKOMITE = [
+  { navn: 'Frank Hansen',   vara: 'Steinar Iversen' },
+  { navn: 'Bjørnar Tønder', vara: 'Tor Arne Strøm' },
+] as const;
+
+// Studieutvalg (ansvar for kurs og skolering i avdelingen).
+export const STUDIEUTVALG = [
+  { navn: 'Ann Kristin Sletvold', sted: 'Brønnøy' },
+  { navn: 'Ulrikke Hansen',       sted: 'Rana' },
+  { navn: 'Cicilie Løkås',        sted: 'Rana' },
 ] as const;
 
 export const UMBUKTA = {

@@ -2,7 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 import CircleMotif from '../components/CircleMotif.astro';
 import Icon from '../components/Icon.astro';
-import { STYRE, ANSATTE, KONTAKT } from '../config.ts';
+import { STYRE, ANSATTE, KONTROLLKOMITE, STUDIEUTVALG, KONTAKT } from '../config.ts';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
 const initialer = (navn: string) =>
@@ -43,26 +43,22 @@ const verktoy = [
 
   <div class="container">
 
-    <!-- ANSATTE (plassholder) -->
+    <!-- ANSATTE -->
     <div class="section">
       <span class="eyebrow" data-en="Staff">Ansatte</span>
       <h2 class="h2" style="margin:6px 0 10px;" data-en="The branch's staff">Avdelingens ansatte</h2>
-      <div class="alert alert-warn" style="margin:0 0 22px; max-width:680px;">
-        <span class="ic">!</span>
-        <div style="font-size:14px; line-height:1.6;"
-             data-en="Placeholder — names and photos will be added when the branch provides them. This only shows the layout.">
-          Plassholder — navn og bilder fylles inn når avdelingen sender dem. Dette viser kun oppsettet.
-        </div>
-      </div>
+      <p class="muted" style="font-size:16px; max-width:62ch; margin-bottom:18px;"
+         data-en="The branch's organisers and office staff are spread across Helgeland and are here for members and shop stewards.">
+        Avdelingens organisasjonsarbeidere og kontoransatte er spredt over Helgeland og er her for medlemmer og tillitsvalgte.
+      </p>
       <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:14px;">
         {ANSATTE.map(a => (
           <div class="person">
-            <span class="person-avatar" aria-hidden="true" style="background:#e4e4ec; color:#6b6b76;">
-              <Icon name="user" size={20} />
-            </span>
+            <span class="person-avatar" aria-hidden="true">{initialer(a.navn)}</span>
             <div>
-              <b style="display:block; font-size:15px; color:var(--tekst-svak);" data-en="Name coming">Navn kommer</b>
+              <b style="display:block; font-size:15px;">{a.navn}</b>
               <span class="muted" style="font-size:13px;" data-en={a.rolle_en}>{a.rolle}</span>
+              <span class="muted" style="display:block; font-size:12.5px;">{a.sted} · {a.stilling}</span>
             </div>
           </div>
         ))}
@@ -80,21 +76,14 @@ const verktoy = [
          data-en="The board is elected by the members and leads the branch's work. Reach the board through the branch office.">
         Styret velges av medlemmene og leder avdelingens arbeid. Du når styret gjennom avdelingskontoret.
       </p>
-      <div class="alert alert-warn" style="margin:0 0 24px; max-width:680px;">
-        <span class="ic">!</span>
-        <div style="font-size:14px; line-height:1.6;"
-             data-en="Placeholder — the board composition and roles (deputy leader, secretary etc.) are being confirmed and will be updated before launch.">
-          Plassholder — styrets sammensetning og verv (nestleder, sekretær osv.) bekreftes og oppdateres før lansering.
-        </div>
-      </div>
-
       <!-- Leder -->
-      <div class="person" style="max-width:380px; margin-bottom:18px;">
+      <div class="person" style="max-width:400px; margin-bottom:22px;">
         <span class="person-avatar" aria-hidden="true">{initialer(STYRE[0].navn)}</span>
         <div>
           <b style="display:block; font-size:15.5px;">{STYRE[0].navn}</b>
           <span class="muted" style="font-size:13.5px;" data-en={STYRE[0].rolle_en}>{STYRE[0].rolle}</span>
-          <div style="font-size:13.5px; margin-top:4px;">
+          <span class="muted" style="display:block; font-size:12.5px;">{STYRE[0].klubb}</span>
+          <div style="font-size:13.5px; margin-top:6px;">
             <a href={`tel:+47${KONTAKT.telefon}`} class="btn-link" style="font-size:13.5px;">{KONTAKT.telefonFormatert}</a>
             <span class="muted"> · </span>
             <a href={`mailto:${KONTAKT.epost}`} class="btn-link" style="font-size:13.5px;">{KONTAKT.epost}</a>
@@ -102,8 +91,8 @@ const verktoy = [
         </div>
       </div>
 
-      <!-- Styremedlemmer -->
-      <h3 class="h3" style="font-size:16px; margin:8px 0 14px;" data-en="Board members">Styremedlemmer</h3>
+      <!-- Ledelse (nestleder, sekretær, ungdomsledelse) + øvrige styremedlemmer -->
+      <h3 class="h3" style="font-size:16px; margin:8px 0 14px;" data-en="Board members">Styret for øvrig</h3>
       <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); gap:14px;">
         {STYRE.slice(1).map(p => (
           <div class="person">
@@ -111,9 +100,33 @@ const verktoy = [
             <div>
               <b style="display:block; font-size:15px;">{p.navn}</b>
               <span class="muted" style="font-size:13px;" data-en={p.rolle_en}>{p.rolle}</span>
+              <span class="muted" style="display:block; font-size:12.5px;">{p.klubb}</span>
             </div>
           </div>
         ))}
+      </div>
+
+      <!-- Kontrollkomité + studieutvalg -->
+      <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:24px; margin-top:32px;">
+        <div>
+          <h3 class="h3" style="font-size:16px; margin:0 0 12px;" data-en="Control committee">Kontrollkomité</h3>
+          <ul class="muted" style="font-size:14px; line-height:1.7; list-style:none; padding:0; margin:0;">
+            {KONTROLLKOMITE.map(k => (
+              <li>
+                <b style="color:var(--tekst);">{k.navn}</b>
+                <span data-en=" (deputy: "> (vara: </span>{k.vara})
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div>
+          <h3 class="h3" style="font-size:16px; margin:0 0 12px;" data-en="Study committee">Studieutvalg</h3>
+          <ul class="muted" style="font-size:14px; line-height:1.7; list-style:none; padding:0; margin:0;">
+            {STUDIEUTVALG.map(s => (
+              <li><b style="color:var(--tekst);">{s.navn}</b> · {s.sted}</li>
+            ))}
+          </ul>
+        </div>
       </div>
     </div>
 

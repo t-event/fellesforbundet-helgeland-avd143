@@ -7,7 +7,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
 const fordeler = [
   { ikon: 'handshake', tittel: 'Lønn & tariff',     tittel_en: 'Pay & agreements', body: 'Vi forhandler tariffavtaler og sikrer deg riktig lønn og ordnede arbeidsforhold.', body_en: 'We negotiate collective agreements and secure fair pay and proper working conditions.' },
-  { ikon: 'scale', tittel: 'Juridisk hjelp',    tittel_en: 'Legal help',       body: 'Gratis bistand i saker om arbeidsforhold, oppsigelse, lønn og rettigheter.', body_en: 'Free assistance in matters of employment, dismissal, pay and rights.' },
+  { ikon: 'scale', tittel: 'Råd og støtte på jobb', tittel_en: 'Advice and backing at work', body: 'Vi gir råd om lønn, arbeidsforhold og rettigheter — og stiller opp i saker der det trengs.', body_en: 'We advise on pay, working conditions and rights — and step in on cases where it is needed.' },
   { ikon: 'graduation-cap', tittel: 'Kurs & skolering',  tittel_en: 'Courses & training', body: 'Tilbud om kurs for medlemmer og tillitsvalgte gjennom hele året.', body_en: 'Courses for members and shop stewards throughout the year.' },
   { ikon: 'mountain', tittel: 'Medlemsfordeler',   tittel_en: 'Member benefits',   body: 'Forsikring, rabatter og leie av forbundets fjellhytter til medlemspris.', body_en: 'Insurance, discounts and rental of the union\'s mountain cabins at member prices.' },
 ];
@@ -15,7 +15,7 @@ const fordeler = [
 
 <Layout
   title="Fellesforbundet Helgeland avd. 143 — fagforening for arbeidsfolk på Helgeland"
-  description="Avdeling 143 organiserer medlemmer i industri, bygg, transport og service i hele Helgeland — fra Mo i Rana og innlandet til Helgelandskysten. Bli medlem, få juridisk hjelp, tariffavtaler og medlemsfordeler."
+  description="Avdeling 143 organiserer medlemmer i industri, bygg, transport og service i hele Helgeland — fra Mo i Rana og innlandet til Helgelandskysten. Bli medlem: råd og støtte, tariffavtaler og medlemsfordeler."
   ogImage="/images/og-default.jpg"
 >
 
@@ -30,10 +30,10 @@ const fordeler = [
             Vi står sammen — for et trygt arbeidsliv på Helgeland
           </h1>
           <p class="lead" style="max-width:54ch; margin-top:20px;"
-             data-en="Fellesforbundet branch 143 organises members in industry, construction, transport and service across all of Helgeland — from Mo i Rana and the inland out to the Helgeland coast. We negotiate pay, give legal help and stand together when it matters.">
+             data-en="Fellesforbundet branch 143 organises members in industry, construction, transport and service across all of Helgeland — from Mo i Rana and the inland out to the Helgeland coast. We negotiate pay, advise and back our members, and stand together when it matters.">
             Fellesforbundet avdeling 143 organiserer medlemmer i industri, bygg, transport og service
             i hele Helgeland — fra Mo i Rana og innlandet ut til Helgelandskysten. Vi forhandler lønn,
-            gir juridisk hjelp og står sammen når det gjelder.
+            gir råd og støtte, og står sammen når det gjelder.
           </p>
           <div class="hero-actions" style="margin-top:26px;">
             <a href={`${base}/bli-medlem`} class="btn btn-primary" data-en="Become a member today">Bli medlem i dag</a>
@@ -52,9 +52,9 @@ const fordeler = [
         </div>
       </div>
       <div class="hero-stats">
-        <div><b>160 000+</b><span data-en="members in Fellesforbundet">medlemmer i Fellesforbundet</span></div>
-        <div><b>Helgeland</b><span data-en="from inland to coast">fra innland til kyst</span></div>
-        <div><b>Avd. 143</b><span data-en="your local branch">din lokale avdeling</span></div>
+        <div><b>180 000+</b><span data-en="members in Fellesforbundet">medlemmer i Fellesforbundet</span></div>
+        <div><b>Avd. 143</b><span data-en="all of Helgeland – inland to coast">hele Helgeland – innland til kyst</span></div>
+        <div><b>Flere bransjer</b><span data-en="industry, construction, transport &amp; services">industri, bygg, transport og service</span></div>
       </div>
     </div>
   </div>
@@ -90,8 +90,8 @@ const fordeler = [
           Vi jobber for trygge ansettelser, anstendig lønn og et organisert arbeidsliv.
         </p>
         <p class="muted" style="font-size:16.5px; line-height:1.7;"
-           data-en="As a member you get access to shop stewards, legal assistance, training and a range of member benefits — including renting the union's mountain cabins at member prices.">
-          Som medlem får du tilgang til tillitsvalgtapparat, juridisk bistand, kursing og en rekke
+           data-en="As a member you get access to shop stewards, advice and support, training and a range of member benefits — including renting the union's mountain cabins at member prices.">
+          Som medlem får du tilgang til tillitsvalgtapparat, råd og støtte, kursing og en rekke
           medlemsfordeler — inkludert leie av forbundets fjellhytter til medlemspris.
         </p>
       </div>
@@ -145,22 +145,14 @@ const fordeler = [
       </div>
       <a href={`${base}/tillitsvalgte`} class="btn-link" data-en="See staff and board →">Se ansatte og styret →</a>
     </div>
-    <div class="alert alert-warn" style="margin:0 0 20px; max-width:680px;">
-      <span class="ic">!</span>
-      <div style="font-size:14px; line-height:1.6;"
-           data-en="Placeholder — staff names and photos are added when the branch provides them. This only shows the layout.">
-        Plassholder — navn og bilder på de ansatte fylles inn når avdelingen sender dem. Dette viser kun oppsettet.
-      </div>
-    </div>
     <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:16px;">
       {ANSATTE.slice(0, 4).map(a => (
         <div class="person">
-          <span class="person-avatar" aria-hidden="true" style="background:#e4e4ec; color:#6b6b76;">
-            <Icon name="user" size={20} />
-          </span>
+          <span class="person-avatar" aria-hidden="true">{a.navn.split(/\s+/).map(d => d[0]).join('').slice(0,2).toUpperCase()}</span>
           <div>
-            <b style="display:block; font-size:15px; color:var(--tekst-svak);" data-en="Name coming">Navn kommer</b>
+            <b style="display:block; font-size:15px;">{a.navn}</b>
             <span class="muted" style="font-size:13px;" data-en={a.rolle_en}>{a.rolle}</span>
+            <span class="muted" style="display:block; font-size:12.5px;">{a.sted} · {a.stilling}</span>
           </div>
         </div>
       ))}
@@ -176,8 +168,8 @@ const fordeler = [
           Alene er du en ansatt. Sammen er vi en bevegelse.
         </h2>
         <p style="color:#dcdce8; font-size:16px; margin-top:12px; max-width:48ch; line-height:1.6;"
-           data-en="Join in under five minutes. You become part of over 160,000 members in Fellesforbundet.">
-          Meld deg inn på under fem minutter. Du blir en del av over 160 000 medlemmer i Fellesforbundet.
+           data-en="Join in under five minutes. You become part of over 180,000 members in Fellesforbundet.">
+          Meld deg inn på under fem minutter. Du blir en del av over 180 000 medlemmer i Fellesforbundet.
         </p>
       </div>
       <a href={FF_LENKER.medlemskap} target="_blank" rel="noopener noreferrer" class="btn btn-primary" data-en="Become a member →">
