@@ -2,7 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 import CircleMotif from '../components/CircleMotif.astro';
 import Icon from '../components/Icon.astro';
-import { STYRE, ANSATTE, KONTROLLKOMITE, STUDIEUTVALG, KONTAKT } from '../config.ts';
+import { STYRE, ANSATTE, KONTROLLKOMITE, STUDIEUTVALG, UNGDOMSUTVALG, KONTAKT } from '../config.ts';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
 const initialer = (navn: string) =>
@@ -101,6 +101,23 @@ const verktoy = [
               <b style="display:block; font-size:15px;">{p.navn}</b>
               <span class="muted" style="font-size:13px;" data-en={p.rolle_en}>{p.rolle}</span>
               <span class="muted" style="display:block; font-size:12.5px;">{p.klubb}</span>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <!-- Ungdomsutvalg -->
+      <h3 class="h3" style="font-size:16px; margin:32px 0 14px;" data-en="Youth committee">Ungdomsutvalg</h3>
+      <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); gap:14px;">
+        {UNGDOMSUTVALG.map(p => (
+          <div class="person">
+            <span class="person-avatar" aria-hidden="true">{initialer(p.navn)}</span>
+            <div>
+              <b style="display:block; font-size:15px;">{p.navn}</b>
+              <span class="muted" style="font-size:13px;" data-en={p.rolle_en}>{p.rolle}</span>
+              {'merknad' in p && (
+                <span class="muted" style="display:block; font-size:12.5px;" data-en={(p as any).merknad_en}>{(p as any).merknad}</span>
+              )}
             </div>
           </div>
         ))}

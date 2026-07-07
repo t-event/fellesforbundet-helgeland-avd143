@@ -125,6 +125,18 @@ export const STUDIEUTVALG = [
   { navn: 'Cicilie Løkås',        sted: 'Rana' },
 ] as const;
 
+// Ungdomsutvalg. Rikke Jacobsen er ungdomssekretær ansatt 100 % i regionen
+// (ikke valgt i avdelingen) — merket med `merknad`.
+export const UNGDOMSUTVALG = [
+  { navn: 'Rikke Jacobsen',     rolle: 'Ungdomssekretær', rolle_en: 'Youth secretary', merknad: 'ansatt 100 % i regionen', merknad_en: 'employed 100 % in the region' },
+  { navn: 'Preben Astrup',      rolle: 'Leder',           rolle_en: 'Leader' },
+  { navn: 'Mathias Tustervatn', rolle: 'Nestleder',       rolle_en: 'Deputy leader' },
+  { navn: 'Anne Malm',          rolle: 'Medlem',          rolle_en: 'Member' },
+  { navn: 'Markus Faksmo',      rolle: 'Medlem',          rolle_en: 'Member' },
+  { navn: 'Ane Djønne',         rolle: 'Medlem',          rolle_en: 'Member' },
+  { navn: 'Fredrik Myrvang',    rolle: 'Medlem',          rolle_en: 'Member' },
+] as const;
+
 export const UMBUKTA = {
   kart: 'https://maps.app.goo.gl/Q8f8DPbiG6TmMtpy6',
   // Koordinater hentet fra avdelingens Google Maps-pin (kart-lenka over).
