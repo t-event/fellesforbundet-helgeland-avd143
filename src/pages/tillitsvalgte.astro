@@ -84,9 +84,14 @@ const verktoy = [
           <span class="muted" style="font-size:13.5px;" data-en={STYRE[0].rolle_en}>{STYRE[0].rolle}</span>
           <span class="muted" style="display:block; font-size:12.5px;">{STYRE[0].klubb}</span>
           <div style="font-size:13.5px; margin-top:6px;">
-            <a href={`tel:+47${KONTAKT.telefon}`} class="btn-link" style="font-size:13.5px;">{KONTAKT.telefonFormatert}</a>
+            <a href={`tel:+47${STYRE[0].tlf}`} class="btn-link" style="font-size:13.5px;">{STYRE[0].tlfFormatert}</a>
             <span class="muted"> · </span>
-            <a href={`mailto:${KONTAKT.epost}`} class="btn-link" style="font-size:13.5px;">{KONTAKT.epost}</a>
+            <a href={`mailto:${STYRE[0].epost}`} class="btn-link" style="font-size:13.5px;">{STYRE[0].epost}</a>
+          </div>
+          <div class="muted" style="font-size:12.5px; margin-top:4px;" data-en="Branch office: ">
+            Avdelingskontoret: <a href={`tel:+47${KONTAKT.telefon}`} class="btn-link" style="font-size:12.5px;">{KONTAKT.telefonFormatert}</a>
+            <span> · </span>
+            <a href={`mailto:${KONTAKT.epost}`} class="btn-link" style="font-size:12.5px;">{KONTAKT.epost}</a>
           </div>
         </div>
       </div>
