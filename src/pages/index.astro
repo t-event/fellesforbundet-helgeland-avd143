@@ -21,7 +21,7 @@ const fordeler = [
 
   <!-- HERO -->
   <div class="hero-dark">
-    <CircleMotif variant="mork" class="hero-motif" />
+    <CircleMotif variant="mork" class="hero-motif hero-motif--forside" />
     <div class="container section">
       <div class="hero-grid" style="align-items:center;">
         <div>
@@ -145,7 +145,7 @@ const fordeler = [
       </div>
       <a href={`${base}/tillitsvalgte`} class="btn-link" data-en="See staff and board →">Se ansatte og styret →</a>
     </div>
-    <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:16px;">
+    <div class="folk-grid">
       <div class="person">
         <span class="person-avatar" aria-hidden="true">{STYRE[0].navn.split(/\s+/).map(d => d[0]).join('').slice(0,2).toUpperCase()}</span>
         <div>

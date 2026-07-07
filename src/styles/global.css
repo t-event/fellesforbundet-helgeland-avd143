@@ -218,6 +218,12 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .brodsmule a:hover { color: var(--rod); }
 .brodsmule-sep { color: var(--tekst-svak); }
 .brodsmule-na { color: var(--tekst); font-weight: 600; }
+/* Folk-rutenett (ansatte/ledelse) — faste kolonner så 6 kort blir jevne rader
+   (3+3), ikke 5+1 som auto-fit kan gi. Deler jevnt: 1 / 2 / 3 kolonner. */
+.folk-grid { display: grid; grid-template-columns: 1fr; gap: 16px; }
+@media (min-width: 560px)  { .folk-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 900px)  { .folk-grid { grid-template-columns: repeat(3, 1fr); } }
+
 /* Representantskap-liste — flerkolonne så lange navnelister ikke blir én kolonne */
 .rep-liste { columns: 3 210px; column-gap: 28px; }
 .rep-liste li { break-inside: avoid; }
@@ -233,9 +239,12 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 /* Avdelingsnavn-lockup (profilhåndbok 2.1): display-font, første linje uthevet
    (heavy), andre linje regular i SAMME størrelse. Plassert UNDER FF-logoen (som
    viser «Fellesforbundet»), så avdelingsnavnet står i kortform (ikke gjentatt). */
-.brand-avd { display: flex; flex-direction: row; align-items: baseline; gap: 6px; line-height: 1.04; font-family: var(--font-display); color: #fff; white-space: nowrap; }
-.brand-avd-1 { font-weight: 700; font-size: 16px; letter-spacing: -0.01em; }
-.brand-avd-2 { font-weight: 400; font-size: 16px; letter-spacing: -0.01em; }
+/* Avdelingsnavnet flukter med ordmerket «Fellesforbundet» (ikke symbolet til
+   venstre) — innrykket tilsvarer bredden på det røde symbolet + luft. */
+.brand-avd { display: flex; flex-direction: row; align-items: baseline; gap: 6px; line-height: 1.04; font-family: var(--font-display); color: #fff; white-space: nowrap; padding-left: 50px; }
+.site-footer .brand-avd { padding-left: 45px; }
+.brand-avd-1 { font-weight: 700; font-size: 15px; letter-spacing: 0; }
+.brand-avd-2 { font-weight: 400; font-size: 15px; letter-spacing: 0; color: rgba(255,255,255,.82); }
 .nav-right { display: flex; align-items: center; gap: 16px; flex-wrap: nowrap; justify-content: flex-end; }
 .nav { display: flex; align-items: center; gap: 4px; flex-wrap: nowrap; }
 .nav a { background: transparent; color: #cfd0e0; font-weight: 600; font-size: 14px; padding: 9px 15px; border: none; border-radius: 4px; cursor: pointer; white-space: nowrap; text-decoration: none; }
@@ -256,13 +265,14 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 /* Gruppe-etikett + underpunkt i mobilmenyen */
 .nav-mobile .nav-m-label { color: var(--lysbla); font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; padding: 16px 0 6px; }
 .nav-mobile a.nav-m-sub { padding-left: 16px; font-size: 16px; }
-.lang { display: flex; background: rgba(255,255,255,.1); border-radius: 4px; padding: 3px; flex: none; }
-.lang button { display: flex; align-items: center; border: none; cursor: pointer; padding: 5px 8px; border-radius: 4px; background: transparent; }
-.lang .flag { width: 22px; height: 16px; display: block; border-radius: 2px; box-shadow: 0 0 0 1px rgba(255,255,255,.25); }
-.lang button:not(.active) .flag { opacity: .5; }
-.lang button:hover .flag { opacity: .85; }
+.lang { display: flex; gap: 2px; background: rgba(255,255,255,.1); border-radius: 4px; padding: 3px; flex: none; }
+.lang button { display: flex; align-items: center; border: none; cursor: pointer; padding: 5px 7px; border-radius: 3px; background: transparent; transition: background .12s ease; }
+/* Begge flagg fyller samme avrundede rektangel (slice, ikke forvrengt) */
+.lang .flag { width: 24px; height: 16px; display: block; border-radius: 2px; box-shadow: inset 0 0 0 1px rgba(255,255,255,.35); }
+.lang button:not(.active) .flag { opacity: .6; }
+.lang button:hover .flag { opacity: .9; }
 .lang button.active { background: #fff; }
-.lang button.active .flag { opacity: 1; }
+.lang button.active .flag { opacity: 1; box-shadow: inset 0 0 0 1px rgba(0,0,0,.12); }
 
 /* Hamburger (mobil) */
 .nav-toggle { display: none; background: none; border: none; color: #fff; cursor: pointer; padding: 8px; }
@@ -283,6 +293,10 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
    forsiden (ingen brødsmule) — der ville motivet blødd inn i headeren. */
 .brodsmule--mork ~ main .hero-dark { overflow-x: clip; overflow-y: visible; }
 .brodsmule--mork ~ main .hero-motif { top: -40px; }
+/* Brødsmula gir allerede topp-luft på undersidene — dropp heroens doble padding. */
+.brodsmule--mork ~ main .hero-dark > .container.section { padding-top: clamp(16px, 2.4vw, 26px); }
+/* Forsiden har ingen brødsmule å blø opp over — plassér motivet så det ikke kuttes. */
+.hero-motif--forside { top: 0; }
 /* Versal hero-overskrift — sterkere merkevare-trykk (fellesforbundet.no-stil).
    Litt løsere tegnavstand enn små bokstaver, som ellers blir trange i versaler. */
 .hero-dark .h1 { text-transform: uppercase; letter-spacing: -0.005em; }

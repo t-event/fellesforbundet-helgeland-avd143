@@ -322,23 +322,31 @@ const faq = [
 
     <!-- BELIGGENHET -->
     <div class="section grid grid-2" style="padding-top:0; gap:clamp(24px,4vw,44px); align-items:stretch;">
-      <div style="border-radius:4px; overflow:hidden; display:flex; flex-direction:column;">
-        <div style="flex:1; min-height:320px;">
-          <MapEmbed src={`https://www.google.com/maps?q=${UMBUKTA.lat},${UMBUKTA.lon}&hl=no&z=14&t=k&output=embed`} title="Kart til Umbukta-hytta (Google Maps)" />
+      <div style="display:flex; flex-direction:column; gap:16px;">
+        <div style="border-radius:4px; overflow:hidden; display:flex; flex-direction:column; flex:1;">
+          <div style="flex:1; min-height:300px;">
+            <MapEmbed src={`https://www.google.com/maps?q=${UMBUKTA.lat},${UMBUKTA.lon}&hl=no&z=14&t=k&output=embed`} title="Kart til Umbukta-hytta (Google Maps)" />
+          </div>
+          <div style="padding:12px 16px; background:var(--flate); border-top:1px solid var(--kantlinje);">
+            <a href={UMBUKTA.kart} target="_blank" rel="noopener noreferrer" class="btn-link" style="font-size:14px;">
+              <span data-en="Open in Google Maps ↗">Åpne i Google Maps ↗</span>
+            </a>
+            <span class="muted" style="font-size:13px; margin-left:12px;">
+              GPS: {UMBUKTA.lat}°N, {UMBUKTA.lon}°Ø
+            </span>
+          </div>
         </div>
-        <div style="padding:12px 16px; background:var(--flate); border-top:1px solid var(--kantlinje);">
-          <a
-            href={UMBUKTA.kart}
-            target="_blank"
-            rel="noopener noreferrer"
-            class="btn-link"
-            style="font-size:14px;"
-          >
-            <span data-en="Open in Google Maps ↗">Åpne i Google Maps ↗</span>
-          </a>
-          <span class="muted" style="font-size:13px; margin-left:12px;">
-            GPS: {UMBUKTA.lat}°N, {UMBUKTA.lon}°Ø
-          </span>
+        <!-- Naustet med båten (eget satellittkart) -->
+        <div style="border-radius:4px; overflow:hidden; display:flex; flex-direction:column;">
+          <div style="min-height:200px;">
+            <MapEmbed src={`https://www.google.com/maps?q=${UMBUKTA.naustLat},${UMBUKTA.naustLon}&hl=no&z=17&t=k&output=embed`} title="Kart til naustet med båt (Google Maps)" />
+          </div>
+          <div style="padding:12px 16px; background:var(--flate); border-top:1px solid var(--kantlinje); display:flex; align-items:baseline; gap:12px; flex-wrap:wrap;">
+            <b style="font-size:13.5px;" data-en="Boathouse with boat">Naust med båt</b>
+            <a href={UMBUKTA.naustKart} target="_blank" rel="noopener noreferrer" class="btn-link" style="font-size:14px;">
+              <span data-en="Open in Google Maps ↗">Åpne i Google Maps ↗</span>
+            </a>
+          </div>
         </div>
       </div>
       <div class="card card-pad">
