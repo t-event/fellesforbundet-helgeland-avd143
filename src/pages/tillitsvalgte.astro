@@ -107,7 +107,7 @@ const verktoy = [
             <div>
               <b style="display:block; font-size:15px;">{p.navn}</b>
               <span class="muted" style="font-size:13px;" data-en={p.rolle_en}>{p.rolle}</span>
-              <span class="muted" style="display:block; font-size:12.5px;">{p.klubb}</span>
+              {p.klubb && <span class="muted" style="display:block; font-size:12.5px;">{p.klubb}</span>}
             </div>
           </div>
         ))}

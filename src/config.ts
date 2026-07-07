@@ -97,7 +97,7 @@ export const STYRE = [
   { navn: 'Tommy Rannov Nystad',          rolle: 'Leder',              rolle_en: 'Leader',              klubb: 'Rana FOB', epost: 'tommy.nystad@fellesforbundet.org', tlf: '90158622', tlfFormatert: '901 58 622' },
   { navn: 'Kjell Arne Olsen',             rolle: 'Nestleder',          rolle_en: 'Deputy leader',       klubb: 'Rana Industri' },
   { navn: 'Roger Eugen Ranfjordnes',      rolle: 'Sekretær',           rolle_en: 'Secretary',           klubb: 'Rana Industri' },
-  { navn: 'Linn Amalie Hansen',           rolle: 'Ungdomsleder',       rolle_en: 'Youth leader',        klubb: 'Rana Riks' },
+  { navn: 'Preben Astrup',                rolle: 'Ungdomsleder',       rolle_en: 'Youth leader',        klubb: '' },
   { navn: 'Mathias Erlandsen Tustervatn', rolle: 'Nestungdomsleder',   rolle_en: 'Deputy youth leader', klubb: 'Rana Industri' },
   { navn: 'Arnt Ove Kirknes',             rolle: 'Styremedlem',        rolle_en: 'Board member',        klubb: 'Grane – Byggeindustrien' },
   { navn: 'Ann Kristin Sletvold',         rolle: 'Styremedlem',        rolle_en: 'Board member',        klubb: 'Brønnøy – Riksavtalen' },
