@@ -175,8 +175,8 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .nav-shortcuts a:hover { color: #fff; }
 .nav-shortcuts a.active { background: var(--rod); color: #fff; }
 /* Meny-knapp: blå (lys blå) når lukket, rød når åpen (bruker ba om dette). */
-.meny-btn { display: inline-flex; align-items: center; gap: 8px; background: var(--lysbla); color: var(--morkbla); border: 1px solid transparent; border-radius: var(--radius-pill); padding: 9px 16px; font-weight: 700; font-size: 14px; font-family: inherit; cursor: pointer; white-space: nowrap; transition: background .12s ease, color .12s ease; }
-.meny-btn:hover { background: #aec6fb; }
+.meny-btn { display: inline-flex; align-items: center; gap: 8px; background: var(--lysgronn); color: var(--morkbla); border: 1px solid transparent; border-radius: var(--radius-pill); padding: 9px 16px; font-weight: 700; font-size: 14px; font-family: inherit; cursor: pointer; white-space: nowrap; transition: background .12s ease, color .12s ease; }
+.meny-btn:hover { background: #b6c795; }
 /* «Meny» veksler til rød «Lukk» når megamenyen er åpen (aria-expanded) */
 .meny-btn .meny-ic-lukk, .meny-btn .meny-txt-lukk { display: none; }
 .meny-btn[aria-expanded="true"] { background: var(--rod); border-color: var(--rod); color: #fff; }
@@ -186,7 +186,8 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .meny-btn[aria-expanded="true"] .meny-txt-lukk { display: inline; }
 
 /* Megameny — hvit flerkolonne-meny (fellesforbundet.no), åpnes av «Meny». */
-.megameny { display: none; position: fixed; inset: var(--header-h, 104px) 0 0 0; background: #fff; color: var(--morkbla); z-index: 49; overflow-y: auto; padding: clamp(28px, 4vw, 48px) 0; }
+/* Absolutt (ikke fixed) → menyen henger på siden og scrolles bort som toppen. */
+.megameny { display: none; position: absolute; top: var(--header-h, 104px); left: 0; right: 0; background: #fff; color: var(--morkbla); z-index: 49; padding: clamp(28px, 4vw, 48px) 0; border-bottom: 3px solid var(--rod); box-shadow: 0 18px 30px rgba(26,24,54,.14); }
 .megameny.open { display: block; }
 .megameny-inner { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: clamp(28px, 4vw, 44px) 32px; align-items: start; }
 .megameny-tittel { font-family: var(--font-display); font-weight: 700; font-size: 19px; color: var(--morkbla); }
@@ -196,19 +197,39 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .megameny-lenker a:hover { color: var(--rod); }
 .megameny-lenker a.active { color: var(--rod); font-weight: 700; }
 
-/* Brødsmule — «Forsiden / [side]» på undersider (fellesforbundet.no) */
-.brodsmule { background: var(--flate); border-bottom: 1px solid var(--kantlinje); }
-.brodsmule .container { display: flex; align-items: center; gap: 9px; padding-top: 11px; padding-bottom: 11px; font-size: 13.5px; }
+/* Ekstern-lenke-varsel (modal) — vises før man forlater avdelingens side */
+.ext-modal { position: fixed; inset: 0; z-index: 200; display: none; align-items: center; justify-content: center; padding: 20px; }
+.ext-modal.open { display: flex; }
+.ext-modal-overlay { position: absolute; inset: 0; background: rgba(26,24,54,.55); }
+.ext-modal-box { position: relative; background: #fff; border-radius: var(--radius); max-width: 460px; width: 100%; padding: clamp(26px, 4vw, 34px); box-shadow: 0 24px 60px rgba(26,24,54,.35); }
+.ext-modal-ic { width: 46px; height: 46px; border-radius: 4px; background: #fbeceb; color: var(--rod); display: flex; align-items: center; justify-content: center; margin-bottom: 16px; }
+.ext-modal-box h2 { font-family: var(--font-display); font-weight: 700; font-size: 21px; color: var(--morkbla); margin: 0 0 8px; }
+.ext-modal-box p { font-size: 15px; color: var(--tekst-dempet); line-height: 1.55; margin: 0 0 10px; }
+.ext-host { display: block; font-family: var(--font-display); font-size: 17px; color: var(--morkbla); word-break: break-all; padding: 12px 14px; background: var(--flate); border: 1px solid var(--kantlinje); border-radius: 4px; }
+.ext-actions { display: flex; gap: 12px; margin-top: 22px; flex-wrap: wrap; }
+.ext-actions .btn { flex: 1 1 auto; justify-content: center; }
+
+/* Brødsmule — «Forsiden / [side]» på undersider (fellesforbundet.no).
+   Bakgrunnen matcher seksjonen rett under: gjennomsiktig (= hvit) på lyse sider,
+   og navy m/hvit tekst (.brodsmule--mork) der siden åpner med mørk hero. */
+.brodsmule { background: transparent; }
+.brodsmule .container { display: flex; align-items: center; gap: 9px; padding-top: 12px; padding-bottom: 12px; font-size: 13.5px; }
 .brodsmule a { color: var(--tekst-dempet); text-decoration: none; }
 .brodsmule a:hover { color: var(--rod); }
 .brodsmule-sep { color: var(--tekst-svak); }
 .brodsmule-na { color: var(--tekst); font-weight: 600; }
-.brand { display: flex; align-items: center; gap: 10px; background: none; border: none; cursor: pointer; padding: 0; color: inherit; text-decoration: none; }
+/* Mørk variant — brødsmula legger seg oppå den mørke heroen (sømløst). */
+.brodsmule--mork { background: var(--morkbla); }
+.brodsmule--mork a { color: rgba(255,255,255,.72); }
+.brodsmule--mork a:hover { color: #fff; }
+.brodsmule--mork .brodsmule-sep { color: rgba(255,255,255,.4); }
+.brodsmule--mork .brodsmule-na { color: #fff; }
+.brand { display: flex; flex-direction: column; align-items: flex-start; gap: 6px; background: none; border: none; cursor: pointer; padding: 0; color: inherit; text-decoration: none; }
 .brand-logo { height: 40px; width: auto; display: block; }
 /* Avdelingsnavn-lockup (profilhåndbok 2.1): display-font, første linje uthevet
-   (heavy), andre linje regular i SAMME størrelse. FF-logoen viser allerede
-   «Fellesforbundet», så avdelingsnavnet står i kortform (ikke gjentatt). */
-.brand-avd { display: flex; flex-direction: column; line-height: 1.06; font-family: var(--font-display); color: #fff; padding-left: 13px; margin-left: 13px; border-left: 1px solid rgba(255,255,255,.28); white-space: nowrap; }
+   (heavy), andre linje regular i SAMME størrelse. Plassert UNDER FF-logoen (som
+   viser «Fellesforbundet»), så avdelingsnavnet står i kortform (ikke gjentatt). */
+.brand-avd { display: flex; flex-direction: column; line-height: 1.04; font-family: var(--font-display); color: #fff; white-space: nowrap; }
 .brand-avd-1 { font-weight: 700; font-size: 16px; letter-spacing: -0.01em; }
 .brand-avd-2 { font-weight: 400; font-size: 16px; letter-spacing: -0.01em; }
 .nav-right { display: flex; align-items: center; gap: 16px; flex-wrap: nowrap; justify-content: flex-end; }
@@ -252,6 +273,12 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 /* ── Hero ────────────────────────────────────────────────────── */
 .hero-dark { background: linear-gradient(180deg, var(--morkbla) 0%, #221f43 100%); color: #fff; position: relative; overflow: hidden; }
 .hero-dark .container { position: relative; z-index: 1; }
+/* På sider med mørk (navy) brødsmule er brødsmula samme farge som heroen, så
+   sirkelmotivet kan blø opp over den uten synlig kutt på de øverste sirklene.
+   overflow-x: clip hindrer horisontal scroll fra bleed mot høyre. Gjelder ikke
+   forsiden (ingen brødsmule) — der ville motivet blødd inn i headeren. */
+.brodsmule--mork ~ main .hero-dark { overflow-x: clip; overflow-y: visible; }
+.brodsmule--mork ~ main .hero-motif { top: -40px; }
 /* Versal hero-overskrift — sterkere merkevare-trykk (fellesforbundet.no-stil).
    Litt løsere tegnavstand enn små bokstaver, som ellers blir trange i versaler. */
 .hero-dark .h1 { text-transform: uppercase; letter-spacing: -0.005em; }

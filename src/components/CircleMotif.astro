@@ -3,7 +3,7 @@
 // (rutenett av sirkler i merkefarger). Rent dekorativt, derfor aria-hidden.
 // Variant styrer paletten så motivet passer bakgrunnen det ligger på.
 interface Props {
-  variant?: 'mork' | 'lys' | 'gronn';
+  variant?: 'mork' | 'mork-rod' | 'mork-gul' | 'mork-bla' | 'mork-oransje' | 'lys' | 'gronn';
   class?: string;
 }
 const { variant = 'mork', class: klass = '' } = Astro.props;
@@ -19,9 +19,15 @@ const sentre = [
 // ÉN primærfarge dominant, hvit som nøytral fyll, primær-aksenter — aldri en
 // sekundærfarge (beige/gul/rosa …) som hovedfarge. Maks 5 farger per oppsett.
 // Primærfarger: mørk blå #1A1836, rød #CF0000, grå #E9E9E9, lys grønn #C4D3A4.
+// Som fellesforbundet.no: samme motiv, men ulik primærfarge-dominans per side.
+// Hver palett = ÉN primærfarge dominant (×3), hvit nøytral (×2), én aksent (×1).
 const paletter: Record<string, string[]> = {
-  // På mørk bakgrunn: lys grønn (primær) dominant + hvit nøytral + rød aksent.
-  mork:  ['var(--lysgronn)', 'var(--hvit)', 'var(--lysgronn)', 'var(--hvit)', 'var(--rod)', 'var(--lysgronn)'],
+  // — Mørk hero. Aksentfargen varierer per side, men dominant er alltid primær —
+  mork:         ['var(--lysgronn)', 'var(--hvit)', 'var(--lysgronn)', 'var(--hvit)',    'var(--rod)',     'var(--lysgronn)'], // grønn dom. + rød
+  'mork-rod':   ['var(--rod)',      'var(--hvit)', 'var(--rod)',      'var(--lysgronn)', 'var(--rod)',     'var(--hvit)'],     // rød dom. + grønn
+  'mork-gul':   ['var(--lysgronn)', 'var(--hvit)', 'var(--lysgronn)', 'var(--gul)',      'var(--lysgronn)', 'var(--hvit)'],    // grønn dom. + gul (sek.)
+  'mork-bla':   ['var(--lysgronn)', 'var(--hvit)', 'var(--lysbla)',   'var(--lysgronn)', 'var(--hvit)',    'var(--lysgronn)'], // grønn dom. + lys blå (sek.)
+  'mork-oransje':['var(--rod)',     'var(--hvit)', 'var(--rod)',      'var(--oransje)',  'var(--hvit)',    'var(--rod)'],      // rød dom. + oransje (sek.)
   // På hvit/lys bakgrunn: lys grønn (primær) dominant + rød/mørk blå aksenter.
   lys:   ['var(--lysgronn)', 'var(--rod)', 'var(--lysgronn)', 'var(--morkbla)', 'var(--lysgronn)', 'var(--lysgronn)'],
   // På grønt band: hvit nøytral dominant + rød + mørk blå (primær) — som håndbokas nettside.

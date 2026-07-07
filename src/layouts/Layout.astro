@@ -49,6 +49,13 @@ const sideNavn: Record<string, { no: string; en: string }> = {
   'takk':            { no: 'Takk',                en: 'Thank you' },
 };
 const brodsmule = sideNavn[sti];
+// Sider som åpner med mørk hero (eller bildehero) → navy brødsmule m/hvit tekst,
+// så den smelter sammen med seksjonen under. Øvrige sider er lyse (gjennomsiktig).
+const morkeHero = new Set([
+  'bli-medlem', 'lonn-tariff', 'tillitsvalgte', 'aktuelt',
+  'om-oss', 'kontakt', 'hytter', 'turtips', 'umbukta',
+]);
+const brodsmuleMork = morkeHero.has(sti);
 ---
 <!doctype html>
 <html lang={lang}>
@@ -120,7 +127,7 @@ const brodsmule = sideNavn[sti];
   <a class="skip-link" href="#main-content" data-en="Skip to content">Hopp til innhold</a>
   <Header />
   {brodsmule && (
-    <nav class="brodsmule" aria-label="Du er her">
+    <nav class={`brodsmule${brodsmuleMork ? ' brodsmule--mork' : ''}`} aria-label="Du er her">
       <div class="container">
         <a href={`${base}/`} data-en="Home">Forsiden</a>
         <span class="brodsmule-sep" aria-hidden="true">/</span>
@@ -133,6 +140,23 @@ const brodsmule = sideNavn[sti];
   </main>
   <Footer />
   <CookieConsent />
+
+  <!-- Varsel før man forlater avdelingens nettside til en ekstern side -->
+  <div class="ext-modal" id="ext-modal" role="dialog" aria-modal="true" aria-labelledby="ext-tittel" aria-describedby="ext-tekst">
+    <div class="ext-modal-overlay" aria-hidden="true"></div>
+    <div class="ext-modal-box">
+      <div class="ext-modal-ic" aria-hidden="true">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+      </div>
+      <h2 id="ext-tittel" data-en="You are leaving our website">Du forlater avdelingens nettside</h2>
+      <p id="ext-tekst" data-en="You are being sent to an external website that the branch does not control:">Du sendes nå til en ekstern nettside som avdelingen ikke har kontroll over:</p>
+      <strong class="ext-host" id="ext-host"></strong>
+      <div class="ext-actions">
+        <button type="button" class="btn btn-primary" id="ext-go" data-en="Continue to the site">Fortsett til siden</button>
+        <button type="button" class="btn btn-secondary" id="ext-cancel" data-en="Cancel">Avbryt</button>
+      </div>
+    </div>
+  </div>
 
   <!-- Språkbytte-skript (initialiseres fra lagret localStorage-preferanse) -->
   <script>
@@ -218,6 +242,51 @@ const brodsmule = sideNavn[sti];
     });
     navMobile?.querySelectorAll('a').forEach(a => a.addEventListener('click', lukkMeny));
     document.addEventListener('keydown', (e) => { if (e.key === 'Escape') lukkMeny(); });
+  </script>
+
+  <!-- Ekstern-lenke-varsel: fang klikk på lenker til andre domener og bekreft først -->
+  <script>
+    (function () {
+      const modal   = document.getElementById('ext-modal');
+      const hostEl  = document.getElementById('ext-host');
+      const goBtn   = document.getElementById('ext-go') as HTMLButtonElement | null;
+      const cancel  = document.getElementById('ext-cancel');
+      const overlay = modal?.querySelector('.ext-modal-overlay');
+      let pending: { url: string; nyFane: boolean } | null = null;
+
+      function erEkstern(a: HTMLAnchorElement): boolean {
+        const href = a.getAttribute('href') || '';
+        if (/^(mailto:|tel:|#|javascript:)/i.test(href)) return false;
+        let u: URL;
+        try { u = new URL(a.href, location.href); } catch { return false; }
+        if (u.protocol !== 'http:' && u.protocol !== 'https:') return false;
+        return u.hostname !== location.hostname;
+      }
+
+      function lukk() { modal?.classList.remove('open'); pending = null; }
+
+      document.addEventListener('click', (e) => {
+        const t = e.target as HTMLElement;
+        const a = t.closest?.('a[href]') as HTMLAnchorElement | null;
+        if (!a || !erEkstern(a)) return;
+        e.preventDefault();
+        pending = { url: a.href, nyFane: a.target === '_blank' };
+        if (hostEl) hostEl.textContent = new URL(a.href).hostname.replace(/^www\./, '');
+        modal?.classList.add('open');
+        goBtn?.focus();
+      });
+
+      goBtn?.addEventListener('click', () => {
+        if (!pending) return;
+        const { url, nyFane } = pending;
+        lukk();
+        if (nyFane) window.open(url, '_blank', 'noopener');
+        else location.href = url;
+      });
+      cancel?.addEventListener('click', lukk);
+      overlay?.addEventListener('click', lukk);
+      document.addEventListener('keydown', (e) => { if (e.key === 'Escape') lukk(); });
+    })();
   </script>
 </body>
 </html>
