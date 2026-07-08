@@ -166,13 +166,21 @@ if (icsBtn && isIsoDato(fra) && isIsoDato(til)) {
   icsBtn.style.display = '';
   icsBtn.addEventListener('click', () => {
     const dt = (s) => s.replace(/-/g, '');
+    // DTEND er EKSKLUSIV for heldags-hendelser (VALUE=DATE) — den peker på dagen
+    // ETTER siste dag. Legg til én dag på sluttdatoen så perioden vises til og med
+    // utsjekksdatoen (f.eks. 20.–26. juli, ikke 20.–25.).
+    const dtEksklusiv = (s) => {
+      const d = new Date(s + 'T00:00:00Z');
+      d.setUTCDate(d.getUTCDate() + 1);
+      return dt(d.toISOString().slice(0, 10));
+    };
     const stamp = new Date().toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
     const uid = (ref || 'umbukta-' + dt(fra)).replace(/[^A-Za-z0-9-]/g, '') + '@ffh143.no';
     const desc = icsTekst(`Betalingsreferanse: ${ref || '-'}. Kontonr: ${KONTONUMMER}.` + (sum ? ` Belop: ${sum} kr.` : ''));
     const ics = [
       'BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//FFH avd 143//Hytte Umbukta//NO', 'CALSCALE:GREGORIAN',
       'BEGIN:VEVENT', `UID:${uid}`, `DTSTAMP:${stamp}`,
-      `DTSTART;VALUE=DATE:${dt(fra)}`, `DTEND;VALUE=DATE:${dt(til)}`,
+      `DTSTART;VALUE=DATE:${dt(fra)}`, `DTEND;VALUE=DATE:${dtEksklusiv(til)}`,
       'SUMMARY:Hytte i Umbukta — Fellesforbundet Helgeland',
       `DESCRIPTION:${desc}`, 'LOCATION:Umbukta', 'END:VEVENT', 'END:VCALENDAR',
     ].join('\r\n');
