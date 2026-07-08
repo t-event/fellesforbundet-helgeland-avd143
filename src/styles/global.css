@@ -639,10 +639,9 @@ textarea.input { resize: vertical; min-height: 110px; }
 .person-avatar { flex: none; width: 46px; height: 46px; border-radius: 50%; background: var(--morkbla); color: #fff; font-weight: 800; font-size: 15px; display: flex; align-items: center; justify-content: center; }
 /* Region-variant (ungdomssekretær) — mørkt kort som skiller henne fra avdelingens
    valgte/ansatte. Samme størrelse som øvrige kort, men navy bakgrunn. */
-.person--region { background: var(--morkbla); border-color: var(--morkbla); }
-.person--region b { color: #fff; }
-.person--region .muted { color: rgba(255,255,255,.72); }
-.person--region .person-avatar { background: var(--lysgronn); color: var(--morkbla); }
+/* Ungdomssekretær (regionansatt) — litt mørkere grå enn de andre kortene, så hun
+   skiller seg fra avdelingens valgte, men ikke like sterkt som en mørk boks. */
+.person--region { background: #e6e7ec; border-color: #d7d9e0; }
 
 /* CTA-band */
 .cta-band { background: linear-gradient(135deg, var(--morkbla) 0%, #2a2657 100%); border-radius: 4px; padding: clamp(32px, 5vw, 56px); display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 28px; }

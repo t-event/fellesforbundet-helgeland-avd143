@@ -171,8 +171,8 @@ export const UNGDOMSSEKRETAR = {
   navn: 'Rikke Jacobsen',
   rolle: 'Ungdomssekretær',
   rolle_en: 'Youth secretary',
-  merknad: 'ansatt 100 % i regionen — ikke medlem av utvalget',
-  merknad_en: 'employed 100 % in the region — not a committee member',
+  merknad: 'ansatt 100 % i regionen',
+  merknad_en: 'employed 100 % in the region',
 } as const;
 
 export const UMBUKTA = {
