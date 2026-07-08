@@ -67,8 +67,8 @@ export const translations = {
     cal_ledig: 'Ledig',
     cal_opptatt: 'Opptatt',
     cal_valgt: 'Valgt',
-    cal_lodd: 'Loddtrekning',
-    cal_note: 'Gule dager = påske (loddtrekning). Kalender oppdateres ca. én gang i timen.',
+    cal_lodd: 'Påskeloddtrekning',
+    cal_note: 'Gule dager = påskeloddtrekning. Kalender oppdateres ca. én gang i timen.',
 
     // Kvittering
     takk_title: 'Takk for din forespørsel!',
@@ -173,8 +173,8 @@ export const translations = {
     cal_ledig: 'Available',
     cal_opptatt: 'Booked',
     cal_valgt: 'Selected',
-    cal_lodd: 'Lottery',
-    cal_note: 'Yellow days = Easter (lottery allocation). Calendar updates approximately once per hour.',
+    cal_lodd: 'Easter draw',
+    cal_note: 'Yellow days = Easter draw. Calendar updates approximately once per hour.',
 
     takk_title: 'Thank you for your request!',
     takk_lead: 'We have received your request for the Umbukta cabin. The office will review it and contact you by email.',

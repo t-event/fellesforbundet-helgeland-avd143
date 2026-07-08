@@ -21,16 +21,16 @@
     <span><span class="swatch" style="background:#fff; border:1px solid var(--kantlinje);"></span><span data-i18n="cal_ledig">Ledig</span></span>
     <span><span class="swatch" style="background:var(--rosa);"></span><span data-i18n="cal_opptatt">Opptatt</span></span>
     <span><span class="swatch" style="background:var(--rod);"></span><span data-i18n="cal_valgt">Valgt</span></span>
-    <span><span class="swatch" style="background:var(--gul);"></span><span data-i18n="cal_lodd">Loddtrekning</span></span>
+    <span><span class="swatch" style="background:var(--gul);"></span><span data-i18n="cal_lodd">Påskeloddtrekning</span></span>
   </div>
   <p class="cal-note" data-i18n="cal_note">
-    Gule dager = påske (loddtrekning). Kalender oppdateres ca. én gang i timen.
+    Gule dager = påskeloddtrekning. Kalender oppdateres ca. én gang i timen.
   </p>
   <p id="cal-lodd-melding" class="cal-lodd-melding" role="status" aria-live="polite" style="display:none;"></p>
 </div>
 
 <script>
-import { getRelevantEaster, isEasterSectionVisible } from '../utils/easter.ts';
+import { getRelevantEaster, isEasterSectionVisible, getEasterPeriods, getEasterDatesRange } from '../utils/easter.ts';
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
@@ -40,7 +40,9 @@ interface Availability {
 }
 
 let availability: Availability = { lastUpdated: '', bookedDates: [] };
-let easterDates: Set<string> = new Set();
+// Map(ISO-dato → påskeår). Dekker alle år framover, så gule dager vises uansett
+// hvor langt fram i kalenderen man blar, og vi vet hvilket år en dato hører til.
+let easterDates: Map<string, number> = new Map();
 
 // Datoer valgt av bruker (for booking-skjema)
 let selectedFrom: string | null = null;
@@ -176,19 +178,22 @@ function renderCalendar() {
   });
 }
 
-// Info-melding for gule (loddtrekning) dager når påmelding ikke er åpnet ennå.
+// Info-melding for gule (påskeloddtrekning) dager når påmelding for DET året
+// ikke er åpnet ennå. Meldingen bruker det klikkede årets åpningsdato.
 let loddMeldingVist = false;
-function visLoddMelding(now: Date) {
+let loddMeldingAar = 0;
+function visLoddMelding(aar: number) {
   const el = document.getElementById('cal-lodd-melding');
   if (!el) return;
-  const ep = getRelevantEaster(now);
+  const ep = getEasterPeriods(aar);
   const dato = ep.registrationStart.toLocaleDateString(erEn() ? 'en-GB' : 'nb-NO',
     { day: 'numeric', month: 'long', year: 'numeric' });
   el.textContent = erEn()
-    ? `The Easter draw is not open yet. Registration for ${ep.year} opens ${dato}.`
-    : `Loddtrekningen er ikke åpen ennå. Påmelding for ${ep.year} åpner ${dato}.`;
+    ? `The Easter draw for ${aar} is not open yet — registration opens ${dato}.`
+    : `Påskeloddtrekningen for ${aar} er ikke åpen ennå — påmelding åpner ${dato}.`;
   el.style.display = '';
   loddMeldingVist = true;
+  loddMeldingAar = aar;
 }
 function skjulLoddMelding() {
   const el = document.getElementById('cal-lodd-melding');
@@ -198,16 +203,16 @@ function skjulLoddMelding() {
 
 function handleDayClick(iso: string) {
   if (easterDates.has(iso)) {
+    const aar = easterDates.get(iso)!;
     const now = new Date();
-    if (isEasterSectionVisible(now)) {
-      // Loddtrekning-seksjonen er synlig (påmelding åpen, eller frist passert med
-      // beskjed i seksjonen) — scroll dit.
+    const relevant = getRelevantEaster(now);
+    // Er påmeldingsskjemaet oppe for NETTOPP dette året? (skjemaet gjelder alltid
+    // det kommende året) → scroll dit. Ellers: fortell når DETTE årets påmelding åpner.
+    if (aar === relevant.year && isEasterSectionVisible(now)) {
       skjulLoddMelding();
       document.getElementById('paske-seksjon')?.scrollIntoView({ behavior: 'smooth' });
     } else {
-      // Påmelding er ikke åpnet ennå (seksjonen er skjult) — fortell når den åpner,
-      // så et klikk på en gul dag ikke bare scroller til et kollapset element.
-      visLoddMelding(now);
+      visLoddMelding(aar);
     }
     return;
   }
@@ -305,8 +310,9 @@ async function init() {
     if (res.ok) availability = await res.json();
   } catch { /* Faller tilbake til tom liste */ }
 
-  const ep = getRelevantEaster(new Date());
-  easterDates = new Set(ep.allDates);
+  // Marker påskedatoer fra det relevante (kommende) året og 10 år fram.
+  const startAar = getRelevantEaster(new Date()).year;
+  easterDates = getEasterDatesRange(startAar, startAar + 10);
 
   renderCalendar();
   oppdaterNesteLedige();
@@ -319,6 +325,6 @@ document.querySelectorAll('.lang button').forEach(b =>
   b.addEventListener('click', () => setTimeout(() => {
     renderCalendar();
     oppdaterNesteLedige();
-    if (loddMeldingVist) visLoddMelding(new Date()); // hold meldingen i valgt språk
+    if (loddMeldingVist) visLoddMelding(loddMeldingAar); // hold meldingen i valgt språk
   }, 0)));
 </script>

@@ -12,10 +12,10 @@ const fakta = [
 ];
 
 const hvaViGjor = [
-  { ikon: 'handshake', tittel: 'Forhandler lønn og tariff', tittel_en: 'Negotiate pay and agreements', body: 'Vi forhandler tariffavtaler og sikrer ordnede lønns- og arbeidsvilkår.', body_en: 'We negotiate collective agreements and secure proper pay and working conditions.' },
-  { ikon: 'scale', tittel: 'Støtter i arbeidssaker', tittel_en: 'Support in workplace cases', body: 'Vi gir råd og støtte om oppsigelse, lønn og rettigheter — og vurderer den enkelte saken.', body_en: 'We advise and support on dismissal, pay and rights — assessing each case.' },
-  { ikon: 'graduation-cap', tittel: 'Skolerer medlemmer', tittel_en: 'Train members', body: 'Kurs og opplæring for medlemmer og tillitsvalgte gjennom hele året.', body_en: 'Courses and training for members and shop stewards all year round.' },
-  { ikon: 'mountain', tittel: 'Tilbyr medlemsfordeler', tittel_en: 'Offer member benefits', body: 'Forsikring, rabatter og leie av forbundets fjellhytter til medlemspris.', body_en: 'Insurance, discounts and rental of the union\'s mountain cabins at member prices.' },
+  { ikon: 'handshake', href: '/lonn-tariff', tittel: 'Forhandler lønn og tariff', tittel_en: 'Negotiate pay and agreements', body: 'Vi forhandler tariffavtaler og sikrer ordnede lønns- og arbeidsvilkår.', body_en: 'We negotiate collective agreements and secure proper pay and working conditions.' },
+  { ikon: 'scale', href: '/tillitsvalgte', tittel: 'Støtter i arbeidssaker', tittel_en: 'Support in workplace cases', body: 'Vi gir råd og støtte om oppsigelse, lønn og rettigheter — og vurderer den enkelte saken.', body_en: 'We advise and support on dismissal, pay and rights — assessing each case.' },
+  { ikon: 'graduation-cap', href: '/nyttige-lenker', tittel: 'Skolerer medlemmer', tittel_en: 'Train members', body: 'Kurs og opplæring for medlemmer og tillitsvalgte gjennom hele året.', body_en: 'Courses and training for members and shop stewards all year round.' },
+  { ikon: 'mountain', href: '/hytter', tittel: 'Tilbyr medlemsfordeler', tittel_en: 'Offer member benefits', body: 'Forsikring, rabatter og leie av forbundets fjellhytter til medlemspris.', body_en: 'Insurance, discounts and rental of the union\'s mountain cabins at member prices.' },
 ];
 ---
 <Layout
@@ -78,11 +78,13 @@ const hvaViGjor = [
       <h2 class="h2" style="margin:6px 0 32px;" data-en="For our members">For medlemmene våre</h2>
       <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:18px;">
         {hvaViGjor.map(h => (
-          <div class="benefit">
+          <a href={`${base}${h.href}`} class="benefit benefit-link">
             <span class="benefit-ic" aria-hidden="true"><Icon name={h.ikon} size={22} /></span>
-            <h3 class="h3" style="font-size:18px; margin-bottom:6px;" data-en={h.tittel_en}>{h.tittel}</h3>
+            <h3 class="h3" style="font-size:18px; margin-bottom:6px; display:flex; align-items:center; gap:6px;" data-en={h.tittel_en}>
+              {h.tittel}<span class="benefit-pil" aria-hidden="true">→</span>
+            </h3>
             <p class="muted" style="font-size:14.5px; line-height:1.6;" data-en={h.body_en}>{h.body}</p>
-          </div>
+          </a>
         ))}
       </div>
     </div>

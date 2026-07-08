@@ -165,14 +165,15 @@ export const UNGDOMSUTVALG = [
   { navn: 'Fredrik Myrvang',    rolle: 'Medlem',    rolle_en: 'Member' },
 ] as const;
 
-// Ungdomssekretær — regionansatt (100 %), støtter ungdomsutvalget men er ikke
-// valgt medlem. Vises i eget felt under ungdomsutvalget.
+// Regional ungdomssekretær (valgt i Region Nord-Norge) — støtter ungdomsutvalget
+// og har kontorplass hos avdelingen, men er ikke valgt i selve avdelingen.
+// Vises i eget felt under ungdomsutvalget.
 export const UNGDOMSSEKRETAR = {
   navn: 'Rikke Jacobsen',
-  rolle: 'Ungdomssekretær',
-  rolle_en: 'Youth secretary',
-  merknad: 'ansatt 100 % i regionen',
-  merknad_en: 'employed 100 % in the region',
+  rolle: 'Regional ungdomssekretær',
+  rolle_en: 'Regional youth secretary',
+  merknad: 'Region Nord-Norge',
+  merknad_en: 'Northern Norway region',
 } as const;
 
 export const UMBUKTA = {

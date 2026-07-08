@@ -86,6 +86,17 @@ export function getEasterPeriods(year: number): EasterPeriods {
   };
 }
 
+// Alle påske-/loddtrekningsdatoer for et spenn av år → Map(dato → år).
+// Brukes til å markere gule dager i kalenderen for ALLE år framover, og til å
+// vite hvilket år en klikket dato hører til (for riktig åpnings-melding).
+export function getEasterDatesRange(fromYear: number, toYear: number): Map<string, number> {
+  const m = new Map<string, number>();
+  for (let y = fromYear; y <= toYear; y++) {
+    for (const iso of getEasterPeriods(y).allDates) m.set(iso, y);
+  }
+  return m;
+}
+
 // Returnerer påskeperiodene som er relevante å vise nå (inneværende eller neste år).
 // Prioriterer neste år hvis vi er etter påske i inneværende år.
 export function getRelevantEaster(now: Date = new Date()): EasterPeriods {
