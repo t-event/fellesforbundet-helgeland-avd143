@@ -100,7 +100,7 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 
 /* ── Layout ──────────────────────────────────────────────────── */
 .container { max-width: var(--maks-bredde); margin: 0 auto; padding: 0 24px; }
-.section    { padding: clamp(44px, 6vw, 72px) 0; }
+.section    { padding: clamp(40px, 5vw, 60px) 0; }
 .grid       { display: grid; gap: 24px; }
 .cols-auto  { grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); }
 /* Eksplisitt 2-kolonners grid. Egen klasse (ikke [style*="1fr 1fr"]) så det

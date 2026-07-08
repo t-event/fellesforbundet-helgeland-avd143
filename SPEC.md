@@ -349,6 +349,32 @@ Nettsiden har ingen admin-del. Etter mottatt e-postforespørsel:
 
 CSS-variabler, komponent-stilene og layout følger design-HTML nøyaktig.
 
+## 18. As-built — tillegg etter go-live
+
+Endringer og tillegg utover opprinnelig spec:
+
+- **Tillitsvalgte-siden** viser nå avdelingens organer med reelle navn/verv (fra
+  `src/config.ts`): `ANSATTE` (m/Tommy som leder–daglig drift), `STYRE` (leder,
+  nestleder, sekretær, ungdomsledelse + styremedlemmer m/klubb), `UNGDOMSUTVALG`
+  + `UNGDOMSSEKRETAR` (mørkt «region»-kort, ikke valgt/ansatt i avdelingen),
+  `REPRESENTANTSKAP` (uten varamedlemmer), `KONTROLLKOMITE`, `VALGKOMITE`.
+- **Header**: to-rads header m/topbar (Om avdelingen · Tillitsvalgte · Min Side ↗
+  + språk), flerkolonne-megameny (Medlem · Avdelingen · Hytteutleie), ikke-sticky.
+  Avdelingsnavn-lockup «Helgeland Avd. 143» under logoen (profilhåndbok 2.1).
+- **Brødsmuler** «Forsiden / [side]» på undersider; navy på mørke hero-sider.
+- **Ekstern-lenke-varsel**: modal bekrefter før man forlater avdelingens side.
+- **Sirkelmotiv** («punktet»): ulik håndbok-godkjent primærfarge-dominans per side.
+- **Profilhåndbok 2.2**: versal «parole» kun på forsidens hero (maks 3 linjer);
+  undersidenes hero-overskrifter i vanlig setningsform.
+- **Typografi**: hovedfont er Monument Grotesk (profilhåndbok). På web brukes
+  **Space Grotesk** som fri erstatningsfont — visuelt nær Monument, siden Monument
+  krever lisens/tilgang fra kommunikasjonsavdelingen (Franklin Gothic er håndbokas
+  Office-erstatning, men passer dårligere på web).
+- **Umbukta**: eget satellittkart for naustet med båt (i tillegg til hyttekartet).
+  Båtdrivstoff: 98 oktan, helst alkylatbensin (4-takt).
+- **Forsiden**: «Vi har ryggen din»-boksene er klikkbare; medlemssitat fra
+  Mathias Tustervatn.
+
 ---
 
 *Godkjenn denne SPEC.md, så begynner vi å bygge fase for fase.*
