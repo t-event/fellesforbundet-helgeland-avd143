@@ -89,6 +89,11 @@
             </label>
             <div class="field-error" id="paske-err-periode" style="display:none;"></div>
           </div>
+          <!-- Spamvern (hCaptcha via Web3Forms) -->
+          <div class="field">
+            <div class="h-captcha" data-captcha="true"></div>
+            <div class="field-error" id="paske-err-captcha" style="display:none;"></div>
+          </div>
           <button class="btn btn-primary btn-block" type="submit" id="paske-submit">
             <span data-i18n="paske_submit">Meld på loddtrekning</span>
             <span id="paske-spinner" class="spinner" style="display:none;"></span>
@@ -193,6 +198,7 @@ form?.addEventListener('submit', async (e) => {
   setFeil('paske-err-navn', '');
   setFeil('paske-err-epost', '');
   setFeil('paske-err-periode', '');
+  setFeil('paske-err-captcha', '');
   if (feilBoks) feilBoks.style.display = 'none';
 
   const navn    = (document.getElementById('paske-navn')).value.trim();
@@ -205,6 +211,9 @@ form?.addEventListener('submit', async (e) => {
   if (!navn)                   { setFeil('paske-err-navn', erEn() ? 'Enter your name.' : 'Oppgi navn.'); ok = false; }
   if (!epost || !epost.includes('@')) { setFeil('paske-err-epost', erEn() ? 'Enter a valid email.' : 'Oppgi gyldig e-post.'); ok = false; }
   if (!p1 && !p2)              { setFeil('paske-err-periode', erEn() ? 'Select at least one period.' : 'Velg minst én periode.'); ok = false; }
+  const capEl = form?.querySelector('textarea[name="h-captcha-response"]');
+  const capToken = capEl ? capEl.value : '';
+  if (capEl && !capToken)      { setFeil('paske-err-captcha', erEn() ? 'Please complete the captcha.' : 'Fullfør captcha-en.'); ok = false; }
   if (!ok) return;
 
   const perioder = [p1 && `Periode 1 (${p1LblEl?.textContent})`, p2 && `Periode 2 (${p2LblEl?.textContent})`].filter(Boolean).join(', ');
@@ -224,6 +233,7 @@ form?.addEventListener('submit', async (e) => {
         email: epost,
         replyto: epost,
         message: `PÅMELDING LODDTREKNING PÅSKE ${ep.year}\n\nNavn: ${navn}\nE-post: ${epost}\nTelefon: ${telefon || '–'}\nPeriode(r): ${perioder}`,
+        'h-captcha-response': capToken,
       }),
     });
     const data = await resp.json();

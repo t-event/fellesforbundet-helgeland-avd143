@@ -68,11 +68,14 @@ const brodsmuleMork = morkeHero.has(sti);
        policyen leveres via meta. 'unsafe-inline' er nødvendig fordi siden bruker
        inline style-attributter og define:vars-skript overalt. Eksterne hoster
        er begrenset til det siden faktisk bruker — oppdater ved nye integrasjoner:
-       img-src (Statens vegvesen-webkamera), frame-src (Google Maps + Facebook),
-       connect-src (Yr + Web3Forms). connect-src MÅ ha 'self' — kalender/booking
+       img-src (Statens vegvesen-webkamera + hCaptcha), frame-src (Google Maps +
+       Facebook + hCaptcha), connect-src (Yr + Web3Forms + hCaptcha), script-src
+       (Web3Forms-klient + hCaptcha). connect-src MÅ ha 'self' — kalender/booking
        henter availability.json fra eget domene, og connect-src overstyrer default-src.
-       NB: frame-ancestors/sandbox ignoreres i meta-CSP og settes ikke her. -->
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; img-src 'self' data: https://kamera.atlas.vegvesen.no; font-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; connect-src 'self' https://api.met.no https://api.web3forms.com; frame-src https://www.google.com https://maps.google.com https://www.facebook.com; form-action 'self' https://api.web3forms.com" />
+       hCaptcha (spamvern på skjemaene) laster fra hcaptcha.com/*.hcaptcha.com, og
+       widget-scriptet fra web3forms.com. NB: frame-ancestors/sandbox ignoreres i
+       meta-CSP og settes ikke her. -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; img-src 'self' data: https://kamera.atlas.vegvesen.no https://*.hcaptcha.com; font-src 'self'; style-src 'self' 'unsafe-inline' https://hcaptcha.com https://*.hcaptcha.com; script-src 'self' 'unsafe-inline' https://web3forms.com https://hcaptcha.com https://*.hcaptcha.com; connect-src 'self' https://api.met.no https://api.web3forms.com https://hcaptcha.com https://*.hcaptcha.com; frame-src https://www.google.com https://maps.google.com https://www.facebook.com https://hcaptcha.com https://*.hcaptcha.com; form-action 'self' https://api.web3forms.com" />
 
   <!-- Tittel og meta -->
   <title>{title}</title>

@@ -122,6 +122,12 @@ const WEB3FORMS_KEY = import.meta.env.PUBLIC_WEB3FORMS_KEY ?? '';
       <div class="field-error" id="err-husregler" style="display:none;"></div>
     </div>
 
+    <!-- Spamvern (hCaptcha via Web3Forms) — aktiveres i Web3Forms-dashbordet -->
+    <div class="field">
+      <div class="h-captcha" data-captcha="true"></div>
+      <div class="field-error" id="err-captcha" style="display:none;"></div>
+    </div>
+
     <!-- Send-knapp -->
     <button class="btn btn-primary btn-block" type="submit" id="booking-submit">
       <span id="booking-submit-tekst" data-i18n="form_submit">Send forespørsel</span>
@@ -269,7 +275,7 @@ function setFeil(id, tekst) {
   if (input) input.classList.toggle('error', !!tekst);
 }
 function clearFeil() {
-  ['err-fra','err-til','err-navn','err-epost','err-telefon','err-forbund','err-gjester','err-husregler'].forEach(id => setFeil(id, ''));
+  ['err-fra','err-til','err-navn','err-epost','err-telefon','err-forbund','err-gjester','err-husregler','err-captcha'].forEach(id => setFeil(id, ''));
   feilBoks.style.display = 'none';
 }
 
@@ -310,6 +316,11 @@ form?.addEventListener('submit', async (e) => {
   if (!gjester) { setFeil('err-gjester', erEn() ? 'Select the number of guests.' : 'Velg antall gjester.'); ok = false; }
   if (!husregler) { setFeil('err-husregler', erEn() ? 'You must accept the terms and house rules.' : 'Du må godta vilkårene og husreglene.'); ok = false; }
 
+  // hCaptcha: krev at feltet er fylt ut HVIS widgeten er rendret (spamvern aktivt).
+  const capEl = form?.querySelector('textarea[name="h-captcha-response"]');
+  const capToken = capEl ? capEl.value : '';
+  if (capEl && !capToken) { setFeil('err-captcha', erEn() ? 'Please complete the captcha.' : 'Fullfør captcha-en.'); ok = false; }
+
   if (!ok) return;
 
   const dager   = antallDøgn(fra, til);
@@ -340,6 +351,7 @@ form?.addEventListener('submit', async (e) => {
     Betalingsreferanse: ref,
     'Husregler godtatt': 'Ja',
     Kontonummer: KONTONUMMER,
+    'h-captcha-response': capToken,
   };
 
   // Vis spinner

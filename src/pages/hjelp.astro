@@ -157,6 +157,11 @@ import { KONTAKT } from '../config.ts';
                 placeholder="Skriv din melding her…" required data-i18n-placeholder="hjelp_melding_ph"></textarea>
               <div class="field-error" id="kerr-melding" style="display:none;"></div>
             </div>
+            <!-- Spamvern (hCaptcha via Web3Forms) -->
+            <div class="field">
+              <div class="h-captcha" data-captcha="true"></div>
+              <div class="field-error" id="kerr-captcha" style="display:none;"></div>
+            </div>
             <button class="btn btn-primary btn-block" type="submit" id="kontakt-submit" data-i18n="hjelp_send">
               Send melding
             </button>
@@ -186,6 +191,9 @@ import { KONTAKT } from '../config.ts';
       </div>
     </div>
   </div>
+
+  <!-- hCaptcha-widget (spamvern på kontaktskjemaet) via Web3Forms-klient -->
+  <script is:inline src="https://web3forms.com/client/script.js" async defer></script>
 </Layout>
 
 <script>
@@ -206,6 +214,7 @@ form?.addEventListener('submit', async (e) => {
   setFeil('kerr-navn', '');
   setFeil('kerr-epost', '');
   setFeil('kerr-melding', '');
+  setFeil('kerr-captcha', '');
   if (feilBoks) feilBoks.style.display = 'none';
 
   const navn    = (document.getElementById('k-navn') as HTMLInputElement).value.trim();
@@ -218,6 +227,9 @@ form?.addEventListener('submit', async (e) => {
   if (!navn)  { setFeil('kerr-navn', erEn() ? 'Enter your name.' : 'Oppgi navn.'); ok = false; }
   if (!epost || !epost.includes('@')) { setFeil('kerr-epost', erEn() ? 'Enter a valid email.' : 'Oppgi gyldig e-post.'); ok = false; }
   if (!melding) { setFeil('kerr-melding', erEn() ? 'Write a message.' : 'Skriv en melding.'); ok = false; }
+  const capEl = form?.querySelector('textarea[name="h-captcha-response"]') as HTMLTextAreaElement | null;
+  const capToken = capEl ? capEl.value : '';
+  if (capEl && !capToken) { setFeil('kerr-captcha', erEn() ? 'Please complete the captcha.' : 'Fullfør captcha-en.'); ok = false; }
   if (!ok) return;
 
   const key = import.meta.env.PUBLIC_WEB3FORMS_KEY ?? '';
@@ -234,6 +246,7 @@ form?.addEventListener('submit', async (e) => {
         email: epost,
         replyto: epost,
         message: `Fra: ${navn}\nE-post: ${epost}\nTelefon: ${telefon || '–'}\nGjelder: ${gjelder}\n\n${melding}`,
+        'h-captcha-response': capToken,
       }),
     });
     const data = await resp.json();
