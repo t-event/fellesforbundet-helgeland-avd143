@@ -35,65 +35,67 @@ const arrangementer = (arrangementData.arrangementer ?? [])
 
   <div class="container">
 
-    <!-- NYTT FRA AVDELINGEN (Facebook) — øverst -->
+    <!-- NYTT FRA AVDELINGEN + KURS/KONFERANSER — side ved side -->
     <div class="section">
-      <div class="grid grid-2" style="gap:clamp(28px,4vw,48px); align-items:start;">
+      <div class="grid grid-2" style="gap:clamp(28px,4vw,44px); align-items:start;">
+
+        <!-- Venstre: Facebook -->
         <div>
           <span class="eyebrow" data-en="Follow the branch">Følg avdelingen</span>
-          <h2 class="h2" style="margin:6px 0 16px;" data-en="Latest news on Facebook">Siste nytt på Facebook</h2>
-          <p class="muted" style="font-size:16.5px; line-height:1.7; margin-bottom:22px;"
-             data-en="The branch shares news, events and updates on its Facebook page. The latest posts load directly here when you choose to show them.">
-            Avdelingen deler nyheter, arrangementer og oppdateringer på Facebook-sida si. De siste
-            innleggene lastes rett inn her når du velger å vise dem.
+          <h2 class="h2" style="margin:6px 0 12px;" data-en="Latest news on Facebook">Siste nytt på Facebook</h2>
+          <p class="muted" style="font-size:15.5px; line-height:1.65; margin-bottom:18px;"
+             data-en="News, events and updates from the branch. The latest posts load here when you choose to show them.">
+            Nyheter, arrangementer og oppdateringer fra avdelingen. De siste innleggene lastes
+            inn her når du velger å vise dem.
           </p>
-          <a href={KONTAKT.facebookUrl} target="_blank" rel="noopener noreferrer" class="btn btn-primary" data-en="Open Facebook ↗">Åpne Facebook ↗</a>
-        </div>
-
-        <!-- Facebook-innlegg: lastes automatisk når «Godta alle» er valgt (cookie-samtykke) -->
-        <div class="fb-embed" id="fb-embed" data-href={KONTAKT.facebookUrl}>
-          <div class="fb-placeholder">
-            <span aria-hidden="true" style="font-size:32px;">📘</span>
-            <p style="font-weight:800; margin:10px 0 4px;" data-en="Facebook posts require cookies">Facebook-innlegg krever informasjonskapsler</p>
-            <p class="muted" style="font-size:13px; max-width:38ch; margin:0 auto 16px; line-height:1.5;"
-               data-en="Embedded posts load from facebook.com, which sets cookies. Accept cookies to view them here.">
-              Innleggene hentes fra facebook.com, som setter informasjonskapsler. Godta informasjonskapsler for å se dem her.
-            </p>
-            <button class="btn btn-primary" id="fb-load" type="button" data-en="Accept cookies & show posts">Godta og vis innlegg</button>
+          <!-- Facebook-innlegg: lastes automatisk når «Godta alle» er valgt (cookie-samtykke) -->
+          <div class="fb-embed" id="fb-embed" data-href={KONTAKT.facebookUrl}>
+            <div class="fb-placeholder">
+              <span aria-hidden="true" style="font-size:32px;">📘</span>
+              <p style="font-weight:800; margin:10px 0 4px;" data-en="Facebook posts require cookies">Facebook-innlegg krever informasjonskapsler</p>
+              <p class="muted" style="font-size:13px; max-width:38ch; margin:0 auto 16px; line-height:1.5;"
+                 data-en="Embedded posts load from facebook.com, which sets cookies. Accept cookies to view them here.">
+                Innleggene hentes fra facebook.com, som setter informasjonskapsler. Godta informasjonskapsler for å se dem her.
+              </p>
+              <button class="btn btn-primary" id="fb-load" type="button" data-en="Accept cookies & show posts">Godta og vis innlegg</button>
+            </div>
           </div>
+          <a href={KONTAKT.facebookUrl} target="_blank" rel="noopener noreferrer" class="btn-link" style="display:inline-block; margin-top:16px;" data-en="Open Facebook ↗">Åpne Facebook ↗</a>
         </div>
+
+        <!-- Høyre: Kurs & konferanser (hentet automatisk fra fellesforbundet.no) -->
+        <div>
+          <span class="eyebrow" data-en="Courses & conferences">Kurs & konferanser</span>
+          <h2 class="h2" style="margin:6px 0 12px;" data-en="Courses and conferences in Nordland">Kurs og konferanser i Nordland</h2>
+          <p class="muted" style="font-size:15.5px; line-height:1.65; margin-bottom:18px;"
+             data-en="Pulled automatically from Fellesforbundet. Sign up via fellesforbundet.no.">
+            Hentes automatisk fra Fellesforbundet. Påmelding skjer på fellesforbundet.no.
+          </p>
+
+          {arrangementer.length > 0 ? (
+            <div class="arr-liste">
+              {arrangementer.slice(0, 6).map(a => (
+                <a href={a.url} target="_blank" rel="noopener noreferrer" class="arr-item">
+                  <span class="arr-dato" aria-hidden="true">
+                    <span class="arr-mnd">{a.mnd}</span>
+                    <span class="arr-dag">{a.dag}</span>
+                  </span>
+                  <span class="arr-body">
+                    <span class={`arr-type${a.type === 'Konferanse' ? ' arr-type--konf' : ''}`}>{a.type}</span>
+                    <b class="arr-tittel">{a.tittel} ↗</b>
+                    <span class="muted arr-meta">{a.dag}. {a.mnd} {a.aar}{a.sted ? ` · ${a.sted}` : ''}</span>
+                  </span>
+                </a>
+              ))}
+            </div>
+          ) : (
+            <p class="muted" data-en="No upcoming courses or conferences registered right now.">Ingen kommende kurs eller konferanser registrert akkurat nå.</p>
+          )}
+
+          <a href={arrangementData.kildeUrl} target="_blank" rel="noopener noreferrer" class="btn-link" style="display:inline-block; margin-top:18px;" data-en="See all at fellesforbundet.no ↗">Se alle på fellesforbundet.no ↗</a>
+        </div>
+
       </div>
-    </div>
-
-    <!-- KURS & KONFERANSER (hentet automatisk fra fellesforbundet.no) — under -->
-    <div class="section" style="padding-top:0;">
-      <span class="eyebrow" data-en="Courses & conferences">Kurs & konferanser</span>
-      <h2 class="h2" style="margin:6px 0 10px;" data-en="Upcoming courses and conferences in Nordland">Kommende kurs og konferanser i Nordland</h2>
-      <p class="muted" style="font-size:15.5px; max-width:64ch; margin-bottom:24px;"
-         data-en="Automatically pulled from Fellesforbundet. Sign up via fellesforbundet.no.">
-        Hentes automatisk fra Fellesforbundet. Påmelding skjer på fellesforbundet.no.
-      </p>
-
-      {arrangementer.length > 0 ? (
-        <div class="arr-liste">
-          {arrangementer.slice(0, 6).map(a => (
-            <a href={a.url} target="_blank" rel="noopener noreferrer" class="arr-item">
-              <span class="arr-dato" aria-hidden="true">
-                <span class="arr-mnd">{a.mnd}</span>
-                <span class="arr-dag">{a.dag}</span>
-              </span>
-              <span class="arr-body">
-                <span class={`arr-type${a.type === 'Konferanse' ? ' arr-type--konf' : ''}`}>{a.type}</span>
-                <b class="arr-tittel">{a.tittel} ↗</b>
-                <span class="muted arr-meta">{a.dag}. {a.mnd} {a.aar}{a.sted ? ` · ${a.sted}` : ''}</span>
-              </span>
-            </a>
-          ))}
-        </div>
-      ) : (
-        <p class="muted" data-en="No upcoming courses or conferences registered right now.">Ingen kommende kurs eller konferanser registrert akkurat nå.</p>
-      )}
-
-      <a href={arrangementData.kildeUrl} target="_blank" rel="noopener noreferrer" class="btn-link" style="display:inline-block; margin-top:22px;" data-en="See all courses and conferences at fellesforbundet.no ↗">Se alle kurs og konferanser på fellesforbundet.no ↗</a>
     </div>
 
     <!-- KONTAKT-STRIPE -->
