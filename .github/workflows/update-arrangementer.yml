@@ -1,0 +1,35 @@
+name: Oppdater arrangementer
+
+on:
+  schedule:
+    # Én gang i døgnet (06:00 UTC) — arrangementer endrer seg sjelden
+    - cron: '0 6 * * *'
+  workflow_dispatch:  # Kan også kjøres manuelt fra GitHub UI
+
+permissions:
+  contents: write  # Nødvendig for å committe src/data/arrangementer.json
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Sjekk ut kode
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Sett opp Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Hent kurs og konferanser (Nordland)
+        run: node scripts/update-arrangementer.mjs
+
+      - name: Commit og push (kun hvis endret)
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add src/data/arrangementer.json
+          git diff --staged --quiet || git commit -m "chore: oppdater arrangementer [$(date -u +'%Y-%m-%d %H:%M UTC')]"
+          git diff HEAD~1 HEAD --quiet 2>/dev/null || git push

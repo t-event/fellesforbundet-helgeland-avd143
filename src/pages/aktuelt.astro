@@ -2,7 +2,16 @@
 import Layout from '../layouts/Layout.astro';
 import CircleMotif from '../components/CircleMotif.astro';
 import { KONTAKT } from '../config.ts';
+import arrangementData from '../data/arrangementer.json';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+// Arrangementer hentes automatisk fra fellesforbundet.no (planlagt GitHub-jobb),
+// se scripts/update-arrangementer.mjs. Filtrer bort passerte ved build også.
+const MND = ['jan', 'feb', 'mar', 'apr', 'mai', 'jun', 'jul', 'aug', 'sep', 'okt', 'nov', 'des'];
+const idag = new Date(); idag.setHours(0, 0, 0, 0);
+const arrangementer = (arrangementData.arrangementer ?? [])
+  .filter(a => new Date(a.dato) >= idag)
+  .map(a => { const d = new Date(a.dato); return { ...a, dag: d.getDate(), mnd: MND[d.getMonth()], aar: d.getFullYear() }; });
 ---
 
 <Layout
@@ -25,6 +34,38 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   </div>
 
   <div class="container">
+
+    <!-- KURS & KONFERANSER (hentet automatisk fra fellesforbundet.no) -->
+    <div class="section">
+      <span class="eyebrow" data-en="Courses & conferences">Kurs & konferanser</span>
+      <h2 class="h2" style="margin:6px 0 10px;" data-en="Upcoming courses and conferences in Nordland">Kommende kurs og konferanser i Nordland</h2>
+      <p class="muted" style="font-size:15.5px; max-width:64ch; margin-bottom:24px;"
+         data-en="Automatically pulled from Fellesforbundet. Sign up via fellesforbundet.no.">
+        Hentes automatisk fra Fellesforbundet. Påmelding skjer på fellesforbundet.no.
+      </p>
+
+      {arrangementer.length > 0 ? (
+        <div class="arr-liste">
+          {arrangementer.map(a => (
+            <a href={a.url} target="_blank" rel="noopener noreferrer" class="arr-item">
+              <span class="arr-dato" aria-hidden="true">
+                <span class="arr-mnd">{a.mnd}</span>
+                <span class="arr-dag">{a.dag}</span>
+              </span>
+              <span class="arr-body">
+                <span class={`arr-type${a.type === 'Konferanse' ? ' arr-type--konf' : ''}`}>{a.type}</span>
+                <b class="arr-tittel">{a.tittel} ↗</b>
+                <span class="muted arr-meta">{a.dag}. {a.mnd} {a.aar}{a.sted ? ` · ${a.sted}` : ''}</span>
+              </span>
+            </a>
+          ))}
+        </div>
+      ) : (
+        <p class="muted" data-en="No upcoming courses or conferences registered right now.">Ingen kommende kurs eller konferanser registrert akkurat nå.</p>
+      )}
+
+      <a href={arrangementData.kildeUrl} target="_blank" rel="noopener noreferrer" class="btn-link" style="display:inline-block; margin-top:22px;" data-en="See all courses and conferences at fellesforbundet.no ↗">Se alle kurs og konferanser på fellesforbundet.no ↗</a>
+    </div>
 
     <!-- FØLG OSS -->
     <div class="section">

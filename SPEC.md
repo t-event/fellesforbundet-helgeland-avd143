@@ -374,6 +374,17 @@ Endringer og tillegg utover opprinnelig spec:
   Båtdrivstoff: 98 oktan, helst alkylatbensin (4-takt).
 - **Forsiden**: «Vi har ryggen din»-boksene er klikkbare; medlemssitat fra
   Mathias Tustervatn.
+- **Merkevare-lockup**: logo + «Helgeland Avd. 143» som én inline-SVG
+  ([BrandLockup.astro](src/components/BrandLockup.astro)) med fast geometri —
+  identisk i header/footer på alle størrelser.
+- **Integrasjon 4 — Arrangementer (auto-henting)**: planlagt GitHub-jobb
+  ([.github/workflows/update-arrangementer.yml](.github/workflows/update-arrangementer.yml))
+  kjører [scripts/update-arrangementer.mjs](scripts/update-arrangementer.mjs) daglig.
+  Scriptet henter Fellesforbundets kurs + konferanser for Nordland (strukturert
+  JSON innebygd i kildesidens HTML), skriver `src/data/arrangementer.json`, og
+  committer. Vises på /aktuelt («Kommende kurs og konferanser i Nordland»),
+  bygges statisk. Facebook-arrangementer kan IKKE hentes automatisk (innloggings-
+  vegg / krever Graph API-token) — derfor kun Fellesforbundet-kilden.
 
 ---
 
