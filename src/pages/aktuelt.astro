@@ -26,9 +26,9 @@ const arrangementer = (arrangementData.arrangementer ?? [])
       <span class="hero-pill" data-en="News">Aktuelt</span>
       <h1 class="h1" style="max-width:16ch; margin-top:18px;" data-en="News from the branch">Nytt fra avdelingen</h1>
       <p class="lead" style="max-width:60ch; margin-top:20px;"
-         data-en="Follow the branch's news and updates on Facebook — and see upcoming courses and conferences in Nordland from Fellesforbundet, pulled automatically.">
+         data-en="Follow the branch's news and updates on Facebook — and see upcoming courses and conferences in Nordland from Fellesforbundet.">
         Følg avdelingens nyheter og oppdateringer på Facebook — og se kommende kurs og konferanser
-        i Nordland fra Fellesforbundet, hentet automatisk.
+        i Nordland fra Fellesforbundet.
       </p>
     </div>
   </div>
@@ -48,7 +48,7 @@ const arrangementer = (arrangementData.arrangementer ?? [])
             Nyheter, arrangementer og oppdateringer fra avdelingen. De siste innleggene lastes
             inn her når du velger å vise dem.
           </p>
-          <!-- Facebook-innlegg: lastes automatisk når «Godta alle» er valgt (cookie-samtykke) -->
+          <!-- Facebook-innlegg: lastes når «Godta alle» er valgt (cookie-samtykke) -->
           <div class="fb-embed" id="fb-embed" data-href={KONTAKT.facebookUrl}>
             <div class="fb-placeholder">
               <span aria-hidden="true" style="font-size:32px;">📘</span>
@@ -63,13 +63,13 @@ const arrangementer = (arrangementData.arrangementer ?? [])
           <a href={KONTAKT.facebookUrl} target="_blank" rel="noopener noreferrer" class="btn-link" style="display:inline-block; margin-top:16px;" data-en="Open Facebook ↗">Åpne Facebook ↗</a>
         </div>
 
-        <!-- Høyre: Kurs & konferanser (hentet automatisk fra fellesforbundet.no) -->
+        <!-- Høyre: Kurs & konferanser (kilde: fellesforbundet.no) -->
         <div>
           <span class="eyebrow" data-en="Courses & conferences">Kurs & konferanser</span>
           <h2 class="h2" style="margin:6px 0 12px;" data-en="Courses and conferences in Nordland">Kurs og konferanser i Nordland</h2>
           <p class="muted" style="font-size:15.5px; line-height:1.65; margin-bottom:18px;"
-             data-en="Pulled automatically from Fellesforbundet. Sign up via fellesforbundet.no.">
-            Hentes automatisk fra Fellesforbundet. Påmelding skjer på fellesforbundet.no.
+             data-en="From Fellesforbundet. Sign up via fellesforbundet.no.">
+            Fra Fellesforbundet. Påmelding skjer på fellesforbundet.no.
           </p>
 
           {arrangementer.length > 0 ? (
