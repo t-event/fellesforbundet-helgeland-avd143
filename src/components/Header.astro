@@ -1,5 +1,6 @@
 ---
 import { ELSVATN_INATUR_URL } from '../config.ts';
+import BrandLockup from './BrandLockup.astro';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const MIN_SIDE = 'https://minside.fellesforbundet.no';
 
@@ -72,17 +73,7 @@ const currentPath = Astro.url.pathname.replace(base, '').replace(/\/$/, '') || '
   <!-- Hovedrad: logo + synlige snarveier + Meny-knapp -->
   <div class="container header-main">
     <a href={`${base}/`} class="brand" aria-label="Fellesforbundet Helgeland avd. 143 – til forsiden">
-      <img
-        src={`${base}/images/logo/ff_logo_hvit_rgb.svg`}
-        alt="Fellesforbundet Helgeland"
-        height="40"
-        loading="eager"
-        class="brand-logo"
-      />
-      <span class="brand-avd">
-        <b class="brand-avd-1">Helgeland</b>
-        <span class="brand-avd-2" data-en="Branch 143">Avd. 143</span>
-      </span>
+      <BrandLockup />
     </a>
 
     <div class="nav-right">

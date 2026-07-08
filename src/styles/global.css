@@ -234,17 +234,11 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .brodsmule--mork a:hover { color: #fff; }
 .brodsmule--mork .brodsmule-sep { color: rgba(255,255,255,.4); }
 .brodsmule--mork .brodsmule-na { color: #fff; }
-.brand { display: flex; flex-direction: column; align-items: flex-start; gap: 6px; background: none; border: none; cursor: pointer; padding: 0; color: inherit; text-decoration: none; }
-.brand-logo { height: 40px; width: auto; display: block; }
-/* Avdelingsnavn-lockup (profilhåndbok 2.1): display-font, første linje uthevet
-   (heavy), andre linje regular i SAMME størrelse. Plassert UNDER FF-logoen (som
-   viser «Fellesforbundet»), så avdelingsnavnet står i kortform (ikke gjentatt). */
-/* Avdelingsnavnet flukter med ordmerket «Fellesforbundet» (ikke symbolet til
-   venstre) — innrykket tilsvarer bredden på det røde symbolet + luft. */
-.brand-avd { display: flex; flex-direction: row; align-items: baseline; gap: 6px; line-height: 1.04; font-family: var(--font-display); color: #fff; white-space: nowrap; padding-left: 50px; }
-.site-footer .brand-avd { padding-left: 45px; }
-.brand-avd-1 { font-weight: 700; font-size: 15px; letter-spacing: 0; }
-.brand-avd-2 { font-weight: 400; font-size: 15px; letter-spacing: 0; color: rgba(255,255,255,.82); }
+.brand { display: inline-flex; align-items: center; background: none; border: none; cursor: pointer; padding: 0; color: inherit; text-decoration: none; }
+/* Merkevare-lockup (BrandLockup.astro): logo + «Helgeland Avd. 143» i én SVG med
+   fast geometri. Høyden styrer hele enheten — avstandene er innebygd, likt overalt. */
+.brand-lockup { height: 56px; width: auto; display: block; }
+.brand-lockup--footer { height: 50px; }
 .nav-right { display: flex; align-items: center; gap: 16px; flex-wrap: nowrap; justify-content: flex-end; }
 .nav { display: flex; align-items: center; gap: 4px; flex-wrap: nowrap; }
 .nav a { background: transparent; color: #cfd0e0; font-weight: 600; font-size: 14px; padding: 9px 15px; border: none; border-radius: 4px; cursor: pointer; white-space: nowrap; text-decoration: none; }
@@ -479,15 +473,6 @@ textarea.input { resize: vertical; min-height: 110px; }
 
 /* ── Turtips ─────────────────────────────────────────────────── */
 .tur-card { background: #fff; border: 1px solid var(--kantlinje); border-radius: 4px; overflow: hidden; display: flex; flex-direction: column; box-shadow: var(--skygge); }
-.tur-card .tur-img { height: 170px; overflow: hidden; }
-.tur-card .tur-img img { width: 100%; height: 100%; object-fit: cover; }
-/* Plassholder til egne turbilder er på plass (se PLACEHOLDERS.md) */
-.tur-card .tur-img.placeholder {
-  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px;
-  color: var(--tekst-svak); background: linear-gradient(135deg, #eef1f5, #e2e7ee);
-  border-bottom: 1px solid var(--kantlinje);
-}
-.tur-card .tur-img.placeholder span { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; }
 .tur-card .body { padding: 22px; display: flex; flex-direction: column; flex: 1; }
 .tur-card .meta { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; color: var(--rod); margin-bottom: 8px; }
 
@@ -557,14 +542,9 @@ textarea.input { resize: vertical; min-height: 110px; }
      ellers inn på smale skjermer og gjør motivet for stort. */
   .hero-motif { width: 78px; top: -8px; right: -14px; opacity: .8; }
 
-  /* Skjul "HYTTEUTLEIE"-teksten i header — logoen er bred nok */
-  .brand-sub { display: none; }
-
-  /* Mindre logo på mobil. Ingen max-width/contain — det gir letterboxing som
-     flytter ordmerket, slik at avdelingsnavnet ikke flukter. */
-  .brand-logo { height: 32px; }
-  /* Mindre logo → mindre innrykk så «Helgeland Avd. 143» fortsatt flukter med ordmerket */
-  .brand-avd, .site-footer .brand-avd { padding-left: 40px; }
+  /* Mindre lockup på mobil (skalerer som én enhet — avstandene følger med) */
+  .brand-lockup { height: 48px; }
+  .brand-lockup--footer { height: 46px; }
 }
 
 @media (max-width: 600px) {

@@ -1,7 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import CircleMotif from '../components/CircleMotif.astro';
-import Icon from '../components/Icon.astro';
 import { TURTIPS } from '../config.ts';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
@@ -45,11 +44,6 @@ const vanskelighetFarge = {
     <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:22px;">
       {TURTIPS.map(tur => (
         <article class="tur-card">
-          <!-- PLASSHOLDER: egne turbilder mangler — se PLACEHOLDERS.md -->
-          <div class="tur-img placeholder" role="img" aria-label="Bilde kommer">
-            <Icon name="mountain" size={34} />
-            <span data-en="Photo coming">Foto kommer</span>
-          </div>
           <div class="body">
             <div class="meta">
               <span style={`background:${vanskelighetFarge[tur.vanskelighet] ?? 'var(--gra)'}; padding:3px 10px; border-radius:4px; color:var(--morkbla);`} data-en={tur.vanskelighet_en}>

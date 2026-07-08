@@ -1,0 +1,25 @@
+---
+// Merkevare-lockup: offisiell Fellesforbundet-logo (hvit) + avdelingsnavn
+// «Helgeland Avd. 143» i ÉN inline-SVG med fast geometri. Da blir avstanden
+// mellom logo og avdelingsnavn identisk i header og footer, på alle skjerm-
+// størrelser, og alt skalerer som én enhet (styres av høyden i CSS).
+//
+// Logoen legges inn via <image> (offisiell SVG, uendret — samme kilde overalt).
+// Avdelingsnavnet flukter med ordmerket «Fellesforbundet», som starter på
+// x≈374.5 i logoens viewBox (0 0 1589.7 294.3).
+interface Props { class?: string; }
+const { class: klass = '' } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+<svg
+  class={`brand-lockup ${klass}`}
+  viewBox="0 0 1589.7 440"
+  role="img"
+  aria-label="Fellesforbundet Helgeland avd. 143"
+  preserveAspectRatio="xMinYMid meet"
+>
+  <image href={`${base}/images/logo/ff_logo_hvit_rgb.svg`} x="0" y="0" width="1589.7" height="294.3" />
+  <text x="374.5" y="410" font-family="'Space Grotesk', sans-serif" font-size="115" letter-spacing="-2">
+    <tspan fill="#ffffff" font-weight="700">Helgeland</tspan><tspan dx="30" fill="#ffffff" fill-opacity="0.82" font-weight="400" data-en="Branch 143">Avd. 143</tspan>
+  </text>
+</svg>

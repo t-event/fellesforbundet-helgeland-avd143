@@ -6,11 +6,11 @@ eller fjernes.
 
 | # | Hva | Hvor | Hva mangler | Slik fjerner du plassholderen |
 |---|-----|------|-------------|-------------------------------|
-| 1 | **Turbilder på turtips** | [src/pages/turtips.astro](src/pages/turtips.astro) (`.tur-img.placeholder`), stil i [src/styles/global.css](src/styles/global.css) | Egne foto fra de 6 turene mangler. Alle kortene viser «Foto kommer» med fjell-ikon. | Legg bildene i `public/images/turtips/`, bytt placeholder-`<div>` med `<img>` i kortet, og fjern `.placeholder`-blokken hvis ingen kort lenger bruker den. |
-| 2 | **Portrettbilder av ansatte og styret** (valgfritt) | [src/config.ts](src/config.ts) (`ANSATTE`, `STYRE`), vist på [src/pages/tillitsvalgte.astro](src/pages/tillitsvalgte.astro) + forsiden | Navn, verv og klubb er på plass; portrettbilder mangler (vises som initialer i avatar — fungerer fint uten). | Legg portretter i `public/images/folk/` og bytt initial-avataren med `<img>` der det er ønskelig. |
+| 1 | **Portrettbilder av ansatte og styret** (valgfritt) | [src/config.ts](src/config.ts) (`ANSATTE`, `STYRE`), vist på [src/pages/tillitsvalgte.astro](src/pages/tillitsvalgte.astro) + forsiden | Navn, verv og klubb er på plass; portrettbilder mangler (vises som initialer i avatar — fungerer fint uten). | Legg portretter i `public/images/folk/` og bytt initial-avataren med `<img>` der det er ønskelig. |
 
-Alle øvrige plassholdere er nå fylt ut:
+Alle øvrige plassholdere er nå fylt ut eller fjernet:
 
+- ✅ **Turbilder på turtips** — avdelingen får ikke egne turbilder; bildeplassholderne er **fjernet**, kortene er rene tekstkort med UT.no-lenke.
 - ✅ **Drivstofftype til båtmotor** — 98 oktan, helst alkylatbensin (4-takt).
 - ✅ **Medlemssitat på forsiden** — sitat fra Mathias Tustervatn.
 - ✅ **Naust: bilde + plassering** — foto i bildestrømmen + eget satellittkart som viser hvor naustet ligger.
