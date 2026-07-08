@@ -278,8 +278,11 @@ GitHub Actions bygger og publiserer siden automatisk (tar ca. 1–2 minutter).
 | `deploy.yml` | Push til `main` | Bygger (Node 22) og deployer til GitHub Pages |
 | `build-check.yml` | Push til andre brancher + PR-er | Bygger **uten** å deploye — validerer at koden kompilerer før merge til `main` |
 | `update-availability.yml` | Cron (hver time) | Synker Outlook-kalenderen → `availability.json` (deployer kun ved reell endring) |
+| `update-arrangementer.yml` | Cron (daglig) | Henter Fellesforbundets kurs + konferanser (Nordland) → `src/data/arrangementer.json`; vises på /aktuelt (commit trigger deploy) |
 
-> Astro 6 krever Node ≥ 22, så begge bygge-workflowene bruker Node 22.
+> Astro 6 krever Node ≥ 22, så begge bygge-workflowene bruker Node 22. Datahenting-
+> workflowene (`update-availability`, `update-arrangementer`) kjører rene Node-skript
+> og bruker Node 20.
 
 ---
 

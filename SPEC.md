@@ -380,11 +380,13 @@ Endringer og tillegg utover opprinnelig spec:
 - **Integrasjon 4 — Arrangementer (auto-henting)**: planlagt GitHub-jobb
   ([.github/workflows/update-arrangementer.yml](.github/workflows/update-arrangementer.yml))
   kjører [scripts/update-arrangementer.mjs](scripts/update-arrangementer.mjs) daglig.
-  Scriptet henter Fellesforbundets kurs + konferanser for Nordland (strukturert
-  JSON innebygd i kildesidens HTML), skriver `src/data/arrangementer.json`, og
-  committer. Vises på /aktuelt («Kommende kurs og konferanser i Nordland»),
-  bygges statisk. Facebook-arrangementer kan IKKE hentes automatisk (innloggings-
-  vegg / krever Graph API-token) — derfor kun Fellesforbundet-kilden.
+  Scriptet henter Fellesforbundets kurs + konferanser for Nordland (samme filter
+  som fellesforbundet.no; strukturert JSON innebygd i kildesidens HTML), skriver
+  `src/data/arrangementer.json`, og committer. Bygges statisk. På /aktuelt vises
+  det **side ved side** med Facebook-feeden (Facebook til venstre, kurs/konferanser
+  til høyre, kompakt liste). Forsidens Aktuelt-seksjon har et teaser-kort som lenker
+  videre. Facebook-arrangementer kan IKKE hentes automatisk (innloggingsvegg /
+  krever Graph API-token) — derfor kun Fellesforbundet-kilden.
 
 ---
 

@@ -25,10 +25,10 @@ const arrangementer = (arrangementData.arrangementer ?? [])
     <div class="container section">
       <span class="hero-pill" data-en="News">Aktuelt</span>
       <h1 class="h1" style="max-width:16ch; margin-top:18px;" data-en="News from the branch">Nytt fra avdelingen</h1>
-      <p class="lead" style="max-width:58ch; margin-top:20px;"
-         data-en="Updates on agreements, events and member info. The branch posts current news on Facebook.">
-        Oppdateringer om tariff, arrangementer og medlemsinfo. Avdelingen legger ut løpende nyheter
-        på Facebook.
+      <p class="lead" style="max-width:60ch; margin-top:20px;"
+         data-en="Follow the branch's news and updates on Facebook — and see upcoming courses and conferences in Nordland from Fellesforbundet, pulled automatically.">
+        Følg avdelingens nyheter og oppdateringer på Facebook — og se kommende kurs og konferanser
+        i Nordland fra Fellesforbundet, hentet automatisk.
       </p>
     </div>
   </div>
@@ -116,9 +116,9 @@ const arrangementer = (arrangementData.arrangementer ?? [])
 </Layout>
 
 <style>
-  .fb-embed { border: 1px solid var(--kantlinje); border-radius: 4px; overflow: hidden; background: var(--flate); min-height: 320px; display: flex; }
+  .fb-embed { border: 1px solid var(--kantlinje); border-radius: 4px; overflow: hidden; background: var(--flate); min-height: 320px; display: flex; justify-content: center; }
   .fb-placeholder { margin: auto; text-align: center; padding: 40px 24px; }
-  .fb-embed iframe { display: block; width: 100%; border: 0; }
+  .fb-embed iframe { display: block; max-width: 100%; border: 0; }
 </style>
 
 <script>
@@ -129,11 +129,14 @@ const arrangementer = (arrangementData.arrangementer ?? [])
     if (!wrap || lastet) return;
     lastet = true;
     const href = wrap.getAttribute('data-href') || '';
+    // Facebook-plugin har fast pikselbredde (min 180, maks 500). Mål containeren
+    // og be Facebook rendre til den bredden, ellers kuttes innlegget på mobil.
+    const bredde = Math.max(180, Math.min(500, Math.floor(wrap.clientWidth) || 500));
     const src = 'https://www.facebook.com/plugins/page.php?href=' + encodeURIComponent(href)
-      + '&tabs=timeline&width=500&height=720&small_header=true&adapt_container_width=true&hide_cover=false&show_facepile=false';
+      + '&tabs=timeline&width=' + bredde + '&height=720&small_header=true&adapt_container_width=true&hide_cover=false&show_facepile=false';
     const ifr = document.createElement('iframe');
     ifr.src = src;
-    ifr.style.cssText = 'width:100%;height:720px;border:0;overflow:hidden;';
+    ifr.style.cssText = 'width:' + bredde + 'px;max-width:100%;height:720px;border:0;overflow:hidden;';
     ifr.setAttribute('scrolling', 'no');
     ifr.setAttribute('frameborder', '0');
     ifr.setAttribute('allowfullscreen', 'true');
