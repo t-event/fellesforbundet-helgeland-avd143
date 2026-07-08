@@ -80,17 +80,26 @@ ICS-lenken for Umbukta-kalenderens Outlook-kalender lagres **KUN** her som GitHu
 
 Nettsiden bruker [Web3Forms](https://web3forms.com) som skjematjeneste — gratis, ingen backend nødvendig.
 
-### Opprette konto
+### Admin-konto vs. mottaker (viktig)
 
-1. Gå til [web3forms.com](https://web3forms.com)
-2. Registrer deg med e-postadressen `avd143@fellesforbundet.org`
+Web3Forms har to atskilte «adresser»:
+
+- **Admin-/innloggingskonto:** `hyttebooking.ffh143@gmail.com` — dette er kontoen som Web3Forms administreres fra. Mathias (T-Event) har tilgang. Access key-en hører til denne kontoen.
+- **Mottaker av skjema-e-postene:** **avdelingens e-post** (`avd143@fellesforbundet.org`) — settes som «Send Email To» i Web3Forms-dashbordet, så alle innsendinger havner i avdelingens innboks, ikke i gmail-kontoen.
+
+Slik at Mathias styrer/administrerer oppsettet, mens selve henvendelsene går til avdelingen.
+
+### Opprette / endre konto
+
+1. Gå til [web3forms.com](https://web3forms.com) og logg inn med `hyttebooking.ffh143@gmail.com`
+2. Sett **«Send Email To»** til avdelingens e-post i skjema-innstillingene
 3. Kopier **Access Key** (en lang streng, f.eks. `abc123-...`)
 4. Legg denne inn som GitHub-hemmeligheten `WEB3FORMS_KEY` (se trinn 2 over)
 5. Legg den også inn i `.env`-filen lokalt (kopier `.env.example` til `.env` og fyll inn)
 
 ### Hva Web3Forms gjør
 
-- Tar imot booking-, kontakt- og påskeskjemaet og sender e-post til kontorets innboks (Web3Forms-kontoens e-post)
+- Tar imot booking-, kontakt- og påskeskjemaet og sender e-post til **avdelingens innboks** (mottakeren satt i dashbordet, ikke admin-gmailen)
 - Den som booker ser betalingsinfo på kvitteringssiden (`/takk`) umiddelbart. Det sendes **ingen automatisk** e-postkvittering — Web3Forms' autosvar er en betalt funksjon. Kontoret følger opp manuelt på e-post.
 
 Gratis-planen tillater **250 skjemainnsendinger per måned** — mer enn nok for hyttetrafikken.
