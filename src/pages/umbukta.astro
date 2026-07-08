@@ -32,7 +32,7 @@ const fasiliteter = [
   { ikon: 'flame', tittel: 'Oppvarming', tittel_en: 'Heating', beskrivelse: 'Varmepumpe og vedovn.', beskrivelse_en: 'Heat pump and wood stove.' },
   { ikon: 'tv', tittel: 'WiFi og TV', tittel_en: 'WiFi and TV', beskrivelse: 'Mobildekning og internettilgang.', beskrivelse_en: 'Mobile coverage and internet access.' },
   { ikon: 'car-front', tittel: 'Parkering', tittel_en: 'Parking', beskrivelse: 'Gratis — plass til 4–5 biler.', beskrivelse_en: 'Free — space for 4–5 cars.' },
-  { ikon: 'sailboat', tittel: 'Naust med båt', tittel_en: 'Boathouse with boat', beskrivelse: 'Aluminiumsbåt med liten motor kan lånes. Ta med eget drivstoff — PLASSHOLDER: motoren bruker [drivstofftype bekreftes].', beskrivelse_en: 'Aluminium boat with small motor to borrow. Bring your own fuel — PLACEHOLDER: motor uses [fuel type to be confirmed].' },
+  { ikon: 'sailboat', tittel: 'Naust med båt', tittel_en: 'Boathouse with boat', beskrivelse: 'Aluminiumsbåt med liten motor kan lånes. Ta med eget drivstoff — 98 oktan, helst alkylatbensin (4-takt).', beskrivelse_en: 'Aluminium boat with small motor to borrow. Bring your own fuel — 98 octane, preferably alkylate petrol (4-stroke).' },
   { ikon: 'dog', tittel: 'Hunder tillatt', tittel_en: 'Dogs allowed', beskrivelse: 'Hunder er velkomne — men ikke i sofa eller senger.', beskrivelse_en: 'Dogs are welcome — but not on the sofa or beds.' },
   { ikon: 'ticket', tittel: 'Spill og fritid', tittel_en: 'Games & leisure', beskrivelse: 'Kortstokk og yatzy finnes på hytta.', beskrivelse_en: 'Playing cards and Yahtzee are available at the cabin.' },
 ];
@@ -324,7 +324,7 @@ const faq = [
     <div class="section grid grid-2" style="padding-top:0; gap:clamp(24px,4vw,44px); align-items:start;">
       <div style="display:flex; flex-direction:column; gap:16px;">
         <div style="border-radius:4px; overflow:hidden; display:flex; flex-direction:column;">
-          <div style="min-height:300px;">
+          <div style="height:320px;">
             <MapEmbed src={`https://www.google.com/maps?q=${UMBUKTA.lat},${UMBUKTA.lon}&hl=no&z=14&t=k&output=embed`} title="Kart til Umbukta-hytta (Google Maps)" />
           </div>
           <div style="padding:12px 16px; background:var(--flate); border-top:1px solid var(--kantlinje); display:flex; align-items:baseline; gap:12px; flex-wrap:wrap;">
@@ -339,8 +339,8 @@ const faq = [
         </div>
         <!-- Naustet med båten (eget satellittkart) -->
         <div style="border-radius:4px; overflow:hidden; display:flex; flex-direction:column;">
-          <div style="min-height:200px;">
-            <MapEmbed src={`https://www.google.com/maps?q=${UMBUKTA.naustLat},${UMBUKTA.naustLon}&hl=no&z=17&t=k&output=embed`} title="Kart til naustet med båt (Google Maps)" />
+          <div style="height:320px;">
+            <MapEmbed src={`https://www.google.com/maps?q=${UMBUKTA.naustLat},${UMBUKTA.naustLon}&hl=no&z=16&t=k&output=embed`} title="Kart til naustet med båt (Google Maps)" />
           </div>
           <div style="padding:12px 16px; background:var(--flate); border-top:1px solid var(--kantlinje); display:flex; align-items:baseline; gap:12px; flex-wrap:wrap;">
             <b style="font-size:13.5px;" data-en="Boathouse with boat">Naust med båt</b>

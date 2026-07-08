@@ -11,19 +11,18 @@ const megaKolonner = [
     { href: '/tillitsvalgte',  label: 'Tillitsvalgte',  en: 'Shop stewards' },
     { href: '/nyttige-lenker', label: 'Nyttige lenker', en: 'Useful links' },
   ] },
+  { tittel: 'Avdelingen', en: 'The branch', lenker: [
+    { href: '/om-oss',  label: 'Om oss',      en: 'About us' },
+    { href: '/aktuelt', label: 'Aktuelt',     en: 'News' },
+    { href: '/kontakt', label: 'Kontakt',     en: 'Contact' },
+    { href: MIN_SIDE,   label: 'Min Side ↗',  en: 'My Page ↗', external: true },
+  ] },
   { tittel: 'Hytteutleie', en: 'Cabin rental', lenker: [
     { href: '/hytter',          label: 'Begge hyttene',          en: 'Both cabins' },
     { href: '/umbukta',         label: 'Hytte i Umbukta',        en: 'Umbukta cabin' },
     { href: ELSVATN_INATUR_URL, label: 'Hytte i Øvre Elsvatn ↗', en: 'Øvre Elsvatn cabin ↗', external: true },
     { href: '/turtips',         label: 'Turtips Umbukta',        en: 'Hiking tips (Umbukta)' },
     { href: '/hjelp',           label: 'Hjelp – hytteutleie',    en: 'Help – cabin rental' },
-  ] },
-  { tittel: 'Avdelingen', en: 'The branch', lenker: [
-    { href: '/',        label: 'Hjem',        en: 'Home' },
-    { href: '/om-oss',  label: 'Om oss',      en: 'About us' },
-    { href: '/aktuelt', label: 'Aktuelt',     en: 'News' },
-    { href: '/kontakt', label: 'Kontakt',     en: 'Contact' },
-    { href: MIN_SIDE,   label: 'Min Side ↗',  en: 'My Page ↗', external: true },
   ] },
 ] as any[];
 
@@ -44,7 +43,7 @@ const currentPath = Astro.url.pathname.replace(base, '').replace(/\/$/, '') || '
     <div class="container topbar-inner">
       <nav class="topbar-nav" aria-label="Avdelings-snarveier">
         <a href={`${base}/om-oss`} class={currentPath === '/om-oss' ? 'active' : ''} data-en="About the branch">Om avdelingen</a>
-        <a href={`${base}/tillitsvalgte`} class={currentPath === '/tillitsvalgte' ? 'active' : ''} data-en="For shop stewards">For tillitsvalgte</a>
+        <a href={`${base}/tillitsvalgte`} class={currentPath === '/tillitsvalgte' ? 'active' : ''} data-en="Shop stewards">Tillitsvalgte</a>
         <a href={MIN_SIDE} target="_blank" rel="noopener noreferrer" data-en="My Page ↗">Min Side ↗</a>
       </nav>
       <div class="lang" role="group" aria-label="Velg språk / Choose language">

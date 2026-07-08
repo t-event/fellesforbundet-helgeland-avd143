@@ -298,9 +298,10 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 /* Forsiden har ingen brødsmule å blø opp over — plassér motivet så det ikke kuttes.
    Høyere spesifisitet (to klasser) så den vinner over .hero-motif under. */
 .hero-motif.hero-motif--forside { top: 0; }
-/* Versal hero-overskrift — sterkere merkevare-trykk (fellesforbundet.no-stil).
-   Litt løsere tegnavstand enn små bokstaver, som ellers blir trange i versaler. */
-.hero-dark .h1 { text-transform: uppercase; letter-spacing: -0.005em; }
+/* Versal «parole» KUN på forsiden (profilhåndbok 2.2: store bokstaver skal brukes
+   på forsidenivå og ikke i alle titler — ellers mister det effekten, maks 3 linjer).
+   Undersidenes hero-overskrifter står derfor i vanlig setningsform. */
+.hero-forside .h1 { text-transform: uppercase; letter-spacing: -0.005em; }
 /* Sirkel-motiv (merkevare-dekor) — blør ut av øvre høyre hjørne, bak innholdet */
 .circle-motif { display: block; height: auto; }
 .hero-motif { position: absolute; top: -64px; right: -48px; width: clamp(140px, 15vw, 210px); opacity: .9; z-index: 0; pointer-events: none; }
@@ -559,8 +560,11 @@ textarea.input { resize: vertical; min-height: 110px; }
   /* Skjul "HYTTEUTLEIE"-teksten i header — logoen er bred nok */
   .brand-sub { display: none; }
 
-  /* Begrens logobredde på mobil */
-  .brand-logo { height: 34px; max-width: 180px; object-fit: contain; }
+  /* Mindre logo på mobil. Ingen max-width/contain — det gir letterboxing som
+     flytter ordmerket, slik at avdelingsnavnet ikke flukter. */
+  .brand-logo { height: 32px; }
+  /* Mindre logo → mindre innrykk så «Helgeland Avd. 143» fortsatt flukter med ordmerket */
+  .brand-avd, .site-footer .brand-avd { padding-left: 40px; }
 }
 
 @media (max-width: 600px) {
@@ -639,6 +643,12 @@ textarea.input { resize: vertical; min-height: 110px; }
 /* Person-/tillitsvalgtkort */
 .person { display: flex; gap: 14px; align-items: flex-start; background: var(--flate); border: 1px solid var(--kantlinje); border-radius: 4px; padding: 18px; }
 .person-avatar { flex: none; width: 46px; height: 46px; border-radius: 50%; background: var(--morkbla); color: #fff; font-weight: 800; font-size: 15px; display: flex; align-items: center; justify-content: center; }
+/* Region-variant (ungdomssekretær) — mørkt kort som skiller henne fra avdelingens
+   valgte/ansatte. Samme størrelse som øvrige kort, men navy bakgrunn. */
+.person--region { background: var(--morkbla); border-color: var(--morkbla); }
+.person--region b { color: #fff; }
+.person--region .muted { color: rgba(255,255,255,.72); }
+.person--region .person-avatar { background: var(--lysgronn); color: var(--morkbla); }
 
 /* CTA-band */
 .cta-band { background: linear-gradient(135deg, var(--morkbla) 0%, #2a2657 100%); border-radius: 4px; padding: clamp(32px, 5vw, 56px); display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 28px; }

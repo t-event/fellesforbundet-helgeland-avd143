@@ -6,10 +6,10 @@ import { KONTAKT, ANSATTE, STYRE, FF_LENKER } from '../config.ts';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
 const fordeler = [
-  { ikon: 'handshake', tittel: 'Lønn & tariff',     tittel_en: 'Pay & agreements', body: 'Vi forhandler tariffavtaler og sikrer deg riktig lønn og ordnede arbeidsforhold.', body_en: 'We negotiate collective agreements and secure fair pay and proper working conditions.' },
-  { ikon: 'scale', tittel: 'Råd og støtte på jobb', tittel_en: 'Advice and backing at work', body: 'Vi gir råd om lønn, arbeidsforhold og rettigheter — og stiller opp i saker der det trengs.', body_en: 'We advise on pay, working conditions and rights — and step in on cases where it is needed.' },
-  { ikon: 'graduation-cap', tittel: 'Kurs & skolering',  tittel_en: 'Courses & training', body: 'Tilbud om kurs for medlemmer og tillitsvalgte gjennom hele året.', body_en: 'Courses for members and shop stewards throughout the year.' },
-  { ikon: 'mountain', tittel: 'Medlemsfordeler',   tittel_en: 'Member benefits',   body: 'Forsikring, rabatter og leie av forbundets fjellhytter til medlemspris.', body_en: 'Insurance, discounts and rental of the union\'s mountain cabins at member prices.' },
+  { ikon: 'handshake', href: '/lonn-tariff', tittel: 'Lønn & tariff',     tittel_en: 'Pay & agreements', body: 'Vi forhandler tariffavtaler og sikrer deg riktig lønn og ordnede arbeidsforhold.', body_en: 'We negotiate collective agreements and secure fair pay and proper working conditions.' },
+  { ikon: 'scale', href: '/tillitsvalgte', tittel: 'Råd og støtte på jobb', tittel_en: 'Advice and backing at work', body: 'Vi gir råd om lønn, arbeidsforhold og rettigheter — og stiller opp i saker der det trengs.', body_en: 'We advise on pay, working conditions and rights — and step in on cases where it is needed.' },
+  { ikon: 'graduation-cap', href: '/nyttige-lenker', tittel: 'Kurs & skolering',  tittel_en: 'Courses & training', body: 'Tilbud om kurs for medlemmer og tillitsvalgte gjennom hele året.', body_en: 'Courses for members and shop stewards throughout the year.' },
+  { ikon: 'mountain', href: '/hytter', tittel: 'Medlemsfordeler',   tittel_en: 'Member benefits',   body: 'Forsikring, rabatter og leie av forbundets fjellhytter til medlemspris.', body_en: 'Insurance, discounts and rental of the union\'s mountain cabins at member prices.' },
 ];
 ---
 
@@ -20,14 +20,14 @@ const fordeler = [
 >
 
   <!-- HERO -->
-  <div class="hero-dark">
+  <div class="hero-dark hero-forside">
     <CircleMotif variant="mork" class="hero-motif hero-motif--forside" />
     <div class="container section">
       <div class="hero-grid" style="align-items:center;">
         <div>
           <span class="hero-pill" data-en="Norway's largest union in the private sector">Norges største forbund i privat sektor</span>
-          <h1 class="h1" style="margin-top:18px;" data-en="Standing together — for a safe working life in Helgeland">
-            Vi står sammen — for et trygt arbeidsliv på Helgeland
+          <h1 class="h1" style="margin-top:18px;" data-en="Standing together for a safe working life">
+            Vi står sammen for et trygt arbeidsliv
           </h1>
           <p class="lead" style="max-width:54ch; margin-top:20px;"
              data-en="Fellesforbundet branch 143 organises members in industry, construction, transport and service across all of Helgeland — from Mo i Rana and the inland out to the Helgeland coast. We negotiate pay, advise and back our members, and stand together when it matters.">
@@ -66,11 +66,13 @@ const fordeler = [
       <h2 class="h2" style="margin:6px 0 36px;" data-en="We've got your back">Vi har ryggen din</h2>
       <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:18px;">
         {fordeler.map(f => (
-          <div class="benefit">
+          <a href={`${base}${f.href}`} class="benefit benefit-link">
             <span class="benefit-ic" aria-hidden="true"><Icon name={f.ikon} size={22} /></span>
-            <h3 class="h3" style="font-size:18px; margin-bottom:6px;" data-en={f.tittel_en}>{f.tittel}</h3>
+            <h3 class="h3" style="font-size:18px; margin-bottom:6px; display:flex; align-items:center; gap:6px;" data-en={f.tittel_en}>
+              {f.tittel}<span class="benefit-pil" aria-hidden="true">→</span>
+            </h3>
             <p class="muted" style="font-size:14.5px; line-height:1.6;" data-en={f.body_en}>{f.body}</p>
-          </div>
+          </a>
         ))}
       </div>
     </div>
@@ -97,17 +99,16 @@ const fordeler = [
       </div>
       <figure class="testimonial">
         <span class="testimonial-mark" aria-hidden="true">&ldquo;</span>
-        <blockquote class="testimonial-quote" data-en="Here we'll feature a quote from a member — about what it has meant to stand together in the union.">
-          Her kommer et sitat fra et medlem — om hva det har betydd å stå sammen i fagforeningen.
+        <blockquote class="testimonial-quote" data-en="The day I organised, I understood that I wasn't standing alone. Together we get through things we'd never manage on our own — that's why I'm a member.">
+          Den dagen jeg ble organisert, forsto jeg at jeg ikke sto alene. Sammen får vi gjennomslag vi aldri hadde klart hver for oss — det er derfor jeg er med.
         </blockquote>
         <figcaption class="testimonial-by">
-          <span class="testimonial-avatar" aria-hidden="true"><Icon name="user" size={20} /></span>
+          <span class="testimonial-avatar" aria-hidden="true">MT</span>
           <span>
-            <b data-en="Name coming">Navn kommer</b>
-            <span class="muted" data-en="Member of the branch">Medlem i avdelingen</span>
+            <b>Mathias Tustervatn</b>
+            <span class="muted" data-en="Member and shop steward in the branch">Medlem og tillitsvalgt i avdelingen</span>
           </span>
         </figcaption>
-        <span class="testimonial-flag" data-en="Placeholder — a real member quote will be added">Plassholder — ekte medlemssitat kommer</span>
       </figure>
     </div>
   </div>
@@ -180,8 +181,8 @@ const fordeler = [
           Meld deg inn på under fem minutter. Du blir en del av over 180 000 medlemmer i Fellesforbundet.
         </p>
       </div>
-      <a href={FF_LENKER.medlemskap} target="_blank" rel="noopener noreferrer" class="btn btn-primary" data-en="Become a member →">
-        Bli medlem →
+      <a href={FF_LENKER.medlemskap} target="_blank" rel="noopener noreferrer" class="btn btn-primary" data-en="Become a member ↗">
+        Bli medlem ↗
       </a>
     </div>
   </div>
