@@ -136,9 +136,13 @@ const verktoy = [
         ))}
       </div>
 
-      <!-- Ungdomssekretær (regionansatt) — mørkere kort viser at hun jobber for
-           ungdommen i Fellesforbundet regionalt, ikke er valgt/ansatt i avdelingen. -->
-      <div style="display:grid; grid-template-columns:repeat(auto-fill,minmax(210px,1fr)); gap:14px; margin-top:14px;">
+      <!-- Skillestrek: markerer at Rikke (regionansatt ungdomssekretær) står
+           adskilt fra de valgte medlemmene i ungdomsutvalget. -->
+      <hr style="border:none; border-top:1px solid var(--kantlinje); margin:22px 0 0;" />
+
+      <!-- Ungdomssekretær (regionansatt) — jobber for ungdommen i Fellesforbundet
+           regionalt, ikke valgt/ansatt i avdelingen. -->
+      <div style="display:grid; grid-template-columns:repeat(auto-fill,minmax(210px,1fr)); gap:14px; margin-top:16px;">
         <div class="person person--region">
           <span class="person-avatar" aria-hidden="true">{initialer(UNGDOMSSEKRETAR.navn)}</span>
           <div>
