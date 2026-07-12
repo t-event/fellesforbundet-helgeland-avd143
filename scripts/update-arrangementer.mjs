@@ -37,7 +37,11 @@ function unescapeHtml(s) {
 }
 
 async function hent(url) {
-  const res = await fetch(url, { headers: { 'User-Agent': UA, 'Accept-Language': 'nb,no;q=0.9' } });
+  // Timeout så en treg/hengende kilde ikke holder jobben til Actions' 6-timersgrense.
+  const res = await fetch(url, {
+    headers: { 'User-Agent': UA, 'Accept-Language': 'nb,no;q=0.9' },
+    signal: AbortSignal.timeout(15000),
+  });
   if (!res.ok) throw new Error(`HTTP ${res.status} for ${url}`);
   return res.text();
 }

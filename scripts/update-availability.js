@@ -18,10 +18,12 @@ if (!ICS_URL) {
 
 const MAKS_REDIRECTS = 5;
 
+const HENT_TIMEOUT_MS = 15000;
+
 function fetch(url, redirectsIgjen = MAKS_REDIRECTS) {
   return new Promise((resolve, reject) => {
     const lib = url.startsWith('https') ? https : http;
-    lib.get(url, { headers: { 'User-Agent': 'FFH-Availability-Bot/1.0' } }, (res) => {
+    const req = lib.get(url, { headers: { 'User-Agent': 'FFH-Availability-Bot/1.0' } }, (res) => {
       // Følg redirect — men med et tak, så en redirect-loop ikke kjører i det uendelige.
       if (res.statusCode >= 300 && res.statusCode < 400 && res.headers.location) {
         res.resume(); // tøm responsen så socketen kan gjenbrukes
@@ -41,7 +43,13 @@ function fetch(url, redirectsIgjen = MAKS_REDIRECTS) {
       res.on('data', chunk => (data += chunk));
       res.on('end', () => resolve(data));
       res.on('error', reject);
-    }).on('error', reject);
+    });
+    req.on('error', reject);
+    // Timeout så en treg/hengende kilde ikke holder jobben til Actions' 6-timersgrense.
+    // 'timeout'-eventet avbryter ikke forespørselen av seg selv — vi må destroye den.
+    req.setTimeout(HENT_TIMEOUT_MS, () => {
+      req.destroy(new Error(`Tidsavbrudd etter ${HENT_TIMEOUT_MS} ms`));
+    });
   });
 }
 

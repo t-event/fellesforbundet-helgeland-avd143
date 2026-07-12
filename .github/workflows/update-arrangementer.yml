@@ -8,6 +8,7 @@ on:
 
 permissions:
   contents: write  # Nødvendig for å committe src/data/arrangementer.json
+  actions: write   # Nødvendig for å utløse deploy-workflowen etter push
 
 jobs:
   update:
@@ -27,9 +28,25 @@ jobs:
         run: node scripts/update-arrangementer.mjs
 
       - name: Commit og push (kun hvis endret)
+        id: commit
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add src/data/arrangementer.json
-          git diff --staged --quiet || git commit -m "chore: oppdater arrangementer [$(date -u +'%Y-%m-%d %H:%M UTC')]"
-          git diff HEAD~1 HEAD --quiet 2>/dev/null || git push
+          if git diff --staged --quiet; then
+            echo "Ingen endring — hopper over commit/push/deploy."
+            echo "pushed=false" >> "$GITHUB_OUTPUT"
+          else
+            git commit -m "chore: oppdater arrangementer [$(date -u +'%Y-%m-%d %H:%M UTC')]"
+            git push
+            echo "pushed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      # Push med GITHUB_TOKEN utløser IKKE andre workflows (GitHubs løkkevern),
+      # så deploy.yml må startes eksplisitt — ellers når ikke nye data den
+      # publiserte siden før neste menneskelige push.
+      - name: Utløs deploy av siden
+        if: steps.commit.outputs.pushed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run deploy.yml --ref main
