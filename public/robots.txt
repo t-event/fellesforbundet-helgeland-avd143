@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://t-event.github.io/fellesforbundet-helgeland-avd143/sitemap-index.xml
+Sitemap: https://ffh143.no/sitemap-index.xml

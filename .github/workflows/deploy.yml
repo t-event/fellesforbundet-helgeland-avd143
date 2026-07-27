@@ -33,11 +33,12 @@ jobs:
       - name: Bygg statisk side
         run: npm run build
         env:
-          # SITE = kun origin (uten understi). Bytt når eget domene er kjøpt:
-          #   SITE: https://hytteutleie-ffh143.no
-          #   BASE: /
-          SITE: https://t-event.github.io
-          BASE: /fellesforbundet-helgeland-avd143
+          # SITE = kun origin (uten understi). Eget domene aktivt (ffh143.no via
+          # Cloudflare → GitHub Pages), så BASE er rot. Gammel github.io-adresse:
+          #   SITE: https://t-event.github.io
+          #   BASE: /fellesforbundet-helgeland-avd143
+          SITE: https://ffh143.no
+          BASE: /
           PUBLIC_WEB3FORMS_KEY: ${{ secrets.WEB3FORMS_KEY }}
 
       - name: Last opp Pages-artefakt

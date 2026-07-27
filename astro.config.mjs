@@ -4,8 +4,8 @@ import sitemap from '@astrojs/sitemap';
 // Sett SITE og BASE via env-variabler i GitHub Actions.
 // SITE = kun origin (scheme + vert), uten understi. Astro legger på BASE selv.
 // Standard er GitHub Pages-origin med repo-stien som BASE.
-const SITE = process.env.SITE || 'https://t-event.github.io';
-const BASE = process.env.BASE || '/fellesforbundet-helgeland-avd143';
+const SITE = process.env.SITE || 'https://ffh143.no';
+const BASE = process.env.BASE || '/';
 
 export default defineConfig({
   site: SITE,
