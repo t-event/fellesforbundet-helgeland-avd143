@@ -1,6 +1,6 @@
 # SPEC.md — Bookingnettside for Fellesforbundet Helgeland
 
-> Dokument til godkjenning. Etter grønt lys begynner bygging.
+> Oppdatert som as-built-dokumentasjon — siden er bygget, live på **ffh143.no** og i drift.
 
 ---
 
@@ -9,9 +9,9 @@
 Statisk nettside for Fellesforbundet Helgeland (avd. 143): **avdelingens hjemmeside** og **hyttebooking** for de to hyttene. Ingen database, ingen backend, ingen betalingsløsning på nettsiden. Alt hostes på GitHub Pages i **ett repo / ett Astro-prosjekt**.
 
 **GitHub-repo:** `https://github.com/t-event/fellesforbundet-helgeland-avd143`  
-**Domene:** `ffh143.no` (bestilt via domene.no — aktivt når faktura er betalt). Ved endelig lansering: forside på `ffh143.no`, hyttebooking via videresending `hyttebooking.ffh143.no`.  
-**Pages-URL midlertidig:** `t-event.github.io/fellesforbundet-helgeland-avd143`  
-**Status:** Avdelingens hovedside er **fronten** (rot `/`). Hytteutleia er en seksjon under «Hytteutleie ▾» i menyen (`/hytter`, `/umbukta`, `/turtips`, `/hjelp`). Én felles meny/footer for hele sida (ingen variant-splitt). MERK: noen plassholdere gjenstår (6 ansatte = navn, lokal kontingentsats). Domene `ffh143.no` ikke aktivt ennå.
+**Domene:** `ffh143.no` — live (registrert hos domene.no, navnetjenere hos Cloudflare → GitHub Pages, HTTPS). Fram til offentlig lansering ligger siden bak passord-gate (Cloudflare Access).  
+**Gammel Pages-URL:** `t-event.github.io/fellesforbundet-helgeland-avd143` (videresender 301 til ffh143.no)  
+**Status:** Avdelingens hovedside er **fronten** (rot `/`). Hytteutleia er en seksjon under «Hytteutleie ▾» i menyen (`/hytter`, `/umbukta`, `/turtips`, `/hjelp`). Én felles meny/footer for hele sida (ingen variant-splitt). MERK: gjenstående plassholder = portrettbilder av folk (valgfritt, se [PLACEHOLDERS.md](PLACEHOLDERS.md)). Domenet er live; venter på avdelingens klarsignal for å fjerne passord-gaten og gå offentlig.
 
 ---
 
@@ -60,7 +60,7 @@ Avdelingens hovedside er nå **den offentlige fronten** (rot `/`), bygget fra de
 - **Én felles footer** (`Footer.astro`): Avdelingen, Hyttene, Kontakt + juridisk bunnlinje.
 - Tidligere skjult `/forhandsvisning`-struktur er fjernet (sidene flyttet til rot, `noindex` + sitemap-filter borte).
 
-**Gjenstår (plassholdere/ekstern):** 6 ansatte (navn — plassholder vises), lokal kontingentsats, domene `ffh143.no` + ev. `hyttebooking.ffh143.no`-videresending (oppdater `CNAME`, `SITE`/`BASE`, robots.txt når aktivt).
+**Gjenstår (plassholdere/ekstern):** portrettbilder av folk (valgfritt — initial-avatarer brukes ellers, se [PLACEHOLDERS.md](PLACEHOLDERS.md)), lokal kontingentsats (ukjent — lenkes til kilde). Domenet `ffh143.no` er live (Cloudflare → GitHub Pages).
 
 ---
 

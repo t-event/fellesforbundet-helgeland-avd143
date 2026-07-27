@@ -15,7 +15,7 @@ Avdelingens nettside: **avdelingens hjemmeside** (forside, medlemskap, aktuelt, 
 | `/personvern`, `/cookies`, `/tilgjengelighet` | Personvern, cookies, tilgjengelighetserklæring |
 
 - Avdelingens hovedside er **fronten** på rot. Hytteutleia er en seksjon under «Hytteutleie ▾» i menyen. Én felles meny + footer for hele sida.
-- **Planlagt domene:** `ffh143.no` (ikke aktivt ennå — se seksjon 5). Ev. `hyttebooking.ffh143.no` som videresending til hytteseksjonen.
+- **Domene:** **`ffh143.no`** er live (navnetjenere hos Cloudflare → GitHub Pages, HTTPS). Fram til offentlig lansering ligger siden bak en passord-gate (Cloudflare Access) — se seksjon 5.
 
 ---
 
@@ -25,7 +25,7 @@ Avdelingens nettside: **avdelingens hjemmeside** (forside, medlemskap, aktuelt, 
 2. [GitHub-hemmeligheter (secrets)](#2-github-hemmeligheter-secrets)
 3. [Web3Forms-konto](#3-web3forms-konto)
 4. [GitHub Pages aktivering](#4-github-pages-aktivering)
-5. [Eget domene (valgfritt)](#5-eget-domene-valgfritt)
+5. [Eget domene](#5-eget-domene)
 6. [Kalendersynkronisering](#6-kalendersynkronisering)
 7. [Kontorutiner — bookingflyt](#7-kontorutiner--bookingflyt)
 8. [Påske-loddtrekning](#8-påske-loddtrekning)
@@ -114,42 +114,36 @@ Gratis-planen tillater **250 skjemainnsendinger per måned** — mer enn nok for
 
 Siden vil nå bygges og publiseres automatisk ved hvert push til `main`-grenen. Første gang tar det ca. 1–2 minutter.
 
-**URL uten eget domene:**
-`https://t-event.github.io/fellesforbundet-helgeland-avd143`
+**Live URL:** `https://ffh143.no` (eget domene, se seksjon 5). Den gamle Pages-adressen `t-event.github.io/fellesforbundet-helgeland-avd143` videresender (301) hit.
 
 ---
 
 ## 5. Eget domene
 
-Domenet **`ffh143.no`** er bestilt via domene.no (aktivt når faktura er betalt). Forsida skal ligge på `ffh143.no`, og `hyttebooking.ffh143.no` settes opp som videresending til hytteseksjonen. Slik kobler du domenet til når det er aktivt:
+Domenet **`ffh143.no`** er registrert hos domene.no og **live**. Navnetjenerne er flyttet til **Cloudflare**, som står foran GitHub Pages (DNS + proxy + HTTPS). Slik er det satt opp som as-built — og hva du gjør hvis noe må endres:
 
-### Oppdater i kodebasen
+### DNS (hos Cloudflare)
 
-Åpne [public/CNAME](public/CNAME) og erstatt plassholder-domenet med det faktiske domenenavnet.
+- Apex `ffh143.no` → fire A-poster mot GitHub Pages: `185.199.108.153`, `.109.153`, `.110.153`, `.111.153`
+- `www` → CNAME `t-event.github.io`
+- **E-post @ffh143.no beholdes:** MX (`mail.ffh143.no`), `mail`/`webmail`/`autodiscover`/`autoconfig` m.fl. + SPF/DKIM/DMARC peker fortsatt på domene.no. **Disse må stå «DNS only» (grå sky)** — Cloudflare-proxy ødelegger e-post.
+- Kun `ffh143.no` + `www` er proxet (oransje sky), med SSL-modus **Full (strict)**. Alt annet er grått.
 
-Åpne [public/robots.txt](public/robots.txt) og oppdater sitemap-URL.
+### Kode (allerede satt)
 
-Oppdater [astro.config.mjs](astro.config.mjs) — legg inn domenet som standard for `SITE` og sett `BASE` til `/`.
+- [public/CNAME](public/CNAME) = `ffh143.no`
+- [astro.config.mjs](astro.config.mjs) + [.github/workflows/deploy.yml](.github/workflows/deploy.yml): `SITE=https://ffh143.no`, `BASE=/`
+- [public/robots.txt](public/robots.txt): sitemap-URL på `ffh143.no`
+- GitHub → Settings → Pages → Custom domain = `ffh143.no`, **Enforce HTTPS** på (Let's Encrypt-cert utstedt)
 
-### DNS-oppsett hos domeneregistrar
+### Passord-gate før lansering (Cloudflare Access)
 
-Legg inn disse DNS-postene hos der domenet er registrert:
+Fram til avdelingen gir klarsignal ligger hele siden bak en **Cloudflare Access**-innlogging (self-hosted app på `ffh143.no` + `www`, engangskode på e-post). Kun styret + admin slipper inn, og Google kan ikke indeksere siden så lenge gaten står.
 
-```
-A     @    185.199.108.153
-A     @    185.199.109.153
-A     @    185.199.110.153
-A     @    185.199.111.153
-CNAME www  t-event.github.io
-```
+**På lanseringsdagen:**
 
-### GitHub Pages — legg til domenet
-
-1. **GitHub → repoet → Settings → Pages**
-2. Under **Custom domain**: skriv inn domenenavnet
-3. Huk av **Enforce HTTPS**
-
-Det tar 15–60 minutter for DNS å propagere første gang.
+1. Cloudflare → Zero Trust → Access → Applications → **deaktiver/slett** appen → siden blir offentlig.
+2. Sett opp Google Search Console (se seksjon 10).
 
 ---
 
@@ -304,7 +298,7 @@ cp .env.example .env
 
 # Start utviklingsserver
 npm run dev
-# Åpner på http://localhost:4321/fellesforbundet-helgeland-avd143/
+# Åpner på http://localhost:4321/
 
 # Bygg for produksjon
 npm run build
@@ -319,14 +313,14 @@ npm run preview
 CALENDAR_ICS_URL="<ics-lenken>" node scripts/update-availability.js
 ```
 
-### Legg til siden i Google Search Console (valgfritt)
+### Legg til siden i Google Search Console (ved offentlig lansering)
 
-Etter at siden er oppe og domenet er satt:
+Gjøres **først når passord-gaten (Cloudflare Access) er slått av** — så lenge gaten står, kan ikke Google crawle siden.
 
 1. Gå til [Google Search Console](https://search.google.com/search-console)
-2. Legg til eiendom: domenet ditt
-3. Verifiser eierskap (DNS TXT-post eller HTML-fil)
-4. Send inn sitemap: `https://dittdomene.no/sitemap-index.xml`
+2. Legg til eiendom: **domenet** `ffh143.no` (Domain-property, ikke URL-prefiks)
+3. Verifiser eierskap via **DNS TXT-post** (legges hos Cloudflare)
+4. Send inn sitemap: `https://ffh143.no/sitemap-index.xml`
 
 ---
 

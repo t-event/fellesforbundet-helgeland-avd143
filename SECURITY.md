@@ -29,7 +29,7 @@ Spørsmål om booking, betaling eller drift (ikke sikkerhet) går til kontoret: 
 
 **Utenfor omfang** (rapporter til den aktuelle leverandøren):
 
-- Tredjepartstjenester vi kun lenker til eller bruker: inatur.no, Web3Forms, GitHub Pages, yr.no, Statens vegvesen (webkamera), Google Maps (keyless embed, ingen API-nøkkel), Facebook (samtykke-styrt innbygging) og fellesforbundet.no (kurs/konferanser-liste hentet serverside i en GitHub Actions-jobb, ikke i nettleseren).
+- Tredjepartstjenester vi kun lenker til eller bruker: inatur.no, Web3Forms, GitHub Pages, Cloudflare (DNS, proxy og Access-tilgangskontroll foran domenet), yr.no, Statens vegvesen (webkamera), Google Maps (keyless embed, ingen API-nøkkel), Facebook (samtykke-styrt innbygging) og fellesforbundet.no (kurs/konferanser-liste hentet serverside i en GitHub Actions-jobb, ikke i nettleseren).
 - Svakheter som krever fysisk tilgang, manipulasjon av ansatte (social engineering), eller tjenestenekt/last-testing (DoS).
 
 ## Om løsningen (kontekst for vurdering)
