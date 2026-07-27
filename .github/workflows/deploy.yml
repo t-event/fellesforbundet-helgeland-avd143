@@ -58,7 +58,7 @@ jobs:
       # venter vi litt og prøver én gang til. Jobben feiler bare hvis BEGGE feiler.
       - name: Deploy til GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
         continue-on-error: true
 
       - name: Vent før nytt forsøk
@@ -68,4 +68,4 @@ jobs:
       - name: Deploy til GitHub Pages (forsøk 2)
         id: deployment_retry
         if: steps.deployment.outcome == 'failure'
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
