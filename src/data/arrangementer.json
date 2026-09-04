@@ -1,36 +1,8 @@
 {
-  "oppdatert": "2026-07-27T08:59:57.725Z",
+  "oppdatert": "2026-09-04T09:59:53.724Z",
   "kilde": "fellesforbundet.no — kurs og konferanser (Nordland)",
   "kildeUrl": "https://www.fellesforbundet.no/aktuelt/kurs-og-arrangementer/?county=Nordland%20-%20Nordl%C3%A1nnda",
   "arrangementer": [
-    {
-      "tittel": "Industrikonferanse",
-      "type": "Kurs",
-      "dato": "2026-08-18T00:00:00",
-      "sted": "Scandic Hell, Værnes",
-      "url": "https://www.fellesforbundet.no/aktuelt/kurs-og-arrangementer/2026/industrikonferanse/"
-    },
-    {
-      "tittel": "Tillitsvalgt 1 - Region Nord",
-      "type": "Kurs",
-      "dato": "2026-08-31T00:00:00",
-      "sted": "Thon Hotel Polar, Tromsø",
-      "url": "https://www.fellesforbundet.no/aktuelt/kurs-og-arrangementer/2026/tillitsvalgt-1--nordland-tromsfinnmark-tromso/"
-    },
-    {
-      "tittel": "Bransjekonferanse Bil",
-      "type": "Konferanse",
-      "dato": "2026-09-03T00:00:00",
-      "sted": "Quality Airport Hotel Gardermoen",
-      "url": "https://www.fellesforbundet.no/aktuelt/kurs-og-arrangementer/2026/bransjekonferanse-bil/"
-    },
-    {
-      "tittel": "Bransjekonferanse Budtjenester",
-      "type": "Konferanse",
-      "dato": "2026-09-03T00:00:00",
-      "sted": "Quality Airport Hotel Gardermoen",
-      "url": "https://www.fellesforbundet.no/aktuelt/kurs-og-arrangementer/2026/bransjekonferanse-budtjenester/"
-    },
     {
       "tittel": "Kurs i bedriftsdemokrati i konsern - høst",
       "type": "Kurs",
@@ -39,18 +11,18 @@
       "url": "https://www.fellesforbundet.no/aktuelt/kurs-og-arrangementer/2026/kurs-i-bedriftsdemokrati-i-konsern---host/"
     },
     {
-      "tittel": "Organisasjonskonferanse 2026",
-      "type": "Konferanse",
-      "dato": "2026-09-09T00:00:00",
-      "sted": "Clarion Hotel & Congress Oslo Airport",
-      "url": "https://www.fellesforbundet.no/aktuelt/kurs-og-arrangementer/2026/organisasjonskonferanse-2026/"
-    },
-    {
       "tittel": "Bransjekonferanse Logistikk, Havn og Spedisjon",
       "type": "Konferanse",
       "dato": "2026-09-14T00:00:00",
       "sted": "Quality Airport Hotel Gardermoen",
       "url": "https://www.fellesforbundet.no/aktuelt/kurs-og-arrangementer/2026/bransjekonferanse-logistikk-havn-og-spedisjon/"
+    },
+    {
+      "tittel": "AVLYST - Bransjekonferanse Budtjenester",
+      "type": "Konferanse",
+      "dato": "2026-09-17T00:00:00",
+      "sted": "Quality Airport Hotel Gardermoen",
+      "url": "https://www.fellesforbundet.no/aktuelt/kurs-og-arrangementer/2026/bransjekonferanse-budtjenester/"
     },
     {
       "tittel": "Baskurs byggfagene",
@@ -81,11 +53,39 @@
       "url": "https://www.fellesforbundet.no/aktuelt/kurs-og-arrangementer/2026/organiseringskurs-for-ansatte-i-avdeling-level-2/"
     },
     {
+      "tittel": "AFP konferanse - Region Nord-Norge",
+      "type": "Konferanse",
+      "dato": "2026-09-29T00:00:00",
+      "sted": "Alta, Bodø, Harstad, Kirkenes, Mo i Rana og Tromsø",
+      "url": "https://www.fellesforbundet.no/aktuelt/kurs-og-arrangementer/2026/afp-konferanse---region-nord-norge/"
+    },
+    {
       "tittel": "Bransjekonferanse Gods",
       "type": "Konferanse",
       "dato": "2026-10-01T00:00:00",
       "sted": "Quality Airport Hotel Gardermoen",
       "url": "https://www.fellesforbundet.no/aktuelt/kurs-og-arrangementer/2026/bransjekonferanse-gods/"
+    },
+    {
+      "tittel": "Tillitsvalgt 2 - Region Nord",
+      "type": "Kurs",
+      "dato": "2026-10-05T00:00:00",
+      "sted": "Thon Hotel Polar Tromsø",
+      "url": "https://www.fellesforbundet.no/aktuelt/kurs-og-arrangementer/2026/tillitsvalgt-2-nordland-tromsfinnmark-tromso-ftv2/"
+    },
+    {
+      "tittel": "Bransjekonferanse Buss",
+      "type": "Konferanse",
+      "dato": "2026-10-05T00:00:00",
+      "sted": "Quality Airport Hotel Gardermoen",
+      "url": "https://www.fellesforbundet.no/aktuelt/kurs-og-arrangementer/2026/bransjekonferanse-buss/"
+    },
+    {
+      "tittel": "EWC-konferansen",
+      "type": "Konferanse",
+      "dato": "2026-10-06T00:00:00",
+      "sted": "Quality Airport Hotel Gardermoen",
+      "url": "https://www.fellesforbundet.no/aktuelt/kurs-og-arrangementer/2026/ewc-konferansen/"
     }
   ]
 }
