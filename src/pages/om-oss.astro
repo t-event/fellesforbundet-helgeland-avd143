@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import Bilde from '../components/Bilde.astro';
 import CircleMotif from '../components/CircleMotif.astro';
 import Icon from '../components/Icon.astro';
 import { KONTAKT, FF_LENKER } from '../config.ts';
@@ -40,7 +41,7 @@ const hvaViGjor = [
           </p>
         </div>
         <div class="hero-img">
-          <img src={`${base}/images/hovedside/fellesskap-arrangement.jpg`} alt="Medlemmer samlet på LO-arrangement i Mo i Rana" width="960" height="540" loading="eager" style="width:100%; height:100%; object-fit:cover;" />
+          <Bilde sti="hovedside/fellesskap-arrangement.jpg" alt="Medlemmer samlet på LO-arrangement i Mo i Rana" bredde={960} hoyde={540} sizes="(max-width: 900px) 100vw, 600px" prioritert style="width:100%; height:100%; object-fit:cover;" />
         </div>
       </div>
       <div class="hero-stats">

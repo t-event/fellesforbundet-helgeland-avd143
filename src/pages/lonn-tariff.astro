@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import Bilde from '../components/Bilde.astro';
 import CircleMotif from '../components/CircleMotif.astro';
 import Icon from '../components/Icon.astro';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
@@ -59,7 +60,7 @@ const ressurser = [
           </p>
         </div>
         <div class="hero-img">
-          <img src={`${base}/images/hovedside/ff-industri.png`} alt="Illustrasjon: industriarbeid" width="1200" height="675" loading="eager" style="width:100%; height:100%; object-fit:cover;" />
+          <Bilde sti="hovedside/ff-industri.png" alt="Illustrasjon: industriarbeid" bredde={1200} hoyde={675} sizes="(max-width: 900px) 100vw, 600px" prioritert style="width:100%; height:100%; object-fit:cover;" />
         </div>
       </div>
     </div>

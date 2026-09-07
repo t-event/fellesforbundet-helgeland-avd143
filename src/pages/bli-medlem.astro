@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import Bilde from '../components/Bilde.astro';
 import CircleMotif from '../components/CircleMotif.astro';
 import Icon from '../components/Icon.astro';
 import { FF_LENKER, KONTAKT } from '../config.ts';
@@ -47,7 +48,7 @@ const steg = [
           </div>
         </div>
         <div class="hero-img">
-          <img src={`${base}/images/hovedside/ff-knyttneve.png`} alt="Illustrasjon: knyttneve — symbol på samhold" width="1200" height="675" loading="eager" style="width:100%; height:100%; object-fit:cover;" />
+          <Bilde sti="hovedside/ff-knyttneve.png" alt="Illustrasjon: knyttneve — symbol på samhold" bredde={1200} hoyde={675} sizes="(max-width: 900px) 100vw, 600px" prioritert style="width:100%; height:100%; object-fit:cover;" />
         </div>
       </div>
     </div>
