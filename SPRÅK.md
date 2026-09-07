@@ -62,6 +62,45 @@ råd i en reell sak. Aktuelle kilder: medlemmer som har språket som morsmål,
 tolketjenesten i kommunen, eller LO/Fellesforbundet sentralt, som allerede har
 mye materiell på flere språk.
 
+## Sjekk at ALT faktisk er oversettbart
+
+Ordboka dekker bare tekst som er merket for oversettelse. Ved den polske
+runden viste det seg at en god del ikke var det i det hele tatt — og det
+oppdages ikke av dekningstallet, som bare teller nøkler som finnes.
+
+**Kjør denne testen etter hvert nytt språk.** Den rendrer hver side på norsk og
+på det nye språket og viser alt som er likt:
+
+```bash
+npm run build
+# Server dist/ og last hver side to ganger, med localStorage lang=nb og lang=<kode>,
+# og sammenlign de synlige tekstnodene. Alt som er identisk er enten uoversatt
+# eller et egennavn.
+```
+
+**Dette SKAL være likt** og er ikke feil: personnavn, stedsnavn og gateadresser,
+navn på norske forbund (Fagforbundet, NTL, Parat …), klubbnavn, kursnavn hentet
+fra fellesforbundet.no, organisasjonsnummer, telefon, e-post, tall og priser, og
+språknavnene i velgeren (Norsk / English / Polski).
+
+**Dette var derimot ekte hull, funnet og rettet 7. sep. 2026:**
+
+| Hva | Hvorfor det glapp |
+|-----|-------------------|
+| «Utviklet av T-Event» i footeren | Manglet `data-en` |
+| «Mange fag» på forsiden | `<b>` manglet `data-en`; bare `<span>` hadde det |
+| Navn på overenskomstene | `navn` i datalista hadde ingen `navn_en` |
+| «Kurs» / «Konferanse» på /aktuelt | Type-merkelappen manglet `data-en` |
+| «Annet LO-forbund» i bookingskjemaet | Eneste post i forbundslista som ikke er et egennavn |
+| Bildetekstene (alt) i galleriet | Byttet på `lang === 'en'`, ikke via `oversett()` |
+| Værteksten | Settes sammen av en dekoder, så den finnes ikke som literal i koden. Kombinasjonene er nå listet eksplisitt i `hent-tekster.mjs` |
+| To lange avsnitt med `&shy;` | Uttrekket leste entiteten, nettleseren ser tegnet — nøkkelen kunne aldri treffe |
+| Alt med `&` i teksten | Astro skriver `&` rått, men `innerHTML` serialiserer tilbake til `&amp;` |
+
+De tre siste var systematiske: entitetene normaliseres nå likt i
+`Layout.astro`, `klient.ts` og `hent-tekster.mjs`. **Endrer du normaliseringen
+ett sted, må alle tre følge med.**
+
 ## For utviklere
 
 - Norsk ligger i HTML-en. Engelsk ligger ved siden av, i `data-en`-attributter.

@@ -75,6 +75,14 @@ Ting som har gått galt før, og som ikke fanges av bygget.
   sin egen ordboknøkkel.
 - **Repo-rulesetet kan blokkere bot-pushen.** Feilen er `GH013: Repository rule
   violations`. Det er rulesetet, ikke scriptet. Skjedde 30.08.–03.09.2026.
+- **Dekningstallet lyver om innhold som ikke er merket for oversettelse.** 100 %
+  betyr at alle *kjente* nøkler er fylt, ikke at all tekst er oversettbar. Ved
+  hvert nytt språk: rendre hver side på norsk og på det nye språket og
+  sammenlign synlig tekst. Se «Sjekk at ALT faktisk er oversettbart» i
+  [SPRÅK.md](SPRÅK.md).
+- **HTML-entiteter må normaliseres likt tre steder.** `&`, `&shy;` og `&nbsp;`
+  ser ulike ut i kilden og i `innerHTML`. Normaliseringen ligger i
+  `Layout.astro`, `klient.ts` og `hent-tekster.mjs` — endrer du én, må alle med.
 - **`frame-ancestors` virker ikke i meta-CSP.** Sida kan rammes inn av andre. Krever
   en HTTP-header, som GitHub Pages ikke kan sette — bevisst valg per 7. sep. 2026.
 

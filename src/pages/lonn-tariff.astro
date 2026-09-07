@@ -8,18 +8,18 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 // Reelle avtaleområder i Fellesforbundet. MERK: hvilken overenskomst som
 // gjelder den enkelte arbeidsplass må bekreftes av avdelingen.
 const avtaler = [
-  { navn: 'Industrioverenskomsten',      omr: 'Verksted, smelteverk og prosessindustri', omr_en: 'Workshop, smelting and process industry' },
-  { navn: 'Byggfagene',                  omr: 'Tømrer, betong og anlegg',                 omr_en: 'Carpentry, concrete and construction' },
-  { navn: 'Byggeindustrien',             omr: 'Industriell produksjon til byggenæringen', omr_en: 'Industrial production for the construction sector' },
-  { navn: 'Riksavtalen',                 omr: 'Hotell, restaurant og servering',          omr_en: 'Hotel, restaurant and catering' },
-  { navn: 'Biloverenskomsten',           omr: 'Bilverksteder og transport',               omr_en: 'Car workshops and transport' },
-  { navn: 'Glassoverenskomsten',         omr: 'Glass, fasade og montering',               omr_en: 'Glass, facade and installation' },
-  { navn: 'Havbruksoverenskomsten',      omr: 'Settefisk, matfisk og slakteri',           omr_en: 'Smolt, food fish and processing' },
-  { navn: 'AIB-overenskomsten',          omr: 'Asfalt, industri og bergverk',             omr_en: 'Asphalt, industry and mining' },
-  { navn: 'Gartnerioverenskomsten',      omr: 'Gartneri og hagebruk',                     omr_en: 'Horticulture and market gardening' },
-  { navn: 'Avisoverenskomsten',          omr: 'Avis, trykk og distribusjon',              omr_en: 'Newspapers, printing and distribution' },
-  { navn: 'Overenskomst for grafisk',    omr: 'Grafisk produksjon og emballasje',         omr_en: 'Graphic production and packaging' },
-  { navn: 'VTA-overenskomsten',          omr: 'Varig tilrettelagt arbeid',                omr_en: 'Sheltered employment (VTA)' },
+  { navn: 'Industrioverenskomsten', navn_en: 'The Industry Agreement',      omr: 'Verksted, smelteverk og prosessindustri', omr_en: 'Workshop, smelting and process industry' },
+  { navn: 'Byggfagene', navn_en: 'The Building Trades Agreement',                  omr: 'Tømrer, betong og anlegg',                 omr_en: 'Carpentry, concrete and construction' },
+  { navn: 'Byggeindustrien', navn_en: 'The Construction Industry Agreement',             omr: 'Industriell produksjon til byggenæringen', omr_en: 'Industrial production for the construction sector' },
+  { navn: 'Riksavtalen', navn_en: 'The National Agreement (hospitality)',                 omr: 'Hotell, restaurant og servering',          omr_en: 'Hotel, restaurant and catering' },
+  { navn: 'Biloverenskomsten', navn_en: 'The Motor Trade Agreement',           omr: 'Bilverksteder og transport',               omr_en: 'Car workshops and transport' },
+  { navn: 'Glassoverenskomsten', navn_en: 'The Glass Agreement',         omr: 'Glass, fasade og montering',               omr_en: 'Glass, facade and installation' },
+  { navn: 'Havbruksoverenskomsten', navn_en: 'The Aquaculture Agreement',      omr: 'Settefisk, matfisk og slakteri',           omr_en: 'Smolt, food fish and processing' },
+  { navn: 'AIB-overenskomsten', navn_en: 'The Asphalt, Industry and Mining Agreement',          omr: 'Asfalt, industri og bergverk',             omr_en: 'Asphalt, industry and mining' },
+  { navn: 'Gartnerioverenskomsten', navn_en: 'The Horticulture Agreement',      omr: 'Gartneri og hagebruk',                     omr_en: 'Horticulture and market gardening' },
+  { navn: 'Avisoverenskomsten', navn_en: 'The Newspaper Agreement',          omr: 'Avis, trykk og distribusjon',              omr_en: 'Newspapers, printing and distribution' },
+  { navn: 'Overenskomst for grafisk', navn_en: 'The Graphic Industry Agreement',    omr: 'Grafisk produksjon og emballasje',         omr_en: 'Graphic production and packaging' },
+  { navn: 'VTA-overenskomsten', navn_en: 'The Sheltered Employment (VTA) Agreement',          omr: 'Varig tilrettelagt arbeid',                omr_en: 'Sheltered employment (VTA)' },
 ];
 
 // Minstelønnssatser er ikke i arbeidsmiljøloven selv, men i allmenngjørings-
@@ -81,7 +81,7 @@ const ressurser = [
       <div class="card card-pad">
         {avtaler.map(a => (
           <div class="list-row">
-            <b>{a.navn}</b>
+            <b data-en={a.navn_en}>{a.navn}</b>
             <span data-en={a.omr_en}>{a.omr}</span>
           </div>
         ))}

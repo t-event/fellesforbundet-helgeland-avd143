@@ -46,7 +46,7 @@ const WEB3FORMS_KEY = import.meta.env.PUBLIC_WEB3FORMS_KEY ?? '';
       <select class="input" id="booking-gjester" name="antall_gjester" required aria-required="true">
         <option value="" data-en="Choose…">Velg…</option>
         {Array.from({ length: 12 }, (_, i) => i + 1).map(n => (
-          <option value={n}>{n}</option>
+          <option value={n} data-en={n === 'Annet LO-forbund' ? 'Other LO union' : undefined}>{n}</option>
         ))}
       </select>
       <div class="field-error" id="err-gjester" style="display:none;"></div>

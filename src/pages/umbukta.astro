@@ -610,6 +610,7 @@ const faq = [
 </style>
 
 <script>
+  import { oversett, paSprakendring } from '../i18n/klient.ts';
   // ── Galleri: miniatyr bytter hovedbilde, hovedbilde åpner lightbox ──
   const thumbs = Array.from(document.querySelectorAll<HTMLButtonElement>('.thumb'));
   const mainBtn = document.getElementById('gallery-main');
@@ -619,10 +620,10 @@ const faq = [
   const lbCap = document.getElementById('lb-caption');
   let cur = 0;
 
-  // Velg bildetekst etter aktivt språk (lagret i localStorage av Layout).
-  const isEn = () => (localStorage.getItem('lang') || 'nb') === 'en';
+  // Bildetekstene (alt) leses av skjermlesere og skal følge språkvalget som
+  // all annen tekst — ikke bare norsk/engelsk.
   const altOf = (t: HTMLButtonElement) =>
-    (isEn() ? (t.dataset.altEn || t.dataset.alt) : t.dataset.alt) || '';
+    oversett(t.dataset.alt || '', t.dataset.altEn || t.dataset.alt || '');
 
   function setMain(i: number) {
     if (!thumbs.length) return;
@@ -656,6 +657,9 @@ const faq = [
   }
 
   thumbs.forEach((t, i) => t.addEventListener('click', () => setMain(i)));
+
+  // Bildeteksten er satt av JS, så den må settes på nytt når språket byttes.
+  paSprakendring(() => setMain(cur));
   mainBtn?.addEventListener('click', () => openLightbox(cur));
   document.getElementById('gallery-prev')?.addEventListener('click', () => setMain(cur - 1));
   document.getElementById('gallery-next')?.addEventListener('click', () => setMain(cur + 1));

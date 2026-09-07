@@ -43,8 +43,15 @@ function htmlFiler(katalog) {
 
 // Astros scope-hash (data-astro-cid-…) endres når stilene i komponenten
 // endres. Den må ikke bli en del av ordboknøkkelen.
+// Myk bindestrek og hardt mellomrom står som entiteter i HTML-kilden, men
+// kjøretiden ser dem som tegn via innerHTML. Begge gjøres om til det samme,
+// ellers kan tekst med &shy; eller &nbsp; aldri slås opp i ordboka.
 const normaliser = s =>
-  s.replace(/\s*data-astro-cid-[\w-]+(?:="[^"]*")?/g, '').replace(/\s+/g, ' ').trim();
+  s.replace(/\s*data-astro-cid-[\w-]+(?:="[^"]*")?/g, '')
+   .replace(/&amp;/g, '&')
+   .replace(/&shy;|\u00ad/g, '')
+   .replace(/&nbsp;|\u00a0/g, ' ')
+   .replace(/\s+/g, ' ').trim();
 
 // Avkod de HTML-entitetene Astro faktisk produserer i attributtverdier.
 const avkod = s =>
@@ -143,6 +150,21 @@ for (const fil of kildefiler.filter(f => f.includes('/pages/'))) {
   const kilde = readFileSync(fil, 'utf8');
   const m = kilde.match(/<Layout\b[^>]*?\n\s*title="([^"]+)"/s);
   if (m) tekster.set(normaliser(m[1]), fil.replace(ROT + '/', ''));
+}
+
+// Værteksten settes sammen av en dekoder i WeatherWidget (nedbørtype +
+// intensitet + byge + torden), så den finnes ikke som literal i koden og kan
+// ikke plukkes automatisk. Kombinasjonene listes derfor her. Endrer du
+// symbolTekst() i WeatherWidget, må denne lista følge med.
+const VÆR = [
+  'Klarvær', 'Lettskyet', 'Delvis skyet', 'Skyet', 'Tåke',
+  'Regn', 'Lett regn', 'Kraftig regn', 'Regnbyger', 'Lette regnbyger', 'Kraftige regnbyger',
+  'Sludd', 'Lett sludd', 'Kraftig sludd', 'Sluddbyger', 'Lette sluddbyger', 'Kraftige sluddbyger',
+  'Snø', 'Lett snø', 'Kraftig snø', 'Snøbyger', 'Lette snøbyger', 'Kraftige snøbyger',
+];
+for (const grunn of VÆR) {
+  tekster.set(grunn, 'src/components/WeatherWidget.astro');
+  tekster.set(`${grunn} og torden`, 'src/components/WeatherWidget.astro');
 }
 
 // Delte strenger med nøkkel ligger i translations.ts, ikke i HTML-en.

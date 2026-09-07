@@ -82,7 +82,7 @@ const arrangementer = (arrangementData.arrangementer ?? [])
                     <span class="arr-dag">{a.dag}</span>
                   </span>
                   <span class="arr-body">
-                    <span class={`arr-type${a.type === 'Konferanse' ? ' arr-type--konf' : ''}`}>{a.type}</span>
+                    <span class={`arr-type${a.type === 'Konferanse' ? ' arr-type--konf' : ''}`} data-en={a.type === 'Konferanse' ? 'Conference' : 'Course'}>{a.type}</span>
                     <b class="arr-tittel">{a.tittel} ↗</b>
                     <span class="muted arr-meta">{a.dag}. {a.mnd} {a.aar}{a.sted ? ` · ${a.sted}` : ''}</span>
                   </span>
