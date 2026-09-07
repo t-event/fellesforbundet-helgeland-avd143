@@ -88,17 +88,17 @@ const brodsmuleMork = morkeHero.has(sti);
        er begrenset til det siden faktisk bruker — oppdater ved nye integrasjoner:
        img-src (Statens vegvesen-webkamera + hCaptcha), frame-src (Google Maps +
        Facebook + hCaptcha), connect-src (Yr + Web3Forms + hCaptcha), script-src
-       (Web3Forms-klient + hCaptcha + Cloudflare-analyse). Cloudflare Web Analytics
-       injiseres av Cloudflare foran nettstedet og lastes fra
-       static.cloudflareinsights.com; målingene sendes til cloudflareinsights.com.
-       Den er beskrevet på /personvern og /cookies. Skrus analysen av i
-       Cloudflare, kan begge hostene fjernes herfra.
+       (Web3Forms-klient + hCaptcha). NB: Cloudflare Web Analytics er IKKE med.
+       Den ble prøvd 7. sep. 2026, men Cloudflare injiserte aldri beaconen, så
+       den samler ikke inn noe. Skrus den på senere, må
+       static.cloudflareinsights.com inn i script-src og cloudflareinsights.com
+       i connect-src — og den må beskrives på /personvern og /cookies.
        connect-src MÅ ha 'self' — kalender/booking
        henter availability.json fra eget domene, og connect-src overstyrer default-src.
        hCaptcha (spamvern på skjemaene) laster fra hcaptcha.com/*.hcaptcha.com, og
        widget-scriptet fra web3forms.com. NB: frame-ancestors/sandbox ignoreres i
        meta-CSP og settes ikke her. -->
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; img-src 'self' data: https://kamera.atlas.vegvesen.no https://*.hcaptcha.com; font-src 'self'; style-src 'self' 'unsafe-inline' https://hcaptcha.com https://*.hcaptcha.com; script-src 'self' 'unsafe-inline' https://web3forms.com https://hcaptcha.com https://*.hcaptcha.com https://static.cloudflareinsights.com; connect-src 'self' https://api.met.no https://api.web3forms.com https://hcaptcha.com https://*.hcaptcha.com https://cloudflareinsights.com https://static.cloudflareinsights.com; frame-src https://www.google.com https://maps.google.com https://www.facebook.com https://hcaptcha.com https://*.hcaptcha.com; form-action 'self' https://api.web3forms.com" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; img-src 'self' data: https://kamera.atlas.vegvesen.no https://*.hcaptcha.com; font-src 'self'; style-src 'self' 'unsafe-inline' https://hcaptcha.com https://*.hcaptcha.com; script-src 'self' 'unsafe-inline' https://web3forms.com https://hcaptcha.com https://*.hcaptcha.com; connect-src 'self' https://api.met.no https://api.web3forms.com https://hcaptcha.com https://*.hcaptcha.com; frame-src https://www.google.com https://maps.google.com https://www.facebook.com https://hcaptcha.com https://*.hcaptcha.com; form-action 'self' https://api.web3forms.com" />
 
   <!-- Tittel og meta -->
   <title>{title}</title>
