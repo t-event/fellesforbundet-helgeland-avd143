@@ -210,7 +210,20 @@ Turkortene er tekstbaserte (ingen bilder — avdelingen har ikke bilderettighete
 
 ---
 
-## 9. Konfigurasjon (`src/config.ts`)
+## 9. Konfigurasjon (`src/config.ts` + `src/data/tillitsvalgte.json`)
+
+> **Navnelistene ligger ikke i `config.ts`.** Styre, ansatte, utvalg og
+> representantskap ble september 2026 flyttet til
+> [`src/data/tillitsvalgte.json`](src/data/tillitsvalgte.json), slik at
+> avdelingen kan oppdatere dem etter årsmøtet uten å redigere kode. `config.ts`
+> re-eksporterer dem (`STYRE`, `ANSATTE`, `KONTROLLKOMITE`, `STUDIEUTVALG`,
+> `REPRESENTANTSKAP`, `VALGKOMITE`, `UNGDOMSUTVALG`, `UNGDOMSSEKRETAR`,
+> `ROSTER_SIST_BEKREFTET`), så sidene er uendret.
+>
+> [`scripts/valider-tillitsvalgte.mjs`](scripts/valider-tillitsvalgte.mjs)
+> kjøres av `npm run build` og **stopper utrullingen ved feil**. Den håndhever
+> blant annet at `styre[0]` er lederen — sida viser første oppføring i egen boks.
+> Rutine: **[ÅRSMØTE.md](ÅRSMØTE.md)**.
 
 ```ts
 export const PRISER = { FFH: 700, FF: 1050, ANNET_LO: 1200 } as const;
@@ -253,25 +266,70 @@ export const LO_FORBUND = [
 
 ---
 
-## 10. Språk (NO/EN, JS-basert)
+## 10. Språk (flerspråklig, JS-basert)
 
-- `lang="no"` på `<html>`
-- Delte/korte strenger (nav, overskrifter, skjemaetiketter) i `src/i18n/translations.ts` med `{ nb, en }`, tagget `data-i18n="nøkkel"`
-- Lengre brødtekst/lister tagges inline med `data-en="..."` (engelsk ved siden av norsk i HTML-en); språkskriptet bytter `innerHTML`. `data-en-ph` bytter placeholder på input/textarea.
-- Valg lagres i `localStorage('lang')`
-- Init-skript kjører på `DOMContentLoaded`, bytter alle tekster
-- Språkvelger i header (NO / EN)
-- E-post til avdelingen alltid på norsk
+Bygget om september 2026 fra to språk til vilkårlig mange. Se **[SPRÅK.md](SPRÅK.md)**
+for rutinen med å legge til et språk.
+
+**Tre lag, i denne rekkefølgen:**
+
+1. **Norsk** ligger i HTML-en. `lang="no"` på `<html>`.
+2. **Engelsk** ligger ved siden av, i `data-en="..."` (og `data-en-ph` for
+   placeholders). Korte, delte strenger har i tillegg nøkler i
+   `src/i18n/translations.ts` med `{ nb, en }`, tagget `data-i18n="nøkkel"`.
+3. **Alle andre språk** slås opp i `src/i18n/ordbok/<kode>.json`, der **den
+   norske teksten er nøkkelen**:
+
+   ```json
+   { "Bli medlem": "Deveniți membru" }
+   ```
+
+   Grunnen er skala: siden har ~460 inline-tekster. Ett attributt per språk per
+   element (`data-ro`, `data-pl`, …) ville gitt over 2 700 attributter i markupen.
+   Ordbokoppslag krever null endringer i sidene.
+
+**Regler:**
+
+- Mangler et oppslag, vises norsk. Tom tekst kan ikke oppstå.
+- Et språk vises i velgeren **først ved 85 % dekning** (`MIN_DEKNING` i
+  `src/i18n/sprak.ts`). Halvoversatt er verre enn ingenting på en side som
+  forklarer lønn og oppsigelsesvern.
+- Klargjort, men ikke aktivert: rumensk, spansk, polsk, litauisk, latvisk
+  (`ordbok/*.json` er tomme ⇒ velgeren viser i dag kun norsk og engelsk).
+- Språkvelgeren er en flaggrad ved to språk, og blir automatisk en
+  nedtrekksmeny med språkenes egne navn ved flere.
+- Valg lagres i `localStorage('lang')`; et språk som senere slås av, faller
+  tilbake til norsk.
+- `npm run tekster` skriver `src/i18n/ordbok/_mal.json` til oversetteren,
+  oppdaterer `ANTALL_TEKSTER`, rapporterer dekning, og advarer om `data-en`
+  inni `data-en` (der blir det innerste aldri oversatt — 3 slike i dag).
+- E-post til avdelingen alltid på norsk.
 
 ---
 
 ## 11. SEO
 
 - `<title>` og `<meta name="description">` unike per side
-- Open Graph-tagger (`og:title`, `og:description`, `og:image 1200×630`, `og:url`)
-- Twitter Card (`summary_large_image`)
-- `robots.txt` — tillater indeksering, peker til `sitemap.xml`
-- `sitemap.xml` — genereres automatisk av Astro `@astrojs/sitemap`
+- Open Graph (`og:title`, `og:description`, `og:url`, `og:image` + `:type`,
+  `:width`, `:height`, `:alt`) og Twitter Card (`summary_large_image`)
+- **Delingsbilder** i `public/images/og/`, laget av `npm run og`
+  ([scripts/gen-og-bilder.mjs](scripts/gen-og-bilder.mjs)): foto beskåret til
+  1200×630, navy tone nedover, hvit FF-logo og rød stripe i bunn. Fire varianter
+  — `og-default` (avdelingen), `og-medlem`, `og-tariff`, `og-hytter`. Sider
+  sender inn sitt eget via `ogImage`-propen i `Layout.astro`.
+  Tittel bakes **ikke** inn i bildet: Facebook, LinkedIn og Slack viser
+  `og:title` som tekst ved siden av, og innbakt tekst ville blitt beskåret ulikt
+  i hver tjeneste.
+- `og:site_name` = «Fellesforbundet Helgeland avd. 143» (het tidligere
+  «… — Hytteutleie», som var feil for avdelingssidene)
+- `robots.txt` — tillater indeksering, peker til `sitemap-index.xml`.
+  **Merk:** Cloudflare leverer i dag sin egen «managed robots.txt» på kanten i
+  stedet for vår, slik at `Sitemap:`-linja ikke når ut. Kan slås av i Cloudflare.
+- `sitemap-index.xml` + `sitemap-0.xml` — genereres automatisk av
+  `@astrojs/sitemap` (17 URL-er; `llms.txt` og `site.webmanifest` er ikke med)
+- `llms.txt` og `site.webmanifest` genereres som endepunkter
+  (`src/pages/llms.txt.ts`, `src/pages/site.webmanifest.ts`) slik at de arver
+  `BASE` og henter priser/kontaktinfo fra `config.ts`
 - `hreflang` — ikke aktuelt (JS-switching, én URL per side)
 - Schema.org JSON-LD: `LodgingBusiness` for Umbukta, `Organization` for FFH
 - Semantisk HTML: `<header>`, `<main>`, `<nav>`, `<footer>`, `<article>`, `<section>`
@@ -387,6 +445,35 @@ Endringer og tillegg utover opprinnelig spec:
   til høyre, kompakt liste). Forsidens Aktuelt-seksjon har et teaser-kort som lenker
   videre. Facebook-arrangementer kan IKKE hentes automatisk (innloggingsvegg /
   krever Graph API-token) — derfor kun Fellesforbundet-kilden.
+
+---
+
+## 19. As-built — innholdsgjennomgang med avdelingen (7. september 2026)
+
+**Vedlikeholdssystem for tillitsvalgte.** Navnelistene ut av `config.ts` og inn i
+`src/data/tillitsvalgte.json`, med validator i bygget og rutine i
+[ÅRSMØTE.md](ÅRSMØTE.md). Feltet `sist_bekreftet` vises nederst på
+/tillitsvalgte, slik at det er synlig utad hvor ferske opplysningene er. Se § 9.
+
+**Flerspråklig i18n.** Lagt om fra to til mange språk, ordbokbasert. Se § 10 og
+[SPRÅK.md](SPRÅK.md).
+
+**Delingsbilder.** Egne Open Graph-bilder per sidetype. Se § 11.
+
+**Innholdsrettelser fra avdelingen:**
+
+| Hva | Endring |
+|-----|---------|
+| Styret | Erik Rauø → Benny Fjelldalselv (Grytåga Settefisk); Jim Ruben Toven → Markus Faksmo (Håland Mosjøen) |
+| Representantskapet | Tobias Håkstad → Alf Ove Gulla; Simon Steensen → Leif Arne Adolfsen; Daniel Kaggerud → Zita Meskaite; Håvard Næss → Kim Måsøy |
+| Ansatte | Frank Stuvland er **fagligpolitisk kontakt i 50 %**, ikke organisasjonsarbeider |
+| Kontingent | **1,6 %** i avd. 143 = 1,5 % forbund + **0,1 % lokal sats**. Den gamle teksten sa feilaktig at 1,5 % var «inkludert» lokal sats. |
+| Kontorer | Nytt `KONTORER` i `config.ts` + seksjon på /kontakt. Mo i Rana = hovedkontor med faste tider; **Sandnessjøen** (Tommy Vistnes) og **Mosjøen** (Trond Brattbakk) har fleksitid, ingen faste åpningstider |
+| Avtaleområder | **Renholdsoverenskomsten fjernet** — finnes ikke i avdelingen. Lagt til byggeindustri, glass, havbruk, VTA, AIB, gartneri, avis og grafisk |
+| Minstelønn | Ny boks på /lonn-tariff. **Minstesatser står ikke i arbeidsmiljøloven**, men i allmenngjøringsforskriftene — vi lenker til Arbeidstilsynet, AML og allmenngjøringsloven |
+| Forsiden | «Kurs & skolering» peker nå til `/aktuelt` (arrangementskalenderen), ikke `/nyttige-lenker` |
+| Om oss | Stiftelsen av Fellesforbundet Helgeland i **2005** tatt med. «Forhandler lønn og tariff» → «Bistår ved lokale forhandlinger» |
+| Web3Forms | Mottaker byttet til `avd143@fellesforbundet.no`. Den offentlige mailto-en på sida er fortsatt `avd143@fellesforbundet.org` — **bevisst forskjell** |
 
 ---
 

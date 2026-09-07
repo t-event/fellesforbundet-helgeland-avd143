@@ -17,6 +17,15 @@ Avdelingens nettside: **avdelingens hjemmeside** (forside, medlemskap, aktuelt, 
 - Avdelingens hovedside er **fronten** på rot. Hytteutleia er en seksjon under «Hytteutleie ▾» i menyen. Én felles meny + footer for hele sida.
 - **Domene:** **`ffh143.no`** er live (navnetjenere hos Cloudflare → GitHub Pages, HTTPS). Fram til offentlig lansering ligger siden bak en passord-gate (Cloudflare Access) — se seksjon 5.
 
+### Egne rutiner i egne filer
+
+| Fil | Når du trenger den |
+|-----|--------------------|
+| **[ÅRSMØTE.md](ÅRSMØTE.md)** | Oppdatere styre, utvalg, representantskap og ansatte etter årsmøtet. Skrevet for noen som ikke koder. |
+| **[SPRÅK.md](SPRÅK.md)** | Legge til et nytt språk på nettsida. |
+| **[PLACEHOLDERS.md](PLACEHOLDERS.md)** | Hva som fortsatt er midlertidig innhold. |
+| **[SPEC.md](SPEC.md)** | Teknisk spesifikasjon og as-built. |
+
 ---
 
 ## Innholdsfortegnelse
@@ -85,7 +94,11 @@ Nettsiden bruker [Web3Forms](https://web3forms.com) som skjematjeneste — grati
 Web3Forms har to atskilte «adresser»:
 
 - **Admin-/innloggingskonto:** `hyttebooking.ffh143@gmail.com` — dette er kontoen som Web3Forms administreres fra. Mathias (T-Event) har tilgang. Access key-en hører til denne kontoen.
-- **Mottaker av skjema-e-postene:** **avdelingens e-post** (`avd143@fellesforbundet.org`) — settes som «Send Email To» i Web3Forms-dashbordet, så alle innsendinger havner i avdelingens innboks, ikke i gmail-kontoen.
+- **Mottaker av skjema-e-postene:** **`avd143@fellesforbundet.no`** — settes som «Send Email To» i Web3Forms-dashbordet, så alle innsendinger havner i avdelingens innboks, ikke i gmail-kontoen. (Endret 7. september 2026 fra den midlertidige gmail-adressen.)
+
+> **Ikke bland disse to:** mottakeradressen over er `…@fellesforbundet.**no**`, mens
+> adressen som vises offentlig på nettsida (`KONTAKT.epost` i `src/config.ts`) er
+> `avd143@fellesforbundet.**org**`. Det er bevisst — ikke «rett opp» det ene til det andre.
 
 Slik at Mathias styrer/administrerer oppsettet, mens selve henvendelsene går til avdelingen.
 
@@ -258,11 +271,21 @@ Rundt 3 uker før påske mottar kontoret alle påske-registreringer på e-post. 
 - Merke perioder som «Opptatt» (se trinn 6)
 - Det er alt!
 
+### Styre, utvalg og ansatte — krever IKKE kode
+
+Navnelistene ligger i **[`src/data/tillitsvalgte.json`](src/data/tillitsvalgte.json)** og
+kan redigeres rett i nettleseren på github.com. En automatisk kontroll kjører før
+utrulling og **stopper den hvis noe er feil**, så en skrivefeil etter årsmøtet kan
+ikke ødelegge siden.
+
+Full oppskrift og sjekkliste: **[ÅRSMØTE.md](ÅRSMØTE.md)**.
+
 ### Hva som krever kodeendringer
 
-- Prisendringer → oppdater `src/config.ts` (variabelen `PRISER`)
-- Kontaktinfo-endringer → oppdater `src/config.ts` (variabelen `KONTAKT`)
-- Nye bilder → legg til i `public/images/umbukta/` eller `public/images/elsvatn/` og oppdater bildegalleriet i sidene
+- Prisendringer → `src/config.ts` (`PRISER`)
+- Kontaktinfo → `src/config.ts` (`KONTAKT` for hovedkontoret, `KONTORER` for kontorene i Mo i Rana, Sandnessjøen og Mosjøen)
+- Nye bilder → legg i `public/images/umbukta/` eller `public/images/elsvatn/` og oppdater galleriet i sidene
+- Nytt språk → se **[SPRÅK.md](SPRÅK.md)**
 
 ### Slik pusher du endringer til nettsiden
 
@@ -274,12 +297,24 @@ git push
 
 GitHub Actions bygger og publiserer siden automatisk (tar ca. 1–2 minutter).
 
+### Hjelpekommandoer
+
+| Kommando | Gjør |
+|----------|------|
+| `npm run valider` | Sjekker `src/data/tillitsvalgte.json`. Kjøres automatisk av `npm run build`, og stopper bygget ved feil. |
+| `npm run tekster` | Skriver `src/i18n/ordbok/_mal.json` med alle tekstene som skal oversettes, og viser dekning per språk. Krever at `npm run build` er kjørt først. |
+| `npm run og` | Lager delingsbildene (Facebook o.l.) i `public/images/og/`. Kjør etter bytte av foto eller logo. |
+| `npm run ikoner` | Lager app-ikonene i `public/` ut fra `public/favicon.svg`. |
+
+De tre siste produserer filer som **sjekkes inn i repoet** — de kjøres manuelt ved
+behov, ikke som del av bygget.
+
 ### GitHub Actions-workflows
 
 | Workflow | Trigger | Gjør |
 |----------|---------|------|
-| `deploy.yml` | Push til `main` | Bygger (Node 22) og deployer til GitHub Pages |
-| `build-check.yml` | Push til andre brancher + PR-er | Bygger **uten** å deploye — validerer at koden kompilerer før merge til `main` |
+| `deploy.yml` | Push til `main` | Validerer navnelistene, bygger (Node 22) og deployer til GitHub Pages |
+| `build-check.yml` | Push til andre brancher + PR-er | Samme validering og bygg **uten** å deploye — fanger feil før merge til `main` |
 | `update-availability.yml` | Cron (hver time) | Synker Outlook-kalenderen → `availability.json` (deployer kun ved reell endring) |
 | `update-arrangementer.yml` | Cron (daglig) | Henter Fellesforbundets kurs + konferanser (Nordland) → `src/data/arrangementer.json`; vises på /aktuelt (commit trigger deploy) |
 
