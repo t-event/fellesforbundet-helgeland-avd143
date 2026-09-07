@@ -12,7 +12,8 @@
     "valider": "node scripts/valider-tillitsvalgte.mjs",
     "ikoner": "node scripts/gen-icons.mjs",
     "og": "node scripts/gen-og-bilder.mjs",
-    "tekster": "node scripts/hent-tekster.mjs"
+    "tekster": "node scripts/hent-tekster.mjs",
+    "bilder": "node scripts/gen-bilder.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.3",

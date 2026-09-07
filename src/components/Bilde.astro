@@ -1,0 +1,58 @@
+---
+// Foto med responsive WebP-varianter og originalen som reserve.
+//
+//   <Bilde sti="hovedside/1mai-tog-mo-i-rana.jpg" alt="…"
+//          bredde={1400} hoyde={934} sizes="(max-width: 900px) 100vw, 570px" />
+//
+// Variantene lages av `npm run bilder` og ligger i public/images/opt/.
+// Finnes de ikke, faller komponenten stille tilbake til originalen — siden
+// virker altså selv om noen har glemt å kjøre scriptet etter å ha lagt inn
+// et nytt bilde.
+
+interface Props {
+  /** Sti under public/images/, f.eks. "umbukta/umbukta-stue.jpg". */
+  sti: string;
+  alt: string;
+  bredde: number;
+  hoyde: number;
+  /** Hvor bred plass bildet får. Styrer hvilken variant nettleseren henter. */
+  sizes?: string;
+  /** true på bildet som er størst i første skjermbilde (LCP). */
+  prioritert?: boolean;
+  class?: string;
+  style?: string;
+}
+
+const {
+  sti, alt, bredde, hoyde,
+  sizes = '100vw',
+  prioritert = false,
+  class: klasse,
+  style,
+} = Astro.props;
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const BREDDER = [400, 640, 900, 1400];
+
+const utenSuffiks = sti.replace(/\.(jpe?g|png)$/i, '');
+
+// Ikke tilby varianter som er bredere enn originalen — de ble ikke laget.
+const srcset = BREDDER
+  .filter(b => b <= bredde)
+  .map(b => `${base}/images/opt/${utenSuffiks}-${b}.webp ${b}w`)
+  .join(', ');
+---
+<picture>
+  {srcset && <source type="image/webp" srcset={srcset} sizes={sizes} />}
+  <img
+    src={`${base}/images/${sti}`}
+    alt={alt}
+    width={bredde}
+    height={hoyde}
+    loading={prioritert ? 'eager' : 'lazy'}
+    decoding={prioritert ? 'sync' : 'async'}
+    fetchpriority={prioritert ? 'high' : undefined}
+    class={klasse}
+    style={style}
+  />
+</picture>

@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import Bilde from '../components/Bilde.astro';
 import Icon from '../components/Icon.astro';
 import Calendar from '../components/Calendar.astro';
 import BookingForm from '../components/BookingForm.astro';
@@ -131,13 +132,13 @@ const faq = [
 
   <!-- HERO -->
   <div class="media-hero">
-    <img
-      src={`${base}/images/umbukta/umbukta-eksterior-terrasse.jpg`}
+    <Bilde
+      sti="umbukta/umbukta-eksterior-terrasse.jpg"
       alt="Hytte i Umbukta — fjellhytte i vakker natur ved Rana og Sveriges grense"
-      width="1440"
-      height="460"
-      loading="eager"
-      fetchpriority="high"
+      bredde={1600}
+      hoyde={1200}
+      sizes="100vw"
+      prioritert
     />
     <div class="media-hero-overlay">
       <div class="container">
@@ -179,12 +180,12 @@ const faq = [
         </p>
       </div>
       <div style="height:clamp(240px,28vw,340px); border-radius:4px; overflow:hidden;">
-        <img
-          src={`${base}/images/umbukta/umbukta-stue.jpg`}
+        <Bilde
+          sti="umbukta/umbukta-stue.jpg"
           alt="Lys stue med hjørnesofa og vedovn inne i Umbukta-hytta"
-          width="800"
-          height="600"
-          loading="lazy"
+          bredde={1600}
+          hoyde={1200}
+          sizes="(max-width: 900px) 100vw, 560px"
           style="width:100%; height:100%; object-fit:cover;"
         />
       </div>
@@ -198,14 +199,18 @@ const faq = [
       <div class="gallery-hero">
         <div class="gallery-main-wrap">
           <button class="gallery-main" id="gallery-main" aria-label="Forstørr hovedbilde">
-            <img
-              id="gallery-main-img"
-              src={`${base}/images/umbukta/${bilder[0].src}`}
-              alt={bilder[0].alt}
-              width="1200"
-              height="750"
-              loading="lazy"
-            />
+            <picture>
+              <source id="gallery-main-webp" type="image/webp"
+                      srcset={`${base}/images/opt/umbukta/${bilder[0].src.replace(/\.jpe?g$/i, '')}-1400.webp`} />
+              <img
+                id="gallery-main-img"
+                src={`${base}/images/umbukta/${bilder[0].src}`}
+                alt={bilder[0].alt}
+                width="1200"
+                height="750"
+                loading="lazy"
+              />
+            </picture>
           </button>
           <button class="gallery-nav prev" id="gallery-prev" aria-label="Forrige bilde">‹</button>
           <button class="gallery-nav next" id="gallery-next" aria-label="Neste bilde">›</button>
@@ -216,15 +221,16 @@ const faq = [
               class={`thumb${i === 0 ? ' active' : ''}`}
               aria-label={`Vis bilde: ${b.alt}`}
               data-src={`${base}/images/umbukta/${b.src}`}
+              data-webp={`${base}/images/opt/umbukta/${b.src.replace(/\.jpe?g$/i, '')}-1400.webp`}
               data-alt={b.alt}
               data-alt-en={b.alt_en}
             >
-              <img
-                src={`${base}/images/umbukta/${b.src}`}
+              <Bilde
+                sti={`umbukta/${b.src}`}
                 alt={b.alt}
-                width="240"
-                height="180"
-                loading="lazy"
+                bredde={1600}
+                hoyde={1200}
+                sizes="120px"
               />
             </button>
           ))}
@@ -532,13 +538,13 @@ const faq = [
     cursor: zoom-in;
     position: relative;
   }
-  .gallery-main img {
+  .gallery-main :global(img) {
     width: 100%;
     height: 100%;
     object-fit: cover;
     transition: transform 0.3s ease;
   }
-  .gallery-main:hover img { transform: scale(1.02); }
+  .gallery-main:hover :global(img) { transform: scale(1.02); }
   .gallery-main::after {
     content: '⤢';
     position: absolute;
@@ -564,10 +570,10 @@ const faq = [
     overflow: hidden;
     cursor: pointer;
   }
-  .thumb img { width: 100%; height: 100%; object-fit: cover; }
+  .thumb :global(img) { width: 100%; height: 100%; object-fit: cover; }
   .thumb.active { border-color: var(--rod); }
-  .thumb:not(.active) img { opacity: 0.78; transition: opacity 0.2s; }
-  .thumb:hover img { opacity: 1; }
+  .thumb:not(.active) :global(img) { opacity: 0.78; transition: opacity 0.2s; }
+  .thumb:hover :global(img) { opacity: 1; }
 
   /* ── "Bra å vite"-skille ──────────────────────────────────── */
   .section-divider { border-top: 1px solid var(--kantlinje); }
@@ -598,7 +604,7 @@ const faq = [
   }
   @media (prefers-reduced-motion: reduce) {
     .sticky-book { transition: opacity 0.25s ease; transform: none; }
-    .gallery-main img, .thumb img { transition: none; }
+    .gallery-main :global(img), .thumb :global(img) { transition: none; }
   }
 </style>
 
@@ -622,6 +628,9 @@ const faq = [
     cur = (i + thumbs.length) % thumbs.length;
     const t = thumbs[cur];
     if (mainImg) {
+      // Bytt WebP-kilden først, ellers rekker nettleseren å laste JPEG-en.
+      const webpKilde = document.getElementById('gallery-main-webp') as HTMLSourceElement | null;
+      if (webpKilde) webpKilde.srcset = t.dataset.webp || '';
       mainImg.src = t.dataset.src || '';
       mainImg.alt = altOf(t);
     }

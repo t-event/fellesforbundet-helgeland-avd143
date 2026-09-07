@@ -36,7 +36,7 @@ const avdLinks = [
 
       <!-- Avdelingen -->
       <div>
-        <h4 data-en="The branch">Avdelingen</h4>
+        <h2 data-en="The branch">Avdelingen</h2>
         <ul>
           {avdLinks.map(l => (
             <li><a href={`${base}${l.href}`} data-en={l.en}>{l.label}</a></li>
@@ -46,7 +46,7 @@ const avdLinks = [
 
       <!-- Hyttene -->
       <div>
-        <h4 data-i18n="footer_hytter">Hyttene</h4>
+        <h2 data-i18n="footer_hytter">Hyttene</h2>
         <ul>
           <li><a href={`${base}/hytter`} data-en="Both cabins">Begge hyttene</a></li>
           <li><a href={`${base}/umbukta`} data-en="Umbukta cabin">Hytte i Umbukta</a></li>
@@ -68,7 +68,7 @@ const avdLinks = [
 
       <!-- Kontakt -->
       <div>
-        <h4 data-i18n="footer_kontakt">Kontakt</h4>
+        <h2 data-i18n="footer_kontakt">Kontakt</h2>
         <ul>
           <li><a href={kartUrl} target="_blank" rel="noopener noreferrer" aria-label="Åpne adressen i Google Maps">{KONTAKT.adresse}, {KONTAKT.postnummer} {KONTAKT.poststed} ↗</a></li>
           <li><a href={`tel:+47${KONTAKT.telefon}`}>Tlf. {KONTAKT.telefonFormatert}</a></li>
@@ -87,7 +87,7 @@ const avdLinks = [
         <a href={KONTAKT.brreg} target="_blank" rel="noopener noreferrer" style="color:inherit;">
           Org.nr. {KONTAKT.orgnr} ↗
         </a>
-        <a href="https://t-event.no" target="_blank" rel="noopener noreferrer" style="color:inherit; opacity:0.7;">
+        <a href="https://t-event.no" target="_blank" rel="noopener noreferrer" style="color:inherit;">
           Utviklet av T-Event ↗
         </a>
       </span>

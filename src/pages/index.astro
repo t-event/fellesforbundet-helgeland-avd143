@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import Bilde from '../components/Bilde.astro';
 import Icon from '../components/Icon.astro';
 import CircleMotif from '../components/CircleMotif.astro';
 import { KONTAKT, ANSATTE, STYRE, FF_LENKER } from '../config.ts';
@@ -41,12 +42,13 @@ const fordeler = [
           </div>
         </div>
         <div class="hero-img">
-          <img
-            src={`${base}/images/hovedside/1mai-tog-mo-i-rana.jpg`}
+          <Bilde
+            sti="hovedside/1mai-tog-mo-i-rana.jpg"
             alt="1. mai-tog gjennom Mo i Rana med avdelingens fane og røde faner, snøkledde fjell i bakgrunnen"
-            width="1400"
-            height="934"
-            loading="eager"
+            bredde={1400}
+            hoyde={934}
+            sizes="(max-width: 900px) 100vw, 600px"
+            prioritert
             style="width:100%; height:100%; object-fit:cover;"
           />
         </div>
@@ -199,12 +201,12 @@ const fordeler = [
     <div class="feature-band">
       <CircleMotif variant="gronn" class="feature-band-motif" />
       <div class="feature-band-media">
-        <img
-          src={`${base}/images/umbukta/umbukta-eksterior-terrasse.jpg`}
+        <Bilde
+          sti="umbukta/umbukta-eksterior-terrasse.jpg"
           alt="Fjellhytta i Umbukta — eksteriør med terrasse i solskinn"
-          width="800"
-          height="550"
-          loading="lazy"
+          bredde={1600}
+          hoyde={1200}
+          sizes="(max-width: 900px) 100vw, 540px"
         />
       </div>
       <div class="feature-band-body">

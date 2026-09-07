@@ -4,6 +4,13 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import CookieConsent from '../components/CookieConsent.astro';
 
+// Fontene importeres for å få tak i den hashede URL-en, slik at de kan
+// forhåndslastes. Uten det oppdages de først når nettleseren har parset CSS-en,
+// og teksten rekker å tegnes med reservefonten før den byttes — det var det som
+// ga utseendeforskyvning (CLS) på forsiden.
+import interWoff2 from '../fonts/inter-latin.woff2?url';
+import spaceGroteskWoff2 from '../fonts/space-grotesk-latin.woff2?url';
+
 interface Props {
   title: string;
   description: string;
@@ -68,6 +75,12 @@ const brodsmuleMork = morkeHero.has(sti);
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="theme-color" content="#1A1836" />
+
+  {/* Fontene lastes samtidig med HTML-en i stedet for etter CSS-parsing.
+      crossorigin er påkrevd selv om fontene er på eget domene — fonter hentes
+      i CORS-modus, og uten flagget lastes de to ganger. */}
+  <link rel="preload" href={interWoff2} as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href={spaceGroteskWoff2} as="font" type="font/woff2" crossorigin />
 
   <!-- Content-Security-Policy. GitHub Pages kan ikke sette HTTP-headere, så
        policyen leveres via meta. 'unsafe-inline' er nødvendig fordi siden bruker
