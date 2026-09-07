@@ -283,10 +283,20 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
   border-radius: 4px; background: transparent; color: #8a6d1f;
 }
 .sprak-notis-knapp:hover, .sprak-notis-lukk:hover { background: rgba(138,109,31,.12); }
+/* Mobil: ikon, tekst og lukkekryss på første rad, knappen under teksten.
+   Med flex-wrap havnet krysset inntil ikonet på en halvtom første rad. */
 @media (max-width: 640px) {
-  .sprak-notis-inner { flex-wrap: wrap; }
-  .sprak-notis p { flex: 1 1 100%; order: 2; }
-  .sprak-notis-knapp { order: 3; }
+  .sprak-notis-inner {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    grid-template-areas: "ic tekst lukk" ". knapp knapp";
+    gap: 9px 10px;
+    align-items: start;
+  }
+  .sprak-notis-ic { grid-area: ic; margin-top: 1px; }
+  .sprak-notis p { grid-area: tekst; font-size: 13px; line-height: 1.45; }
+  .sprak-notis-lukk { grid-area: lukk; margin: -5px -7px 0 0; }
+  .sprak-notis-knapp { grid-area: knapp; justify-self: start; padding: 7px 13px; }
 }
 @media print { .sprak-notis { display: none; } }
 
