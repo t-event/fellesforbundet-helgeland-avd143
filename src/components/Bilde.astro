@@ -13,6 +13,9 @@ interface Props {
   /** Sti under public/images/, f.eks. "umbukta/umbukta-stue.jpg". */
   sti: string;
   alt: string;
+  /** Bildeteksten på engelsk. Uten den blir alt-teksten stående på norsk i
+      alle språk — den leses av skjermlesere. */
+  altEn?: string;
   bredde: number;
   hoyde: number;
   /** Hvor bred plass bildet får. Styrer hvilken variant nettleseren henter. */
@@ -24,7 +27,7 @@ interface Props {
 }
 
 const {
-  sti, alt, bredde, hoyde,
+  sti, alt, altEn, bredde, hoyde,
   sizes = '100vw',
   prioritert = false,
   class: klasse,
@@ -47,6 +50,7 @@ const srcset = BREDDER
   <img
     src={`${base}/images/${sti}`}
     alt={alt}
+    data-en-alt={altEn}
     width={bredde}
     height={hoyde}
     loading={prioritert ? 'eager' : 'lazy'}

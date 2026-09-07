@@ -71,7 +71,7 @@ const avdLinks = [
         <h2 data-i18n="footer_kontakt">Kontakt</h2>
         <ul>
           <li><a href={kartUrl} target="_blank" rel="noopener noreferrer" aria-label="Åpne adressen i Google Maps" data-en-aria="Open the address in Google Maps">{KONTAKT.adresse}, {KONTAKT.postnummer} {KONTAKT.poststed} ↗</a></li>
-          <li><a href={`tel:+47${KONTAKT.telefon}`}>Tlf. {KONTAKT.telefonFormatert}</a></li>
+          <li><a href={`tel:+47${KONTAKT.telefon}`}><span data-en="Tel.">Tlf.</span> {KONTAKT.telefonFormatert}</a></li>
           <li><a href={`mailto:${KONTAKT.epost}`}>{KONTAKT.epost}</a></li>
           <li><span data-en="Open">Åpent</span> {KONTAKT.apningstider}</li>
         </ul>
@@ -87,7 +87,7 @@ const avdLinks = [
         <a href={`${base}/cookies`} style="color:inherit;" data-en="Cookies">Cookies</a>
         <a href={`${base}/tilgjengelighet`} style="color:inherit;" data-en="Accessibility">Tilgjengelighet</a>
         <a href={KONTAKT.brreg} target="_blank" rel="noopener noreferrer" style="color:inherit;">
-          Org.nr. {KONTAKT.orgnr} ↗
+          <span data-en="Org. no.">Org.nr.</span> {KONTAKT.orgnr} ↗
         </a>
         <a href="https://t-event.no" target="_blank" rel="noopener noreferrer" style="color:inherit;" data-en="Developed by T-Event ↗">
           Utviklet av T-Event ↗

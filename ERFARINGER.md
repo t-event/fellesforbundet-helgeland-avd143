@@ -66,6 +66,18 @@ oversatte teksten. Da kan heller ikke en oversetter miste dem ved et uhell.
 **Lærdom:** når en nøkkel normaliseres for oppslag, må det vurderes om noe av
 det som normaliseres bort er *betydningsbærende* i utdataen.
 
+### Ny mekanikk, glemt å ta den i bruk
+
+**Hva skjedde:** `<Bilde>` fikk støtte for `altEn`, men bare de to
+illustrasjonene fikk den satt. Ni andre bilder sto igjen med norsk alt-tekst i
+alle språk — tekst som leses av skjermlesere.
+
+**Hvorfor:** Å legge til en mekanisme og å bruke den overalt er to jobber. Den
+første føles som om den løser problemet.
+
+**Etter dette:** når et nytt attributt eller en ny prop innføres, søkes det opp
+alle stedene som *burde* bruke den — ikke bare de som utløste endringen.
+
 ---
 
 ## 2. Verktøy som ga falsk trygghet
@@ -103,8 +115,11 @@ Ekte mobilvisning krever at sida rendres i en `<iframe>` med fast bredde.
 
 `rm -f dist/_t-*.html dist/_e-*.html` — zsh avbryter hele kommandoen når ett
 glob ikke treffer, så **ingen** av filene ble slettet. `npm run tekster` leste
-dem som ekte sider og meldte «21 sider». Slett filene enkeltvis, eller sjekk
-resultatet.
+dem som ekte sider og meldte «21 sider».
+
+Jeg gikk i den samme fella igjen senere, og da avbrøt den en kommandokjede som
+også skulle skrive til denne fila — så endringen forsvant stille. Bruk
+`find dist -maxdepth 1 -name '_*.html' -delete`, som ikke bryr seg om treff.
 
 ---
 
