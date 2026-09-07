@@ -44,7 +44,7 @@ const currentPath = Astro.url.pathname.replace(base, '').replace(/\/$/, '') || '
   <!-- Topp-rad: avdelings-snarveier + Min Side, språkvelger helt til høyre -->
   <div class="topbar">
     <div class="container topbar-inner">
-      <nav class="topbar-nav" aria-label="Avdelings-snarveier">
+      <nav class="topbar-nav" aria-label="Avdelings-snarveier" data-en-aria="Branch shortcuts">
         <a href={`${base}/om-oss`} class={currentPath === '/om-oss' ? 'active' : ''} data-en="About the branch">Om avdelingen</a>
         <a href={`${base}/tillitsvalgte`} class={currentPath === '/tillitsvalgte' ? 'active' : ''} data-en="Shop stewards">Tillitsvalgte</a>
         <a href={MIN_SIDE} target="_blank" rel="noopener noreferrer" data-en="My Page ↗">Min Side ↗</a>
@@ -93,12 +93,12 @@ const currentPath = Astro.url.pathname.replace(base, '').replace(/\/$/, '') || '
 
   <!-- Hovedrad: logo + synlige snarveier + Meny-knapp -->
   <div class="container header-main">
-    <a href={`${base}/`} class="brand" aria-label="Fellesforbundet Helgeland avd. 143 – til forsiden">
+    <a href={`${base}/`} class="brand" aria-label="Fellesforbundet Helgeland avd. 143 – til forsiden" data-en-aria="Fellesforbundet Helgeland branch 143 – to the front page">
       <BrandLockup />
     </a>
 
     <div class="nav-right">
-      <nav class="nav-shortcuts" aria-label="Hurtiglenker">
+      <nav class="nav-shortcuts" aria-label="Hurtiglenker" data-en-aria="Quick links">
         {snarveier.map(l => (
           <a href={`${base}${l.href}`} class={currentPath === l.href ? 'active' : ''} data-en={l.en}>{l.label}</a>
         ))}
@@ -106,7 +106,7 @@ const currentPath = Astro.url.pathname.replace(base, '').replace(/\/$/, '') || '
       <button
         class="meny-btn"
         id="nav-toggle"
-        aria-label="Åpne meny"
+        aria-label="Åpne meny" data-en-aria="Open menu"
         aria-expanded="false"
         aria-controls="nav-mobile"
       >
@@ -124,7 +124,7 @@ const currentPath = Astro.url.pathname.replace(base, '').replace(/\/$/, '') || '
 </header>
 
 <!-- Full meny (megameny, åpnes av «Meny» på alle skjermstørrelser) -->
-<nav class="megameny" id="nav-mobile" aria-label="Meny" role="navigation">
+<nav class="megameny" id="nav-mobile" aria-label="Meny" data-en-aria="Menu" role="navigation">
   <div class="container megameny-inner">
     {megaKolonner.map(kol => (
       <div class="megameny-kol">

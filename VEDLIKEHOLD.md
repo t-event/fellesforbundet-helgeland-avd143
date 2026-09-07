@@ -80,6 +80,14 @@ Ting som har gått galt før, og som ikke fanges av bygget.
   hvert nytt språk: rendre hver side på norsk og på det nye språket og
   sammenlign synlig tekst. Se «Sjekk at ALT faktisk er oversettbart» i
   [SPRÅK.md](SPRÅK.md).
+- **Attributter er ikke tekstnoder.** `placeholder`, `aria-label`, `title` og
+  `alt` må merkes med `data-en-ph` / `-aria` / `-title` / `-alt`. En diff av
+  synlig tekst finner dem aldri — sjekken må lese attributtene.
+- **Tekst som settes av JavaScript må tegnes på nytt ved språkbytte** med
+  `paSprakendring()`. Ellers henger den igjen på forrige språk.
+- **Tekst fra tabeller i koden fanges ikke av uttrekket.** `oversett(TABELL[i])`
+  er ikke en literal. Værtekstene og kompassretningene er derfor listet
+  eksplisitt i `hent-tekster.mjs` — endrer du tabellene, må lista følge med.
 - **HTML-entiteter må normaliseres likt tre steder.** `&`, `&shy;` og `&nbsp;`
   ser ulike ut i kilden og i `innerHTML`. Normaliseringen ligger i
   `Layout.astro`, `klient.ts` og `hent-tekster.mjs` — endrer du én, må alle med.

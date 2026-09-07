@@ -110,11 +110,33 @@ function samle(html, fil) {
     }
   }
 
+  // aria-label / title på elementer som er merket for oversettelse
+  for (const [attr, kilde] of [['aria-label', 'data-en-aria'], ['title', 'data-en-title'], ['alt', 'data-en-alt']]) {
+    const re = new RegExp(`<[^>]*\\b${kilde}=[^>]*>`, 'gi');
+    let t;
+    while ((t = re.exec(html)) !== null) {
+      const v = t[0].match(new RegExp(`(?<![-\\w])${attr}="([^"]*)"`, 'i'));
+      if (v) { const norsk = normaliser(avkod(v[1])); if (norsk) tekster.set(norsk, fil); }
+    }
+  }
+
+  // Bildetekster i galleriet ligger som data-alt (norsk) / data-alt-en.
+  // De settes av JS på hovedbildet og i lightboxen.
+  {
+    const re = /\bdata-alt="([^"]*)"/gi;
+    let t;
+    while ((t = re.exec(html)) !== null) {
+      const norsk = normaliser(avkod(t[1]));
+      if (norsk) tekster.set(norsk, fil);
+    }
+  }
+
   // placeholder="NORSK" på felt som også har data-en-ph
-  const rePh = /<[^>]*\bdata-en-ph=(?:"[^"]*"|'[^']*')[^>]*\bplaceholder="([^"]*)"[^>]*>/gi;
+  // Rekkefølgen på attributtene i taggen skal ikke ha noe å si.
+  const rePh = /<[^>]*\bdata-en-ph=[^>]*>/gi;
   while ((m = rePh.exec(html)) !== null) {
-    const norsk = normaliser(avkod(m[1]));
-    if (norsk) tekster.set(norsk, fil);
+    const t = m[0].match(/(?<![-\w])placeholder="([^"]*)"/i);
+    if (t) { const norsk = normaliser(avkod(t[1])); if (norsk) tekster.set(norsk, fil); }
   }
 }
 
@@ -162,6 +184,12 @@ const VÆR = [
   'Sludd', 'Lett sludd', 'Kraftig sludd', 'Sluddbyger', 'Lette sluddbyger', 'Kraftige sluddbyger',
   'Snø', 'Lett snø', 'Kraftig snø', 'Snøbyger', 'Lette snøbyger', 'Kraftige snøbyger',
 ];
+// Kompassretningene kommer fra samme slags tabell og fanges heller ikke
+// automatisk. Norsk bruker Ø/V (øst/vest); andre språk bruker som regel de
+// internasjonale N/E/S/W.
+const KOMPASS = ['N','NNØ','NØ','ØNØ','Ø','ØSØ','SØ','SSØ','S','SSV','SV','VSV','V','VNV','NV','NNV'];
+for (const retning of KOMPASS) tekster.set(retning, 'src/components/WeatherWidget.astro');
+
 for (const grunn of VÆR) {
   tekster.set(grunn, 'src/components/WeatherWidget.astro');
   tekster.set(`${grunn} og torden`, 'src/components/WeatherWidget.astro');
@@ -176,6 +204,11 @@ if (nbBlokk) {
     if (norsk) tekster.set(norsk, 'src/i18n/translations.ts');
   }
 }
+
+// Enkelte plassholdere bærer et i18n-nøkkelnavn som verdi (settes av JS ved
+// oppstart). De skal ikke oversettes.
+const erNokkelnavn = t => /^[a-z][a-z0-9]*(_[a-z0-9]+)+$/.test(t);
+for (const t of [...tekster.keys()]) if (erNokkelnavn(t)) tekster.delete(t);
 
 const alle = [...tekster.keys()].sort((a, b) => a.localeCompare(b, 'nb'));
 

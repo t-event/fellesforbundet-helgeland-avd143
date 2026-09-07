@@ -108,13 +108,13 @@ const googleEmbed = `https://www.google.com/maps?q=${encodeURIComponent(mapQuery
             style="position:absolute; left:-9999px; width:1px; height:1px; opacity:0;" />
           <div class="field">
             <label for="hk-navn" data-en="Name">Navn</label>
-            <input class="input" type="text" id="hk-navn" name="navn" placeholder="Ola Nordmann" required autocomplete="name" />
+            <input class="input" type="text" id="hk-navn" name="navn" placeholder="Ola Nordmann" data-en-ph="John Smith" required autocomplete="name" />
             <div class="field-error" id="hkerr-navn" style="display:none;"></div>
           </div>
           <div class="field-row">
             <div class="field">
               <label for="hk-epost" data-en="Email">E-post</label>
-              <input class="input" type="email" id="hk-epost" name="epost" placeholder="ola@epost.no" required autocomplete="email" />
+              <input class="input" type="email" id="hk-epost" name="epost" placeholder="ola@epost.no" data-en-ph="john@email.com" required autocomplete="email" />
               <div class="field-error" id="hkerr-epost" style="display:none;"></div>
             </div>
             <div class="field">
@@ -134,7 +134,7 @@ const googleEmbed = `https://www.google.com/maps?q=${encodeURIComponent(mapQuery
           </div>
           <div class="field">
             <label for="hk-melding" data-en="Message">Melding</label>
-            <textarea class="input" id="hk-melding" name="melding" rows="4" placeholder="Skriv din melding her…" required></textarea>
+            <textarea class="input" id="hk-melding" name="melding" rows="4" placeholder="Skriv din melding her…" data-en-ph="Write your message here…" required></textarea>
             <div class="field-error" id="hkerr-melding" style="display:none;"></div>
           </div>
           <!-- Spamvern (hCaptcha via Web3Forms) -->

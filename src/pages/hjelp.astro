@@ -128,14 +128,14 @@ import { KONTAKT } from '../config.ts';
             <div class="field">
               <label for="k-navn" data-i18n="form_name">Navn</label>
               <input class="input" type="text" id="k-navn" name="navn"
-                placeholder="Ola Nordmann" required autocomplete="name" />
+                placeholder="Ola Nordmann" data-en-ph="John Smith" required autocomplete="name" />
               <div class="field-error" id="kerr-navn" style="display:none;"></div>
             </div>
             <div class="field-row">
               <div class="field">
                 <label for="k-epost" data-i18n="form_email">E-post</label>
                 <input class="input" type="email" id="k-epost" name="epost"
-                  placeholder="ola@epost.no" required autocomplete="email" />
+                  placeholder="ola@epost.no" data-en-ph="john@email.com" required autocomplete="email" />
                 <div class="field-error" id="kerr-epost" style="display:none;"></div>
               </div>
               <div class="field">
@@ -157,7 +157,7 @@ import { KONTAKT } from '../config.ts';
             <div class="field">
               <label for="k-melding" data-i18n="hjelp_melding">Melding</label>
               <textarea class="input" id="k-melding" name="melding" rows="4"
-                placeholder="Skriv din melding her…" required data-i18n-placeholder="hjelp_melding_ph"></textarea>
+                placeholder="Skriv din melding her…" data-en-ph="Write your message here…" required data-i18n-placeholder="hjelp_melding_ph"></textarea>
               <div class="field-error" id="kerr-melding" style="display:none;"></div>
             </div>
             <!-- Spamvern (hCaptcha via Web3Forms) -->

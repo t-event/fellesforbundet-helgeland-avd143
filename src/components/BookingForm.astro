@@ -57,14 +57,14 @@ const WEB3FORMS_KEY = import.meta.env.PUBLIC_WEB3FORMS_KEY ?? '';
     <div class="field">
       <label for="booking-navn" data-i18n="form_name">Navn</label>
       <input class="input" type="text" id="booking-navn" name="navn"
-        placeholder="Ola Nordmann" required aria-required="true" autocomplete="name" />
+        placeholder="Ola Nordmann" data-en-ph="John Smith" required aria-required="true" autocomplete="name" />
       <div class="field-error" id="err-navn" style="display:none;"></div>
     </div>
     <div class="field-row">
       <div class="field">
         <label for="booking-epost" data-i18n="form_email">E-post</label>
         <input class="input" type="email" id="booking-epost" name="epost"
-          placeholder="ola@epost.no" required aria-required="true" autocomplete="email" />
+          placeholder="ola@epost.no" data-en-ph="john@email.com" required aria-required="true" autocomplete="email" />
         <div class="field-error" id="err-epost" style="display:none;"></div>
       </div>
       <div class="field">

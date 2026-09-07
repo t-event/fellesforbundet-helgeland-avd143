@@ -23,7 +23,7 @@ const avdLinks = [
 
       <!-- Merkevare -->
       <div class="footer-brand">
-        <a href={`${base}/`} class="brand" style="margin-bottom:14px; text-decoration:none;" aria-label="Forside">
+        <a href={`${base}/`} class="brand" style="margin-bottom:14px; text-decoration:none;" aria-label="Forside" data-en-aria="Home">
           <BrandLockup class="brand-lockup--footer" />
         </a>
         <p data-en="Trade union for working people in Helgeland — we organise, negotiate and stand together.">
@@ -70,7 +70,7 @@ const avdLinks = [
       <div>
         <h2 data-i18n="footer_kontakt">Kontakt</h2>
         <ul>
-          <li><a href={kartUrl} target="_blank" rel="noopener noreferrer" aria-label="Åpne adressen i Google Maps">{KONTAKT.adresse}, {KONTAKT.postnummer} {KONTAKT.poststed} ↗</a></li>
+          <li><a href={kartUrl} target="_blank" rel="noopener noreferrer" aria-label="Åpne adressen i Google Maps" data-en-aria="Open the address in Google Maps">{KONTAKT.adresse}, {KONTAKT.postnummer} {KONTAKT.poststed} ↗</a></li>
           <li><a href={`tel:+47${KONTAKT.telefon}`}>Tlf. {KONTAKT.telefonFormatert}</a></li>
           <li><a href={`mailto:${KONTAKT.epost}`}>{KONTAKT.epost}</a></li>
           <li><span data-en="Open">Åpent</span> {KONTAKT.apningstider}</li>

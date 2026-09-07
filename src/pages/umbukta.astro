@@ -199,7 +199,7 @@ const faq = [
       </h2>
       <div class="gallery-hero">
         <div class="gallery-main-wrap">
-          <button class="gallery-main" id="gallery-main" aria-label="Forstørr hovedbilde">
+          <button class="gallery-main" id="gallery-main" aria-label="Forstørr hovedbilde" data-en-aria="Enlarge main image">
             <picture>
               <source id="gallery-main-webp" type="image/webp"
                       srcset={`${base}/images/opt/umbukta/${bilder[0].src.replace(/\.jpe?g$/i, '')}-1400.webp`} />
@@ -213,8 +213,8 @@ const faq = [
               />
             </picture>
           </button>
-          <button class="gallery-nav prev" id="gallery-prev" aria-label="Forrige bilde">‹</button>
-          <button class="gallery-nav next" id="gallery-next" aria-label="Neste bilde">›</button>
+          <button class="gallery-nav prev" id="gallery-prev" aria-label="Forrige bilde" data-en-aria="Previous image">‹</button>
+          <button class="gallery-nav next" id="gallery-next" aria-label="Neste bilde" data-en-aria="Next image">›</button>
         </div>
         <div class="gallery-thumbs" id="galleri">
           {bilder.map((b, i) => (
@@ -240,10 +240,10 @@ const faq = [
     </div>
 
     <!-- LIGHTBOX -->
-    <div id="lightbox" role="dialog" aria-modal="true" aria-label="Bildevisning" style="display:none; position:fixed; inset:0; z-index:1000; background:rgba(0,0,0,0.92); align-items:center; justify-content:center; padding:20px;">
-      <button id="lb-prev" aria-label="Forrige bilde" style="position:absolute; left:16px; top:50%; transform:translateY(-50%); background:rgba(255,255,255,0.12); border:none; color:#fff; font-size:28px; width:48px; height:48px; border-radius:50%; cursor:pointer; display:flex; align-items:center; justify-content:center;">‹</button>
-      <button id="lb-next" aria-label="Neste bilde" style="position:absolute; right:16px; top:50%; transform:translateY(-50%); background:rgba(255,255,255,0.12); border:none; color:#fff; font-size:28px; width:48px; height:48px; border-radius:50%; cursor:pointer; display:flex; align-items:center; justify-content:center;">›</button>
-      <button id="lb-close" aria-label="Lukk" style="position:absolute; top:16px; right:16px; background:rgba(255,255,255,0.12); border:none; color:#fff; font-size:22px; width:44px; height:44px; border-radius:50%; cursor:pointer; display:flex; align-items:center; justify-content:center;">✕</button>
+    <div id="lightbox" role="dialog" aria-modal="true" aria-label="Bildevisning" data-en-aria="Image viewer" style="display:none; position:fixed; inset:0; z-index:1000; background:rgba(0,0,0,0.92); align-items:center; justify-content:center; padding:20px;">
+      <button id="lb-prev" aria-label="Forrige bilde" data-en-aria="Previous image" style="position:absolute; left:16px; top:50%; transform:translateY(-50%); background:rgba(255,255,255,0.12); border:none; color:#fff; font-size:28px; width:48px; height:48px; border-radius:50%; cursor:pointer; display:flex; align-items:center; justify-content:center;">‹</button>
+      <button id="lb-next" aria-label="Neste bilde" data-en-aria="Next image" style="position:absolute; right:16px; top:50%; transform:translateY(-50%); background:rgba(255,255,255,0.12); border:none; color:#fff; font-size:28px; width:48px; height:48px; border-radius:50%; cursor:pointer; display:flex; align-items:center; justify-content:center;">›</button>
+      <button id="lb-close" aria-label="Lukk" data-en-aria="Close" style="position:absolute; top:16px; right:16px; background:rgba(255,255,255,0.12); border:none; color:#fff; font-size:22px; width:44px; height:44px; border-radius:50%; cursor:pointer; display:flex; align-items:center; justify-content:center;">✕</button>
       <img id="lb-img" src="" alt="" style="max-width:min(90vw,1200px); max-height:85vh; object-fit:contain; border-radius:4px; display:block;" />
       <p id="lb-caption" style="position:absolute; bottom:20px; left:50%; transform:translateX(-50%); color:#ccc; font-size:14px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:80vw;"></p>
     </div>
@@ -423,7 +423,7 @@ const faq = [
     <!-- HUSREGLER + FAQ -->
     <div class="section grid grid-2" style="padding-top:0; align-items:start; gap:clamp(20px,4vw,36px);">
 
-      <div class="rules" aria-label="Husregler">
+      <div class="rules" aria-label="Husregler" data-en-aria="House rules">
         <h2 class="h2" style="font-size:24px;" data-i18n="umbukta_rules_title">
           Husregler &amp; praktisk info
         </h2>
@@ -664,20 +664,24 @@ const faq = [
   document.getElementById('gallery-prev')?.addEventListener('click', () => setMain(cur - 1));
   document.getElementById('gallery-next')?.addEventListener('click', () => setMain(cur + 1));
 
-  // Oppdater bildetekst når språket byttes (les ønsket språk fra knappen
-  // for å unngå timing mot Layout sin applyLang).
-  document.querySelectorAll<HTMLButtonElement>('[data-lang]').forEach(btn =>
-    btn.addEventListener('click', () => {
-      if (!thumbs.length) return;
-      const t = thumbs[cur];
-      const a = (btn.dataset.lang === 'en' ? (t.dataset.altEn || t.dataset.alt) : t.dataset.alt) || '';
-      if (mainImg) mainImg.alt = a;
-      if (lb && lb.style.display !== 'none') {
-        if (lbImg) lbImg.alt = a;
-        if (lbCap) lbCap.textContent = a;
-      }
-    })
-  );
+  // Oppdater bildetekst og lightbox-tekst når språket byttes.
+  // Miniatyrenes alt-tekst og «Vis bilde: …» bygges av JS, så de må settes på
+  // nytt ved språkbytte — ellers henger de igjen på norsk.
+  function oppdaterBildetekster() {
+    thumbs.forEach(t => {
+      const a = altOf(t);
+      const img = t.querySelector('img');
+      if (img) img.alt = a;
+      t.setAttribute('aria-label', oversett('Vis bilde: {tekst}', 'Show image: {tekst}', { tekst: a }));
+    });
+    if (!thumbs.length) return;
+    const a = altOf(thumbs[cur]);
+    if (mainImg) mainImg.alt = a;
+    if (lbImg) lbImg.alt = a;
+    if (lbCap) lbCap.textContent = a;
+  }
+  oppdaterBildetekster();
+  paSprakendring(oppdaterBildetekster);
   document.getElementById('lb-close')?.addEventListener('click', closeLightbox);
   document.getElementById('lb-prev')?.addEventListener('click', () => openLightbox(cur - 1));
   document.getElementById('lb-next')?.addEventListener('click', () => openLightbox(cur + 1));

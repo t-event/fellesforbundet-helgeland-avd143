@@ -34,7 +34,7 @@ export const MIN_DEKNING = 0.85;
 
 // Antall tekster som skal oversettes totalt. Oppdateres av `npm run tekster`.
 // Står den på 0, regnes ingen ordbok som komplett nok.
-export const ANTALL_TEKSTER = 739;
+export const ANTALL_TEKSTER = 791;
 
 export const ORDBOKER: Record<string, Record<string, string>> = { ro, es, pl, lt, lv };
 

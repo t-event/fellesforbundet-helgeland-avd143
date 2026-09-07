@@ -3,12 +3,12 @@
 // Faktisk data og rendring skjer client-side via calendar.ts.
 ---
 
-<div class="cal" id="cal" aria-label="Ledighetskalender for Umbukta">
+<div class="cal" id="cal" aria-label="Ledighetskalender for Umbukta" data-en-aria="Availability calendar for Umbukta">
   <div class="cal-head">
     <b id="cal-title" data-en="Loading calendar…">Laster kalender…</b>
     <div class="cal-nav">
-      <button id="cal-prev" aria-label="Forrige måned">‹</button>
-      <button id="cal-next" aria-label="Neste måned">›</button>
+      <button id="cal-prev" aria-label="Forrige måned" data-en-aria="Previous month">‹</button>
+      <button id="cal-next" aria-label="Neste måned" data-en-aria="Next month">›</button>
     </div>
   </div>
   <button type="button" id="cal-neste" class="cal-neste" style="display:none;"></button>
@@ -16,8 +16,8 @@
     <span data-en="Mon">Man</span><span data-en="Tue">Tir</span><span data-en="Wed">Ons</span>
     <span data-en="Thu">Tor</span><span data-en="Fri">Fre</span><span data-en="Sat">Lør</span><span data-en="Sun">Søn</span>
   </div>
-  <div class="cal-grid" id="cal-grid" role="grid" aria-label="Dager"></div>
-  <div class="cal-legend" aria-label="Tegnforklaring">
+  <div class="cal-grid" id="cal-grid" role="grid" aria-label="Dager" data-en-aria="Days"></div>
+  <div class="cal-legend" aria-label="Tegnforklaring" data-en-aria="Legend">
     <span><span class="swatch" style="background:#fff; border:1px solid var(--kantlinje);"></span><span data-i18n="cal_ledig">Ledig</span></span>
     <span><span class="swatch" style="background:var(--rosa);"></span><span data-i18n="cal_opptatt">Opptatt</span></span>
     <span><span class="swatch" style="background:var(--rod);"></span><span data-i18n="cal_valgt">Valgt</span></span>
@@ -117,14 +117,14 @@ function renderCalendar() {
 
     if (isPast) {
       cls += ' fortid';
-      ariaLabel += ' (fortid)';
+      ariaLabel += oversett(' (fortid)', ' (past)');
     } else if (easterDates.has(iso)) {
       cls += ' lodd';
-      ariaLabel += ' (loddtrekning — påske)';
+      ariaLabel += oversett(' (loddtrekning — påske)', ' (draw — Easter)');
       clickable = true;
     } else if (availability.bookedDates.includes(iso)) {
       cls += ' opptatt';
-      ariaLabel += ' (opptatt)';
+      ariaLabel += oversett(' (opptatt)', ' (booked)');
     } else {
       // Ledig
       if (selectedFrom && selectedTo) {
@@ -155,7 +155,7 @@ function renderCalendar() {
       tabIndex = '0';
     }
 
-    if (isToday) ariaLabel += ' (i dag)';
+    if (isToday) ariaLabel += oversett(' (i dag)', ' (today)');
 
     html += `<div
       class="${cls}"

@@ -101,6 +101,42 @@ De tre siste var systematiske: entitetene normaliseres nå likt i
 `Layout.astro`, `klient.ts` og `hent-tekster.mjs`. **Endrer du normaliseringen
 ett sted, må alle tre følge med.**
 
+### Attributter er ikke tekstnoder
+
+Andre runde avdekket en hel klasse til. Å sammenligne synlig tekst finner dem
+ikke, fordi de ikke *er* tekst — sjekken må lese attributtene direkte:
+
+| Attributt | Merkes med | Hva som glapp |
+|-----------|-----------|---------------|
+| `placeholder` | `data-en-ph` | Alle fire feltene i alle fire skjemaene sto på norsk — også på engelsk |
+| `aria-label` | `data-en-aria` | 18 stykker. Skjermlesere leste norsk til polske brukere |
+| `title` | `data-en-title` | Hjelpetekst på webkameraet |
+| `alt` | `data-en-alt` | Bildetekstene i galleriet |
+
+Tekst som **settes av JavaScript** må i tillegg tegnes på nytt ved språkbytte,
+via `paSprakendring()`. Det gjaldt lightbox-teksten, miniatyrenes `alt` og
+«Vis bilde: …», og kalenderens `(opptatt)` / `(i dag)` / `(fortid)`.
+
+### Verdier fra tabeller i koden
+
+Uttrekket finner bare `oversett('literal')`. Kommer teksten fra en tabell —
+`oversett(TABELL[i], ...)` — ser den den ikke. To slike finnes, og begge er
+listet **eksplisitt** i `hent-tekster.mjs`:
+
+- **Værteksten** (46 kombinasjoner: nedbørtype × intensitet × byge × torden)
+- **Kompassretningene** (16). Norsk bruker Ø/V; polsk og de fleste andre språk
+  bruker de internasjonale N/E/S/W. `SØ` blir altså `SE`, ikke `SØ`.
+
+Endrer du `symbolTekst()` eller `COMPASS` i WeatherWidget, **må lista i
+`hent-tekster.mjs` følge med**.
+
+### hCaptcha
+
+Widgeten viser sin egen tekst («Jeg er ikke en robot») på det språket den får
+ved rendring. Den settes fra `data-hl` av et lite inline-skript i `<head>`, som
+må kjøre før Web3Forms-scriptet. Bytter man språk etter at widgeten er tegnet,
+lastes sida på nytt — hCaptcha kan ikke bytte språk uten å rendres på nytt.
+
 ## For utviklere
 
 - Norsk ligger i HTML-en. Engelsk ligger ved siden av, i `data-en`-attributter.

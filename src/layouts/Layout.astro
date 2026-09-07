@@ -79,6 +79,25 @@ const brodsmuleMork = morkeHero.has(sti);
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="theme-color" content="#1A1836" />
 
+  {/* hCaptcha viser sin egen tekst («Jeg er ikke en robot») på det språket
+      widgeten får ved rendring. Web3Forms-scriptet rendrer den så snart det er
+      lastet, altså før modulskriptet nederst rekker å bytte språk. Derfor
+      settes data-hl så tidlig som mulig, rett fra localStorage. */}
+  <script is:inline>
+    (function () {
+      var kart = { nb: 'no', en: 'en', pl: 'pl', ro: 'ro', es: 'es', lt: 'lt', lv: 'lv' };
+      var valgt = 'nb';
+      try { valgt = localStorage.getItem('lang') || 'nb'; } catch (e) {}
+      var hl = kart[valgt] || 'no';
+      document.documentElement.setAttribute('data-hcaptcha-hl', hl);
+      document.addEventListener('DOMContentLoaded', function () {
+        document.querySelectorAll('.h-captcha').forEach(function (el) {
+          el.setAttribute('data-hl', hl);
+        });
+      });
+    })();
+  </script>
+
   {/* Fontene lastes samtidig med HTML-en i stedet for etter CSS-parsing.
       crossorigin er påkrevd selv om fontene er på eget domene — fonter hentes
       i CORS-modus, og uten flagget lastes de to ganger. */}
@@ -182,7 +201,7 @@ const brodsmuleMork = morkeHero.has(sti);
         gjelder — eller ta kontakt med avdelingen.
       </p>
       <button type="button" id="sprak-notis-norsk" class="sprak-notis-knapp" data-en="Show in Norwegian">Vis på norsk</button>
-      <button type="button" id="sprak-notis-lukk" class="sprak-notis-lukk" aria-label="Lukk" data-en-ph="Close">
+      <button type="button" id="sprak-notis-lukk" class="sprak-notis-lukk" aria-label="Lukk" data-en-aria="Close" data-en-ph="Close">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true">
           <path d="M6 6l12 12M18 6L6 18" />
         </svg>
@@ -190,7 +209,7 @@ const brodsmuleMork = morkeHero.has(sti);
     </div>
   </div>
   {brodsmule && (
-    <nav class={`brodsmule${brodsmuleMork ? ' brodsmule--mork' : ''}`} aria-label="Du er her">
+    <nav class={`brodsmule${brodsmuleMork ? ' brodsmule--mork' : ''}`} aria-label="Du er her" data-en-aria="You are here">
       <div class="container">
         <a href={`${base}/`} data-en="Home">Forsiden</a>
         <span class="brodsmule-sep" aria-hidden="true">/</span>
@@ -251,6 +270,7 @@ const brodsmuleMork = morkeHero.has(sti);
     // Original (norsk) innhold, slik at vi alltid kan slå opp og bytte tilbake.
     const noHtml = new WeakMap<HTMLElement, string>();
     const noPh   = new WeakMap<HTMLInputElement | HTMLTextAreaElement, string>();
+    const noAttr = new WeakMap<HTMLElement, Record<string, string>>();
 
     // Ordboknøkkelen er den norske teksten med normalisert mellomrom, slik at
     // innrykk i HTML-en ikke gjør oppslaget avhengig av formatering.
@@ -302,6 +322,20 @@ const brodsmuleMork = morkeHero.has(sti);
           : slaOpp(norsk, lang);
       });
 
+      // Attributter som leses opp av skjermlesere eller vises som hjelpetekst.
+      // De er ikke tekstnoder, så de fanges ikke av [data-en] over.
+      for (const [attr, kilde] of [['aria-label', 'data-en-aria'], ['title', 'data-en-title'], ['alt', 'data-en-alt']] as const) {
+        document.querySelectorAll<HTMLElement>(`[${kilde}]`).forEach(el => {
+          if (!noAttr.has(el)) noAttr.set(el, {});
+          const cache = noAttr.get(el)!;
+          if (cache[attr] === undefined) cache[attr] = el.getAttribute(attr) ?? '';
+          const norsk = cache[attr];
+          el.setAttribute(attr, lang === 'nb' ? norsk
+            : lang === 'en' ? (el.getAttribute(kilde) ?? norsk)
+            : slaOpp(norsk, lang));
+        });
+      }
+
       document.documentElement.lang = HTML_LANG[lang] ?? 'no';
 
       // Fanetittelen fulgte ikke språkvalget: <html lang="en"> med norsk
@@ -336,6 +370,19 @@ const brodsmuleMork = morkeHero.has(sti);
       }
 
       try { localStorage.setItem('lang', lang); } catch { /* privat vindu */ }
+
+      // hCaptcha rendrer sin egen tekst én gang, ved lasting. Er widgeten
+      // allerede tegnet opp, kan språket bare byttes ved å laste sida på nytt.
+      // Det gjøres bare når det faktisk står en captcha på sida.
+      const HL: Record<string, string> = { nb: 'no', en: 'en', pl: 'pl', ro: 'ro', es: 'es', lt: 'lt', lv: 'lv' };
+      const onsket = HL[lang] ?? 'no';
+      const captcha = document.querySelector('.h-captcha iframe');
+      if (captcha && document.documentElement.dataset.hcaptchaHl !== onsket) {
+        document.documentElement.dataset.hcaptchaHl = onsket;
+        try { localStorage.setItem('lang', lang); } catch { /* privat vindu */ }
+        location.reload();
+        return;
+      }
 
       // Si fra til skript som tegner opp eget innhold (kalender, værwidget,
       // datoer). De skal IKKE lytte på klikk i språkvelgeren selv — markupen
