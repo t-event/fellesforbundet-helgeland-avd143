@@ -41,7 +41,10 @@ function htmlFiler(katalog) {
   });
 }
 
-const normaliser = s => s.replace(/\s+/g, ' ').trim();
+// Astros scope-hash (data-astro-cid-…) endres når stilene i komponenten
+// endres. Den må ikke bli en del av ordboknøkkelen.
+const normaliser = s =>
+  s.replace(/\s*data-astro-cid-[\w-]+(?:="[^"]*")?/g, '').replace(/\s+/g, ' ').trim();
 
 // Avkod de HTML-entitetene Astro faktisk produserer i attributtverdier.
 const avkod = s =>

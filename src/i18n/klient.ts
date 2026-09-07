@@ -31,7 +31,11 @@ export function aktivtSprak(): Sprakkode {
 }
 
 // Samme normalisering som i Layout.astro, slik at nøklene treffer hverandre.
-const nokkel = (s: string) => s.replace(/\s+/g, ' ').trim();
+// Astro setter data-astro-cid-… på elementer for å scope CSS. Hashen endres
+// hver gang stilene i komponenten endres, så den MÅ ut av nøkkelen — ellers
+// ville en ren CSS-justering stille ugyldiggjøre alle oversettelsene på sida.
+const utenScope = (s: string) => s.replace(/\s*data-astro-cid-[\w-]+(?:="[^"]*")?/g, '');
+const nokkel = (s: string) => utenScope(s).replace(/\s+/g, ' ').trim();
 
 /**
  * Oversett en streng som lages i JavaScript.
