@@ -7,7 +7,8 @@ eller fjernes.
 | # | Hva | Hvor | Hva mangler | Slik fjerner du plassholderen |
 |---|-----|------|-------------|-------------------------------|
 | 1 | **Portrettbilder av ansatte og styret** (valgfritt) | [src/data/tillitsvalgte.json](src/data/tillitsvalgte.json) (`ansatte`, `styre`), vist på [src/pages/tillitsvalgte.astro](src/pages/tillitsvalgte.astro) + forsiden | Navn, verv og klubb er på plass; portrettbilder mangler (vises som initialer i avatar — fungerer fint uten). | Legg portretter i `public/images/folk/` og bytt initial-avataren med `<img>` der det er ønskelig. |
-| 2 | **Oversettelser til rumensk, spansk, polsk, litauisk og latvisk** | [src/i18n/ordbok/](src/i18n/ordbok/) | Mekanikken er på plass, men ordbøkene er tomme, så språkene vises ikke i velgeren ennå. | Se [SPRÅK.md](SPRÅK.md). Kort: `npm run tekster` → send `_mal.json` til oversetter → lagre svaret som `<kode>.json`. |
+| 2 | **Oversettelser til rumensk, spansk, litauisk og latvisk** | [src/i18n/ordbok/](src/i18n/ordbok/) | Mekanikken er på plass, men ordbøkene er tomme, så språkene vises ikke i velgeren ennå. Polsk er ferdig og aktivt. | Se [SPRÅK.md](SPRÅK.md). Kort: `npm run tekster` → send `_mal.json` til oversetter → lagre svaret som `<kode>.json`. |
+| 3 | **Morsmålskontroll av den polske utgaven** | [src/i18n/ordbok/pl.json](src/i18n/ordbok/pl.json) | Oversatt av Claude, ikke av et menneske med polsk som morsmål. Besøkende ser en notis om at norsk er offisiell versjon. | La noen som kan polsk lese gjennom, særlig `/lonn-tariff` og `/vilkar`. Rett direkte i `pl.json`. |
 
 Alle øvrige plassholdere er nå fylt ut eller fjernet:
 

@@ -32,10 +32,18 @@ npm run build                 # produksjonsbygg
 - **Stack:** Astro (statisk side), TypeScript, deployes til GitHub Pages.
 - **Arkitektur og innhold:** se [SPEC.md](SPEC.md).
 - Mye innhold styres fra [src/config.ts](src/config.ts) og datafiler under `src/data/`.
+- **Les [VEDLIKEHOLD.md](VEDLIKEHOLD.md) før du endrer noe.** Der står hva som må
+  gjøres i tillegg når du rører tekst, bilder eller eksterne tjenester — og
+  «Kjente fallgruver», som er feil vi faktisk har gått på og som bygget ikke
+  fanger opp.
 
 ## Retningslinjer for endringer
 
 - **Bygg lokalt** (`npm run build`) og sjekk at alt kompilerer før du sender inn.
+- **Åpne sida i en nettleser etterpå.** Bygget typesjekker ikke `<script>`-blokker
+  i .astro-filer, så en feil der gir grønt bygg og ødelagt side. Det har skjedd.
+- **Endrer du tekst:** skriv `data-en` samtidig, og kjør `npm run tekster` så de
+  nye strengene havner i oversettelsesmalen.
 - Følg eksisterende kodestil, komponentmønster og designprofil
   (Fellesforbundets profilhåndbok — ikke fjern merkefarger på smaksbasis).
 - Hold endringer fokuserte, og beskriv hva og hvorfor i commit/PR.

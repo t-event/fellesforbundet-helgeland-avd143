@@ -21,6 +21,7 @@ Avdelingens nettside: **avdelingens hjemmeside** (forside, medlemskap, aktuelt, 
 
 | Fil | Når du trenger den |
 |-----|--------------------|
+| **[VEDLIKEHOLD.md](VEDLIKEHOLD.md)** | Alt som må gjøres over tid, samlet: hva som går automatisk, hva som må gjøres når, kjente fallgruver og hva som styres utenfor repoet. **Start her.** |
 | **[ÅRSMØTE.md](ÅRSMØTE.md)** | Oppdatere styre, utvalg, representantskap og ansatte etter årsmøtet. Skrevet for noen som ikke koder. |
 | **[SPRÅK.md](SPRÅK.md)** | Legge til et nytt språk på nettsida. |
 | **[PLACEHOLDERS.md](PLACEHOLDERS.md)** | Hva som fortsatt er midlertidig innhold. |
@@ -304,6 +305,7 @@ GitHub Actions bygger og publiserer siden automatisk (tar ca. 1–2 minutter).
 | `npm run valider` | Sjekker `src/data/tillitsvalgte.json`. Kjøres automatisk av `npm run build`, og stopper bygget ved feil. |
 | `npm run tekster` | Skriver `src/i18n/ordbok/_mal.json` med alle tekstene som skal oversettes, og viser dekning per språk. Krever at `npm run build` er kjørt først. |
 | `npm run og` | Lager delingsbildene (Facebook o.l.) i `public/images/og/`. Kjør etter bytte av foto eller logo. |
+| `npm run bilder` | Lager responsive WebP-varianter av alle foto i `public/images/opt/`. Kjør når du legger inn nye bilder. |
 | `npm run ikoner` | Lager app-ikonene i `public/` ut fra `public/favicon.svg`. |
 
 De tre siste produserer filer som **sjekkes inn i repoet** — de kjøres manuelt ved

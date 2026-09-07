@@ -294,15 +294,21 @@ for rutinen med å legge til et språk.
 - Et språk vises i velgeren **først ved 85 % dekning** (`MIN_DEKNING` i
   `src/i18n/sprak.ts`). Halvoversatt er verre enn ingenting på en side som
   forklarer lønn og oppsigelsesvern.
-- Klargjort, men ikke aktivert: rumensk, spansk, polsk, litauisk, latvisk
-  (`ordbok/*.json` er tomme ⇒ velgeren viser i dag kun norsk og engelsk).
+- **Polsk er komplett og aktivt** (678/678). Oversatt av Claude, ikke
+  morsmålskontrollert — se forbeholdet i [SPRÅK.md](SPRÅK.md).
+- Klargjort, men ikke aktivert: rumensk, spansk, litauisk, latvisk
+  (`ordbok/*.json` er tomme for disse).
 - Språkvelgeren er en flaggrad ved to språk, og blir automatisk en
   nedtrekksmeny med språkenes egne navn ved flere.
 - Valg lagres i `localStorage('lang')`; et språk som senere slås av, faller
   tilbake til norsk.
 - `npm run tekster` skriver `src/i18n/ordbok/_mal.json` til oversetteren,
   oppdaterer `ANTALL_TEKSTER`, rapporterer dekning, og advarer om `data-en`
-  inni `data-en` (der blir det innerste aldri oversatt — 3 slike i dag).
+  inni `data-en` (ingen slike i dag).
+- Ordboknøklene strippes for Astros `data-astro-cid-…`. Uten det ville en ren
+  CSS-endring ugyldiggjort alle oversettelsene på den sida.
+- Fanetitlene følger språket via `titleEn` på `<Layout>` og ordboka. Den norske
+  tittelen står i HTML-en, så søkemotorer ser den uendret.
 - E-post til avdelingen alltid på norsk.
 
 ---
@@ -450,6 +456,9 @@ Endringer og tillegg utover opprinnelig spec:
 
 ## 19. As-built — innholdsgjennomgang med avdelingen (7. september 2026)
 
+> Løpende vedlikehold, fallgruver og hva som styres utenfor repoet:
+> **[VEDLIKEHOLD.md](VEDLIKEHOLD.md)**.
+
 **Vedlikeholdssystem for tillitsvalgte.** Navnelistene ut av `config.ts` og inn i
 `src/data/tillitsvalgte.json`, med validator i bygget og rutine i
 [ÅRSMØTE.md](ÅRSMØTE.md). Feltet `sist_bekreftet` vises nederst på
@@ -474,6 +483,29 @@ Endringer og tillegg utover opprinnelig spec:
 | Forsiden | «Kurs & skolering» peker nå til `/aktuelt` (arrangementskalenderen), ikke `/nyttige-lenker` |
 | Om oss | Stiftelsen av Fellesforbundet Helgeland i **2005** tatt med. «Forhandler lønn og tariff» → «Bistår ved lokale forhandlinger» |
 | Web3Forms | Mottaker byttet til `avd143@fellesforbundet.no`. Den offentlige mailto-en på sida er fortsatt `avd143@fellesforbundet.org` — **bevisst forskjell** |
+
+---
+
+## 20. As-built — ytelse, tilgjengelighet og språk (7. september 2026, kveld)
+
+**Ytelse.** Fontene forhåndslastes (fjernet utseendeforskyvningen). Alle foto
+leveres som responsiv WebP via `<Bilde>` og `npm run bilder` — 2042 KiB → 422 KiB
+for bildene som faktisk lastes. LCP-bildene har `fetchpriority="high"`.
+
+**Tilgjengelighet.** Fire kontrastfeil rettet (bl.a. rød tekst på lysgrønn flate,
+3,6:1 → 8,1:1 med burgunder fra profilhåndboka). Overskriftsrekkefølge rettet i
+footeren og på /turtips. Kontrollert på alle 18 sider: ingen brutte interne
+lenker, ingen bilder uten alt-tekst, ingen konsollfeil.
+
+**Indeksering.** `/takk` og 404-siden er `noindex` og ute av sitemapet.
+Canonical utelates på noindex-sider.
+
+**Språk.** All JS-generert tekst går nå gjennom `oversett()`; ukedager,
+månedsnavn og datoformat kommer fra `Intl`. Polsk er komplett.
+
+**Værvarselet.** Symbolkodene fra MET dekodes nå i stedet for å slås opp i en
+tabell som manglet alle byge-variantene. Regn bruker alltid `cloud-rain` —
+`cloud-drizzle` ble lest som snø i 26 px.
 
 ---
 

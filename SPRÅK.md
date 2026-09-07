@@ -1,8 +1,14 @@
 # Legge til et nytt språk
 
-Nettsida er i dag på **norsk og engelsk**. Mekanikken håndterer i tillegg
-**rumensk, spansk, polsk, litauisk og latvisk** — de er bygd inn, men vises
-ikke før noen har oversatt dem.
+Nettsida er i dag på **norsk, engelsk og polsk**. Mekanikken håndterer i tillegg
+**rumensk, spansk, litauisk og latvisk** — de er bygd inn, men vises ikke før
+noen har oversatt dem.
+
+> **Om den polske utgaven:** den er oversatt av Claude, ikke av et menneske med
+> polsk som morsmål. Besøkende ser en notis om at norsk er den offisielle
+> versjonen. Før språket markedsføres aktivt bør minst `/lonn-tariff` og
+> `/vilkar` leses gjennom av noen som kan polsk — det er sidene som forklarer
+> lønn, rettigheter og bindende vilkår.
 
 ## Hvorfor de ikke vises ennå
 
@@ -18,7 +24,7 @@ npm run build     # bygger siden
 npm run tekster   # skriver src/i18n/ordbok/_mal.json
 ```
 
-`_mal.json` inneholder alle tekstene på nettstedet, med norsk som nøkkel:
+`_mal.json` inneholder alle 678 tekstene på nettstedet, med norsk som nøkkel:
 
 ```json
 {
@@ -33,6 +39,7 @@ npm run tekster   # skriver src/i18n/ordbok/_mal.json
 2. Fyll inn oversettelsen til høyre.
 3. Lagre svaret som `src/i18n/ordbok/<kode>.json` —
    `ro` rumensk · `es` spansk · `pl` polsk · `lt` litauisk · `lv` latvisk.
+   Bruk `pl.json` som fasit på formatet.
 4. `npm run tekster` viser dekningen. Over 85 % → språket vises av seg selv
    ved neste bygg, og språkvelgeren blir automatisk en nedtrekksmeny.
 
@@ -63,7 +70,13 @@ mye materiell på flere språk.
 - Faller et oppslag gjennom, vises norsk. Ingen tom tekst kan oppstå.
 - `npm run tekster` advarer om `data-en` inni et annet `data-en`. Slike blir
   aldri oversatt — forelderens `innerHTML` byttes før barnet rekker å bli
-  oppdatert. Det er i dag 3 slike, på `/personvern`, `/umbukta` og `/vilkar`.
+  oppdatert. Det er ingen slike i dag.
+- Nøklene strippes for Astros `data-astro-cid-…` før oppslag. Uten det ville en
+  ren CSS-endring ugyldiggjort alle oversettelsene på den sida.
+- Tekst som lages av JavaScript går gjennom `oversett()` i `src/i18n/klient.ts`.
+  Verdier som varierer sendes som plassholdere: `oversett('{antall} døgn',
+  '{antall} nights', { antall })`.
+- Fanetitlene (`title` på `<Layout>`) er også med i ordboka.
 - `ANTALL_TEKSTER` i `sprak.ts` oppdateres automatisk av `npm run tekster`.
   Kjør den etter at du har lagt til eller endret tekst, ellers blir dekningen
   regnet ut mot et gammelt tall.
