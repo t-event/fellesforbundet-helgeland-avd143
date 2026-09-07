@@ -268,6 +268,42 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .lang button.active { background: #fff; }
 .lang button.active .flag { opacity: 1; box-shadow: inset 0 0 0 1px rgba(0,0,0,.12); }
 
+/* Språkvelger som nedtrekksmeny (brukes når det er mer enn to språk) */
+.lang-meny { position: relative; flex: none; }
+.lang-knapp {
+  display: flex; align-items: center; gap: 7px; cursor: pointer;
+  border: 1px solid rgba(255,255,255,.22); border-radius: 4px;
+  background: rgba(255,255,255,.1); color: #fff;
+  padding: 5px 9px; font: inherit; font-size: 13px; font-weight: 600;
+  transition: background .12s ease, border-color .12s ease;
+}
+.lang-knapp:hover { background: rgba(255,255,255,.18); border-color: rgba(255,255,255,.4); }
+.lang-knapp-flagg { display: flex; }
+.lang-knapp .flag { width: 20px; height: 14px; display: block; border-radius: 2px; box-shadow: inset 0 0 0 1px rgba(255,255,255,.35); }
+.lang-pil { opacity: .75; transition: transform .15s ease; }
+.lang-knapp[aria-expanded="true"] .lang-pil { transform: rotate(180deg); }
+
+.lang-liste {
+  position: absolute; top: calc(100% + 6px); right: 0; z-index: 60;
+  min-width: 176px; margin: 0; padding: 5px; list-style: none;
+  background: #fff; border: 1px solid var(--kantlinje); border-radius: 4px;
+  box-shadow: var(--skygge-hover);
+}
+.lang-liste button {
+  display: flex; align-items: center; gap: 10px; width: 100%;
+  padding: 8px 10px; border: none; border-radius: 3px; cursor: pointer;
+  background: transparent; color: var(--tekst);
+  font: inherit; font-size: 14px; font-weight: 600; text-align: left;
+}
+.lang-liste .flag { width: 20px; height: 14px; flex: none; border-radius: 2px; box-shadow: inset 0 0 0 1px rgba(0,0,0,.15); }
+.lang-liste button:hover { background: var(--flate); }
+.lang-liste button[aria-selected="true"] { background: var(--flate); color: var(--rod); }
+
+@media (max-width: 560px) {
+  .lang-knapp-navn { display: none; }
+  .lang-knapp { padding: 5px 7px; gap: 5px; }
+}
+
 /* Hamburger (mobil) */
 .nav-toggle { display: none; background: none; border: none; color: #fff; cursor: pointer; padding: 8px; }
 .nav-mobile { display: none; position: fixed; inset: var(--header-h, 104px) 0 0 0; background: var(--morkbla); padding: 24px; z-index: 49; overflow-y: auto; }

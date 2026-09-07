@@ -1,0 +1,100 @@
+{
+  "_les_dette": [
+    "Dette er avdelingens register over styre, utvalg og ansatte. Alt som vises på",
+    "/tillitsvalgte og forsiden hentes herfra — endrer du her, endres siden.",
+    "",
+    "SLIK REDIGERER DU (uten å kunne kode):",
+    "  1. Åpne fila på github.com og trykk blyant-ikonet.",
+    "  2. Endre navn/roller. Behold anførselstegn og komma nøyaktig som de står.",
+    "  3. Trykk «Commit changes». Siden bygges og oppdateres av seg selv.",
+    "",
+    "En kontroll kjører automatisk og STOPPER utrullingen hvis noe er feil, så du",
+    "kan ikke ødelegge siden ved en skrivefeil. Kjør den gjerne selv først:",
+    "  npm run valider",
+    "",
+    "Se ÅRSMØTE.md i repoet for full sjekkliste etter hvert årsmøte."
+  ],
+
+  "sist_bekreftet": "2026-09-07",
+  "sist_bekreftet_kilde": "Innmeldte endringer fra avdelingen 7. september 2026",
+
+  "styre": [
+    { "navn": "Tommy Rannov Nystad", "rolle": "Leder", "rolle_en": "Leader", "klubb": "Rana FOB", "epost": "tommy.nystad@fellesforbundet.org", "tlf": "90158622", "tlfFormatert": "901 58 622" },
+    { "navn": "Kjell Arne Olsen", "rolle": "Nestleder", "rolle_en": "Deputy leader", "klubb": "Rana Industri" },
+    { "navn": "Roger Eugen Ranfjordnes", "rolle": "Sekretær", "rolle_en": "Secretary", "klubb": "Rana Industri" },
+    { "navn": "Preben Astrup", "rolle": "Ungdomsleder", "rolle_en": "Youth leader", "klubb": "Rana Industri" },
+    { "navn": "Mathias Erlandsen Tustervatn", "rolle": "Nestungdomsleder", "rolle_en": "Deputy youth leader", "klubb": "Rana Industri" },
+    { "navn": "Arnt Ove Kirknes", "rolle": "Styremedlem", "rolle_en": "Board member", "klubb": "Grane – Byggeindustrien" },
+    { "navn": "Ann Kristin Sletvold", "rolle": "Styremedlem", "rolle_en": "Board member", "klubb": "Brønnøy – Riksavtalen" },
+    { "navn": "Remi Andre Knapstad", "rolle": "Styremedlem", "rolle_en": "Board member", "klubb": "Rana Industri" },
+    { "navn": "Johan Hovind", "rolle": "Styremedlem", "rolle_en": "Board member", "klubb": "Rana Industri" },
+    { "navn": "Andreas Bech Stene", "rolle": "Styremedlem", "rolle_en": "Board member", "klubb": "Vefsn Bil" },
+    { "navn": "Bjørn Tore Isaksen", "rolle": "Styremedlem", "rolle_en": "Board member", "klubb": "Rana Industri" },
+    { "navn": "Mary-Linn Kümmel", "rolle": "Styremedlem", "rolle_en": "Board member", "klubb": "Alstadhaug – Riksavtalen" },
+    { "navn": "Stein André Olsen", "rolle": "Styremedlem", "rolle_en": "Board member", "klubb": "Rana Industri TD" },
+    { "navn": "Benny Fjelldalselv", "rolle": "Styremedlem", "rolle_en": "Board member", "klubb": "Grytåga Settefisk" },
+    { "navn": "Markus Faksmo", "rolle": "Styremedlem", "rolle_en": "Board member", "klubb": "Håland Mosjøen" },
+    { "navn": "Hedvig Oddøy", "rolle": "Styremedlem", "rolle_en": "Board member", "klubb": "Lovund Havbruk" }
+  ],
+
+  "ansatte": [
+    { "navn": "Eva-Maria Svartvatn", "rolle": "Kontoransatt", "rolle_en": "Office staff", "sted": "Rana", "stilling": "100 %" },
+    { "navn": "Cicilie Dahl Løkås", "rolle": "Organisasjonsarbeider", "rolle_en": "Organiser", "sted": "Rana", "stilling": "100 %" },
+    { "navn": "Tommy Vistnes", "rolle": "Organisasjonsarbeider", "rolle_en": "Organiser", "sted": "Alstahaug", "stilling": "100 %" },
+    { "navn": "Trond Brattbakk", "rolle": "Organisasjonsarbeider", "rolle_en": "Organiser", "sted": "Vefsn", "stilling": "100 %" },
+    { "navn": "Frank Stuvland", "rolle": "Fagligpolitisk kontakt", "rolle_en": "Trade union political contact", "sted": "Vefsn", "stilling": "50 %" }
+  ],
+
+  "kontrollkomite": [
+    { "navn": "Frank Hansen", "vara": "Steinar Iversen" },
+    { "navn": "Bjørnar Tønder", "vara": "Tor Arne Strøm" }
+  ],
+
+  "studieutvalg": [
+    { "navn": "Ann Kristin Sletvold", "sted": "Brønnøy" },
+    { "navn": "Ulrikke Hansen", "sted": "Rana" },
+    { "navn": "Cicilie Løkås", "sted": "Rana" }
+  ],
+
+  "representantskap": [
+    "Frank Arne Hanssen",
+    "Runar Adolfsen",
+    "Alf Ove Gulla",
+    "Camilla Johnsdatter",
+    "Leif Arne Adolfsen",
+    "Miriam Åsland",
+    "Helge Valrygg",
+    "Per Eriksen",
+    "Andrea Lillebjerka",
+    "Zita Meskaite",
+    "Kjell Erik Karlsen",
+    "Ruben Mørk Jacobsen",
+    "Anne Malm",
+    "Kim Måsøy",
+    "Frithjof Leirvik"
+  ],
+
+  "valgkomite": [
+    { "navn": "Peder Morten Olsen", "rolle": "Leder", "rolle_en": "Leader", "sted": "Rana" },
+    { "navn": "Sara Scott Jane Eriksen", "rolle": "Medlem", "rolle_en": "Member", "sted": "Alstahaug" },
+    { "navn": "Ben Johan Nilssen", "rolle": "Medlem", "rolle_en": "Member", "sted": "Vefsn" },
+    { "navn": "Ron Høvik", "rolle": "Medlem", "rolle_en": "Member", "sted": "Brønnøy" }
+  ],
+
+  "ungdomsutvalg": [
+    { "navn": "Preben Astrup", "rolle": "Leder", "rolle_en": "Leader" },
+    { "navn": "Mathias Tustervatn", "rolle": "Nestleder", "rolle_en": "Deputy leader" },
+    { "navn": "Anne Malm", "rolle": "Medlem", "rolle_en": "Member" },
+    { "navn": "Markus Faksmo", "rolle": "Medlem", "rolle_en": "Member" },
+    { "navn": "Ane Djønne", "rolle": "Medlem", "rolle_en": "Member" },
+    { "navn": "Fredrik Myrvang", "rolle": "Medlem", "rolle_en": "Member" }
+  ],
+
+  "ungdomssekretar": {
+    "navn": "Rikke Jacobsen",
+    "rolle": "Regional ungdomssekretær",
+    "rolle_en": "Regional youth secretary",
+    "merknad": "Region Nord-Norge",
+    "merknad_en": "Northern Norway region"
+  }
+}

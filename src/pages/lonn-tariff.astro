@@ -7,12 +7,28 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 // Reelle avtaleområder i Fellesforbundet. MERK: hvilken overenskomst som
 // gjelder den enkelte arbeidsplass må bekreftes av avdelingen.
 const avtaler = [
-  { navn: 'Industrioverenskomsten',  omr: 'Verksted, smelteverk og prosessindustri', omr_en: 'Workshop, smelting and process industry' },
-  { navn: 'Byggfagene',              omr: 'Tømrer, betong og anlegg',                 omr_en: 'Carpentry, concrete and construction' },
-  { navn: 'Riksavtalen',             omr: 'Hotell, restaurant og servering',          omr_en: 'Hotel, restaurant and catering' },
-  { navn: 'Biloverenskomsten',       omr: 'Bilverksteder og transport',               omr_en: 'Car workshops and transport' },
-  { navn: 'Renholdsoverenskomsten',  omr: 'Renhold og service',                       omr_en: 'Cleaning and service' },
+  { navn: 'Industrioverenskomsten',      omr: 'Verksted, smelteverk og prosessindustri', omr_en: 'Workshop, smelting and process industry' },
+  { navn: 'Byggfagene',                  omr: 'Tømrer, betong og anlegg',                 omr_en: 'Carpentry, concrete and construction' },
+  { navn: 'Byggeindustrien',             omr: 'Industriell produksjon til byggenæringen', omr_en: 'Industrial production for the construction sector' },
+  { navn: 'Riksavtalen',                 omr: 'Hotell, restaurant og servering',          omr_en: 'Hotel, restaurant and catering' },
+  { navn: 'Biloverenskomsten',           omr: 'Bilverksteder og transport',               omr_en: 'Car workshops and transport' },
+  { navn: 'Glassoverenskomsten',         omr: 'Glass, fasade og montering',               omr_en: 'Glass, facade and installation' },
+  { navn: 'Havbruksoverenskomsten',      omr: 'Settefisk, matfisk og slakteri',           omr_en: 'Smolt, food fish and processing' },
+  { navn: 'AIB-overenskomsten',          omr: 'Asfalt, industri og bergverk',             omr_en: 'Asphalt, industry and mining' },
+  { navn: 'Gartnerioverenskomsten',      omr: 'Gartneri og hagebruk',                     omr_en: 'Horticulture and market gardening' },
+  { navn: 'Avisoverenskomsten',          omr: 'Avis, trykk og distribusjon',              omr_en: 'Newspapers, printing and distribution' },
+  { navn: 'Overenskomst for grafisk',    omr: 'Grafisk produksjon og emballasje',         omr_en: 'Graphic production and packaging' },
+  { navn: 'VTA-overenskomsten',          omr: 'Varig tilrettelagt arbeid',                omr_en: 'Sheltered employment (VTA)' },
 ];
+
+// Minstelønnssatser er ikke i arbeidsmiljøloven selv, men i allmenngjørings-
+// forskriftene som Tariffnemnda fastsetter med hjemmel i allmenngjøringsloven.
+// Arbeidstilsynet har den oppdaterte oversikten over gjeldende satser.
+const LOVLENKER = {
+  minstelonn: 'https://www.arbeidstilsynet.no/arbeidsforhold/lonn/minstelonn/',
+  allmenngjoring: 'https://lovdata.no/dokument/NL/lov/1993-06-04-58',
+  aml: 'https://lovdata.no/dokument/NL/lov/2005-06-17-62',
+};
 
 const ressurser = [
   { ikon: 'file-text', tittel: 'Hva er en tariffavtale?', tittel_en: 'What is a collective agreement?', body: 'En avtale mellom fagforening og arbeidsgiver om lønn, arbeidstid og rettigheter.', body_en: 'An agreement between union and employer on pay, working hours and rights.' },
@@ -24,6 +40,8 @@ const ressurser = [
 <Layout
   title="Lønn & tariff — Fellesforbundet Helgeland avd. 143"
   description="Tariffavtaler, lønn og rettigheter for medlemmer i Fellesforbundet avd. 143. Avtaleområder i industri, bygg, transport og service på Helgeland."
+  ogImage="/images/og/og-tariff.jpg"
+  ogImageAlt="Markering med faner i Mo i Rana"
 >
 
   <!-- HERO -->
@@ -72,6 +90,22 @@ const ressurser = [
              data-en="Minimum rates and supplements follow the current agreement and are adjusted at each wage settlement. The branch can tell you what applies to you.">
           Minstesatser og tillegg følger gjeldende overenskomst og justeres ved hvert lønnsoppgjør.
           Avdelingen kan fortelle deg hva som gjelder for deg.
+        </div>
+      </div>
+
+      <!-- MINSTELØNN -->
+      <div class="card card-pad" style="margin-top:18px;">
+        <h3 class="h3" style="font-size:18px; margin-bottom:8px;" data-en="Minimum wage — what the law says">Minstelønn — hva loven sier</h3>
+        <p class="muted" style="font-size:14.5px; line-height:1.65;"
+           data-en="Norway has no general statutory minimum wage. In several industries a minimum rate is nevertheless made binding for everyone through the general application regulations, whether or not you are a union member. Arbeidstilsynet keeps the current rates.">
+          Norge har ingen generell lovfestet minstelønn. I flere bransjer er en minstesats likevel
+          gjort bindende for alle gjennom allmenn&shy;gjørings&shy;forskriftene — enten du er organisert
+          eller ikke. Arbeidstilsynet holder oversikt over gjeldende satser.
+        </p>
+        <div style="display:flex; flex-wrap:wrap; gap:18px; margin-top:14px;">
+          <a href={LOVLENKER.minstelonn} target="_blank" rel="noopener noreferrer" class="btn-link" style="font-size:14px;" data-en="Minimum wage rates (Arbeidstilsynet) ↗">Minstelønnssatser (Arbeidstilsynet) ↗</a>
+          <a href={LOVLENKER.aml} target="_blank" rel="noopener noreferrer" class="btn-link" style="font-size:14px;" data-en="The Working Environment Act (Lovdata) ↗">Arbeidsmiljøloven (Lovdata) ↗</a>
+          <a href={LOVLENKER.allmenngjoring} target="_blank" rel="noopener noreferrer" class="btn-link" style="font-size:14px;" data-en="The General Application Act (Lovdata) ↗">Allmenngjøringsloven (Lovdata) ↗</a>
         </div>
       </div>
     </div>

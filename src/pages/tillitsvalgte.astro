@@ -2,8 +2,14 @@
 import Layout from '../layouts/Layout.astro';
 import CircleMotif from '../components/CircleMotif.astro';
 import Icon from '../components/Icon.astro';
-import { STYRE, ANSATTE, KONTROLLKOMITE, STUDIEUTVALG, VALGKOMITE, UNGDOMSUTVALG, UNGDOMSSEKRETAR, REPRESENTANTSKAP, KONTAKT } from '../config.ts';
+import { STYRE, ANSATTE, KONTROLLKOMITE, STUDIEUTVALG, VALGKOMITE, UNGDOMSUTVALG, UNGDOMSSEKRETAR, REPRESENTANTSKAP, KONTAKT, ROSTER_SIST_BEKREFTET } from '../config.ts';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+// Når navnelista sist ble bekreftet mot avdelingen (settes i
+// src/data/tillitsvalgte.json etter hvert årsmøte — se ÅRSMØTE.md).
+const bekreftet = new Date(ROSTER_SIST_BEKREFTET);
+const bekreftetNo = bekreftet.toLocaleDateString('nb-NO', { day: 'numeric', month: 'long', year: 'numeric' });
+const bekreftetEn = bekreftet.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
 
 const initialer = (navn: string) =>
   navn.split(/\s+/).map(d => d[0]).join('').slice(0, 2).toUpperCase();
@@ -235,6 +241,14 @@ const verktoy = [
         <a href={`${base}/kontakt`} class="btn btn-primary" data-en="Get in touch →">Ta kontakt →</a>
       </div>
     </div>
+
+    <!-- SIST BEKREFTET — viser hvor ferske navnelistene er -->
+    <p class="muted" style="font-size:13px; padding-bottom:32px; display:flex; align-items:center; gap:7px;">
+      <span aria-hidden="true" style="display:inline-flex; color:var(--rod);"><Icon name="user" size={15} /></span>
+      <span data-en={`Names last confirmed with the branch on ${bekreftetEn}. Contact us if something is out of date.`}>
+        Navnelistene ble sist bekreftet av avdelingen {bekreftetNo}. Ta kontakt hvis noe ikke stemmer.
+      </span>
+    </p>
 
   </div>
 </Layout>

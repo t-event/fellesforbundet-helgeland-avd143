@@ -4,9 +4,7 @@
 // hvordan seksjonen ser ut. La stå `false` for normal, fullautomatisk
 // visning (synlig fra 1. okt. → etter 2. påskedag, skjema fram til fristen).
 // Merk: `?paske=test` i URL-en gjør det samme, men kun for den med lenken.
-// PÅ nå: slått på for at leder skal se seksjonen under gjennomgang 7. sep. 2026.
-// Sett tilbake til `false` etterpå — da går visningen tilbake til fullautomatisk.
-export const PASKE_MANUELL_VISNING = true;
+export const PASKE_MANUELL_VISNING = false;
 
 // Beregner påskedato for et gitt år.
 // Algoritme: Meeus/Jones/Butcher — fungerer for alle år 1900–2099.

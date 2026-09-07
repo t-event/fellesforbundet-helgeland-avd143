@@ -3,8 +3,13 @@ import Layout from '../layouts/Layout.astro';
 import CircleMotif from '../components/CircleMotif.astro';
 import Icon from '../components/Icon.astro';
 import MapEmbed from '../components/MapEmbed.astro';
-import { KONTAKT } from '../config.ts';
+import { KONTAKT, KONTORER } from '../config.ts';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+// Lokalkontorene (alle unntatt hovedkontoret, som har sin egen boks over).
+const lokalkontor = KONTORER.filter(k => !k.hovedkontor);
+const kartUrl = (k: typeof KONTORER[number]) =>
+  `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${k.adresse}, ${k.postnummer} ${k.poststed}`)}`;
 const mapQuery = `${KONTAKT.adresse}, ${KONTAKT.postnummer} ${KONTAKT.poststed}`;
 const googleMapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(mapQuery)}`;
 // Keyless Google Maps-embed (ingen API-nøkkel) — Google geokoder adressen presist.
@@ -13,7 +18,7 @@ const googleEmbed = `https://www.google.com/maps?q=${encodeURIComponent(mapQuery
 
 <Layout
   title="Kontakt — Fellesforbundet Helgeland avd. 143"
-  description="Kontakt Fellesforbundet avd. 143. Besøk oss i Søndre gate 13, Mo i Rana, ring 75 15 12 28 eller send oss en melding."
+  description="Kontakt Fellesforbundet avd. 143. Hovedkontor i Søndre gate 13, Mo i Rana, og kontorer i Sandnessjøen og Mosjøen. Ring 75 15 12 28 eller send oss en melding."
 >
 
   <!-- HERO -->
@@ -23,8 +28,9 @@ const googleEmbed = `https://www.google.com/maps?q=${encodeURIComponent(mapQuery
       <span class="hero-pill" data-en="Contact">Kontakt</span>
       <h1 class="h1" style="max-width:16ch; margin-top:18px;" data-en="Get in touch with the branch">Ta kontakt med avdelingen</h1>
       <p class="lead" style="max-width:56ch; margin-top:20px;"
-         data-en="Visit us in Mo i Rana, give us a call or send a message — we're here for the members.">
-        Besøk oss i Mo i Rana, ring oss eller send en melding — vi er her for medlemmene.
+         data-en="Visit us in Mo i Rana, Sandnessjøen or Mosjøen, give us a call or send a message — we're here for the members.">
+        Besøk oss i Mo i Rana, Sandnessjøen eller Mosjøen, ring oss eller send en melding — vi er her
+        for medlemmene.
       </p>
     </div>
   </div>
@@ -140,6 +146,54 @@ const googleEmbed = `https://www.google.com/maps?q=${encodeURIComponent(mapQuery
       </div>
 
     </div>
+
+    <!-- LOKALKONTORER -->
+    <div class="section" style="padding-top:0;">
+      <span class="eyebrow" data-en="Our offices">Våre kontorer</span>
+      <h2 class="h2" style="margin:6px 0 10px;" data-en="We are in three places on Helgeland">Vi er tre steder på Helgeland</h2>
+      <p class="muted" style="font-size:16px; max-width:62ch; margin-bottom:22px;"
+         data-en="Mo i Rana is our main office. In Sandnessjøen and Mosjøen you will find our organisers, who work flexible hours — call or email ahead to make sure someone is in.">
+        Mo i Rana er hovedkontoret vårt. I Sandnessjøen og Mosjøen finner du organisasjons&shy;arbeiderne
+        våre, som har fleksitid — ring eller send en e-post på forhånd, så du er sikker på å treffe noen.
+      </p>
+      <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:18px;">
+        {KONTORER.map(k => (
+          <div class="card card-pad">
+            <div style="display:flex; align-items:center; gap:8px; margin-bottom:12px;">
+              <span aria-hidden="true" style="display:inline-flex; color:var(--rod);"><Icon name="map-pin" size={17} /></span>
+              <h3 class="h3" style="font-size:18px;">{k.sted}</h3>
+              {k.hovedkontor && (
+                <span class="badge badge-gul" style="margin-left:auto; font-size:11.5px;" data-en="Main office">Hovedkontor</span>
+              )}
+            </div>
+
+            <p class="muted" style="font-size:14.5px; line-height:1.6;">
+              {k.adresse}{'adresseTillegg' in k && k.adresseTillegg ? <><br />{k.adresseTillegg}</> : null}<br />
+              {k.postnummer} {k.poststed}
+            </p>
+            <a href={kartUrl(k)} target="_blank" rel="noopener noreferrer" class="btn-link" style="font-size:13.5px; display:inline-block; margin-top:6px;" data-en="Show on map ↗">Vis i kart ↗</a>
+
+            {'kontaktperson' in k && k.kontaktperson && (
+              <p style="font-size:14px; margin-top:14px;">
+                <b data-en="Contact">Kontaktperson</b><br />
+                <span class="muted">{k.kontaktperson}</span>
+              </p>
+            )}
+
+            <p style="font-size:14px; margin-top:14px;">
+              <a href={`tel:+47${k.telefon}`} class="btn-link">{k.telefonFormatert}</a><br />
+              <a href={`mailto:${k.epost}`} class="btn-link" style="word-break:break-all;">{k.epost}</a>
+            </p>
+
+            <p class="muted" style="font-size:13.5px; margin-top:14px; line-height:1.55;">
+              <b style="color:var(--tekst);" data-en="Opening hours">Åpningstider</b><br />
+              <span data-en={k.apningstider_en}>{k.apningstider}</span>
+            </p>
+          </div>
+        ))}
+      </div>
+    </div>
+
   </div>
 
   <!-- hCaptcha-widget (spamvern på kontaktskjemaet) via Web3Forms-klient -->

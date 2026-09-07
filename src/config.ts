@@ -29,6 +29,58 @@ export const KONTAKT = {
   brreg: 'https://virksomhet.brreg.no/nb/oppslag/enheter/943238049',
 } as const;
 
+// Avdelingens kontorer. Mo i Rana er hovedkontoret (og det KONTAKT over gjelder).
+// Sandnessjøen og Mosjøen er bemannet av organisasjonsarbeiderne, som har
+// fleksitid — derfor ingen faste åpningstider; avtal besøk på forhånd.
+export const KONTORER = [
+  {
+    sted: 'Mo i Rana',
+    hovedkontor: true,
+    navn: 'Avdelingskontoret',
+    navn_en: 'The branch office',
+    adresse: 'Søndre gate 13',
+    postnummer: '8624',
+    poststed: 'Mo i Rana',
+    apningstider: '08:00–15:30',
+    apningstider_en: '08:00–15:30',
+    telefon: '75151228',
+    telefonFormatert: '75 15 12 28',
+    epost: 'avd143@fellesforbundet.org',
+  },
+  {
+    sted: 'Sandnessjøen',
+    hovedkontor: false,
+    navn: 'Sandnessjøen',
+    navn_en: 'Sandnessjøen',
+    adresse: 'Torolv Kveldulvsons gate 39',
+    adresseTillegg: 'Væxthuset',
+    postnummer: '8800',
+    poststed: 'Sandnessjøen',
+    apningstider: 'Fleksitid — avtal besøk på forhånd',
+    apningstider_en: 'Flexible hours — arrange a visit in advance',
+    kontaktperson: 'Tommy Vistnes',
+    telefon: '97119906',
+    telefonFormatert: '971 19 906',
+    epost: 'tommy.vistnes@fellesforbundet.org',
+  },
+  {
+    sted: 'Mosjøen',
+    hovedkontor: false,
+    navn: 'Mosjøen',
+    navn_en: 'Mosjøen',
+    adresse: 'Smågean 2',
+    adresseTillegg: 'Alti kjøpesenter, 2. etasje',
+    postnummer: '8651',
+    poststed: 'Mosjøen',
+    apningstider: 'Fleksitid — avtal besøk på forhånd',
+    apningstider_en: 'Flexible hours — arrange a visit in advance',
+    kontaktperson: 'Trond Brattbakk',
+    telefon: '47644864',
+    telefonFormatert: '476 44 864',
+    epost: 'trond.brattbakk@fellesforbundet.org',
+  },
+] as const;
+
 // Fellesforbundet sentralt — offisielle lenker (ekte)
 export const FF_LENKER = {
   medlemskap: 'https://www.fellesforbundet.no/medlemskap/',
@@ -79,102 +131,26 @@ export const LENKER_GRUPPER = [
   },
 ] as const;
 
-// Avdelingens ansatte (lønnede/valgte i FFH). sted = kommune, stilling = stillingsprosent.
-// Brukt på forside + /tillitsvalgte. NB: Eva-Maria er utleid til Transport Nord 33 % av
-// tiden — utelatt fra offentlig visning (operativ detalj); ta med om det ønskes.
-// Eva-Maria er den man kommer til på avdelingskontoret — derfor øverst.
-export const ANSATTE = [
-  { navn: 'Eva-Maria Svartvatn', rolle: 'Kontoransatt',          rolle_en: 'Office staff', sted: 'Rana',      stilling: '100 %' },
-  { navn: 'Cicilie Dahl Løkås',  rolle: 'Organisasjonsarbeider', rolle_en: 'Organiser',    sted: 'Rana',      stilling: '100 %' },
-  { navn: 'Tommy Vistnes',       rolle: 'Organisasjonsarbeider', rolle_en: 'Organiser',    sted: 'Alstahaug', stilling: '100 %' },
-  { navn: 'Trond Brattbakk',     rolle: 'Organisasjonsarbeider', rolle_en: 'Organiser',    sted: 'Vefsn',     stilling: '100 %' },
-  { navn: 'Frank Stuvland',      rolle: 'Organisasjonsarbeider', rolle_en: 'Organiser',    sted: 'Vefsn',     stilling: '50 %'  },
-] as const;
+// ── Styre, utvalg og ansatte ─────────────────────────────────────────
+// Dataene ligger IKKE her, men i src/data/tillitsvalgte.json, slik at
+// avdelingen kan oppdatere dem etter årsmøtet uten å redigere kode.
+// `npm run valider` (og bygget i GitHub Actions) sjekker at fila er gyldig.
+// Se ÅRSMØTE.md for rutinen.
 
-// Avdelingsstyret (valgt av medlemmene). klubb = klubb/bransje personen representerer.
-// Rekkefølge: ledelse først (leder, nestleder, sekretær, ungdomsleder, nest-ungdomsleder),
-// deretter styremedlemmer. Roster oppdatert per styrets sammensetning fra avdelingen.
-export const STYRE = [
-  { navn: 'Tommy Rannov Nystad',          rolle: 'Leder',              rolle_en: 'Leader',              klubb: 'Rana FOB', epost: 'tommy.nystad@fellesforbundet.org', tlf: '90158622', tlfFormatert: '901 58 622' },
-  { navn: 'Kjell Arne Olsen',             rolle: 'Nestleder',          rolle_en: 'Deputy leader',       klubb: 'Rana Industri' },
-  { navn: 'Roger Eugen Ranfjordnes',      rolle: 'Sekretær',           rolle_en: 'Secretary',           klubb: 'Rana Industri' },
-  { navn: 'Preben Astrup',                rolle: 'Ungdomsleder',       rolle_en: 'Youth leader',        klubb: 'Rana Industri' },
-  { navn: 'Mathias Erlandsen Tustervatn', rolle: 'Nestungdomsleder',   rolle_en: 'Deputy youth leader', klubb: 'Rana Industri' },
-  { navn: 'Arnt Ove Kirknes',             rolle: 'Styremedlem',        rolle_en: 'Board member',        klubb: 'Grane – Byggeindustrien' },
-  { navn: 'Ann Kristin Sletvold',         rolle: 'Styremedlem',        rolle_en: 'Board member',        klubb: 'Brønnøy – Riksavtalen' },
-  { navn: 'Remi Andre Knapstad',          rolle: 'Styremedlem',        rolle_en: 'Board member',        klubb: 'Rana Industri' },
-  { navn: 'Johan Hovind',                 rolle: 'Styremedlem',        rolle_en: 'Board member',        klubb: 'Rana Industri' },
-  { navn: 'Andreas Bech Stene',           rolle: 'Styremedlem',        rolle_en: 'Board member',        klubb: 'Vefsn Bil' },
-  { navn: 'Bjørn Tore Isaksen',           rolle: 'Styremedlem',        rolle_en: 'Board member',        klubb: 'Rana Industri' },
-  { navn: 'Mary-Linn Kümmel',             rolle: 'Styremedlem',        rolle_en: 'Board member',        klubb: 'Alstadhaug – Riksavtalen' },
-  { navn: 'Stein André Olsen',            rolle: 'Styremedlem',        rolle_en: 'Board member',        klubb: 'Rana Industri TD' },
-  { navn: 'Erik Rauø',                    rolle: 'Styremedlem',        rolle_en: 'Board member',        klubb: 'Vega Havbruk' },
-  { navn: 'Jim Ruben Toven',              rolle: 'Styremedlem',        rolle_en: 'Board member',        klubb: 'Vefsn FOB' },
-  { navn: 'Hedvig Oddøy',                 rolle: 'Styremedlem',        rolle_en: 'Board member',        klubb: 'Lovund Havbruk' },
-] as const;
+import roster from './data/tillitsvalgte.json';
 
-// Kontrollkomité (velges av medlemmene) med vararepresentant.
-export const KONTROLLKOMITE = [
-  { navn: 'Frank Hansen',   vara: 'Steinar Iversen' },
-  { navn: 'Bjørnar Tønder', vara: 'Tor Arne Strøm' },
-] as const;
+export const STYRE = roster.styre;
+export const ANSATTE = roster.ansatte;
+export const KONTROLLKOMITE = roster.kontrollkomite;
+export const STUDIEUTVALG = roster.studieutvalg;
+export const REPRESENTANTSKAP = roster.representantskap;
+export const VALGKOMITE = roster.valgkomite;
+export const UNGDOMSUTVALG = roster.ungdomsutvalg;
+export const UNGDOMSSEKRETAR = roster.ungdomssekretar;
 
-// Studieutvalg (ansvar for kurs og skolering i avdelingen).
-export const STUDIEUTVALG = [
-  { navn: 'Ann Kristin Sletvold', sted: 'Brønnøy' },
-  { navn: 'Ulrikke Hansen',       sted: 'Rana' },
-  { navn: 'Cicilie Løkås',        sted: 'Rana' },
-] as const;
-
-// Representantskapet — avdelingens øverste organ mellom årsmøtene.
-// (Varamedlemmer utelatt bevisst — vises ikke offentlig.)
-export const REPRESENTANTSKAP = [
-  'Frank Arne Hanssen',
-  'Runar Adolfsen',
-  'Tobias Håkstad',
-  'Camilla Johnsdatter',
-  'Simon Steensen',
-  'Miriam Åsland',
-  'Helge Valrygg',
-  'Per Eriksen',
-  'Andrea Lillebjerka',
-  'Daniel Kaggerud',
-  'Kjell Erik Karlsen',
-  'Ruben Mørk Jacobsen',
-  'Anne Malm',
-  'Håvard Næss',
-  'Frithjof Leirvik',
-] as const;
-
-// Valgkomité (innstiller på valg til styre og utvalg).
-export const VALGKOMITE = [
-  { navn: 'Peder Morten Olsen',      rolle: 'Leder',  rolle_en: 'Leader', sted: 'Rana' },
-  { navn: 'Sara Scott Jane Eriksen', rolle: 'Medlem', rolle_en: 'Member', sted: 'Alstahaug' },
-  { navn: 'Ben Johan Nilssen',       rolle: 'Medlem', rolle_en: 'Member', sted: 'Vefsn' },
-  { navn: 'Ron Høvik',               rolle: 'Medlem', rolle_en: 'Member', sted: 'Brønnøy' },
-] as const;
-
-// Ungdomsutvalg (valgte). Ungdomssekretær Rikke Jacobsen er IKKE medlem av
-// utvalget — hun er regionansatt og vises i eget felt (UNGDOMSSEKRETAR).
-export const UNGDOMSUTVALG = [
-  { navn: 'Preben Astrup',      rolle: 'Leder',     rolle_en: 'Leader' },
-  { navn: 'Mathias Tustervatn', rolle: 'Nestleder', rolle_en: 'Deputy leader' },
-  { navn: 'Anne Malm',          rolle: 'Medlem',    rolle_en: 'Member' },
-  { navn: 'Markus Faksmo',      rolle: 'Medlem',    rolle_en: 'Member' },
-  { navn: 'Ane Djønne',         rolle: 'Medlem',    rolle_en: 'Member' },
-  { navn: 'Fredrik Myrvang',    rolle: 'Medlem',    rolle_en: 'Member' },
-] as const;
-
-// Regional ungdomssekretær (valgt i Region Nord-Norge) — støtter ungdomsutvalget
-// og har kontorplass hos avdelingen, men er ikke valgt i selve avdelingen.
-// Vises i eget felt under ungdomsutvalget.
-export const UNGDOMSSEKRETAR = {
-  navn: 'Rikke Jacobsen',
-  rolle: 'Regional ungdomssekretær',
-  rolle_en: 'Regional youth secretary',
-  merknad: 'Region Nord-Norge',
-  merknad_en: 'Northern Norway region',
-} as const;
+// Når rosteret sist ble bekreftet mot avdelingen. Vises på /tillitsvalgte
+// slik at det er synlig for besøkende hvor ferske opplysningene er.
+export const ROSTER_SIST_BEKREFTET = roster.sist_bekreftet;
 
 export const UMBUKTA = {
   kart: 'https://maps.app.goo.gl/Q8f8DPbiG6TmMtpy6',

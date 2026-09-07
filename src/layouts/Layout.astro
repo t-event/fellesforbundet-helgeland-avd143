@@ -8,16 +8,21 @@ interface Props {
   title: string;
   description: string;
   ogImage?: string;
+  ogImageAlt?: string;
   ogType?: string;
   canonical?: string;
   lang?: string;
   noindex?: boolean;
 }
 
+// Delingsbilder ligger i /images/og/ og lages av `npm run og`
+// (scripts/gen-og-bilder.mjs). Sider som handler om hytteutleie, medlemskap
+// eller tariff sender inn sitt eget bilde — resten deler avdelingsbildet.
 const {
   title,
   description,
-  ogImage = '/images/og-default.jpg',
+  ogImage = '/images/og/og-default.jpg',
+  ogImageAlt = 'Fellesforbundet Helgeland avd. 143 — 1. mai-tog med fanen gjennom Mo i Rana',
   ogType = 'website',
   lang = 'no',
   noindex = false,
@@ -88,17 +93,22 @@ const brodsmuleMork = morkeHero.has(sti);
   <meta property="og:title"       content={title} />
   <meta property="og:description" content={description} />
   <meta property="og:url"         content={canonicalUrl} />
-  <meta property="og:image"       content={ogImageUrl} />
+  <meta property="og:image"        content={ogImageUrl} />
+  <meta property="og:image:secure_url" content={ogImageUrl} />
+  <meta property="og:image:type"   content="image/jpeg" />
   <meta property="og:image:width"  content="1200" />
   <meta property="og:image:height" content="630" />
-  <meta property="og:locale"      content="nb_NO" />
-  <meta property="og:site_name"   content="Fellesforbundet Helgeland — Hytteutleie" />
+  <meta property="og:image:alt"    content={ogImageAlt} />
+  <meta property="og:locale"       content="nb_NO" />
+  <meta property="og:locale:alternate" content="en_GB" />
+  <meta property="og:site_name"    content="Fellesforbundet Helgeland avd. 143" />
 
   <!-- Twitter Card -->
   <meta name="twitter:card"        content="summary_large_image" />
   <meta name="twitter:title"       content={title} />
   <meta name="twitter:description" content={description} />
   <meta name="twitter:image"       content={ogImageUrl} />
+  <meta name="twitter:image:alt"   content={ogImageAlt} />
 
   <!-- Schema.org Organisation -->
   <script type="application/ld+json" set:html={JSON.stringify({
@@ -165,50 +175,125 @@ const brodsmuleMork = morkeHero.has(sti);
   <!-- Språkbytte-skript (initialiseres fra lagret localStorage-preferanse) -->
   <script>
     import { translations } from '../i18n/translations.ts';
+    import { ORDBOKER, AKTIVE_SPRAK, type Sprakkode } from '../i18n/sprak.ts';
 
-    type Lang = 'nb' | 'en';
+    // Norsk ligger i HTML-en. Engelsk ligger ved siden av, i data-en. Alle
+    // andre språk slås opp i en ordbok på den norske teksten — da trenger vi
+    // ikke ett attributt per språk på hvert eneste element (det ville blitt
+    // over to tusen). Mangler en tekst i ordboka, faller den tilbake til norsk.
+    const HTML_LANG: Record<string, string> = Object.fromEntries(
+      AKTIVE_SPRAK.map(s => [s.kode, s.htmlLang]),
+    );
+    const NAVN: Record<string, string> = Object.fromEntries(
+      AKTIVE_SPRAK.map(s => [s.kode, s.navn]),
+    );
 
-    // Cache for original (norsk) innhold, slik at vi kan bytte tilbake fra engelsk.
+    // Original (norsk) innhold, slik at vi alltid kan slå opp og bytte tilbake.
     const noHtml = new WeakMap<HTMLElement, string>();
     const noPh   = new WeakMap<HTMLInputElement | HTMLTextAreaElement, string>();
 
-    function applyLang(lang: Lang) {
-      const t = translations[lang];
-      // 1) Delte strenger via translations.ts (nav, overskrifter, skjemaetiketter)
+    // Ordboknøkkelen er den norske teksten med normalisert mellomrom, slik at
+    // innrykk i HTML-en ikke gjør oppslaget avhengig av formatering.
+    const nokkel = (s: string) => s.replace(/\s+/g, ' ').trim();
+
+    function slaOpp(norsk: string, lang: Sprakkode): string {
+      if (lang === 'nb') return norsk;
+      const ordbok = ORDBOKER[lang];
+      const treff = ordbok?.[nokkel(norsk)];
+      return treff && treff.trim() !== '' ? treff : norsk;
+    }
+
+    function applyLang(lang: Sprakkode) {
+      const t = translations[lang as 'nb' | 'en'] ?? translations.nb;
+      const nb = translations.nb;
+
+      // 1) Delte strenger med nøkkel (nav, overskrifter, skjemaetiketter).
       document.querySelectorAll<HTMLElement>('[data-i18n]').forEach(el => {
-        const key = el.getAttribute('data-i18n') as keyof typeof t;
-        if (key && key in t) el.textContent = t[key];
+        const key = el.getAttribute('data-i18n') as keyof typeof nb;
+        if (!key || !(key in nb)) return;
+        el.textContent = lang === 'nb' || lang === 'en' ? t[key] : slaOpp(nb[key], lang);
       });
       document.querySelectorAll<HTMLElement>('[data-i18n-placeholder]').forEach(el => {
-        const key = el.getAttribute('data-i18n-placeholder') as keyof typeof t;
-        if (key && key in t && el instanceof HTMLInputElement || el instanceof HTMLTextAreaElement) {
-          (el as HTMLInputElement).placeholder = t[key];
+        const key = el.getAttribute('data-i18n-placeholder') as keyof typeof nb;
+        if (!key || !(key in nb)) return;
+        if (el instanceof HTMLInputElement || el instanceof HTMLTextAreaElement) {
+          el.placeholder = lang === 'nb' || lang === 'en' ? t[key] : slaOpp(nb[key], lang);
         }
       });
-      // 2) Inline engelsk: data-en bytter innerHTML, data-en-ph bytter placeholder.
-      //    Engelsk ligger ved siden av norsk i HTML-en; norsk caches ved første kjøring.
+
+      // 2) Tekst som står inline i HTML-en. Norsk caches ved første kjøring.
       document.querySelectorAll<HTMLElement>('[data-en]').forEach(el => {
         if (!noHtml.has(el)) noHtml.set(el, el.innerHTML);
-        el.innerHTML = lang === 'en' ? (el.getAttribute('data-en') ?? '') : (noHtml.get(el) ?? '');
+        const norsk = noHtml.get(el) ?? '';
+        el.innerHTML = lang === 'nb' ? norsk
+          : lang === 'en' ? (el.getAttribute('data-en') ?? norsk)
+          : slaOpp(norsk, lang);
       });
       document.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>('[data-en-ph]').forEach(el => {
         if (!noPh.has(el)) noPh.set(el, el.placeholder);
-        el.placeholder = lang === 'en' ? (el.getAttribute('data-en-ph') ?? '') : (noPh.get(el) ?? '');
+        const norsk = noPh.get(el) ?? '';
+        el.placeholder = lang === 'nb' ? norsk
+          : lang === 'en' ? (el.getAttribute('data-en-ph') ?? norsk)
+          : slaOpp(norsk, lang);
       });
-      document.documentElement.lang = lang === 'nb' ? 'no' : 'en';
+
+      document.documentElement.lang = HTML_LANG[lang] ?? 'no';
+
+      // Oppdater begge varianter av språkvelgeren (flaggrad og nedtrekksmeny).
       document.querySelectorAll<HTMLElement>('.lang button').forEach(btn => {
         btn.classList.toggle('active', btn.dataset.lang === lang);
       });
-      localStorage.setItem('lang', lang);
+      document.querySelectorAll<HTMLElement>('.lang-liste button').forEach(btn => {
+        btn.setAttribute('aria-selected', String(btn.dataset.lang === lang));
+      });
+      const navnEl  = document.getElementById('lang-knapp-navn');
+      const flaggEl = document.getElementById('lang-knapp-flagg');
+      const valgt   = document.querySelector<HTMLElement>(`.lang-liste button[data-lang="${lang}"]`);
+      if (navnEl) navnEl.textContent = NAVN[lang] ?? 'Norsk';
+      if (flaggEl && valgt?.querySelector('svg')) {
+        flaggEl.innerHTML = valgt.querySelector('svg')!.outerHTML;
+      }
+
+      try { localStorage.setItem('lang', lang); } catch { /* privat vindu */ }
     }
 
-    const saved = (localStorage.getItem('lang') as Lang) || 'nb';
-    applyLang(saved);
+    let lagret: string | null = null;
+    try { lagret = localStorage.getItem('lang'); } catch { /* privat vindu */ }
+    // Et språk kan ha blitt slått av igjen etter at noen valgte det.
+    const gyldig = AKTIVE_SPRAK.some(s => s.kode === lagret);
+    applyLang((gyldig ? lagret : 'nb') as Sprakkode);
 
-    document.querySelectorAll<HTMLElement>('.lang button').forEach(btn => {
+    document.querySelectorAll<HTMLElement>('.lang button, .lang-liste button').forEach(btn => {
       btn.addEventListener('click', () => {
-        applyLang((btn.dataset.lang as Lang) || 'nb');
+        applyLang((btn.dataset.lang as Sprakkode) || 'nb');
+        lukkMeny();
       });
+    });
+
+    // ── Nedtrekksmenyen ────────────────────────────────────────────────
+    const knapp = document.getElementById('lang-knapp');
+    const liste = document.getElementById('lang-liste');
+
+    function lukkMeny() {
+      if (!liste || !knapp) return;
+      liste.hidden = true;
+      knapp.setAttribute('aria-expanded', 'false');
+    }
+
+    knapp?.addEventListener('click', e => {
+      e.stopPropagation();
+      if (!liste) return;
+      const apen = !liste.hidden;
+      liste.hidden = apen;
+      knapp.setAttribute('aria-expanded', String(!apen));
+      if (!apen) liste.querySelector<HTMLElement>('button[aria-selected="true"]')?.focus();
+    });
+
+    document.addEventListener('click', e => {
+      if (liste && !liste.hidden && !liste.contains(e.target as Node) && e.target !== knapp) lukkMeny();
+    });
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape' && liste && !liste.hidden) { lukkMeny(); knapp?.focus(); }
     });
   </script>
 

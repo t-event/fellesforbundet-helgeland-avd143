@@ -1,6 +1,8 @@
 ---
 import { ELSVATN_INATUR_URL } from '../config.ts';
 import BrandLockup from './BrandLockup.astro';
+import Flagg from './Flagg.astro';
+import { AKTIVE_SPRAK } from '../i18n/sprak.ts';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const MIN_SIDE = 'https://minside.fellesforbundet.no';
 
@@ -47,26 +49,45 @@ const currentPath = Astro.url.pathname.replace(base, '').replace(/\/$/, '') || '
         <a href={`${base}/tillitsvalgte`} class={currentPath === '/tillitsvalgte' ? 'active' : ''} data-en="Shop stewards">Tillitsvalgte</a>
         <a href={MIN_SIDE} target="_blank" rel="noopener noreferrer" data-en="My Page ↗">Min Side ↗</a>
       </nav>
-      <div class="lang" role="group" aria-label="Velg språk / Choose language">
-        <button data-lang="nb" class="active" aria-label="Norsk" title="Norsk">
-          <svg class="flag" viewBox="0 0 22 16" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-            <rect width="22" height="16" fill="#BA0C2F" />
-            <rect x="6" width="4" height="16" fill="#fff" />
-            <rect y="6" width="22" height="4" fill="#fff" />
-            <rect x="7" width="2" height="16" fill="#00205B" />
-            <rect y="7" width="22" height="2" fill="#00205B" />
-          </svg>
-        </button>
-        <button data-lang="en" aria-label="English" title="English">
-          <svg class="flag" viewBox="0 0 60 30" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-            <rect width="60" height="30" fill="#012169" />
-            <path d="M0,0 60,30 M60,0 0,30" stroke="#fff" stroke-width="6" />
-            <path d="M0,0 60,30 M60,0 0,30" stroke="#C8102E" stroke-width="4" />
-            <path d="M30,0 V30 M0,15 H60" stroke="#fff" stroke-width="10" />
-            <path d="M30,0 V30 M0,15 H60" stroke="#C8102E" stroke-width="6" />
-          </svg>
-        </button>
-      </div>
+      {/* Språkvelger. To språk = flaggene ved siden av hverandre; flere enn to
+          får ikke plass i headeren, så da blir det en nedtrekksmeny med
+          språkets eget navn. Se src/i18n/sprak.ts. */}
+      {AKTIVE_SPRAK.length <= 2 ? (
+        <div class="lang" role="group" aria-label="Velg språk / Choose language">
+          {AKTIVE_SPRAK.map(s => (
+            <button data-lang={s.kode} class={s.kode === 'nb' ? 'active' : undefined} aria-label={s.navn} title={s.navn}>
+              <Flagg kode={s.kode} />
+            </button>
+          ))}
+        </div>
+      ) : (
+        <div class="lang-meny">
+          <button
+            type="button"
+            id="lang-knapp"
+            class="lang-knapp"
+            aria-haspopup="listbox"
+            aria-expanded="false"
+            aria-label="Velg språk / Choose language"
+          >
+            <span class="lang-knapp-flagg" id="lang-knapp-flagg"><Flagg kode="nb" /></span>
+            <span class="lang-knapp-navn" id="lang-knapp-navn">Norsk</span>
+            <svg width="10" height="10" viewBox="0 0 12 12" aria-hidden="true" class="lang-pil">
+              <path d="M2 4.5 6 8.5 10 4.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </button>
+          <ul class="lang-liste" id="lang-liste" role="listbox" aria-labelledby="lang-knapp" hidden>
+            {AKTIVE_SPRAK.map(s => (
+              <li role="none">
+                <button type="button" role="option" data-lang={s.kode} aria-selected={s.kode === 'nb' ? 'true' : 'false'} lang={s.htmlLang}>
+                  <Flagg kode={s.kode} />
+                  <span>{s.navn}</span>
+                </button>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
     </div>
   </div>
 

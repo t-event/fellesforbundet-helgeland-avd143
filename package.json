@@ -7,8 +7,12 @@
   "type": "module",
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
-    "preview": "astro preview"
+    "build": "npm run valider && astro build",
+    "preview": "astro preview",
+    "valider": "node scripts/valider-tillitsvalgte.mjs",
+    "ikoner": "node scripts/gen-icons.mjs",
+    "og": "node scripts/gen-og-bilder.mjs",
+    "tekster": "node scripts/hent-tekster.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.3",

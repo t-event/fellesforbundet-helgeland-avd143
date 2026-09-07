@@ -1,0 +1,56 @@
+---
+// Flagg for språkvelgeren. Tegnet som enkel SVG i stedet for emoji, fordi
+// flagg-emoji ikke rendres i det hele tatt på Windows.
+interface Props { kode: string; class?: string }
+const { kode, class: klasse = 'flag' } = Astro.props;
+---
+{kode === 'nb' && (
+  <svg class={klasse} viewBox="0 0 22 16" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+    <rect width="22" height="16" fill="#BA0C2F" />
+    <rect x="6" width="4" height="16" fill="#fff" />
+    <rect y="6" width="22" height="4" fill="#fff" />
+    <rect x="7" width="2" height="16" fill="#00205B" />
+    <rect y="7" width="22" height="2" fill="#00205B" />
+  </svg>
+)}
+{kode === 'en' && (
+  <svg class={klasse} viewBox="0 0 60 30" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+    <rect width="60" height="30" fill="#012169" />
+    <path d="M0,0 60,30 M60,0 0,30" stroke="#fff" stroke-width="6" />
+    <path d="M0,0 60,30 M60,0 0,30" stroke="#C8102E" stroke-width="4" />
+    <path d="M30,0 V30 M0,15 H60" stroke="#fff" stroke-width="10" />
+    <path d="M30,0 V30 M0,15 H60" stroke="#C8102E" stroke-width="6" />
+  </svg>
+)}
+{kode === 'ro' && (
+  <svg class={klasse} viewBox="0 0 21 14" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+    <rect width="7" height="14" fill="#002B7F" />
+    <rect x="7" width="7" height="14" fill="#FCD116" />
+    <rect x="14" width="7" height="14" fill="#CE1126" />
+  </svg>
+)}
+{kode === 'es' && (
+  <svg class={klasse} viewBox="0 0 21 14" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+    <rect width="21" height="14" fill="#AA151B" />
+    <rect y="3.5" width="21" height="7" fill="#F1BF00" />
+  </svg>
+)}
+{kode === 'pl' && (
+  <svg class={klasse} viewBox="0 0 21 14" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+    <rect width="21" height="14" fill="#fff" />
+    <rect y="7" width="21" height="7" fill="#DC143C" />
+  </svg>
+)}
+{kode === 'lt' && (
+  <svg class={klasse} viewBox="0 0 21 14" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+    <rect width="21" height="14" fill="#FDB913" />
+    <rect y="4.667" width="21" height="4.667" fill="#006A44" />
+    <rect y="9.333" width="21" height="4.667" fill="#C1272D" />
+  </svg>
+)}
+{kode === 'lv' && (
+  <svg class={klasse} viewBox="0 0 21 14" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+    <rect width="21" height="14" fill="#9E3039" />
+    <rect y="5.6" width="21" height="2.8" fill="#fff" />
+  </svg>
+)}
