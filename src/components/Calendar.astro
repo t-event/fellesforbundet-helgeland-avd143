@@ -31,6 +31,7 @@
 
 <script>
 import { getRelevantEaster, isEasterSectionVisible, getEasterPeriods, getEasterDatesRange } from '../utils/easter.ts';
+import { oversett, locale, paSprakendring } from '../i18n/klient.ts';
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
@@ -57,11 +58,12 @@ const title  = document.getElementById('cal-title')!;
 const btnPrev = document.getElementById('cal-prev')!;
 const btnNext = document.getElementById('cal-next')!;
 
-const MÅNEDER = ['Januar','Februar','Mars','April','Mai','Juni',
-                 'Juli','August','September','Oktober','November','Desember'];
-const MONTHS_EN = ['January','February','March','April','May','June',
-                   'July','August','September','October','November','December'];
-const erEn = () => localStorage.getItem('lang') === 'en';
+// Månedsnavn hentes fra Intl i stedet for egne tabeller — da stemmer de på
+// alle språk, ikke bare norsk og engelsk.
+function manedsnavn(ar: number, maned: number): string {
+  const navn = new Date(ar, maned, 1).toLocaleDateString(locale(), { month: 'long' });
+  return navn.charAt(0).toUpperCase() + navn.slice(1);
+}
 
 function isoDate(y: number, m: number, d: number): string {
   return `${y}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
@@ -91,7 +93,7 @@ function renderCalendar() {
   let startDow = firstDay.getDay(); // 0=søn..6=lør
   startDow = startDow === 0 ? 6 : startDow - 1; // Gjør man=0
 
-  title.textContent = `${(erEn() ? MONTHS_EN : MÅNEDER)[viewMonth]} ${viewYear}`;
+  title.textContent = `${manedsnavn(viewYear, viewMonth)} ${viewYear}`;
 
   let html = '';
 
@@ -186,11 +188,11 @@ function visLoddMelding(aar: number) {
   const el = document.getElementById('cal-lodd-melding');
   if (!el) return;
   const ep = getEasterPeriods(aar);
-  const dato = ep.registrationStart.toLocaleDateString(erEn() ? 'en-GB' : 'nb-NO',
+  const dato = ep.registrationStart.toLocaleDateString(locale(),
     { day: 'numeric', month: 'long', year: 'numeric' });
-  el.textContent = erEn()
-    ? `The Easter draw for ${aar} is not open yet — registration opens ${dato}.`
-    : `Påskeloddtrekningen for ${aar} er ikke åpen ennå — påmelding åpner ${dato}.`;
+  el.textContent = oversett(
+    `Påskeloddtrekningen for ${aar} er ikke åpen ennå — påmelding åpner ${dato}.`,
+    `The Easter draw for ${aar} is not open yet — registration opens ${dato}.`);
   el.style.display = '';
   loddMeldingVist = true;
   loddMeldingAar = aar;
@@ -252,7 +254,7 @@ function updateBookingForm() {
 
 // «Neste ledige»-hint: første dato fra i dag som verken er opptatt eller påske.
 function fmtDato(iso: string): string {
-  return parseIso(iso).toLocaleDateString(erEn() ? 'en-GB' : 'nb-NO', { weekday: 'short', day: 'numeric', month: 'long' });
+  return parseIso(iso).toLocaleDateString(locale(), { weekday: 'short', day: 'numeric', month: 'long' });
 }
 function finnNesteLedige(): string | null {
   const d = new Date(); d.setHours(0,0,0,0);
@@ -273,8 +275,8 @@ function oppdaterNesteLedige() {
   el.style.display = '';
   el.dataset.date = iso;
   el.innerHTML = iso === todayIso
-    ? (erEn() ? 'Available from today →' : 'Ledig fra i dag →')
-    : (erEn() ? `Next available: <b>${fmtDato(iso)}</b> →` : `Neste ledige: <b>${fmtDato(iso)}</b> →`);
+    ? oversett('Ledig fra i dag →', 'Available from today →')
+    : oversett(`Neste ledige: <b>${fmtDato(iso)}</b> →`, `Next available: <b>${fmtDato(iso)}</b> →`);
 }
 document.getElementById('cal-neste')?.addEventListener('click', (e) => {
   const iso = (e.currentTarget as HTMLElement).dataset.date;
@@ -320,11 +322,10 @@ async function init() {
 
 init();
 
-// Tegn kalenderen på nytt ved språkbytte (månedsnavn)
-document.querySelectorAll('.lang button').forEach(b =>
-  b.addEventListener('click', () => setTimeout(() => {
-    renderCalendar();
-    oppdaterNesteLedige();
-    if (loddMeldingVist) visLoddMelding(loddMeldingAar); // hold meldingen i valgt språk
-  }, 0)));
+// Tegn kalenderen på nytt ved språkbytte (månedsnavn, datoer, hint)
+paSprakendring(() => {
+  renderCalendar();
+  oppdaterNesteLedige();
+  if (loddMeldingVist) visLoddMelding(loddMeldingAar);
+});
 </script>

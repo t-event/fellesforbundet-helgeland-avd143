@@ -85,8 +85,11 @@ const brodsmuleMork = morkeHero.has(sti);
   <!-- Tittel og meta -->
   <title>{title}</title>
   <meta name="description" content={description} />
-  <link rel="canonical" href={canonicalUrl} />
-  {noindex && <meta name="robots" content="noindex,nofollow" />}
+  {/* Canonical utelates på noindex-sider: å peke en side Google ikke skal
+      indeksere til seg selv er et motstridende signal, og på 404-siden ville
+      den pekt på /404/, som ikke finnes som URL. */}
+  {!noindex && <link rel="canonical" href={canonicalUrl} />}
+  {noindex && <meta name="robots" content="noindex,follow" />}
 
   <!-- Open Graph -->
   <meta property="og:type"        content={ogType} />
@@ -255,6 +258,11 @@ const brodsmuleMork = morkeHero.has(sti);
       }
 
       try { localStorage.setItem('lang', lang); } catch { /* privat vindu */ }
+
+      // Si fra til skript som tegner opp eget innhold (kalender, værwidget,
+      // datoer). De skal IKKE lytte på klikk i språkvelgeren selv — markupen
+      // der er ulik med to og med flere språk.
+      document.dispatchEvent(new CustomEvent('sprakendret', { detail: lang }));
     }
 
     let lagret: string | null = null;
