@@ -13,6 +13,7 @@ const vanskelighetFarge = {
 
 <Layout
   title="Turtips fra Umbukta — Fellesforbundet Helgeland Hytteutleie"
+  titleEn="Hiking tips from Umbukta — Fellesforbundet Helgeland Cabin Rental"
   description="Utforsk fjell og vatn rundt Umbukta. Turtips for alle nivåer — fra korte vandringer til krevende toppturer. Sauvasshytta, Oksskolten, Virvasshytta og mer."
   ogImage="/images/og/og-hytter.jpg"
   ogImageAlt="Hytta i Umbukta — mørkbeiset tømmerhytte med terrasse i fjellet"
@@ -53,7 +54,10 @@ const vanskelighetFarge = {
               {' · '}
               <span data-en={[tur.distanse_en, tur.tid_en].filter(Boolean).join(' · ')}>{[tur.distanse, tur.tid].filter(Boolean).join(' · ')}</span>
             </div>
-            <h3 class="h3" style="margin-bottom:8px;">{tur.navn}</h3>
+            {/* h2, ikke h3: turkortene er øverste nivå under h1-en på sida, og
+                et hopp fra h1 til h3 gjør strukturen uleselig for skjermlesere.
+                class="h3" beholder størrelsen, så utseendet er uendret. */}
+            <h2 class="h3" style="margin-bottom:8px;">{tur.navn}</h2>
             <p class="muted" style="font-size:14.5px; flex:1; line-height:1.6;" data-en={tur.beskrivelse_en}>{tur.beskrivelse}</p>
             <a href={tur.lenke} target="_blank" rel="noopener noreferrer" class="btn-link" style="font-size:14px; margin-top:12px; align-self:flex-start;" data-en="See on UT.no ↗">Se på UT.no ↗</a>
           </div>

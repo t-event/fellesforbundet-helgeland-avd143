@@ -13,6 +13,8 @@ import spaceGroteskWoff2 from '../fonts/space-grotesk-latin.woff2?url';
 
 interface Props {
   title: string;
+  /** Fanetittel på engelsk. Utelates den, brukes den norske. */
+  titleEn?: string;
   description: string;
   ogImage?: string;
   ogImageAlt?: string;
@@ -27,6 +29,7 @@ interface Props {
 // eller tariff sender inn sitt eget bilde — resten deler avdelingsbildet.
 const {
   title,
+  titleEn,
   description,
   ogImage = '/images/og/og-default.jpg',
   ogImageAlt = 'Fellesforbundet Helgeland avd. 143 — 1. mai-tog med fanen gjennom Mo i Rana',
@@ -158,7 +161,7 @@ const brodsmuleMork = morkeHero.has(sti);
   <link rel="apple-touch-icon" href={`${base}/apple-touch-icon.png`} />
   <link rel="manifest" href={`${base}/site.webmanifest`} />
 </head>
-<body>
+<body data-tittel-no={title} data-tittel-en={titleEn ?? title}>
   <a class="skip-link" href="#main-content" data-en="Skip to content">Hopp til innhold</a>
   <Header />
 
@@ -295,6 +298,13 @@ const brodsmuleMork = morkeHero.has(sti);
       });
 
       document.documentElement.lang = HTML_LANG[lang] ?? 'no';
+
+      // Fanetittelen fulgte ikke språkvalget: <html lang="en"> med norsk
+      // <title> er det bokmerker og fanen viser. Den norske står fortsatt i
+      // HTML-en, så søkemotorer ser den.
+      const tNo = document.body.dataset.tittelNo;
+      const tEn = document.body.dataset.tittelEn;
+      if (tNo) document.title = lang === 'nb' ? tNo : lang === 'en' ? (tEn ?? tNo) : slaOpp(tNo, lang);
 
       // Notis om at norsk er den offisielle teksten. Vises på alt annet enn
       // norsk, med mindre den besøkende har lukket den i denne fanen.
