@@ -143,6 +143,31 @@ const brodsmuleMork = morkeHero.has(sti);
 <body>
   <a class="skip-link" href="#main-content" data-en="Skip to content">Hopp til innhold</a>
   <Header />
+
+  {/* Vises bare når den besøkende har valgt et annet språk enn norsk. Norsk er
+      avdelingens offisielle tekst — oversettelsene er ikke kvalitetssikret, og
+      det må stå tydelig på en side som forklarer lønn, rettigheter og vilkår.
+      Selve notisen oversettes som all annen tekst (data-en + ordbok). */}
+  <div class="sprak-notis" id="sprak-notis" role="status" hidden>
+    <div class="container sprak-notis-inner">
+      <span class="sprak-notis-ic" aria-hidden="true">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <circle cx="12" cy="12" r="9" /><path d="M12 11v5" /><path d="M12 7.6v.4" />
+        </svg>
+      </span>
+      <p data-en="Norwegian is the branch's official version. Translations are not quality assured. If anything is unclear about pay, rights or terms, the Norwegian text applies — or contact the branch.">
+        Norsk er avdelingens offisielle versjon. Oversettelsene er ikke kvalitetssikret.
+        Er noe uklart om lønn, rettigheter eller vilkår, er det den norske teksten som
+        gjelder — eller ta kontakt med avdelingen.
+      </p>
+      <button type="button" id="sprak-notis-norsk" class="sprak-notis-knapp" data-en="Show in Norwegian">Vis på norsk</button>
+      <button type="button" id="sprak-notis-lukk" class="sprak-notis-lukk" aria-label="Lukk" data-en-ph="Close">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true">
+          <path d="M6 6l12 12M18 6L6 18" />
+        </svg>
+      </button>
+    </div>
+  </div>
   {brodsmule && (
     <nav class={`brodsmule${brodsmuleMork ? ' brodsmule--mork' : ''}`} aria-label="Du er her">
       <div class="container">
@@ -179,6 +204,17 @@ const brodsmuleMork = morkeHero.has(sti);
   <script>
     import { translations } from '../i18n/translations.ts';
     import { ORDBOKER, AKTIVE_SPRAK, type Sprakkode } from '../i18n/sprak.ts';
+    import { oversett as oversettKlient, locale as localeKlient } from '../i18n/klient.ts';
+
+    // Skript som bruker define:vars blir klassiske inline-skript og kan ikke
+    // importere noe (se BookingForm, WeatherWidget og takk). De når hjelperne
+    // her i stedet. Dette skriptet er en modul og kjører etter dem, så de må
+    // tåle at window.ffhI18n ennå ikke finnes — de faller da tilbake til norsk
+    // og tegnes på nytt av «sprakendret» rett etter.
+    (window as typeof window & { ffhI18n?: unknown }).ffhI18n = {
+      oversett: oversettKlient,
+      locale: localeKlient,
+    };
 
     // Norsk ligger i HTML-en. Engelsk ligger ved siden av, i data-en. Alle
     // andre språk slås opp i en ordbok på den norske teksten — da trenger vi
@@ -242,6 +278,15 @@ const brodsmuleMork = morkeHero.has(sti);
 
       document.documentElement.lang = HTML_LANG[lang] ?? 'no';
 
+      // Notis om at norsk er den offisielle teksten. Vises på alt annet enn
+      // norsk, med mindre den besøkende har lukket den i denne fanen.
+      const notis = document.getElementById('sprak-notis');
+      if (notis) {
+        let lukket = false;
+        try { lukket = sessionStorage.getItem('sprak-notis-lukket') === '1'; } catch { /* privat vindu */ }
+        notis.hidden = lang === 'nb' || lukket;
+      }
+
       // Oppdater begge varianter av språkvelgeren (flaggrad og nedtrekksmeny).
       document.querySelectorAll<HTMLElement>('.lang button').forEach(btn => {
         btn.classList.toggle('active', btn.dataset.lang === lang);
@@ -276,6 +321,18 @@ const brodsmuleMork = morkeHero.has(sti);
         applyLang((btn.dataset.lang as Sprakkode) || 'nb');
         lukkMeny();
       });
+    });
+
+    // ── Språknotisen ───────────────────────────────────────────────────
+    document.getElementById('sprak-notis-lukk')?.addEventListener('click', () => {
+      const notis = document.getElementById('sprak-notis');
+      if (notis) notis.hidden = true;
+      // Bare for denne fanen — notisen kommer igjen ved nytt besøk.
+      try { sessionStorage.setItem('sprak-notis-lukket', '1'); } catch { /* privat vindu */ }
+    });
+
+    document.getElementById('sprak-notis-norsk')?.addEventListener('click', () => {
+      applyLang('nb');
     });
 
     // ── Nedtrekksmenyen ────────────────────────────────────────────────

@@ -35,15 +35,37 @@ const nokkel = (s: string) => s.replace(/\s+/g, ' ').trim();
 
 /**
  * Oversett en streng som lages i JavaScript.
+ *
  * @param norsk    Teksten på norsk — dette er nøkkelen i ordboka.
  * @param engelsk  Teksten på engelsk. Utelates den, brukes norsk.
+ * @param verdier  Verdier som settes inn der teksten har {navn}.
+ *
+ * Verdier som varierer (antall, priser, datoer) MÅ sendes inn her, ikke limes
+ * inn i strengen med backticks. En streng som allerede inneholder «3 døgn» er
+ * en annen nøkkel enn «4 døgn», og ville aldri truffet i ordboka:
+ *
+ *   oversett('{antall} døgn × {pris} kr', '{antall} nights × NOK {pris}',
+ *            { antall: dager, pris: tallformat(rate) })
+ *
+ * Plassholderne står igjen som de er hvis oversetteren har glemt en av dem —
+ * det er synlig, i motsetning til tekst som stille faller tilbake til norsk.
  */
-export function oversett(norsk: string, engelsk?: string): string {
+export function oversett(
+  norsk: string,
+  engelsk?: string,
+  verdier?: Record<string, string | number>,
+): string {
   const lang = aktivtSprak();
-  if (lang === 'nb') return norsk;
-  if (lang === 'en') return engelsk ?? norsk;
-  const treff = ORDBOKER[lang]?.[nokkel(norsk)];
-  return treff && treff.trim() !== '' ? treff : norsk;
+  let ut: string;
+  if (lang === 'nb') ut = norsk;
+  else if (lang === 'en') ut = engelsk ?? norsk;
+  else {
+    const treff = ORDBOKER[lang]?.[nokkel(norsk)];
+    ut = treff && treff.trim() !== '' ? treff : norsk;
+  }
+  if (!verdier) return ut;
+  return ut.replace(/\{(\w+)\}/g, (hel, navn) =>
+    navn in verdier ? String(verdier[navn]) : hel);
 }
 
 /** Locale-streng til toLocaleDateString o.l. for valgt språk. */

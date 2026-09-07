@@ -111,6 +111,28 @@ function samle(html, fil) {
 const filer = htmlFiler(DIST);
 for (const f of filer) samle(readFileSync(f, 'utf8'), f.replace(DIST + '/', ''));
 
+// Tekst som lages av JavaScript ligger som oversett('norsk', 'english')-kall i
+// kildekoden, ikke i den ferdige HTML-en. Vi henter det norske argumentet.
+// Kall med backticks (`...${variabel}...`) hoppes over: nøkkelen finnes først
+// når verdien er satt inn, så den kan ikke slås opp i en fast ordbok.
+const medMal = new Set();
+const kildefiler = readdirSync(join(ROT, 'src'), { recursive: true, encoding: 'utf8' })
+  .filter(f => f.endsWith('.astro') || f.endsWith('.ts'))
+  .map(f => join(ROT, 'src', f));
+
+for (const fil of kildefiler) {
+  let kilde;
+  try { kilde = readFileSync(fil, 'utf8'); } catch { continue; }
+  const rel = fil.replace(ROT + '/', '');
+
+  for (const m of kilde.matchAll(/\boversett\(\s*'((?:[^'\\]|\\.)*)'/g)) {
+    const norsk = normaliser(m[1].replace(/\\'/g, "'").replace(/\\n/g, ' '));
+    if (norsk) tekster.set(norsk, rel);
+  }
+  // Registrer at fila har mal-kall vi IKKE kan hente ut, så vi kan si fra.
+  if (/\boversett\(\s*`/.test(kilde)) medMal.add(rel);
+}
+
 // Delte strenger med nøkkel ligger i translations.ts, ikke i HTML-en.
 const tsKilde = readFileSync(join(ROT, 'src', 'i18n', 'translations.ts'), 'utf8');
 const nbBlokk = tsKilde.match(/\bnb:\s*\{([\s\S]*?)\n {2}\},/);
@@ -153,6 +175,13 @@ for (const fil of readdirSync(ORDBOK).filter(f => f.endsWith('.json') && !f.star
     (utdaterte ? `  ⚠ ${utdaterte} tekst(er) finnes ikke lenger på siden` : ''),
   );
 }
+if (medMal.size) {
+  console.log(`\n  ℹ ${medMal.size} fil(er) har oversett()-kall med innsatte verdier (backticks).`);
+  console.log('    De kan ikke stå i ordboka, siden nøkkelen først finnes når verdien');
+  console.log('    er satt inn. De vises på norsk på andre språk enn engelsk:');
+  for (const f of [...medMal].sort()) console.log(`      • ${f}`);
+}
+
 if (nostede.size) {
   console.log(`\n  ⚠ ${nostede.size} element(er) har data-en inni et annet data-en.`);
   console.log('    Det innerste blir aldri oversatt — flytt teksten ut, eller la');

@@ -115,17 +115,17 @@
 
 <script>
 import { getRelevantEaster, isEasterRegistrationOpen, isEasterSectionVisible, formatNorsk, PASKE_MANUELL_VISNING } from '../utils/easter.ts';
+import { oversett, locale, paSprakendring } from '../i18n/klient.ts';
 
 const now = new Date();
 const ep  = getRelevantEaster(now);
 
 // Datoformat (språkbevisst)
-const erEn = () => localStorage.getItem('lang') === 'en';
 function fmt(d) {
-  return d.toLocaleDateString(erEn() ? 'en-GB' : 'nb-NO', { day:'numeric', month:'long', year:'numeric' });
+  return d.toLocaleDateString(locale(), { day:'numeric', month:'long', year:'numeric' });
 }
 function fmtKort(d) {
-  return d.toLocaleDateString(erEn() ? 'en-GB' : 'nb-NO', { day:'numeric', month:'long' });
+  return d.toLocaleDateString(locale(), { day:'numeric', month:'long' });
 }
 
 // Fyll inn datoer
@@ -138,22 +138,21 @@ const p1LblEl  = document.getElementById('paske-p1-label');
 const p2LblEl  = document.getElementById('paske-p2-label');
 
 function fyllDatoer() {
-  if (fristEl)  fristEl.textContent = `${fmt(ep.registrationDeadline)}${erEn() ? ', 23:59' : ', kl. 23:59'}`;
+  if (fristEl)  fristEl.textContent = oversett('{dato}, kl. 23:59', '{dato}, 23:59', { dato: fmt(ep.registrationDeadline) });
   if (fristMndEl) fristMndEl.textContent = ep.registrationDeadline
-    .toLocaleDateString(erEn() ? 'en-GB' : 'nb-NO', { month: 'short' }).replace('.', '').toUpperCase();
+    .toLocaleDateString(locale(), { month: 'short' }).replace('.', '').toUpperCase();
   if (fristDagEl) fristDagEl.textContent = String(ep.registrationDeadline.getDate());
-  if (p1InfoEl) p1InfoEl.textContent = erEn()
-    ? `Period 1: ${fmtKort(ep.p1Start)} → ${fmtKort(ep.p1End)} (checkout 12:00)`
-    : `Periode 1: ${fmtKort(ep.p1Start)} → ${fmtKort(ep.p1End)} (kl. 12:00 utsjekk)`;
-  if (p2InfoEl) p2InfoEl.textContent = erEn()
-    ? `Period 2: ${fmtKort(ep.p2Start)} (check-in 16:00) → ${fmtKort(ep.p2End)}`
-    : `Periode 2: ${fmtKort(ep.p2Start)} (innsjekk kl. 16:00) → ${fmtKort(ep.p2End)}`;
+  if (p1InfoEl) p1InfoEl.textContent = oversett(
+    'Periode 1: {fra} → {til} (kl. 12:00 utsjekk)', 'Period 1: {fra} → {til} (checkout 12:00)',
+    { fra: fmtKort(ep.p1Start), til: fmtKort(ep.p1End) });
+  if (p2InfoEl) p2InfoEl.textContent = oversett(
+    'Periode 2: {fra} (innsjekk kl. 16:00) → {til}', 'Period 2: {fra} (check-in 16:00) → {til}',
+    { fra: fmtKort(ep.p2Start), til: fmtKort(ep.p2End) });
   if (p1LblEl)  p1LblEl.textContent = `${fmtKort(ep.p1Start)} – ${fmtKort(ep.p1End)}`;
   if (p2LblEl)  p2LblEl.textContent = `${fmtKort(ep.p2Start)} – ${fmtKort(ep.p2End)}`;
 }
 fyllDatoer();
-document.querySelectorAll('.lang button').forEach(b =>
-  b.addEventListener('click', () => setTimeout(fyllDatoer, 0)));
+paSprakendring(fyllDatoer);
 
 // Tvungen visning av seksjon + skjema:
 //  • PASKE_MANUELL_VISNING (i src/utils/easter.ts) = på for ALLE besøkende (manuell bryter i koden)
@@ -208,12 +207,12 @@ form?.addEventListener('submit', async (e) => {
   const p2      = (document.getElementById('paske-p2')).checked;
 
   let ok = true;
-  if (!navn)                   { setFeil('paske-err-navn', erEn() ? 'Enter your name.' : 'Oppgi navn.'); ok = false; }
-  if (!epost || !epost.includes('@')) { setFeil('paske-err-epost', erEn() ? 'Enter a valid email.' : 'Oppgi gyldig e-post.'); ok = false; }
-  if (!p1 && !p2)              { setFeil('paske-err-periode', erEn() ? 'Select at least one period.' : 'Velg minst én periode.'); ok = false; }
+  if (!navn)                   { setFeil('paske-err-navn', oversett('Oppgi navn.', 'Enter your name.')); ok = false; }
+  if (!epost || !epost.includes('@')) { setFeil('paske-err-epost', oversett('Oppgi gyldig e-post.', 'Enter a valid email.')); ok = false; }
+  if (!p1 && !p2)              { setFeil('paske-err-periode', oversett('Velg minst én periode.', 'Select at least one period.')); ok = false; }
   const capEl = form?.querySelector('textarea[name="h-captcha-response"]');
   const capToken = capEl ? capEl.value : '';
-  if (capEl && !capToken)      { setFeil('paske-err-captcha', erEn() ? 'Please complete the captcha.' : 'Fullfør captcha-en.'); ok = false; }
+  if (capEl && !capToken)      { setFeil('paske-err-captcha', oversett('Fullfør captcha-en.', 'Please complete the captcha.')); ok = false; }
   if (!ok) return;
 
   const perioder = [p1 && `Periode 1 (${p1LblEl?.textContent})`, p2 && `Periode 2 (${p2LblEl?.textContent})`].filter(Boolean).join(', ');
@@ -244,7 +243,7 @@ form?.addEventListener('submit', async (e) => {
   } catch {
     submitBtn.disabled = false;
     if (spinner) spinner.style.display = 'none';
-    if (feilTxt) feilTxt.textContent = erEn() ? 'Something went wrong. Please try again or call us.' : 'Det oppstod en feil. Prøv igjen eller ring oss.';
+    if (feilTxt) feilTxt.textContent = oversett('Det oppstod en feil. Prøv igjen eller ring oss.', 'Something went wrong. Please try again or call us.');
     if (feilBoks) feilBoks.style.display = 'flex';
   }
 });

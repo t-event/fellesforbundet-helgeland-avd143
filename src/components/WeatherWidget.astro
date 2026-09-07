@@ -73,9 +73,14 @@ import { UMBUKTA, YR_URL, VEGVESEN_KAMERA_URL } from '../config.ts';
 </div>
 
 <script define:vars={{ LAT: UMBUKTA.lat, LON: UMBUKTA.lon, KAMERA_URL: VEGVESEN_KAMERA_URL }}>
-const DAGER_NB = ['søn','man','tir','ons','tor','fre','lør'];
-const DAYS_EN  = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
-const erEn = () => localStorage.getItem('lang') === 'en';
+// Dette er et define:vars-skript og kan ikke importere. Hjelperne ligger på
+// window.ffhI18n, satt av Layout.astro. Er de ikke der ennå (Layout er en
+// modul og kjører etter dette), brukes norsk — «sprakendret» tegner på nytt.
+const oversett = (no, en, v) => window.ffhI18n ? window.ffhI18n.oversett(no, en, v) : no;
+const locale   = () => window.ffhI18n ? window.ffhI18n.locale() : 'nb-NO';
+
+// Ukedagsnavn hentes fra Intl, ikke fra egne tabeller — da stemmer de på alle språk.
+const ukedag = (date) => date.toLocaleDateString(locale(), { weekday: 'short' }).replace('.', '');
 
 // Inline-SVG værsymboler (vendrede Lucide-ikoner) — erstatter emoji som
 // rendres ulikt per OS. Fargen arves via currentColor.
@@ -134,13 +139,14 @@ function symbolBase(code) {
 }
 function symbolLabel(code) {
   const b = symbolBase(code);
-  return (erEn() ? SYMBOL_MAP_EN : SYMBOL_MAP)[b] ?? b.replace(/_/g,' ');
+  return oversett(SYMBOL_MAP[b] ?? b.replace(/_/g,' '), SYMBOL_MAP_EN[b] ?? b.replace(/_/g,' '));
 }
 
 const COMPASS = ['N','NNØ','NØ','ØNØ','Ø','ØSØ','SØ','SSØ','S','SSV','SV','VSV','V','VNV','NV','NNV'];
 const COMPASS_EN = ['N','NNE','NE','ENE','E','ESE','SE','SSE','S','SSW','SW','WSW','W','WNW','NW','NNW'];
 function toCompass(deg) {
-  return (erEn() ? COMPASS_EN : COMPASS)[Math.round(deg / 22.5) % 16];
+  const i = Math.round(deg / 22.5) % 16;
+  return oversett(COMPASS[i], COMPASS_EN[i]);
 }
 
 async function fetchWeather() {
@@ -188,7 +194,7 @@ async function fetchWeather() {
     document.getElementById('weather-icon').innerHTML = wxSvg(iconName(sym), 44);
     document.getElementById('weather-cond').textContent = sym ? symbolLabel(sym) : '–';
     document.getElementById('weather-dato').textContent =
-      now.toLocaleDateString(erEn() ? 'en-GB' : 'nb-NO', { weekday:'long', hour:'2-digit', minute:'2-digit' });
+      now.toLocaleDateString(locale(), { weekday:'long', hour:'2-digit', minute:'2-digit' });
 
     // 5-dagers prognose — finn oppføring nærmest kl. 12 UTC for hver fremtidig dato
     const dagMap = {};
@@ -209,14 +215,14 @@ async function fetchWeather() {
       const prec  = data?.next_6_hours?.details?.precipitation_amount ?? 0;
       const sym2  = data?.next_6_hours?.summary?.symbol_code ?? data?.next_1_hours?.summary?.symbol_code;
       return `<div class="weather-day">
-        <div class="wd-dag">${(erEn() ? DAYS_EN : DAGER_NB)[date.getDay()]}</div>
+        <div class="wd-dag">${ukedag(date)}</div>
         <div class="wd-ic" aria-hidden="true">${wxSvg(iconName(sym2), 26)}</div>
         <div class="wd-temp">${t2 != null ? Math.round(t2) + '°' : '–'}</div>
         <div class="wd-prec">${prec > 0 ? prec + ' mm' : ''}</div>
       </div>`;
     }).join('');
   } catch {
-    document.getElementById('weather-dato').textContent = erEn() ? 'Weather unavailable' : 'Vær ikke tilgjengelig';
+    document.getElementById('weather-dato').textContent = oversett('Vær ikke tilgjengelig', 'Weather unavailable');
   }
 }
 
@@ -224,7 +230,7 @@ function oppdaterKamera() {
   const img = document.getElementById('webcam-img');
   const tid = document.getElementById('webcam-tid');
   if (img) img.src = `${KAMERA_URL}?t=${Date.now()}`;
-  if (tid) tid.textContent = `${erEn() ? 'Updated' : 'Oppdatert'} ${new Date().toLocaleTimeString(erEn() ? 'en-GB' : 'nb-NO', { hour:'2-digit', minute:'2-digit' })}`;
+  if (tid) tid.textContent = `${oversett('Oppdatert', 'Updated')} ${new Date().toLocaleTimeString(locale(), { hour:'2-digit', minute:'2-digit' })}`;
 }
 
 fetchWeather();
@@ -232,6 +238,5 @@ oppdaterKamera();
 setInterval(oppdaterKamera, 5 * 60 * 1000);
 
 // Oppdater værtekst og kameratid ved språkbytte
-document.querySelectorAll('.lang button').forEach(b =>
-  b.addEventListener('click', () => setTimeout(() => { fetchWeather(); oppdaterKamera(); }, 0)));
+document.addEventListener('sprakendret', () => { fetchWeather(); oppdaterKamera(); });
 </script>

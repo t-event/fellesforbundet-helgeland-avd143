@@ -111,7 +111,7 @@ function renderCalendar() {
     let cls = 'day';
     let label = String(d);
     let role  = 'gridcell';
-    let ariaLabel = `${d}. ${MÅNEDER[viewMonth]} ${viewYear}`;
+    let ariaLabel = `${d}. ${manedsnavn(viewYear, viewMonth)} ${viewYear}`;
     let clickable = false;
     let tabIndex = '-1';
 
@@ -191,8 +191,9 @@ function visLoddMelding(aar: number) {
   const dato = ep.registrationStart.toLocaleDateString(locale(),
     { day: 'numeric', month: 'long', year: 'numeric' });
   el.textContent = oversett(
-    `Påskeloddtrekningen for ${aar} er ikke åpen ennå — påmelding åpner ${dato}.`,
-    `The Easter draw for ${aar} is not open yet — registration opens ${dato}.`);
+    'Påskeloddtrekningen for {ar} er ikke åpen ennå — påmelding åpner {dato}.',
+    'The Easter draw for {ar} is not open yet — registration opens {dato}.',
+    { ar: aar, dato });
   el.style.display = '';
   loddMeldingVist = true;
   loddMeldingAar = aar;
@@ -276,7 +277,7 @@ function oppdaterNesteLedige() {
   el.dataset.date = iso;
   el.innerHTML = iso === todayIso
     ? oversett('Ledig fra i dag →', 'Available from today →')
-    : oversett(`Neste ledige: <b>${fmtDato(iso)}</b> →`, `Next available: <b>${fmtDato(iso)}</b> →`);
+    : oversett('Neste ledige: <b>{dato}</b> →', 'Next available: <b>{dato}</b> →', { dato: fmtDato(iso) });
 }
 document.getElementById('cal-neste')?.addEventListener('click', (e) => {
   const iso = (e.currentTarget as HTMLElement).dataset.date;

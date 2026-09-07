@@ -163,7 +163,11 @@ const feilTekst     = document.getElementById('booking-feil-tekst');
 const form          = document.getElementById('booking-form');
 
 const RATE_MAP = { FFH: PRISER.FFH, FF: PRISER.FF, ANNET_LO: PRISER.ANNET_LO };
-const erEn = () => localStorage.getItem('lang') === 'en';
+// define:vars-skript kan ikke importere — hjelperne ligger på window.ffhI18n
+// (satt av Layout.astro). Mangler de ennå, brukes norsk, og «sprakendret»
+// tegner på nytt straks etter.
+const oversett = (no, en, v) => window.ffhI18n ? window.ffhI18n.oversett(no, en, v) : no;
+const tallformat = (n) => n.toLocaleString(window.ffhI18n ? window.ffhI18n.locale() : 'nb-NO');
 
 // Sett min-dato klientside — attributtet settes ved bygg, og siden bygges kun
 // når ledigheten endres, så build-verdien kan være utdatert og slippe gjennom
@@ -201,8 +205,8 @@ function opptattDatoIPerioden(fra, til) {
 function validerDatoerLive() {
   const konflikt = opptattDatoIPerioden(fraInput?.value, tilInput?.value);
   setFeil('err-til', konflikt
-    ? (erEn() ? 'One or more of the selected dates are already booked — please pick an available period.'
-              : 'En eller flere av de valgte datoene er opptatt — velg en ledig periode.')
+    ? oversett('En eller flere av de valgte datoene er opptatt — velg en ledig periode.',
+               'One or more of the selected dates are already booked — please pick an available period.')
     : '');
   return !konflikt;
 }
@@ -223,20 +227,21 @@ function oppdaterPris() {
 
   const dager = (fra && til && til > fra) ? antallDøgn(fra, til) : 0;
   if (dager < 1) {
-    prisDetalj.textContent = erEn()
-      ? `Select dates · NOK ${rate.toLocaleString('en-US')}/night`
-      : `Velg datoer · ${rate.toLocaleString('nb-NO')} kr/døgn`;
+    prisDetalj.textContent = oversett(
+      'Velg datoer · {pris} kr/døgn', 'Select dates · NOK {prisEn}/night',
+      { pris: tallformat(rate), prisEn: rate.toLocaleString('en-US') });
     prisTotal.textContent = '—';
     return;
   }
 
   const sum = dager * rate;
-  prisDetalj.textContent = erEn()
-    ? `${dager} ${dager === 1 ? 'night' : 'nights'} × NOK ${rate.toLocaleString('en-US')}`
-    : `${dager} døgn × ${rate.toLocaleString('nb-NO')} kr`;
-  prisTotal.textContent = erEn()
-    ? `NOK ${sum.toLocaleString('en-US')}`
-    : `${sum.toLocaleString('nb-NO')} kr`;
+  prisDetalj.textContent = oversett(
+    '{antall} døgn × {pris} kr', '{antall} {natt} × NOK {prisEn}',
+    { antall: dager, pris: tallformat(rate), prisEn: rate.toLocaleString('en-US'),
+      natt: dager === 1 ? 'night' : 'nights' });
+  prisTotal.textContent = oversett(
+    '{sum} kr', 'NOK {sumEn}',
+    { sum: tallformat(sum), sumEn: sum.toLocaleString('en-US') });
 }
 
 // Vis/skjul LO-forbund-felt
@@ -262,8 +267,7 @@ tilInput?.addEventListener('change', () => { oppdaterPris(); validerDatoerLive()
 
 // Vis pris med en gang, og oppdater tekst ved språkbytte
 oppdaterPris();
-document.querySelectorAll('.lang button').forEach(b =>
-  b.addEventListener('click', () => setTimeout(oppdaterPris, 0)));
+document.addEventListener('sprakendret', oppdaterPris);
 
 // Feilvisning
 function setFeil(id, tekst) {
@@ -304,22 +308,22 @@ form?.addEventListener('submit', async (e) => {
   const husregler = (document.getElementById('booking-husregler'))?.checked ?? false;
   const melding = (document.getElementById('booking-melding'))?.value?.trim() ?? '';
 
-  if (!fra) { setFeil('err-fra', erEn() ? 'Choose a start date.' : 'Velg fra-dato.'); ok = false; }
-  else if (fra < iDagIso) { setFeil('err-fra', erEn() ? 'Choose today or a later date.' : 'Velg en dato i dag eller senere.'); ok = false; }
-  if (!til) { setFeil('err-til', erEn() ? 'Choose an end date.' : 'Velg til-dato.'); ok = false; }
-  else if (til <= fra) { setFeil('err-til', erEn() ? 'End date must be after start date.' : 'Til-dato må være etter fra-dato.'); ok = false; }
-  else if (opptattDatoIPerioden(fra, til)) { setFeil('err-til', erEn() ? 'One or more of the selected dates are already booked — please pick an available period.' : 'En eller flere av de valgte datoene er opptatt — velg en ledig periode.'); ok = false; }
-  if (!navn) { setFeil('err-navn', erEn() ? 'Enter your name.' : 'Oppgi navn.'); ok = false; }
-  if (!epost || !epost.includes('@')) { setFeil('err-epost', erEn() ? 'Enter a valid email address.' : 'Oppgi gyldig e-postadresse.'); ok = false; }
-  if (!telefon) { setFeil('err-telefon', erEn() ? 'Enter a phone number.' : 'Oppgi telefonnummer.'); ok = false; }
-  if (gruppe === 'ANNET_LO' && !forbund) { setFeil('err-forbund', erEn() ? 'Select an LO union.' : 'Velg LO-forbund.'); ok = false; }
-  if (!gjester) { setFeil('err-gjester', erEn() ? 'Select the number of guests.' : 'Velg antall gjester.'); ok = false; }
-  if (!husregler) { setFeil('err-husregler', erEn() ? 'You must accept the terms and house rules.' : 'Du må godta vilkårene og husreglene.'); ok = false; }
+  if (!fra) { setFeil('err-fra', oversett('Velg fra-dato.', 'Choose a start date.')); ok = false; }
+  else if (fra < iDagIso) { setFeil('err-fra', oversett('Velg en dato i dag eller senere.', 'Choose today or a later date.')); ok = false; }
+  if (!til) { setFeil('err-til', oversett('Velg til-dato.', 'Choose an end date.')); ok = false; }
+  else if (til <= fra) { setFeil('err-til', oversett('Til-dato må være etter fra-dato.', 'End date must be after start date.')); ok = false; }
+  else if (opptattDatoIPerioden(fra, til)) { setFeil('err-til', oversett('En eller flere av de valgte datoene er opptatt — velg en ledig periode.', 'One or more of the selected dates are already booked — please pick an available period.')); ok = false; }
+  if (!navn) { setFeil('err-navn', oversett('Oppgi navn.', 'Enter your name.')); ok = false; }
+  if (!epost || !epost.includes('@')) { setFeil('err-epost', oversett('Oppgi gyldig e-postadresse.', 'Enter a valid email address.')); ok = false; }
+  if (!telefon) { setFeil('err-telefon', oversett('Oppgi telefonnummer.', 'Enter a phone number.')); ok = false; }
+  if (gruppe === 'ANNET_LO' && !forbund) { setFeil('err-forbund', oversett('Velg LO-forbund.', 'Select an LO union.')); ok = false; }
+  if (!gjester) { setFeil('err-gjester', oversett('Velg antall gjester.', 'Select the number of guests.')); ok = false; }
+  if (!husregler) { setFeil('err-husregler', oversett('Du må godta vilkårene og husreglene.', 'You must accept the terms and house rules.')); ok = false; }
 
   // hCaptcha: krev at feltet er fylt ut HVIS widgeten er rendret (spamvern aktivt).
   const capEl = form?.querySelector('textarea[name="h-captcha-response"]');
   const capToken = capEl ? capEl.value : '';
-  if (capEl && !capToken) { setFeil('err-captcha', erEn() ? 'Please complete the captcha.' : 'Fullfør captcha-en.'); ok = false; }
+  if (capEl && !capToken) { setFeil('err-captcha', oversett('Fullfør captcha-en.', 'Please complete the captcha.')); ok = false; }
 
   if (!ok) return;
 
@@ -377,7 +381,7 @@ form?.addEventListener('submit', async (e) => {
     submitBtn.disabled = false;
     submitTekst.style.display = '';
     submitSpinner.style.display = 'none';
-    feilTekst.textContent = erEn() ? 'Something went wrong. Please try again or contact the office directly.' : 'Det oppstod en feil. Prøv igjen eller kontakt avdelingen direkte.';
+    feilTekst.textContent = oversett('Det oppstod en feil. Prøv igjen eller kontakt avdelingen direkte.', 'Something went wrong. Please try again or contact the office directly.');
     feilBoks.style.display = 'flex';
   }
 });

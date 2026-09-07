@@ -268,6 +268,28 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .lang button.active { background: #fff; }
 .lang button.active .flag { opacity: 1; box-shadow: inset 0 0 0 1px rgba(0,0,0,.12); }
 
+/* Notis om at norsk er den offisielle teksten — vises på andre språk */
+.sprak-notis { background: var(--beige); border-bottom: 1px solid #e8d9bd; }
+.sprak-notis-inner { display: flex; align-items: center; gap: 12px; padding-top: 11px; padding-bottom: 11px; }
+.sprak-notis-ic { display: flex; flex: none; color: #8a6d1f; }
+.sprak-notis p { font-size: 13.5px; line-height: 1.5; color: #5a4218; margin: 0; flex: 1; }
+.sprak-notis-knapp {
+  flex: none; cursor: pointer; font: inherit; font-size: 13px; font-weight: 700;
+  background: transparent; color: #5a4218; border: 1px solid #cbb08a;
+  border-radius: 4px; padding: 6px 11px; white-space: nowrap;
+}
+.sprak-notis-lukk {
+  flex: none; cursor: pointer; display: flex; padding: 6px; border: none;
+  border-radius: 4px; background: transparent; color: #8a6d1f;
+}
+.sprak-notis-knapp:hover, .sprak-notis-lukk:hover { background: rgba(138,109,31,.12); }
+@media (max-width: 640px) {
+  .sprak-notis-inner { flex-wrap: wrap; }
+  .sprak-notis p { flex: 1 1 100%; order: 2; }
+  .sprak-notis-knapp { order: 3; }
+}
+@media print { .sprak-notis { display: none; } }
+
 /* Språkvelger som nedtrekksmeny (brukes når det er mer enn to språk) */
 .lang-meny { position: relative; flex: none; }
 .lang-knapp {

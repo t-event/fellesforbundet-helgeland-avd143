@@ -120,18 +120,24 @@ function vis(id, tekst) {
   }
 }
 
-const erEn = () => localStorage.getItem('lang') === 'en';
+// define:vars-skript kan ikke importere — hjelperne ligger på window.ffhI18n
+// (satt av Layout.astro). Mangler de ennå, brukes norsk, og «sprakendret»
+// tegner på nytt straks etter.
+const oversett = (no, en, v) => window.ffhI18n ? window.ffhI18n.oversett(no, en, v) : no;
+const locale   = () => window.ffhI18n ? window.ffhI18n.locale() : 'nb-NO';
 
 function fyll() {
-  const loc = erEn() ? 'en-GB' : 'nb-NO';
+  const loc = locale();
   if (fra && til) {
     const fmtFra = new Date(fra).toLocaleDateString(loc, { day:'numeric', month:'long', year:'numeric' });
     const fmtTil = new Date(til).toLocaleDateString(loc, { day:'numeric', month:'long', year:'numeric' });
     vis('datoer', `${fmtFra} – ${fmtTil}`);
   }
-  if (dager) vis('dager', erEn() ? `${dager} ${dager === '1' ? 'night' : 'nights'}` : `${dager} døgn`);
+  if (dager) vis('dager', oversett('{antall} døgn', '{antall} {natt}',
+    { antall: dager, natt: dager === '1' ? 'night' : 'nights' }));
   if (ref)   vis('ref',   ref);
-  if (sum)   vis('sum',   erEn() ? `NOK ${parseInt(sum).toLocaleString('en-US')}` : `${parseInt(sum).toLocaleString('nb-NO')} kr`);
+  if (sum)   vis('sum',   oversett('{sum} kr', 'NOK {sumEn}',
+    { sum: parseInt(sum).toLocaleString(loc), sumEn: parseInt(sum).toLocaleString('en-US') }));
 
   if (fra && til && navn) {
     const fmtFra = new Date(fra).toLocaleDateString(loc, { day:'numeric', month:'long' });
@@ -142,19 +148,18 @@ function fyll() {
       // aldri tolkes som HTML/skript (hindrer DOM-basert XSS).
       const strong = (t) => { const s = document.createElement('strong'); s.textContent = t; return s; };
       lead.replaceChildren(
-        document.createTextNode(erEn() ? 'We have received your request for the ' : 'Vi har mottatt forespørselen din om '),
-        strong(erEn() ? 'Umbukta cabin' : 'Hytte i Umbukta'),
-        document.createTextNode(erEn() ? ' for ' : ' for '),
+        document.createTextNode(oversett('Vi har mottatt forespørselen din om ', 'We have received your request for the ')),
+        strong(oversett('Hytte i Umbukta', 'Umbukta cabin')),
+        document.createTextNode(oversett(' for ', ' for ')),
         strong(`${fmtFra}–${fmtTil}`),
         document.createTextNode(`, ${navn}`),
-        document.createTextNode(erEn() ? '. The office will review it and contact you by email.' : '. Avdelingen ser over og tar kontakt på e-post.'),
+        document.createTextNode(oversett('. Avdelingen ser over og tar kontakt på e-post.', '. The office will review it and contact you by email.')),
       );
     }
   }
 }
 fyll();
-document.querySelectorAll('.lang button').forEach(b =>
-  b.addEventListener('click', () => setTimeout(fyll, 0)));
+document.addEventListener('sprakendret', fyll);
 
 // Skriv ut / lagre som PDF
 document.getElementById('takk-print')?.addEventListener('click', () => window.print());

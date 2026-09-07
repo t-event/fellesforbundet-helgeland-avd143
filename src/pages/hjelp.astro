@@ -199,12 +199,12 @@ import { KONTAKT } from '../config.ts';
 </Layout>
 
 <script>
+  import { oversett } from '../i18n/klient.ts';
 const form    = document.getElementById('kontakt-form');
 const suksess = document.getElementById('kontakt-suksess');
 const feilBoks= document.getElementById('kontakt-feil');
 const feilTxt = document.getElementById('kontakt-feil-tekst');
 const submit  = document.getElementById('kontakt-submit');
-const erEn = () => localStorage.getItem('lang') === 'en';
 
 function setFeil(id, t) {
   const el = document.getElementById(id);
@@ -226,12 +226,12 @@ form?.addEventListener('submit', async (e) => {
   const melding = (document.getElementById('k-melding') as HTMLTextAreaElement).value.trim();
 
   let ok = true;
-  if (!navn)  { setFeil('kerr-navn', erEn() ? 'Enter your name.' : 'Oppgi navn.'); ok = false; }
-  if (!epost || !epost.includes('@')) { setFeil('kerr-epost', erEn() ? 'Enter a valid email.' : 'Oppgi gyldig e-post.'); ok = false; }
-  if (!melding) { setFeil('kerr-melding', erEn() ? 'Write a message.' : 'Skriv en melding.'); ok = false; }
+  if (!navn)  { setFeil('kerr-navn', oversett('Oppgi navn.', 'Enter your name.')); ok = false; }
+  if (!epost || !epost.includes('@')) { setFeil('kerr-epost', oversett('Oppgi gyldig e-post.', 'Enter a valid email.')); ok = false; }
+  if (!melding) { setFeil('kerr-melding', oversett('Skriv en melding.', 'Write a message.')); ok = false; }
   const capEl = form?.querySelector('textarea[name="h-captcha-response"]') as HTMLTextAreaElement | null;
   const capToken = capEl ? capEl.value : '';
-  if (capEl && !capToken) { setFeil('kerr-captcha', erEn() ? 'Please complete the captcha.' : 'Fullfør captcha-en.'); ok = false; }
+  if (capEl && !capToken) { setFeil('kerr-captcha', oversett('Fullfør captcha-en.', 'Please complete the captcha.')); ok = false; }
   if (!ok) return;
 
   const key = import.meta.env.PUBLIC_WEB3FORMS_KEY ?? '';
@@ -258,7 +258,7 @@ form?.addEventListener('submit', async (e) => {
     } else throw new Error(data.message);
   } catch {
     submit.removeAttribute('disabled');
-    if (feilTxt) feilTxt.textContent = erEn() ? 'Something went wrong. Please try again or call us.' : 'Det oppstod en feil. Prøv igjen eller ring oss.';
+    if (feilTxt) feilTxt.textContent = oversett('Det oppstod en feil. Prøv igjen eller ring oss.', 'Something went wrong. Please try again or call us.');
     if (feilBoks) feilBoks.style.display = 'flex';
   }
 });
