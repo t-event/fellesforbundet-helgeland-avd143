@@ -143,6 +143,23 @@ minutters lesing hadde spart en unødig alarm.
   for å tegne seg på nytt. Selektoren slutter å matche når velgeren blir en
   nedtrekksmeny. Erstattet med hendelsen `sprakendret`.
 
+### Mellomrom som forsvant i oversettelsen
+
+**Hva skjedde:** På polsk sto det «Zadzwoń do nas pod75 15 12 28» — telefon og
+e-post klistret seg inntil teksten foran.
+
+**Hvorfor:** Setninger deles opp rundt lenker: `Ring oss på ` + `<a>tlf</a>` +
+` eller send e-post til ` + `<a>e-post</a>`. Mellomrommet i start og slutt bærer
+avstanden. Ordboknøkkelen trimmes — med rett, ellers ville innrykk i HTML-en
+gjort oppslaget avhengig av formatering — men den oversatte **verdien** ble satt
+inn trimmet også. 20 tekster var rammet, på tvers av seks sider.
+
+**Løsningen:** kjøretiden setter tilbake originalens ytre mellomrom rundt den
+oversatte teksten. Da kan heller ikke en oversetter miste dem ved et uhell.
+
+**Lærdom:** når en nøkkel normaliseres for oppslag, må det vurderes om noe av
+det som normaliseres bort er *betydningsbærende* i utdataen.
+
 ---
 
 ## 5. Rene slurvefeil

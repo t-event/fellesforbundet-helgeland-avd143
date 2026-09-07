@@ -117,6 +117,14 @@ Tekst som **settes av JavaScript** må i tillegg tegnes på nytt ved språkbytte
 via `paSprakendring()`. Det gjaldt lightbox-teksten, miniatyrenes `alt` og
 «Vis bilde: …», og kalenderens `(opptatt)` / `(i dag)` / `(fortid)`.
 
+### Mellomrom i start og slutt
+
+Setninger som er delt opp rundt en lenke bærer avstanden i et mellomrom først
+eller sist: `Ring oss på ` + `<a>75 15 12 28</a>`. Nøkkelen trimmes ved
+oppslag, så **oversetteren skal ikke tenke på mellomrom** — kjøretiden setter
+tilbake originalens ytre mellomrom rundt den oversatte teksten. 20 tekster er
+av denne typen.
+
 ### Verdier fra tabeller i koden
 
 Uttrekket finner bare `oversett('literal')`. Kommer teksten fra en tabell —

@@ -310,9 +310,18 @@ const brodsmuleMork = morkeHero.has(sti);
       document.querySelectorAll<HTMLElement>('[data-en]').forEach(el => {
         if (!noHtml.has(el)) noHtml.set(el, el.innerHTML);
         const norsk = noHtml.get(el) ?? '';
-        el.innerHTML = lang === 'nb' ? norsk
-          : lang === 'en' ? (el.getAttribute('data-en') ?? norsk)
-          : slaOpp(norsk, lang);
+        if (lang === 'nb') { el.innerHTML = norsk; return; }
+
+        // Setninger deles opp rundt lenker: «Ring oss på » + <a>tlf</a> +
+        // « eller send e-post til » + <a>e-post</a>. Mellomrommet i start og
+        // slutt bærer avstanden, men ordboknøkkelen er trimmet — ellers ville
+        // innrykk i HTML-en gjort oppslaget avhengig av formatering. Derfor
+        // settes ytre mellomrom tilbake fra originalen. Da kan heller ikke en
+        // oversetter miste dem ved et uhell.
+        const foran = norsk.match(/^\s*/)?.[0] ?? '';
+        const bak   = norsk.match(/\s*$/)?.[0] ?? '';
+        const ny = lang === 'en' ? (el.getAttribute('data-en') ?? norsk) : slaOpp(norsk, lang);
+        el.innerHTML = foran + ny.replace(/^\s+|\s+$/g, '') + bak;
       });
       document.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>('[data-en-ph]').forEach(el => {
         if (!noPh.has(el)) noPh.set(el, el.placeholder);
