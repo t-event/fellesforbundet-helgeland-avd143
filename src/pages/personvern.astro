@@ -61,12 +61,12 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
           <span data-en="The website itself uses only necessary cookies stored locally in your browser: ">Nettsiden bruker i seg selv kun nødvendige informasjonskapsler som lagres lokalt i nettleseren: </span><code>lang</code><span data-en=" (chosen language) and "> (valgt språk) og </span><code>samtykke</code><span data-en=" (your cookie choice). These are not shared with anyone."> (cookie-valget ditt). Disse deles ikke med noen.</span>
         </p>
         <p style="margin-top:12px;"
-           data-en="On the news page we can embed the branch's Facebook posts, and on the contact and cabin pages a map from Google Maps. These are third-party content (Facebook/Meta and Google) that set their own cookies and may involve tracking. They load only if you choose «Accept all» in the cookie banner — never with «Necessary only». You can change or withdraw consent at any time on the cookie page.">
+           data-en={`On the news page we can embed the branch's Facebook posts, and on the contact and cabin pages a map from Google Maps. These are third-party content (Facebook/Meta and Google) that set their own cookies and may involve tracking. They load only if you choose «Accept all» in the cookie banner — never with «Necessary only». You can change or withdraw consent at any time on <a href="${base}/cookies" class="btn-link">the cookie page</a>.`}>
           På aktuelt-sida kan vi bygge inn avdelingens Facebook-innlegg, og på kontakt- og hyttesidene et kart
           fra Google Maps. Dette er tredjepartsinnhold (Facebook/Meta og Google) som setter egne
           informasjonskapsler og kan innebære sporing. Det lastes kun hvis du velger «Godta alle» i
           cookie-banneret — aldri med «Bare nødvendige». Du kan endre eller trekke tilbake samtykket når som
-          helst på <a href={`${base}/cookies`} class="btn-link" data-en="the cookie page">cookie-sida</a>.
+          helst på <a href={`${base}/cookies`} class="btn-link">cookie-sida</a>.
         </p>
         <p style="margin-top:12px;"
            data-en="The forms (booking, contact, help and the Easter draw) are protected against spam with hCaptcha (Intuition Machines). The widget loads from hcaptcha.com when you open a form — a necessary security measure to tell people from bots — and may set its own cookies. hCaptcha is not used for marketing or profiling.">

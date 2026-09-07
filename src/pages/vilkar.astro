@@ -62,11 +62,11 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
       <section>
         <h2 style="font-size:20px; font-weight:800; color:var(--tekst); margin-bottom:8px;" data-en="Responsibility and house rules">Ansvar og husregler</h2>
-        <p data-en="The cabin is rented as-is. The renter is responsible for leaving it clean and tidy, and must replace or compensate for damage and missing items beyond normal wear. The branch is not liable for personal belongings or for injury/loss during the stay. Full house rules and practical info are on the cabin page.">
+        <p data-en={`The cabin is rented as-is. The renter is responsible for leaving it clean and tidy, and must replace or compensate for damage and missing items beyond normal wear. The branch is not liable for personal belongings or for injury/loss during the stay. Full house rules and practical info are on <a href="${base}/umbukta" class="btn-link">the cabin page</a>.`}>
           Hytta leies ut som den er. Leietaker er ansvarlig for å forlate den ryddig og rengjort, og må erstatte
           skader og manglende inventar utover normal slitasje. Avdelingen er ikke ansvarlig for personlige
           eiendeler eller for skade/tap under oppholdet. Fullstendige husregler og praktisk info står på
-          <a href={`${base}/umbukta`} class="btn-link" data-en="the cabin page">hyttesida</a>.
+          <a href={`${base}/umbukta`} class="btn-link">hyttesida</a>.
         </p>
       </section>
 
