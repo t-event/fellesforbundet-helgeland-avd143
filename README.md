@@ -26,6 +26,7 @@ Avdelingens nettside: **avdelingens hjemmeside** (forside, medlemskap, aktuelt, 
 | **[SPRÅK.md](SPRÅK.md)** | Legge til et nytt språk på nettsida. |
 | **[PLACEHOLDERS.md](PLACEHOLDERS.md)** | Hva som fortsatt er midlertidig innhold. |
 | **[SPEC.md](SPEC.md)** | Teknisk spesifikasjon og as-built. |
+| **[ERFARINGER.md](ERFARINGER.md)** | Feil som faktisk er gjort i dette prosjektet, og hvorfor verifiseringen ikke fanget dem. Les før du melder noe ferdig. |
 
 ---
 

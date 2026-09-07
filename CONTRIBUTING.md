@@ -39,6 +39,8 @@ npm run build                 # produksjonsbygg
 
 ## Retningslinjer for endringer
 
+- **Les [ERFARINGER.md](ERFARINGER.md).** Kort liste over feil som faktisk er
+  gjort her, og hvorfor grønt bygg ikke er nok.
 - **Bygg lokalt** (`npm run build`) og sjekk at alt kompilerer før du sender inn.
 - **Åpne sida i en nettleser etterpå.** Bygget typesjekker ikke `<script>`-blokker
   i .astro-filer, så en feil der gir grønt bygg og ødelagt side. Det har skjedd.

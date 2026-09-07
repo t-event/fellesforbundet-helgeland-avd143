@@ -55,7 +55,9 @@ ved behov, ikke som del av bygget.
 
 ## Kjente fallgruver
 
-Ting som har gått galt før, og som ikke fanges av bygget.
+Ting som har gått galt før, og som ikke fanges av bygget. Bakgrunnen for hver
+av dem — hva som skjedde og hvorfor det ikke ble oppdaget — står i
+**[ERFARINGER.md](ERFARINGER.md)**.
 
 - **Astro-scopet CSS treffer ikke elementer fra en underkomponent.** `.thumb img`
   sluttet å virke da miniatyrene ble `<Bilde>`, og bildene ble strukket. Bruk

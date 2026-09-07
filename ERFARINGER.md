@@ -1,0 +1,173 @@
+# Erfaringer — feil som er gjort, og hva de lærte oss
+
+Ærlig logg over ting som gikk galt under arbeidet, ført så neste person
+(inkludert meg selv) slipper å gjøre dem om igjen. De fleste ble oppdaget av
+avdelingen, ikke av meg — det sier noe om hvor verifiseringen sviktet.
+
+Feilene faller i tre grupper: **verifisering som ikke målte det den skulle**,
+**verktøy som ga falsk trygghet**, og **antakelser jeg ikke sjekket**.
+
+Kortversjonen av alt under: *grønt bygg betyr ikke at det virker, og 100 %
+dekning betyr ikke at det er komplett.*
+
+---
+
+## 1. Verifisering som målte feil ting
+
+### «100 % oversatt» målte bare det som var merket for oversettelse
+
+**Hva skjedde:** Polsk viste `pl 100 % 792/792`, og jeg meldte språket ferdig.
+Avdelingen fant umiddelbart at overenskomstene, «Utviklet av T-Event», «Mange
+fag», bildetekstene i galleriet, værteksten, kompassretningene og hele
+kontaktskjemaet sto på norsk.
+
+**Hvorfor:** Dekningstallet teller *nøkler som finnes i ordboka*. Tekst uten
+`data-en` finnes ikke som nøkkel, og telles derfor ikke som mangel. Målingen
+kunne per definisjon ikke oppdage problemet.
+
+**Metoden som virker:** rendre hver side på norsk og på det nye språket, og
+sammenligne. Alt som er identisk er enten uoversatt eller et egennavn.
+
+### Sammenligningen så bare synlig tekst, ikke attributter
+
+**Hva skjedde:** Etter første runde meldte jeg igjen at det var komplett.
+Avdelingen fant at hele kontaktskjemaet fortsatt var norsk.
+
+**Hvorfor:** `placeholder`, `aria-label`, `title` og `alt` er ikke tekstnoder.
+En diff av synlig tekst kan aldri finne dem. Skjermlesere leste norsk til
+polske brukere i 18 tilfeller uten at noe utslag ga seg.
+
+**Metoden som virker:** sjekken må lese attributtene direkte. Se
+«Sjekk at ALT faktisk er oversettbart» i [SPRÅK.md](SPRÅK.md).
+
+### Falske treff i min egen sjekk
+
+`\bplaceholder="` traff også `data-i18n-placeholder="`, fordi `\b` matcher
+etter bindestreken. Det ga meldinger om «uoversatt» tekst som faktisk var
+oversatt. Bruk `(?<![-\w])placeholder=` i stedet.
+
+Motsatt vei: «Kontakt» og «Telefon» ble rapportert som uoversatte, men er
+identiske ord på polsk. En diff finner likhet, ikke feil — resultatet må leses.
+
+---
+
+## 2. Verktøy som ga falsk trygghet
+
+### Grønt bygg, ødelagt side
+
+**Hva skjedde:** Kalenderen forsvant fra /umbukta. Jeg hadde byttet
+månedstabellene mot `Intl`, men latt én referanse til `MÅNEDER` stå igjen i
+`aria-label`. Det ga `ReferenceError` midt i `renderCalendar()`. Markupen var
+der, rutenettet var tomt. **Bygget var grønt, og feilen gikk live.**
+
+**Hvorfor:** Astro typesjekker ikke `<script>`-blokker i `.astro`-filer.
+
+**Etter dette:** hver skriptendring kontrolleres i headless Chrome, og det
+kjøres en konsollsjekk på alle sider.
+
+### Grønt bygg, forvrengte bilder
+
+**Hva skjedde:** Miniatyrene i galleriet ble strukket til uleselige striper da
+de gikk fra `<img>` til `<Bilde>`.
+
+**Hvorfor:** Astro-scopet CSS treffer ikke elementer som kommer fra en
+underkomponent. `.thumb img` sluttet å matche. Bygget og konsollen var rene —
+bare et skjermbilde avslørte det.
+
+**Etter dette:** visuell kontroll av alt som endrer markup, ikke bare bygg.
+
+### Skjermbilder som ikke viste sannheten
+
+Headless Chrome legger ut bredere enn `--window-size` og klipper bildet. Første
+«mobilkontroll» viste en side som så ødelagt ut over alt, ikke bare i notisen.
+Ekte mobilvisning krever at sida rendres i en `<iframe>` med fast bredde.
+
+### `rm` med et glob uten treff
+
+`rm -f dist/_t-*.html dist/_e-*.html` — zsh avbryter hele kommandoen når ett
+glob ikke treffer, så **ingen** av filene ble slettet. `npm run tekster` leste
+dem som ekte sider og meldte «21 sider». Slett filene enkeltvis, eller sjekk
+resultatet.
+
+---
+
+## 3. Antakelser jeg ikke sjekket
+
+### Ikonet var teknisk riktig og likevel feil
+
+Lette regnbyger fikk `cloud-drizzle`, som er korrekt. Men Lucides
+`cloud-drizzle` er seks korte dasher, og ved 26 px leser det som snøfnugg — i
+september, på 11 grader. Jeg hadde valgt ikonet ut fra navnet, ikke ut fra
+hvordan det ser ut.
+
+**Etter dette:** ikonene ble rendret side om side i faktisk størrelse og
+vurdert visuelt. Regn bruker nå alltid `cloud-rain`.
+
+### Dokumenterte noe som ikke skjedde
+
+Jeg åpnet CSP-en for Cloudflare Web Analytics og skrev inn på /personvern og
+/cookies at siden samler besøksstatistikk — uten å sjekke at beaconen faktisk
+ble injisert. Det ble den aldri. Personvernerklæringen beskrev dermed en
+innsamling som ikke fant sted, og motsa setningen «Vi bruker ingen analyse»
+lenger nede på samme side. Alt ble rullet tilbake.
+
+**Lærdom:** verifiser at en integrasjon faktisk kjører før den beskrives i et
+juridisk dokument.
+
+### Gjettet en URL
+
+Lenka til minstelønnssatsene ble gjettet ut fra hvordan Arbeidstilsynet pleier
+å strukturere adresser. Den svarte 301 videre til den riktige. Avdelingen ga
+den korrekte. **Sjekk lenker, ikke utled dem.**
+
+### Leste ikke prosjektnotatene først
+
+Jeg flagget Cloudflare Access som en kritisk blokker foran en demo. Notatene
+sa allerede at gaten var bevisst, i påvente av lederens godkjenning. Fem
+minutters lesing hadde spart en unødig alarm.
+
+---
+
+## 4. Nesten-tabber, fanget i tide
+
+- **`data-astro-cid` i ordboknøklene.** Oppdaget rett før 3 300 oversettelser
+  skulle skrives. Hashen endres ved enhver CSS-endring i komponenten, så en ren
+  stilendring ville stille ugyldiggjort alle oversettelsene på den sida.
+- **Regex mot HTML.** Første uttrekk brukte ikke-grådig regex og stoppet på
+  første sluttagg — feil så snart et element av samme type lå inni. Erstattet
+  med en dybdeteller. Første forsøk på den startet dybden på 0 i stedet for 1
+  og fanget forbi elementgrensen, noe som ga 281 falske advarsler.
+- **Attributtrekkefølge.** Uttrekket krevde `data-en-ph` før `placeholder`.
+  Markupen hadde motsatt rekkefølge, og ingenting ble funnet.
+- **Nedtrekksmenyen brøt fem komponenter.** De lyttet på klikk i `.lang button`
+  for å tegne seg på nytt. Selektoren slutter å matche når velgeren blir en
+  nedtrekksmeny. Erstattet med hendelsen `sprakendret`.
+
+---
+
+## 5. Rene slurvefeil
+
+- Skrev `border: 1px solid #cbb versionless;` — ugyldig CSS-verdi.
+- Lot notisens mobilvisning bruke `flex-wrap`, som la lukkekrysset inntil
+  ikonet på en halvtom første rad.
+- Plukket opp interne i18n-nøkkelnavn (`hjelp_melding_ph`) som oversettbar
+  tekst, fordi de står som plassholderverdi i HTML-en.
+
+---
+
+## Sjekklista dette gir
+
+Før noe meldes ferdig:
+
+1. **Bygget er grønt** — nødvendig, ikke tilstrekkelig.
+2. **Åpnet i en nettleser**, med konsollen sjekket. Gjelder alltid ved
+   skriptendringer.
+3. **Sett på med øynene** hvis markup eller CSS er endret. Skjermbilde i ekte
+   bredde, i iframe hvis mobil.
+4. **Målt det som faktisk betyr noe**, ikke en indikator som ligner. Spør:
+   *kan denne målingen i det hele tatt oppdage feilen jeg leter etter?*
+5. **Sjekket eksterne fakta** — lenker, at integrasjoner kjører, hva notatene
+   allerede sier.
+6. **Sagt hva som ikke er verifisert.** Den polske oversettelsen er ikke lest
+   av noen med polsk som morsmål, og det står både her, i
+   [PLACEHOLDERS.md](PLACEHOLDERS.md) og som notis til besøkende.
