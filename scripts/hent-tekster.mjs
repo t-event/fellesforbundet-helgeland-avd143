@@ -136,6 +136,15 @@ for (const fil of kildefiler) {
   if (/\boversett\(\s*`/.test(kilde)) medMal.add(rel);
 }
 
+// Fanetitlene står som title="…" på <Layout> i hver side. De vises i
+// nettleserfanen og i bokmerker, så de skal oversettes som all annen tekst.
+// (title-attributter på andre elementer, f.eks. kart-iframes, hoppes over.)
+for (const fil of kildefiler.filter(f => f.includes('/pages/'))) {
+  const kilde = readFileSync(fil, 'utf8');
+  const m = kilde.match(/<Layout\b[^>]*?\n\s*title="([^"]+)"/s);
+  if (m) tekster.set(normaliser(m[1]), fil.replace(ROT + '/', ''));
+}
+
 // Delte strenger med nøkkel ligger i translations.ts, ikke i HTML-en.
 const tsKilde = readFileSync(join(ROT, 'src', 'i18n', 'translations.ts'), 'utf8');
 const nbBlokk = tsKilde.match(/\bnb:\s*\{([\s\S]*?)\n {2}\},/);
