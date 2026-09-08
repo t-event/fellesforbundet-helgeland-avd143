@@ -102,6 +102,11 @@ av dem — hva som skjedde og hvorfor det ikke ble oppdaget — står i
   `Layout.astro`, `klient.ts` og `hent-tekster.mjs` — endrer du én, må alle med.
 - **`frame-ancestors` virker ikke i meta-CSP.** Sida kan rammes inn av andre. Krever
   en HTTP-header, som GitHub Pages ikke kan sette — bevisst valg per 7. sep. 2026.
+- **Cloudflare kan legge til scripts uten at vi deployer.** Web Analytics-beaconen
+  dukket opp ved kanten og ble blokkert av CSP-en, med konsollfeil på hver
+  sidelast. Ser du en CSP-feil for en host vi ikke har lagt inn: sjekk hva
+  Cloudflare injiserer før du leter i koden. En ekstern host kan trenge **to**
+  direktiver — beaconen krevde både `script-src` og `connect-src`.
 
 ---
 
@@ -128,7 +133,7 @@ Disse styres i andres kontrollpanel og kan ikke fikses i koden.
 | DNS, proxy, cache | Cloudflare | Buffer-TTL står på 4 t. Kan trygt være 1 år for `/_astro/`, som har hash i filnavnet. |
 | `email-decode.min.js` | Cloudflare → Scrape Shield | Blokkerer opptegning ~450 ms på mobil. Ikke slått av. |
 | Sikkerhetsheadere (HSTS, X-Frame-Options m.m.) | Cloudflare → Transform Rules | **Bevisst utelatt** per 7. sep. 2026. |
-| Web Analytics | Cloudflare | Prøvd 7. sep. 2026, men beaconen ble aldri injisert. Fjernet igjen fra CSP og personvernsidene. Skal den på, må begge deler tilbake. |
+| Web Analytics | Cloudflare | Beaconen injiseres ved kanten, ustabilt — den var borte 7. sep. 2026 og blokkert av CSP 8. sep. CSP-en er nå åpen for den uansett. **Personvernsidene beskriver den ikke.** Er analysen faktisk på i dashbordet, må /personvern og /cookies oppdateres. |
 | Mottaker for skjema-e-post | Web3Forms-dashbordet | `avd143@fellesforbundet.no`. **Ikke det samme** som den offentlige adressen på sida, `avd143@fellesforbundet.org` — forskjellen er tilsiktet. |
 | Outlook-kalenderen | Avdelingens Microsoft-konto | ICS-lenka ligger som GitHub-secret `CALENDAR_ICS_URL`. Aldri i koden. |
 | Søkeindeksering | Google Search Console | Domenet verifiseres via DNS TXT; sitemap er `https://ffh143.no/sitemap-index.xml`. |

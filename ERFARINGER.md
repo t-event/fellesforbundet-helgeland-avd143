@@ -207,6 +207,31 @@ lenger nede på samme side. Alt ble rullet tilbake.
 **Lærdom:** verifiser at en integrasjon faktisk kjører før den beskrives i et
 juridisk dokument.
 
+### …og lot en negativ observasjon bli en varig antakelse
+
+**Hva skjedde:** Etter tilbakerullingen over ble CSP-en stående uten
+cloudflareinsights.com, med kommentaren «Cloudflare injiserte aldri beaconen».
+Dagen etter meldte PageSpeed konsollfeil på hver eneste sidelast: beaconen ble
+injisert likevel, og CSP-en blokkerte den.
+
+**Hvorfor:** «beaconen kom ikke nå» ble lest som «beaconen kommer ikke». Men
+injeksjonen skjer ved Cloudflares kant, ikke i dette repoet — den kan slås av
+og på i et dashbord, uten at noe her endrer seg og uten at noen deployer. Én
+observasjon av noe tredjeparts sier ingenting om i morgen.
+
+**Verdt å merke:** feilmeldingen nevnte bare `script-src`. Beaconen POSTer til
+`cloudflareinsights.com/cdn-cgi/rum`, så en fiks av bare det feilmeldingen
+pekte på ville gitt et `connect-src`-brudd rett etterpå. Kontrolltesten mot den
+gamle CSP-en fanget begge.
+
+**Etter dette:** begge kildene står åpne, uavhengig av om beaconen kjører — en
+åpen CSP-kilde for et script som ikke lastes koster ingenting, mens en manglende
+kilde gir feil på hver sidelast. Personvernteksten er *ikke* skrevet tilbake;
+den venter på at det bekreftes at analysen faktisk er på.
+
+**Lærdom:** når noe utenfor repoet kan endre seg uten en deploy, skal
+konfigurasjonen tåle begge tilstander framfor å anta den ene.
+
 ### Gjettet en URL
 
 Lenka til minstelønnssatsene ble gjettet ut fra hvordan Arbeidstilsynet pleier
