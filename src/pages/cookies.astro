@@ -12,9 +12,10 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       Informasjonskapsler (cookies)
     </h1>
     <div style="display:flex; flex-direction:column; gap:24px; font-size:16px; line-height:1.75; color:var(--tekst-dempet);">
-      <p data-en="This website uses very few cookies and no analytics or advertising. We only load embedded content from Facebook and Google Maps if you accept all cookies.">
-        Denne nettsiden bruker svært få informasjonskapsler, og ingen analyse eller reklame. Vi laster kun
-        innebygd innhold fra Facebook og Google Maps dersom du godtar alle informasjonskapsler.
+      <p data-en="This website uses very few cookies and no advertising. Our visitor statistics are cookie-free. We only load embedded content from Facebook and Google Maps if you accept all cookies.">
+        Denne nettsiden bruker svært få informasjonskapsler, og ingen reklame. Besøksstatistikken vår er
+        cookiefri. Vi laster kun innebygd innhold fra Facebook og Google Maps dersom du godtar alle
+        informasjonskapsler.
       </p>
 
       <h2 class="h3" data-en="Necessary cookies">Nødvendige informasjonskapsler</h2>
@@ -44,6 +45,15 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
           </tbody>
         </table>
       </div>
+
+      <h2 class="h3" data-en="Visitor statistics without cookies">Besøksstatistikk uten informasjonskapsler</h2>
+      <p style="margin-top:-12px;"
+         data-en="We use Cloudflare Web Analytics to count visits. It sets no cookies and stores nothing in your browser — which is why it is not in the table above, and why we do not ask for consent to it. We see aggregate figures for page views, country and browser type, never who you are.">
+        Vi bruker Cloudflare Web Analytics for å telle besøk. Det setter ingen informasjonskapsler og
+        lagrer ingenting i nettleseren din — derfor står det ikke i tabellen over, og derfor spør vi ikke
+        om samtykke til det. Vi ser samlet statistikk over sidevisninger, land og nettlesertype, aldri
+        hvem du er.
+      </p>
 
       <h2 class="h3" data-en="Embedded content (Facebook and Google Maps)">Innebygd innhold (Facebook og Google Maps)</h2>
       <p style="margin-top:-12px;"

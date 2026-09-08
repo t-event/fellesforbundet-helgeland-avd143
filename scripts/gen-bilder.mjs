@@ -24,7 +24,12 @@ const UT = join(BILDER, 'opt');
 
 // Breddene dekker mobil, tablet og desktop, samt 2× for skjermer med høy
 // pikseltetthet. Ingen variant lages større enn originalen.
-const BREDDER = [400, 640, 900, 1400];
+//
+// 768 finnes fordi spranget 640 → 900 var for stort: en vanlig mobil (380 CSS-px
+// innholdsbredde) trenger 665 px ved DPR 1.75 og 760 px ved DPR 2, og måtte
+// derfor hente 900 og kaste ~40 % av pikslene. Endrer du lista, kjør
+// `npm run bilder` — variantene er sjekket inn i repoet.
+const BREDDER = [400, 640, 768, 900, 1400];
 
 // Mapper med foto. logo/ og og/ holdes utenfor: logoen er SVG, og
 // delingsbildene har sin egen faste størrelse (se gen-og-bilder.mjs).

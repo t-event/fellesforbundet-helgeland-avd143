@@ -33,7 +33,7 @@ export type Sprakkode = 'nb' | 'en' | 'ro' | 'es' | 'pl' | 'lt' | 'lv';
 export const MIN_DEKNING = 0.85;
 
 // Antall tekster som skal oversettes totalt. Oppdateres av `npm run tekster`.
-export const ANTALL_TEKSTER = 803;
+export const ANTALL_TEKSTER = 806;
 
 // Andel oversatt per språk (0–1). Skrives av `npm run tekster` — her ligger
 // bare tall, aldri selve tekstene.

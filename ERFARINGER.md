@@ -67,6 +67,31 @@ bekrefte at tilstanden traff — her: at `document.documentElement.lang` faktisk
 endret seg — og avbryte hvis ikke. Ellers måler den bare seg selv. Slå alltid
 opp nøkkelnavnet i kildekoden framfor å skrive det etter hukommelsen.
 
+### `sizes` som løy om hvor bredt bildet vises
+
+**Hva skjedde:** Alle hero-bildene sto med `sizes="(max-width: 900px) 100vw, …"`.
+På mobil er de ikke `100vw` — `.container` har 16 px padding under 600 px, så
+bildet er 380 px bredt i et 412 px vindu. Nettleseren regnet derfor med for stort
+behov. I tillegg var spranget i varianter 640 → 900 for stort til at den kunne
+lande riktig uansett. Resultatet: LCP-bildet ble hentet i 900 px når 665 holdt,
+altså ~40 % bortkastede piksler på hver mobilbesøkende.
+
+**Hvorfor kontrollen ikke fanget det:** ingen har målt. `sizes` ble skrevet ut
+fra hvordan oppsettet *ser ut* — «det fyller jo bredden» — ikke fra hva elementet
+faktisk måler. Bygget kan ikke se det, og på desktop var valget riktig hele tiden.
+
+**Hva som avslørte det:** PageSpeed på mobil. Deretter `getBoundingClientRect()`
+på bildet i et 412 px vindu, som ga 380 px — nøyaktig det avviket Lighthouse
+klaget på.
+
+**Etter dette:** `sizes` regner med containerens padding
+(`calc(100vw - 32px)`), og 768 er lagt til i variantbreddene fordi den treffer
+både DPR 1,75 (665 px) og DPR 2 (760 px). Verifisert ved å lese `currentSrc` i
+et emulert mobilvindu, med desktop som kontroll.
+
+**Lærdom:** `sizes` er et løfte til nettleseren om layout. Skriv det aldri etter
+øyemål — mål elementet i den bredden det gjelder.
+
 ### Mellomrom som forsvant i oversettelsen
 
 **Hva skjedde:** På polsk sto det «Zadzwoń do nas pod75 15 12 28» — telefon og
@@ -226,8 +251,9 @@ gamle CSP-en fanget begge.
 
 **Etter dette:** begge kildene står åpne, uavhengig av om beaconen kjører — en
 åpen CSP-kilde for et script som ikke lastes koster ingenting, mens en manglende
-kilde gir feil på hver sidelast. Personvernteksten er *ikke* skrevet tilbake;
-den venter på at det bekreftes at analysen faktisk er på.
+kilde gir feil på hver sidelast. Personvernteksten ble først skrevet inn da
+avdelingen hadde bekreftet i dashbordet at analysen faktisk er på — altså
+motsatt rekkefølge av tabben over.
 
 **Lærdom:** når noe utenfor repoet kan endre seg uten en deploy, skal
 konfigurasjonen tåle begge tilstander framfor å anta den ene.

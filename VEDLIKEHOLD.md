@@ -102,6 +102,11 @@ av dem — hva som skjedde og hvorfor det ikke ble oppdaget — står i
   `Layout.astro`, `klient.ts` og `hent-tekster.mjs` — endrer du én, må alle med.
 - **`frame-ancestors` virker ikke i meta-CSP.** Sida kan rammes inn av andre. Krever
   en HTTP-header, som GitHub Pages ikke kan sette — bevisst valg per 7. sep. 2026.
+- **`sizes` må regne med containerens padding.** `.container` har 16 px padding
+  under 600 px, så et «fullbredde»-bilde er 380 px i et 412 px vindu, ikke
+  `100vw`. Oppgir du for mye, henter mobilen en større variant enn nødvendig.
+  Mål med `getBoundingClientRect()` i et emulert mobilvindu framfor å anslå.
+  Breddelista i `Bilde.astro` og `scripts/gen-bilder.mjs` **må** være identisk.
 - **Cloudflare kan legge til scripts uten at vi deployer.** Web Analytics-beaconen
   dukket opp ved kanten og ble blokkert av CSP-en, med konsollfeil på hver
   sidelast. Ser du en CSP-feil for en host vi ikke har lagt inn: sjekk hva
@@ -133,7 +138,7 @@ Disse styres i andres kontrollpanel og kan ikke fikses i koden.
 | DNS, proxy, cache | Cloudflare | Buffer-TTL står på 4 t. Kan trygt være 1 år for `/_astro/`, som har hash i filnavnet. |
 | `email-decode.min.js` | Cloudflare → Scrape Shield | Blokkerer opptegning ~450 ms på mobil. Ikke slått av. |
 | Sikkerhetsheadere (HSTS, X-Frame-Options m.m.) | Cloudflare → Transform Rules | **Bevisst utelatt** per 7. sep. 2026. |
-| Web Analytics | Cloudflare | Beaconen injiseres ved kanten, ustabilt — den var borte 7. sep. 2026 og blokkert av CSP 8. sep. CSP-en er nå åpen for den uansett. **Personvernsidene beskriver den ikke.** Er analysen faktisk på i dashbordet, må /personvern og /cookies oppdateres. |
+| Web Analytics | Cloudflare | **På** per 8. sep. 2026. Beaconen injiseres ved kanten, ikke fra dette repoet. CSP-en er åpen for den, og den er beskrevet på /personvern og /cookies på alle sju språk. Skrus den av, skal de to sidene rettes tilbake. |
 | Mottaker for skjema-e-post | Web3Forms-dashbordet | `avd143@fellesforbundet.no`. **Ikke det samme** som den offentlige adressen på sida, `avd143@fellesforbundet.org` — forskjellen er tilsiktet. |
 | Outlook-kalenderen | Avdelingens Microsoft-konto | ICS-lenka ligger som GitHub-secret `CALENDAR_ICS_URL`. Aldri i koden. |
 | Søkeindeksering | Google Search Console | Domenet verifiseres via DNS TXT; sitemap er `https://ffh143.no/sitemap-index.xml`. |
