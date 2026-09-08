@@ -1,9 +1,22 @@
 ---
 import { PRISER, KONTONUMMER, LO_FORBUND } from '../config.ts';
+import { getEasterDatesRange } from '../utils/easter.ts';
 // VIKTIG: import.meta.env virker IKKE inne i et define:vars-script (det blir et
 // klassisk inline-script). Les byggetids-env her i frontmatter og send inn via define:vars.
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const WEB3FORMS_KEY = import.meta.env.PUBLIC_WEB3FORMS_KEY ?? '';
+
+// Påskedatoene fordeles ved loddtrekning, ikke førstemann-til-mølla. Kalenderen
+// tegner dem gule og blokkerer klikk, men dato-feltene er vanlige <input
+// type="date"> — uten denne lista kunne man skrive inn en påskedato direkte og
+// sende en forespørsel på en periode som ikke er til utleie.
+//
+// Regnes ut ved bygg og sendes inn via define:vars: skriptet kan ikke importere,
+// og å lese dem fra Calendar.astro på window ville gitt et kappløp om hvem som
+// laster først. Påskedatoer er rent kalenderbaserte, så byggetid er trygt.
+// 12 år fram — siden bygges minst hver time, så vinduet forskyver seg selv.
+const iAar = new Date().getFullYear();
+const PASKE_DATOER = [...getEasterDatesRange(iAar, iAar + 12).keys()];
 ---
 
 <div class="card card-pad" id="booking">
@@ -143,7 +156,7 @@ const WEB3FORMS_KEY = import.meta.env.PUBLIC_WEB3FORMS_KEY ?? '';
   </form>
 </div>
 
-<script define:vars={{ PRISER, KONTONUMMER, base, WEB3FORMS_KEY }}>
+<script define:vars={{ PRISER, KONTONUMMER, base, WEB3FORMS_KEY, PASKE_DATOER }}>
 const fraInput      = document.getElementById('booking-fra');
 const tilInput      = document.getElementById('booking-til');
 const navnInput     = document.getElementById('booking-navn');
@@ -184,10 +197,12 @@ fetch(`${base}/availability.json`)
   .then(d => { if (d && Array.isArray(d.bookedDates)) { bookedDates = new Set(d.bookedDates); validerDatoerLive(); } })
   .catch(() => { /* tom liste = ingen blokkering */ });
 
-// Returnerer første opptatte dato i det valgte intervallet [fra, til] (inklusiv begge
-// endepunkter), ellers null. Inklusiv slik at man verken kan sjekke inn ELLER ut på en
-// opptatt dato — man skal ikke kunne forespørre noen opptatt dato.
-function opptattDatoIPerioden(fra, til) {
+const paskeDatoer = new Set(PASKE_DATOER);
+
+// Returnerer første dato i intervallet [fra, til] som finnes i `sett`, ellers null.
+// Inklusiv begge endepunkter: man skal verken kunne sjekke inn ELLER ut på en
+// dato som er sperret.
+function forsteDatoIPerioden(fra, til, sett) {
   if (!fra) return null;
   const slutt = (til && til >= fra) ? til : fra; // mangler/ugyldig til → sjekk bare fra-datoen
   const [fy, fm, fd] = fra.split('-').map(Number);
@@ -195,20 +210,33 @@ function opptattDatoIPerioden(fra, til) {
   const d = new Date(fy, fm - 1, fd), end = new Date(ty, tm - 1, td);
   while (d <= end) {
     const iso = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
-    if (bookedDates.has(iso)) return iso;
+    if (sett.has(iso)) return iso;
     d.setDate(d.getDate() + 1);
   }
   return null;
 }
 
-// Live-validering: vis feil hvis intervallet inneholder en opptatt dato.
+const opptattDatoIPerioden = (fra, til) => forsteDatoIPerioden(fra, til, bookedDates);
+const paskeDatoIPerioden   = (fra, til) => forsteDatoIPerioden(fra, til, paskeDatoer);
+
+// Feilmelding for perioden — opptatt eller påske. Påske sjekkes først: den er en
+// hardere sperre (perioden er ikke til utleie i det hele tatt), og meldinga må
+// fortelle hvor man faktisk melder seg på.
+function periodeFeil(fra, til) {
+  if (paskeDatoIPerioden(fra, til))
+    return oversett('Påskeuka leies ikke ut — den fordeles ved loddtrekning. Velg andre datoer, eller meld deg på trekningen.',
+                    'Easter week is not rented out — it is allocated by draw. Please choose other dates, or enter the draw.');
+  if (opptattDatoIPerioden(fra, til))
+    return oversett('En eller flere av de valgte datoene er opptatt — velg en ledig periode.',
+                    'One or more of the selected dates are already booked — please pick an available period.');
+  return '';
+}
+
+// Live-validering: vis feil hvis intervallet inneholder en sperret dato.
 function validerDatoerLive() {
-  const konflikt = opptattDatoIPerioden(fraInput?.value, tilInput?.value);
-  setFeil('err-til', konflikt
-    ? oversett('En eller flere av de valgte datoene er opptatt — velg en ledig periode.',
-               'One or more of the selected dates are already booked — please pick an available period.')
-    : '');
-  return !konflikt;
+  const melding = periodeFeil(fraInput?.value, tilInput?.value);
+  setFeil('err-til', melding);
+  return !melding;
 }
 
 // Beregn antall døgn mellom to ISO-datoer
@@ -312,7 +340,7 @@ form?.addEventListener('submit', async (e) => {
   else if (fra < iDagIso) { setFeil('err-fra', oversett('Velg en dato i dag eller senere.', 'Choose today or a later date.')); ok = false; }
   if (!til) { setFeil('err-til', oversett('Velg til-dato.', 'Choose an end date.')); ok = false; }
   else if (til <= fra) { setFeil('err-til', oversett('Til-dato må være etter fra-dato.', 'End date must be after start date.')); ok = false; }
-  else if (opptattDatoIPerioden(fra, til)) { setFeil('err-til', oversett('En eller flere av de valgte datoene er opptatt — velg en ledig periode.', 'One or more of the selected dates are already booked — please pick an available period.')); ok = false; }
+  else if (periodeFeil(fra, til)) { setFeil('err-til', periodeFeil(fra, til)); ok = false; }
   if (!navn) { setFeil('err-navn', oversett('Oppgi navn.', 'Enter your name.')); ok = false; }
   if (!epost || !epost.includes('@')) { setFeil('err-epost', oversett('Oppgi gyldig e-postadresse.', 'Enter a valid email address.')); ok = false; }
   if (!telefon) { setFeil('err-telefon', oversett('Oppgi telefonnummer.', 'Enter a phone number.')); ok = false; }

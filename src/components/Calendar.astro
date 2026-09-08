@@ -75,10 +75,14 @@ function parseIso(s: string): Date {
 }
 
 // Sjekker om nettene [fra, til) inneholder en opptatt dato (utsjekk-dagen er ledig).
+// Sant hvis perioden inneholder en dag man ikke kan booke. Påskedagene teller
+// med: de er gule og kan ikke klikkes direkte, men uten sjekken her kunne man
+// klikke før og etter påsken og få et utvalg som spente rett over den.
 function rangeHarOpptatt(fra: string, til: string): boolean {
   const d = parseIso(fra), end = parseIso(til);
   while (d < end) {
-    if (availability.bookedDates.includes(isoDate(d.getFullYear(), d.getMonth(), d.getDate()))) return true;
+    const iso = isoDate(d.getFullYear(), d.getMonth(), d.getDate());
+    if (availability.bookedDates.includes(iso) || easterDates.has(iso)) return true;
     d.setDate(d.getDate() + 1);
   }
   return false;

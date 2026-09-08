@@ -180,6 +180,32 @@ der, rutenettet var tomt. **Bygget var grønt, og feilen gikk live.**
 **Etter dette:** hver skriptendring kontrolleres i headless Chrome, og det
 kjøres en konsollsjekk på alle sider.
 
+### Sperret i kalenderen, åpen i skjemaet
+
+**Hva skjedde:** Påskeuka fordeles ved loddtrekning og er ikke til utleie.
+Kalenderen tegnet dagene gule og blokkerte klikk på dem — men datofeltene er
+vanlige `<input type="date">`. Skrev man en påskedato rett inn, gikk
+forespørselen gjennom valideringen og ble sendt. Feilen lå ute helt til
+avdelingen selv fant den.
+
+I tillegg spente kalenderens egen `rangeHarOpptatt` bare over opptatte dager,
+ikke påskedager. Man kunne klikke *før* og *etter* påsken og få et utvalg som
+gikk rett over den.
+
+**Hvorfor kontrollen ikke fanget det:** regelen sto ett sted (kalenderen) og
+ble antatt å gjelde overalt. Det ble aldri testet om skjemaet håndhevet den —
+bare om kalenderen så riktig ut. To komponenter, én regel, én implementasjon.
+
+**Løsningen:** påskedatoene regnes ut ved bygg og sendes inn til skjemaet via
+`define:vars` (skriptet kan ikke importere, og å lese dem fra kalenderen på
+`window` ville gitt et kappløp om lasterekkefølge). Begge komponentene sjekker
+nå samme liste, og `rangeHarOpptatt` teller påske som sperret.
+
+**Lærdom:** når noe skal være umulig, spør *hvor mange veier fører inn dit*.
+Et klikk i kalenderen er én vei; å skrive i feltet er en annen. En sperre som
+bare finnes i den ene, finnes ikke. Kontrollen ble verifisert ved å tømme
+påskelista i den bygde fila og se at feilen kom tilbake.
+
 ### Grønt bygg, forvrengte bilder
 
 **Hva skjedde:** Miniatyrene i galleriet ble strukket til uleselige striper da

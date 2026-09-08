@@ -102,6 +102,11 @@ av dem — hva som skjedde og hvorfor det ikke ble oppdaget — står i
   `Layout.astro`, `klient.ts` og `hent-tekster.mjs` — endrer du én, må alle med.
 - **`frame-ancestors` virker ikke i meta-CSP.** Sida kan rammes inn av andre. Krever
   en HTTP-header, som GitHub Pages ikke kan sette — bevisst valg per 7. sep. 2026.
+- **En sperre må håndheves i skjemaet, ikke bare i kalenderen.** Kalenderen kan
+  bare hindre *klikk*; datofeltene er vanlige `<input type="date">` og kan fylles
+  direkte. Påskedatoene ble derfor sluppet gjennom en gang. Legger du inn en ny
+  regel for hvilke datoer som er sperret, må både `Calendar.astro` og
+  `BookingForm.astro` kjenne den.
 - **`sizes` må regne med containerens padding.** `.container` har 16 px padding
   under 600 px, så et «fullbredde»-bilde er 380 px i et 412 px vindu, ikke
   `100vw`. Oppgir du for mye, henter mobilen en større variant enn nødvendig.
@@ -135,12 +140,25 @@ Disse styres i andres kontrollpanel og kan ikke fikses i koden.
 
 | Hva | Hvor | Status |
 |-----|------|--------|
-| DNS, proxy, cache | Cloudflare | Buffer-TTL står på 4 t. Kan trygt være 1 år for `/_astro/`, som har hash i filnavnet. |
-| `email-decode.min.js` | Cloudflare → Scrape Shield | Blokkerer opptegning ~450 ms på mobil. Ikke slått av. |
+| DNS, proxy, cache | Cloudflare | Global buffer-TTL 4 t. To **cache-regler** overstyrer den: `/_astro/` → 1 år (trygt, hash i filnavnet) og `/images/` → 30 dager. Se advarselen under tabellen. |
+| `email-decode.min.js` | Cloudflare → Scrape Shield | **Slått av** 8. sep. 2026. Blokkerte opptegningen ~490 ms på mobil. E-postadressene står nå i klartekst i HTML-en — et bevisst bytte, siden de allerede er offentlige hos Fellesforbundet. |
 | Sikkerhetsheadere (HSTS, X-Frame-Options m.m.) | Cloudflare → Transform Rules | **Bevisst utelatt** per 7. sep. 2026. |
 | Web Analytics | Cloudflare | **På** per 8. sep. 2026. Beaconen injiseres ved kanten, ikke fra dette repoet. CSP-en er åpen for den, og den er beskrevet på /personvern og /cookies på alle sju språk. Skrus den av, skal de to sidene rettes tilbake. |
 | Mottaker for skjema-e-post | Web3Forms-dashbordet | `avd143@fellesforbundet.no`. **Ikke det samme** som den offentlige adressen på sida, `avd143@fellesforbundet.org` — forskjellen er tilsiktet. |
 | Outlook-kalenderen | Avdelingens Microsoft-konto | ICS-lenka ligger som GitHub-secret `CALENDAR_ICS_URL`. Aldri i koden. |
+
+> ### ⚠️ Aldri en cache-regel som treffer bredt
+>
+> `/availability.json` er hyttekalenderens ledige datoer. Den oppdateres **hver
+> time** av `update-availability.yml` og har **ikke** hash i filnavnet. Får den
+> lang TTL, viser bookingkalenderen utdaterte ledige datoer i like lang tid.
+> Det samme gjelder `/i18n/*.json`, sitemapet og HTML-en. Alle disse skal bli
+> stående på `max-age=600`.
+>
+> Bare `/_astro/` er trygt for lang TTL, fordi filnavnet endrer seg når
+> innholdet gjør det. `/images/` har 30 dager som et kompromiss — bytter du et
+> foto **uten** å endre filnavnet, må du kjøre **Caching → Configuration →
+> Purge Everything** etterpå, ellers ser folk det gamle bildet i inntil en måned.
 | Søkeindeksering | Google Search Console | Domenet verifiseres via DNS TXT; sitemap er `https://ffh143.no/sitemap-index.xml`. |
 
 ---
