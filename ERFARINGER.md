@@ -99,6 +99,28 @@ Det passet hoppes nå over.
 **Lærdom:** mål størrelsen på det som sendes ut, ikke bare at det virker. En
 funksjon som er riktig kan likevel være dyr.
 
+### Avkodet HTML-entiteter i feil rekkefølge
+
+**Hva skjedde:** CodeQL meldte `js/double-escaping` i `hent-tekster.mjs`.
+Normaliseringen avkodet `&amp;` → `&` **først**, deretter `&shy;` og `&nbsp;`.
+
+**Hvorfor det er en ekte feil, ikke bare en advarsel:** teksten `&amp;shy;`
+(altså det som skal vises som «&shy;») ble først til `&shy;` og deretter
+strippet som myk bindestrek. Kjørt gjennom:
+
+    riktig rekkefølge: "Vis &shy; i teksten"
+    gammel rekkefølge: "Vis  i teksten"   ← teksten forsvant
+
+Nøkkelen ville i tillegg ikke lenger matche kjøretiden, så oversettelsen av det
+avsnittet ville stille falt tilbake til norsk.
+
+**Regelen:** `&amp;` avkodes ALLTID sist. Den kan lage nye entiteter av tekst
+som ikke var ment som entiteter. Samme rekkefølge er nå brukt i alle tre
+normaliseringene.
+
+**Lærdom:** en statisk analyse som melder noe i egen verktøykode er verdt å
+lese, ikke bare kvittere ut. Denne fant en reell feil jeg hadde skrevet.
+
 ---
 
 ## 2. Verktøy som ga falsk trygghet

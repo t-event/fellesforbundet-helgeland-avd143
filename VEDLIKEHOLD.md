@@ -94,6 +94,9 @@ av dem — hva som skjedde og hvorfor det ikke ble oppdaget — står i
 - **Tekst fra tabeller i koden fanges ikke av uttrekket.** `oversett(TABELL[i])`
   er ikke en literal. Værtekstene og kompassretningene er derfor listet
   eksplisitt i `hent-tekster.mjs` — endrer du tabellene, må lista følge med.
+- **`&amp;` avkodes alltid SIST.** Gjøres den først, kan «&amp;shy;» bli til
+  «&shy;» og så strippes som myk bindestrek. CodeQL fanget dette som
+  `js/double-escaping`.
 - **HTML-entiteter må normaliseres likt tre steder.** `&`, `&shy;` og `&nbsp;`
   ser ulike ut i kilden og i `innerHTML`. Normaliseringen ligger i
   `Layout.astro`, `klient.ts` og `hent-tekster.mjs` — endrer du én, må alle med.
