@@ -206,6 +206,17 @@ Et klikk i kalenderen er én vei; å skrive i feltet er en annen. En sperre som
 bare finnes i den ene, finnes ikke. Kontrollen ble verifisert ved å tømme
 påskelista i den bygde fila og se at feilen kom tilbake.
 
+**Og så var det ikke ferdig likevel.** Første fiks lot datoen bli stående i
+feltet med en feilmelding under, og blokkerte den ved innsending. Jeg testet
+`submit` og meldte det som løst. Avdelingen kom tilbake: *«kan fortsatt velge
+påskedatoene»*. Det stemte — jeg hadde oversatt «skal ikke kunne velges» til
+«skal ikke kunne sendes inn», fordi det var det som var lett å teste. Nå tømmes
+feltet, slik at datoen ikke kan bli stående i det hele tatt — samme oppførsel
+som kalenderen, der dagen ikke lar seg klikke.
+
+**Lærdom nummer to:** test den handlingen brukeren beskrev, ikke den nærmeste
+som er lett å automatisere. «Velge» og «sende inn» er ikke det samme.
+
 ### Grønt bygg, forvrengte bilder
 
 **Hva skjedde:** Miniatyrene i galleriet ble strukket til uleselige striper da
@@ -312,6 +323,11 @@ minutters lesing hadde spart en unødig alarm.
 - **Nedtrekksmenyen brøt fem komponenter.** De lyttet på klikk i `.lang button`
   for å tegne seg på nytt. Selektoren slutter å matche når velgeren blir en
   nedtrekksmeny. Erstattet med hendelsen `sprakendret`.
+- **Feilmeldinga ble stående etter at feilen var rettet.** Da påskedatoer ble
+  avvist ved å tømme feltet, satte jeg `err-fra`, men fjernet den aldri. Valgte
+  brukeren så en gyldig dato, sto påskemeldinga igjen under et helt greit felt.
+  Fanget av et kontrolltilfelle som gjorde nettopp det — avvist valg, deretter
+  gyldig valg. **Enhver melding som settes, må også ha en vei ut.**
 
 ---
 

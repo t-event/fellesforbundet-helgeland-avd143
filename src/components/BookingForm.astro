@@ -232,6 +232,40 @@ function periodeFeil(fra, til) {
   return '';
 }
 
+const paskeMelding = () => oversett(
+  'Påskeuka leies ikke ut — den fordeles ved loddtrekning. Velg andre datoer, eller meld deg på trekningen.',
+  'Easter week is not rented out — it is allocated by draw. Please choose other dates, or enter the draw.');
+
+// En påskedato skal ikke bli stående i feltet. Kalenderen tegner dagene gule og
+// nekter å velge dem; et <input type="date"> kan ikke deaktivere enkeltdatoer
+// (bare min/max), så vi må avvise verdien i stedet — ellers ser det ut som om
+// datoen er godtatt, med en feilmelding under.
+//
+// `felt` sier hvilket felt brukeren nettopp endret, så vi alltid tømmer det de
+// rørte og aldri det andre. Spenner perioden over påsken uten at endepunktene
+// selv er påskedager, er det til-datoen som må vike.
+function avvisPaske(felt) {
+  if (!fraInput || !tilInput) return false;
+  if (felt === 'fra' && fraInput.value && paskeDatoIPerioden(fraInput.value, fraInput.value)) {
+    fraInput.value = '';
+    setFeil('err-fra', paskeMelding());
+    setFeil('err-til', '');
+    return true;
+  }
+  if (felt === 'til' && tilInput.value && paskeDatoIPerioden(tilInput.value, tilInput.value)) {
+    tilInput.value = '';
+    setFeil('err-til', paskeMelding());
+    return true;
+  }
+  // Endepunktene er greie, men perioden mellom dem inneholder påske.
+  if (fraInput.value && tilInput.value && paskeDatoIPerioden(fraInput.value, tilInput.value)) {
+    tilInput.value = '';
+    setFeil('err-til', paskeMelding());
+    return true;
+  }
+  return false;
+}
+
 // Live-validering: vis feil hvis intervallet inneholder en sperret dato.
 function validerDatoerLive() {
   const melding = periodeFeil(fraInput?.value, tilInput?.value);
@@ -284,14 +318,23 @@ prisGruppeEl?.addEventListener('change', () => {
 });
 
 fraInput?.addEventListener('change', () => {
+  // Rydd en tidligere avvisning før ny vurdering — ellers blir påskemeldinga
+  // stående under fra-feltet etter at brukeren har valgt en gyldig dato.
+  setFeil('err-fra', '');
   if (tilInput?.value && tilInput.value <= fraInput.value) {
     tilInput.value = '';
   }
   tilInput?.setAttribute('min', fraInput.value);
+  // Avvis før prisen regnes ut — ellers vises en pris for en periode vi nekter.
+  if (avvisPaske('fra')) { oppdaterPris(); return; }
   oppdaterPris();
   validerDatoerLive();
 });
-tilInput?.addEventListener('change', () => { oppdaterPris(); validerDatoerLive(); });
+tilInput?.addEventListener('change', () => {
+  if (avvisPaske('til')) { oppdaterPris(); return; }
+  oppdaterPris();
+  validerDatoerLive();
+});
 
 // Vis pris med en gang, og oppdater tekst ved språkbytte
 oppdaterPris();
