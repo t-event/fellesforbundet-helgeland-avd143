@@ -194,7 +194,6 @@
   "Fellesforbundet avdeling 143 organiserer medlemmer i industri, bygg, transport og service i hele Helgeland — fra Mo i Rana og innlandet ut til Helgelandskysten. Vi forhandler lønn, gir råd og støtte, og står sammen når det gjelder.": "Fellesforbundet 143 skyrius vienija narius pramonės, statybų, transporto ir paslaugų srityse visame Helgelande — nuo Mo i Rana ir vidaus žemių iki Helgelando pakrantės. Deramės dėl atlyginimų, patariame ir palaikome, ir laikomės kartu, kai to reikia.",
   "Fellesforbundet Helgeland avd. 143": "Fellesforbundet Helgeland 143 skyrius",
   "Fellesforbundet Helgeland avd. 143 – til forsiden": "Fellesforbundet Helgeland 143 skyrius – į pradžios puslapį",
-  "Fellesforbundet Helgeland avd. 143 — fagforening for arbeidsfolk på Helgeland": "Fellesforbundet Helgeland 143 skyrius — Helgelando darbo žmonių profsąjunga",
   "Fellesforbundet Helgeland avd. 143 eier to hytter som leies ut til LO-medlemmer og andre LO-forbund. Velg hytte under, sjekk ledige datoer og send en uforpliktende forespørsel. Avdelingen bekrefter bookingen.": "Fellesforbundet Helgeland 143 skyriui priklauso du nameliai, nuomojami LO nariams ir kitoms LO profsąjungoms. Pasirinkite namelį žemiau, patikrinkite laisvas datas ir siųskite neįpareigojančią užklausą. Skyrius patvirtins rezervaciją.",
   "Fellesforbundet Helgeland avd. 143 eier to hytter som leies ut til LO-medlemmer:": "Fellesforbundet Helgeland 143 skyriui priklauso du nameliai, nuomojami LO nariams:",
   "Fellesforbundet Helgeland avd. 143.": "Fellesforbundet Helgeland 143 skyrius.",
@@ -302,7 +301,6 @@
   "Hytte i Umbukta — eksteriør med terrasse i solskinn og blå himmel": "Umbuktos namelis — fasadas su terasa saulėje ir mėlynas dangus",
   "Hytte i Umbukta — fjellhytte i vakker natur ved Rana og Sveriges grense": "Umbuktos namelis — kalnų namelis gražioje gamtoje prie Ranos ir Švedijos sienos",
   "Hytte i Umbukta — fjellhytte ved Umbukta i Rana, nær Sverige": "Umbuktos namelis — kalnų namelis Umbuktoje, Ranos savivaldybėje, netoli Švedijos",
-  "Hytte i Umbukta — Leie fjellhytte ved Rana | Fellesforbundet Helgeland": "Umbuktos namelis — kalnų namelio nuoma prie Ranos | Fellesforbundet Helgeland",
   "Hytte i Umbukta (Rana)": "Umbuktos namelis (Rana)",
   "Hytte i Umbukta →": "Umbuktos namelis →",
   "Hytte i vestenden av Virvatnet. Om sommeren fra E6 ved Krokstrand: 16 km anleggsvei til demningen, deretter sti til hytta. Anleggsveien er ikke vinterbrøytet.": "Namelis vakariniame Virvatnet gale. Vasarą nuo E6 ties Krokstrand: 16 km privažiavimo kelio iki užtvankos, toliau takas iki namelio. Privažiavimo kelias žiemą nevalomas.",
@@ -417,7 +415,6 @@
   "Ledighetskalender for Umbukta": "Umbuktos užimtumo kalendorius",
   "Legg i kalender (.ics)": "Įtraukti į kalendorių (.ics)",
   "Leie fjellhytte til medlemspris": "Nuomokitės kalnų namelį nario kaina",
-  "Leie hytte — Fellesforbundet Helgeland | Umbukta og Øvre Elsvatn": "Namelio nuoma — Fellesforbundet Helgeland | Umbukta ir Øvre Elsvatn",
   "Leie hytte hos Fellesforbundet Helgeland": "Nuomokitės namelį iš Fellesforbundet Helgeland",
   "Leieperiode": "Nuomos laikotarpis",
   "Lenker": "Nuorodos",
@@ -693,7 +690,6 @@
   "Tilbyr medlemsfordeler<span class=\"benefit-pil\" aria-hidden=\"true\">→</span>": "Siūlome nario privilegijas<span class=\"benefit-pil\" aria-hidden=\"true\">→</span>",
   "Tilgjengelighet": "Prieinamumas",
   "Tilgjengelighetserklæring": "Prieinamumo deklaracija",
-  "Tilgjengelighetserklæring — Fellesforbundet Helgeland avd. 143": "Prieinamumo deklaracija — Fellesforbundet Helgeland 143 skyrius",
   "Tillatt (ikke i seng/sofa)": "Leidžiama (ne lovoje / ant sofos)",
   "Tillitsvalgt / arbeidsplass": "Profsąjungos atstovas / darbovietė",
   "Tillitsvalgte": "Profsąjungos atstovai",
@@ -801,5 +797,9 @@
   "Åpne Facebook ↗": "Atidaryti Facebook ↗",
   "Åpne i Google Maps ↗": "Atidaryti Google Maps ↗",
   "Åpne meny": "Atidaryti meniu",
-  "Åpningstider": "Darbo laikas"
+  "Åpningstider": "Darbo laikas",
+  "Fellesforbundet avd. 143 — fagforening på Helgeland": "Fellesforbundet 143 skyrius — profsąjunga Helgelande",
+  "Hytte i Umbukta — leie fjellhytte ved Rana": "Umbuktos namelis — kalnų namelio nuoma prie Ranos",
+  "Leie hytte på Helgeland — Umbukta og Øvre Elsvatn": "Namelių nuoma Helgelande — Umbukta ir Øvre Elsvatn",
+  "Tilgjengelighetserklæring — Fellesforbundet avd. 143": "Prieinamumo deklaracija — Fellesforbundet 143 skyrius"
 }

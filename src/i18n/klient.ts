@@ -36,7 +36,7 @@ export function aktivtSprak(): Sprakkode {
 // ville en ren CSS-justering stille ugyldiggjøre alle oversettelsene på sida.
 const utenScope = (s: string) => s.replace(/\s*data-astro-cid-[\w-]+(?:="[^"]*")?/g, '');
 const nokkel = (s: string) =>
-  utenScope(s).replace(/&amp;/g, '&').replace(/\u00ad/g, '').replace(/\u00a0/g, ' ').replace(/\s+/g, ' ').trim();
+  utenScope(s).replace(/\u00ad/g, '').replace(/\u00a0/g, ' ').replace(/&amp;/g, '&').replace(/\s+/g, ' ').trim();
 
 /**
  * Oversett en streng som lages i JavaScript.

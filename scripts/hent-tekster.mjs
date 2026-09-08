@@ -46,11 +46,14 @@ function htmlFiler(katalog) {
 // Myk bindestrek og hardt mellomrom står som entiteter i HTML-kilden, men
 // kjøretiden ser dem som tegn via innerHTML. Begge gjøres om til det samme,
 // ellers kan tekst med &shy; eller &nbsp; aldri slås opp i ordboka.
+// MERK rekkefølgen: &amp; avkodes SIST. Gjøres den først, blir teksten
+// «&amp;shy;» (som skal vise «&shy;») til «&shy;» og deretter strippet som myk
+// bindestrek — dobbel avkoding, og nøkkelen matcher ikke kjøretiden.
 const normaliser = s =>
   s.replace(/\s*data-astro-cid-[\w-]+(?:="[^"]*")?/g, '')
-   .replace(/&amp;/g, '&')
    .replace(/&shy;|\u00ad/g, '')
    .replace(/&nbsp;|\u00a0/g, ' ')
+   .replace(/&amp;/g, '&')
    .replace(/\s+/g, ' ').trim();
 
 // Avkod de HTML-entitetene Astro faktisk produserer i attributtverdier.

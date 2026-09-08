@@ -193,7 +193,6 @@
   "Fellesforbundet avdeling 143 organiserer medlemmer i industri, bygg, transport og service i hele Helgeland — fra Mo i Rana og innlandet ut til Helgelandskysten. Vi forhandler lønn, gir råd og støtte, og står sammen når det gjelder.": "Fellesforbundet filiala 143 organizează membri din industrie, construcții, transport și servicii în întreaga regiune Helgeland — de la Mo i Rana și zona interioară până la coasta Helgeland. Negociem salarii, oferim sfaturi și sprijin și stăm împreună când contează.",
   "Fellesforbundet Helgeland avd. 143": "Fellesforbundet Helgeland filiala 143",
   "Fellesforbundet Helgeland avd. 143 – til forsiden": "Fellesforbundet Helgeland filiala 143 – către prima pagină",
-  "Fellesforbundet Helgeland avd. 143 — fagforening for arbeidsfolk på Helgeland": "Fellesforbundet Helgeland filiala 143 — sindicatul oamenilor muncii din Helgeland",
   "Fellesforbundet Helgeland avd. 143 eier to hytter som leies ut til LO-medlemmer og andre LO-forbund. Velg hytte under, sjekk ledige datoer og send en uforpliktende forespørsel. Avdelingen bekrefter bookingen.": "Fellesforbundet Helgeland filiala 143 deține două cabane închiriate membrilor LO și altor sindicate LO. Alegeți cabana mai jos, verificați datele libere și trimiteți o cerere fără obligații. Filiala confirmă rezervarea.",
   "Fellesforbundet Helgeland avd. 143 eier to hytter som leies ut til LO-medlemmer:": "Fellesforbundet Helgeland filiala 143 deține două cabane închiriate membrilor LO:",
   "Fellesforbundet Helgeland avd. 143.": "Fellesforbundet Helgeland filiala 143.",
@@ -298,7 +297,6 @@
   "Hytta skal forlates ryddig og rengjort av leietaker etter bruk. Nøkkel hentes i nøkkelboks på hytta — kode sendes av avdelingen etter bekreftet betaling.": "Cabana trebuie lăsată curată și în ordine de către chiriaș după folosire. Cheia se ia din cutia de chei de la cabană — codul este trimis de filială după confirmarea plății.",
   "Hytte i Umbukta": "Cabana din Umbukta",
   "Hytte i Umbukta — eksteriør med terrasse i solskinn og blå himmel": "Cabana din Umbukta — fațadă cu terasă în soare și cer albastru",
-  "Hytte i Umbukta — Leie fjellhytte ved Rana | Fellesforbundet Helgeland": "Cabana din Umbukta — închiriere cabană de munte lângă Rana | Fellesforbundet Helgeland",
   "Hytte i Umbukta (Rana)": "Cabana din Umbukta (Rana)",
   "Hytte i Umbukta →": "Cabana din Umbukta →",
   "Hytte i vestenden av Virvatnet. Om sommeren fra E6 ved Krokstrand: 16 km anleggsvei til demningen, deretter sti til hytta. Anleggsveien er ikke vinterbrøytet.": "Cabană la capătul vestic al lacului Virvatnet. Vara de la E6 la Krokstrand: 16 km drum de acces până la baraj, apoi potecă până la cabană. Drumul de acces nu este deszăpezit iarna.",
@@ -410,7 +408,6 @@
   "Ledighetskalender for Umbukta": "Calendar de disponibilitate pentru Umbukta",
   "Legg i kalender (.ics)": "Adaugă în calendar (.ics)",
   "Leie fjellhytte til medlemspris": "Închiriați o cabană de munte la preț de membru",
-  "Leie hytte — Fellesforbundet Helgeland | Umbukta og Øvre Elsvatn": "Închiriere cabană — Fellesforbundet Helgeland | Umbukta și Øvre Elsvatn",
   "Leie hytte hos Fellesforbundet Helgeland": "Închiriați o cabană la Fellesforbundet Helgeland",
   "Leieperiode": "Perioada de închiriere",
   "Lenker": "Linkuri",
@@ -683,7 +680,6 @@
   "Tilbyr medlemsfordeler<span class=\"benefit-pil\" aria-hidden=\"true\">→</span>": "Oferim avantaje pentru membri<span class=\"benefit-pil\" aria-hidden=\"true\">→</span>",
   "Tilgjengelighet": "Accesibilitate",
   "Tilgjengelighetserklæring": "Declarație de accesibilitate",
-  "Tilgjengelighetserklæring — Fellesforbundet Helgeland avd. 143": "Declarație de accesibilitate — Fellesforbundet Helgeland filiala 143",
   "Tillatt (ikke i seng/sofa)": "Permis (nu în pat/pe canapea)",
   "Tillitsvalgt / arbeidsplass": "Reprezentant sindical / loc de muncă",
   "Tillitsvalgte": "Reprezentanți sindicali",
@@ -801,5 +797,9 @@
   "Medlemmer samlet på LO-arrangement i Mo i Rana": "Membri adunați la un eveniment LO în Mo i Rana",
   "Medlemmer samlet på møte i avdelingen": "Membri adunați la o ședință a filialei",
   "Hytte i Umbukta — fjellhytte i vakker natur ved Rana og Sveriges grense": "Cabana din Umbukta — cabană de munte în natură frumoasă lângă Rana și granița cu Suedia",
-  "Lys stue med hjørnesofa og vedovn inne i Umbukta-hytta": "Living luminos cu colțar și sobă cu lemne în interiorul cabanei din Umbukta"
+  "Lys stue med hjørnesofa og vedovn inne i Umbukta-hytta": "Living luminos cu colțar și sobă cu lemne în interiorul cabanei din Umbukta",
+  "Fellesforbundet avd. 143 — fagforening på Helgeland": "Fellesforbundet filiala 143 — sindicat în Helgeland",
+  "Hytte i Umbukta — leie fjellhytte ved Rana": "Cabana din Umbukta — închiriere cabană de munte lângă Rana",
+  "Leie hytte på Helgeland — Umbukta og Øvre Elsvatn": "Închiriere cabane în Helgeland — Umbukta și Øvre Elsvatn",
+  "Tilgjengelighetserklæring — Fellesforbundet avd. 143": "Declarație de accesibilitate — Fellesforbundet filiala 143"
 }

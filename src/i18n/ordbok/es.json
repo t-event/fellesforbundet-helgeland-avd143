@@ -194,7 +194,6 @@
   "Fellesforbundet avdeling 143 organiserer medlemmer i industri, bygg, transport og service i hele Helgeland — fra Mo i Rana og innlandet ut til Helgelandskysten. Vi forhandler lønn, gir råd og støtte, og står sammen når det gjelder.": "Fellesforbundet sección 143 organiza a miembros de la industria, la construcción, el transporte y los servicios en toda la región de Helgeland — desde Mo i Rana y el interior hasta la costa de Helgeland. Negociamos salarios, damos asesoramiento y apoyo, y permanecemos unidos cuando hace falta.",
   "Fellesforbundet Helgeland avd. 143": "Fellesforbundet Helgeland sección 143",
   "Fellesforbundet Helgeland avd. 143 – til forsiden": "Fellesforbundet Helgeland sección 143 – a la página principal",
-  "Fellesforbundet Helgeland avd. 143 — fagforening for arbeidsfolk på Helgeland": "Fellesforbundet Helgeland sección 143 — sindicato para la gente trabajadora de Helgeland",
   "Fellesforbundet Helgeland avd. 143 eier to hytter som leies ut til LO-medlemmer og andre LO-forbund. Velg hytte under, sjekk ledige datoer og send en uforpliktende forespørsel. Avdelingen bekrefter bookingen.": "Fellesforbundet Helgeland sección 143 es propietaria de dos cabañas que se alquilan a miembros de LO y de otros sindicatos de LO. Elija una cabaña abajo, consulte las fechas libres y envíe una solicitud sin compromiso. La sección confirmará la reserva.",
   "Fellesforbundet Helgeland avd. 143 eier to hytter som leies ut til LO-medlemmer:": "Fellesforbundet Helgeland sección 143 es propietaria de dos cabañas que se alquilan a miembros de LO:",
   "Fellesforbundet Helgeland avd. 143.": "Fellesforbundet Helgeland sección 143.",
@@ -302,7 +301,6 @@
   "Hytte i Umbukta — eksteriør med terrasse i solskinn og blå himmel": "Cabaña en Umbukta — fachada con terraza al sol y cielo azul",
   "Hytte i Umbukta — fjellhytte i vakker natur ved Rana og Sveriges grense": "Cabaña en Umbukta — cabaña de montaña en plena naturaleza junto a Rana y la frontera con Suecia",
   "Hytte i Umbukta — fjellhytte ved Umbukta i Rana, nær Sverige": "Cabaña en Umbukta — cabaña de montaña en Umbukta, en Rana, cerca de Suecia",
-  "Hytte i Umbukta — Leie fjellhytte ved Rana | Fellesforbundet Helgeland": "Cabaña en Umbukta — alquiler de cabaña de montaña junto a Rana | Fellesforbundet Helgeland",
   "Hytte i Umbukta (Rana)": "Cabaña en Umbukta (Rana)",
   "Hytte i Umbukta →": "Cabaña en Umbukta →",
   "Hytte i vestenden av Virvatnet. Om sommeren fra E6 ved Krokstrand: 16 km anleggsvei til demningen, deretter sti til hytta. Anleggsveien er ikke vinterbrøytet.": "Cabaña en el extremo occidental del lago Virvatnet. En verano desde la E6 en Krokstrand: 16 km de pista hasta la presa, después sendero hasta la cabaña. La pista no se limpia de nieve en invierno.",
@@ -417,7 +415,6 @@
   "Ledighetskalender for Umbukta": "Calendario de disponibilidad de Umbukta",
   "Legg i kalender (.ics)": "Añadir al calendario (.ics)",
   "Leie fjellhytte til medlemspris": "Alquile una cabaña de montaña a precio de miembro",
-  "Leie hytte — Fellesforbundet Helgeland | Umbukta og Øvre Elsvatn": "Alquiler de cabaña — Fellesforbundet Helgeland | Umbukta y Øvre Elsvatn",
   "Leie hytte hos Fellesforbundet Helgeland": "Alquile una cabaña en Fellesforbundet Helgeland",
   "Leieperiode": "Periodo de alquiler",
   "Lenker": "Enlaces",
@@ -693,7 +690,6 @@
   "Tilbyr medlemsfordeler<span class=\"benefit-pil\" aria-hidden=\"true\">→</span>": "Ofrecemos ventajas para miembros<span class=\"benefit-pil\" aria-hidden=\"true\">→</span>",
   "Tilgjengelighet": "Accesibilidad",
   "Tilgjengelighetserklæring": "Declaración de accesibilidad",
-  "Tilgjengelighetserklæring — Fellesforbundet Helgeland avd. 143": "Declaración de accesibilidad — Fellesforbundet Helgeland sección 143",
   "Tillatt (ikke i seng/sofa)": "Permitido (no en la cama ni en el sofá)",
   "Tillitsvalgt / arbeidsplass": "Delegado sindical / centro de trabajo",
   "Tillitsvalgte": "Delegados sindicales",
@@ -801,5 +797,9 @@
   "Åpne Facebook ↗": "Abrir Facebook ↗",
   "Åpne i Google Maps ↗": "Abrir en Google Maps ↗",
   "Åpne meny": "Abrir menú",
-  "Åpningstider": "Horario"
+  "Åpningstider": "Horario",
+  "Fellesforbundet avd. 143 — fagforening på Helgeland": "Fellesforbundet sección 143 — sindicato en Helgeland",
+  "Hytte i Umbukta — leie fjellhytte ved Rana": "Cabaña en Umbukta — alquiler de cabaña de montaña junto a Rana",
+  "Leie hytte på Helgeland — Umbukta og Øvre Elsvatn": "Alquiler de cabañas en Helgeland — Umbukta y Øvre Elsvatn",
+  "Tilgjengelighetserklæring — Fellesforbundet avd. 143": "Declaración de accesibilidad — Fellesforbundet sección 143"
 }

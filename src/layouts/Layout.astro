@@ -3,6 +3,7 @@ import '../styles/global.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import CookieConsent from '../components/CookieConsent.astro';
+import { KONTAKT } from '../config.ts';
 
 // Fontene importeres for å få tak i den hashede URL-en, slik at de kan
 // forhåndslastes. Uten det oppdages de først når nettleseren har parset CSS-en,
@@ -153,18 +154,40 @@ const brodsmuleMork = morkeHero.has(sti);
   <meta name="twitter:image"       content={ogImageUrl} />
   <meta name="twitter:image:alt"   content={ogImageAlt} />
 
-  <!-- Schema.org Organisation -->
+  {/* Schema.org. Organisasjonen beskrives på hver side med samme @id, slik at
+      Google forstår at det er én og samme enhet. Brødsmulen legges ved der den
+      finnes — den er en av de få typene Google faktisk viser i resultatlista.
+      (FAQPage er utelatt med vilje: Google begrenset FAQ-rike resultater til
+      myndighets- og helsenettsteder i 2023, så det ville ikke gitt utslag.) */}
   <script type="application/ld+json" set:html={JSON.stringify({
     "@context": "https://schema.org",
     "@type": "Organization",
+    "@id": siteUrl + base + "/#organisasjon",
     "name": "Fellesforbundet Helgeland avd. 143",
+    "alternateName": ["Fellesforbundet avd. 143", "FFH avd. 143"],
+    "description": "Lokal fagforening som organiserer arbeidsfolk i industri, bygg, transport og service på Helgeland.",
     "url": siteUrl + base,
     "logo": siteUrl + base + "/images/logo/ff_logo_hvit_rgb-01.png",
+    "image": siteUrl + base + "/images/og/og-default.jpg",
+    "email": "avd143@fellesforbundet.org",
+    "telephone": "+47-75151228",
+    "foundingDate": "1965",
+    "areaServed": { "@type": "AdministrativeArea", "name": "Helgeland, Nordland, Norge" },
+    "parentOrganization": { "@type": "Organization", "name": "Fellesforbundet", "url": "https://www.fellesforbundet.no" },
+    "sameAs": [KONTAKT.facebookUrl, KONTAKT.fellesforbundetUrl, KONTAKT.brreg],
+    "openingHoursSpecification": {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+      "opens": "08:00",
+      "closes": "15:30"
+    },
     "contactPoint": {
       "@type": "ContactPoint",
       "telephone": "+47-75151228",
+      "email": "avd143@fellesforbundet.org",
       "contactType": "customer service",
-      "availableLanguage": ["Norwegian", "English"]
+      "areaServed": "NO",
+      "availableLanguage": ["Norwegian", "English", "Polish", "Romanian", "Lithuanian", "Spanish", "Latvian"]
     },
     "address": {
       "@type": "PostalAddress",
@@ -174,6 +197,17 @@ const brodsmuleMork = morkeHero.has(sti);
       "addressCountry": "NO"
     }
   })} />
+
+  {brodsmule && (
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Forsiden", "item": siteUrl + base + "/" },
+        { "@type": "ListItem", "position": 2, "name": brodsmule.no, "item": canonicalUrl },
+      ],
+    })} />
+  )}
 
   <!-- Favicon og web app manifest -->
   <link rel="icon" type="image/svg+xml" href={`${base}/favicon.svg`} />
@@ -279,7 +313,7 @@ const brodsmuleMork = morkeHero.has(sti);
     // ville en ren CSS-justering stille ugyldiggjøre alle oversettelsene på sida.
     const utenScope = (s: string) => s.replace(/\s*data-astro-cid-[\w-]+(?:="[^"]*")?/g, '');
     const nokkel = (s: string) =>
-      utenScope(s).replace(/&amp;/g, '&').replace(/\u00ad/g, '').replace(/\u00a0/g, ' ').replace(/\s+/g, ' ').trim();
+      utenScope(s).replace(/\u00ad/g, '').replace(/\u00a0/g, ' ').replace(/&amp;/g, '&').replace(/\s+/g, ' ').trim();
 
     function slaOpp(norsk: string, lang: Sprakkode): string {
       if (lang === 'nb') return norsk;
