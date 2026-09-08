@@ -102,6 +102,14 @@ av dem — hva som skjedde og hvorfor det ikke ble oppdaget — står i
   `Layout.astro`, `klient.ts` og `hent-tekster.mjs` — endrer du én, må alle med.
 - **`frame-ancestors` virker ikke i meta-CSP.** Sida kan rammes inn av andre. Krever
   en HTTP-header, som GitHub Pages ikke kan sette — bevisst valg per 7. sep. 2026.
+- **Prosjektet ligger i en iCloud-synket mappe.** `~/Documents` synkes av
+  «Skrivebord og Dokumenter», og det gir merkelige symptomer: `astro build` som
+  henger i minutter i stedet for sekunder, `TimeoutError` ved lesing av en helt
+  vanlig fil, og duplikater med « 2»-suffiks (`klient.CpnW-fL3 2.js`) i `dist/`.
+  Duplikatene er ufarlige — `dist/` er gitignorert og de når aldri nettet — men
+  de forstyrrer lokale målinger. Henger bygget: vent, eller `pkill -f "astro
+  build"` og prøv igjen. Varig løsning er å flytte repoet ut av `~/Documents`,
+  eller å ta `node_modules/` og `dist/` ut av synk.
 - **En sperre må håndheves i skjemaet, ikke bare i kalenderen.** Kalenderen kan
   bare hindre *klikk*; datofeltene er vanlige `<input type="date">` og kan fylles
   direkte. Påskedatoene ble derfor sluppet gjennom en gang. Legger du inn en ny
@@ -128,6 +136,16 @@ av dem — hva som skjedde og hvorfor det ikke ble oppdaget — står i
 2. Åpne <https://ffh143.no/umbukta/> — viser kalenderen riktig måned og ledige datoer?
 3. Sjekk at datoen nederst på <https://ffh143.no/tillitsvalgte/> ikke er mer enn
    et år gammel. `npm run valider` advarer selv etter 15 måneder.
+4. **Google Search Console** — er det nye feil under «Sider» eller
+   «Nettstedskart»? Sitemapet skal stå som «Lykkes» med 16 URL-er.
+5. Åpne en tilfeldig side og trykk F12 → **Console**. Skal være tom. Dukker det
+   opp en CSP-feil for en host vi ikke har lagt inn, er det som regel Cloudflare
+   som har begynt å skyte inn et nytt script — se «Kjente fallgruver».
+
+**Før påske hvert år:** åpne <https://ffh143.no/umbukta/> og kontroller at
+påskeukas dager er gule i kalenderen, og at datofeltene i skjemaet **tømmer seg**
+hvis du prøver å skrive inn en påskedato. Datoene regnes ut automatisk, men
+sperren er verdt et blikk siden den er lett å brekke ved en omskriving.
 
 **Dependabot** foreslår sikkerhetsoppdateringer automatisk som pull requests.
 De skal ses over og merges — bygg-sjekken kjører på hver PR.

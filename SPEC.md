@@ -9,9 +9,9 @@
 Statisk nettside for Fellesforbundet Helgeland (avd. 143): **avdelingens hjemmeside** og **hyttebooking** for de to hyttene. Ingen database, ingen backend, ingen betalingsløsning på nettsiden. Alt hostes på GitHub Pages i **ett repo / ett Astro-prosjekt**.
 
 **GitHub-repo:** `https://github.com/t-event/fellesforbundet-helgeland-avd143`  
-**Domene:** `ffh143.no` — live (registrert hos domene.no, navnetjenere hos Cloudflare → GitHub Pages, HTTPS). Fram til offentlig lansering ligger siden bak passord-gate (Cloudflare Access).  
+**Domene:** `ffh143.no` — live og offentlig (registrert hos domene.no, navnetjenere hos Cloudflare → GitHub Pages, HTTPS). Passord-gaten (Cloudflare Access) ble fjernet 7. sep. 2026.  
 **Gammel Pages-URL:** `t-event.github.io/fellesforbundet-helgeland-avd143` (videresender 301 til ffh143.no)  
-**Status:** Avdelingens hovedside er **fronten** (rot `/`). Hytteutleia er en seksjon under «Hytteutleie ▾» i menyen (`/hytter`, `/umbukta`, `/turtips`, `/hjelp`). Én felles meny/footer for hele sida (ingen variant-splitt). MERK: gjenstående plassholder = portrettbilder av folk (valgfritt, se [PLACEHOLDERS.md](PLACEHOLDERS.md)). Domenet er live; venter på avdelingens klarsignal for å fjerne passord-gaten og gå offentlig.
+**Status:** Avdelingens hovedside er **fronten** (rot `/`). Hytteutleia er en seksjon under «Hytteutleie ▾» i menyen (`/hytter`, `/umbukta`, `/turtips`, `/hjelp`). Én felles meny/footer for hele sida (ingen variant-splitt). MERK: gjenstående plassholder = portrettbilder av folk (valgfritt, se [PLACEHOLDERS.md](PLACEHOLDERS.md)). Sida er offentlig og indekseres av Google.
 
 ---
 
@@ -47,7 +47,7 @@ Statisk nettside for Fellesforbundet Helgeland (avd. 143): **avdelingens hjemmes
 | `/turtips` | `turtips.astro` | 6 turtips fra Umbukta-området |
 | `/hjelp` | `hjelp.astro` | FAQ-accordion + kontaktskjema |
 | `/takk` | `takk.astro` | Kvitteringsside etter bookingforespørsel |
-| `/om-oss` | `om-oss.astro` | Om avdelingen (historie fra 1965), kontakt, lenker |
+| `/om-oss` | `om-oss.astro` | Om avdelingen (forløperen Mo Jern- og Metallarbeiderforening fra 1965; Fellesforbundet Helgeland stiftet 2005), kontakt, lenker |
 | `/personvern` | `personvern.astro` | GDPR-personvernerklæring |
 | `/cookies` | `cookies.astro` | Informasjonskapsler + samtykke |
 | `/404` | `404.astro` | «Side ikke funnet» |
@@ -60,7 +60,7 @@ Avdelingens hovedside er nå **den offentlige fronten** (rot `/`), bygget fra de
 - **Én felles footer** (`Footer.astro`): Avdelingen, Hyttene, Kontakt + juridisk bunnlinje.
 - Tidligere skjult `/forhandsvisning`-struktur er fjernet (sidene flyttet til rot, `noindex` + sitemap-filter borte).
 
-**Gjenstår (plassholdere/ekstern):** portrettbilder av folk (valgfritt — initial-avatarer brukes ellers, se [PLACEHOLDERS.md](PLACEHOLDERS.md)), lokal kontingentsats (ukjent — lenkes til kilde). Domenet `ffh143.no` er live (Cloudflare → GitHub Pages).
+**Gjenstår (plassholdere/ekstern):** portrettbilder av folk (valgfritt — initial-avatarer brukes ellers, se [PLACEHOLDERS.md](PLACEHOLDERS.md)), lokal kontingentsats — **avklart**: 1,5 % + 0,1 % lokalt = 1,6 %. Domenet `ffh143.no` er live og offentlig (Cloudflare → GitHub Pages).
 
 ---
 
@@ -104,6 +104,8 @@ Avdelingens hovedside er nå **den offentlige fronten** (rot `/`), bygget fra de
 
 **Validering mot opptatte datoer:** Booking-skjemaet henter samme `availability.json` som kalenderen og blokkerer innsending hvis det valgte intervallet `[fra, til]` inneholder en opptatt dato (inklusiv begge endepunkter — verken innsjekk eller utsjekk på en opptatt dag). Kalenderen tillater heller ikke å markere et intervall som spenner over opptatte netter.
 
+**Validering mot påskedatoer:** Påskeuka leies ikke ut — den fordeles ved loddtrekning (se § 8 i README). Datoene regnes ut ved bygg i `BookingForm.astro` og sendes inn via `define:vars` (skriptet er klassisk og kan ikke importere). Velges en påskedato i et datofelt, **tømmes feltet** og meldinga vises — datoen kan ikke bli stående, slik at oppførselen er den samme som i kalenderen, der den gule dagen ikke lar seg klikke. Spenner perioden over påsken uten at endepunktene selv er påskedager, vikes til-datoen. Innsendingsvalideringen sperrer i tillegg. **Begge komponentene må kjenne regelen** — `Calendar.astro` kan bare hindre klikk, ikke tastede datoer.
+
 **Kvittering til bestiller:** Vises umiddelbart på `/takk`-siden (ikke e-post — Web3Forms' autosvar er en betalt funksjon som ikke er aktivert):
 - Valgte datoer, antall døgn, prisgruppe, totalpris
 - Kontonummer `451635821274`
@@ -113,7 +115,7 @@ Avdelingens hovedside er nå **den offentlige fronten** (rot `/`), bygget fra de
 
 **Kontaktskjema (Hjelpesenter):** Samme key, emne-tag skiller de to.
 
-**Spam-beskyttelse:** Honeypot-felt (`<input name="botcheck" hidden>`).
+**Spam-beskyttelse:** **hCaptcha** (Intuition Machines) på booking-, kontakt- og hjelpeskjemaet, i tillegg til et honeypot-felt (`<input name="botcheck" hidden>`). Widgeten lastes fra `hcaptcha.com` og språket settes med `data-hl` fra et tidlig inline-skript i `Layout.astro`, så den følger språkvalget.
 
 ### Integrasjon 3 — Prisberegning (in-browser)
 
@@ -329,10 +331,13 @@ for rutinen med å legge til et språk.
 - `og:site_name` = «Fellesforbundet Helgeland avd. 143» (het tidligere
   «… — Hytteutleie», som var feil for avdelingssidene)
 - `robots.txt` — tillater indeksering, peker til `sitemap-index.xml`.
-  **Merk:** Cloudflare leverer i dag sin egen «managed robots.txt» på kanten i
-  stedet for vår, slik at `Sitemap:`-linja ikke når ut. Kan slås av i Cloudflare.
+  **Merk:** Cloudflare skyter inn sin egen «managed robots.txt» øverst i fila,
+  som stenger ute AI-crawlere (GPTBot, ClaudeBot, Google-Extended m.fl.).
+  Googlebot for vanlig søk er ikke berørt, og vår egen `Sitemap:`-linje står
+  under og når ut — verifisert 8. sep. 2026.
 - `sitemap-index.xml` + `sitemap-0.xml` — genereres automatisk av
-  `@astrojs/sitemap` (17 URL-er; `llms.txt` og `site.webmanifest` er ikke med)
+  `@astrojs/sitemap` (16 URL-er; `/takk`, `llms.txt` og `site.webmanifest` er
+  ikke med). Meldt inn i Google Search Console som `sitemap-index.xml`.
 - `llms.txt` og `site.webmanifest` genereres som endepunkter
   (`src/pages/llms.txt.ts`, `src/pages/site.webmanifest.ts`) slik at de arver
   `BASE` og henter priser/kontaktinfo fra `config.ts`
@@ -357,7 +362,8 @@ Vises tydelig på Umbukta-siden og kvitteringssiden:
 - ICS-URL kun i GitHub Actions-secret, aldri i kildekode
 - Web3Forms access-key er public/trygg — OK i frontend
 - Ingen server-hemmeligheter i drift
-- GDPR: Nettsiden lagrer ingenting — data finnes kun hos avdelingen og Web3Forms
+- GDPR: Nettsiden lagrer ingenting i nettleseren utover `lang` og `samtykke` — skjemadata finnes kun hos avdelingen og Web3Forms. **Cloudflare Web Analytics** kjører i tillegg (se § 21): cookiefri, ingen lagring på enheten, aggregerte tall til Cloudflare. Beskrevet på /personvern og /cookies.
+- **CSP** leveres via `<meta>` (GitHub Pages kan ikke sette headere). Eksterne kilder er begrenset til det siden faktisk bruker. `frame-ancestors` og `sandbox` virker ikke i meta-CSP og settes ikke. Legger du til en tjeneste, husk at én host kan trenge **flere** direktiver — beaconen krevde både `script-src` og `connect-src`.
 - Samtykketekst vises i booking- og kontaktskjema
 - Dørkode: håndteres utelukkende av avdelingen, ALDRI i kode, e-poster eller nettsted
 - **Skrift selv-hostet** (Inter + Space Grotesk woff2 i `src/fonts/`) — ingen ekstern Google Fonts-forespørsel, så besøkendes IP deles ikke med Google
@@ -491,6 +497,7 @@ Endringer og tillegg utover opprinnelig spec:
 **Ytelse.** Fontene forhåndslastes (fjernet utseendeforskyvningen). Alle foto
 leveres som responsiv WebP via `<Bilde>` og `npm run bilder` — 2042 KiB → 422 KiB
 for bildene som faktisk lastes. LCP-bildene har `fetchpriority="high"`.
+*(Breddelista og `sizes` ble rettet igjen 8. sep. — se § 21.)*
 
 **Tilgjengelighet.** Fire kontrastfeil rettet (bl.a. rød tekst på lysgrønn flate,
 3,6:1 → 8,1:1 med burgunder fra profilhåndboka). Overskriftsrekkefølge rettet i
@@ -502,10 +509,62 @@ Canonical utelates på noindex-sider.
 
 **Språk.** All JS-generert tekst går nå gjennom `oversett()`; ukedager,
 månedsnavn og datoformat kommer fra `Intl`. Polsk er komplett.
+*(Alle fem tilleggsspråk ble fullført samme kveld — se § 21.)*
 
 **Værvarselet.** Symbolkodene fra MET dekodes nå i stedet for å slås opp i en
 tabell som manglet alle byge-variantene. Regn bruker alltid `cloud-rain` —
 `cloud-drizzle` ble lest som snø i 26 px.
+
+---
+
+## 21. As-built — drift, ytelse og bookingregler (8. september 2026)
+
+**Cloudflare Web Analytics er på.** Beaconen skytes inn ved kanten, ikke fra
+repoet — den kan altså slås av og på uten at noe her endrer seg. CSP-en er åpen
+for `static.cloudflareinsights.com` (script-src) og `cloudflareinsights.com`
+(connect-src). Begge trengs: beaconen POSTer resultatene til `/cdn-cgi/rum`.
+Verktøyet er cookiefritt og beskrevet på /personvern og /cookies på alle sju
+språk. **Slås den av, skal de to sidene rettes tilbake.**
+
+**Cache-regler i Cloudflare.** Global buffer-TTL er 4 t. To regler overstyrer:
+
+| Sti | TTL | Hvorfor trygt |
+|-----|-----|---------------|
+| `/_astro/` | 1 år | Innholdshash i filnavnet — endres innholdet, endres navnet |
+| `/images/` | 30 dager | Ingen hash. Bytter du foto uten å endre filnavn, må cachen tømmes |
+
+**Alt annet skal bli stående på `max-age=600`.** `/availability.json` oppdateres
+hver time og har ikke hash i filnavnet — en bred cache-regel ville frosset
+bookingkalenderen. Det samme gjelder `/i18n/*.json` og sitemapet.
+
+**E-postobfuskering (Scrape Shield) er slått av.** Den skjøt inn
+`email-decode.min.js`, som blokkerte opptegningen ~490 ms på mobil — den største
+enkeltposten i målingene. Adressene står nå i klartekst i HTML-en; et bevisst
+bytte, siden de allerede er offentlige hos Fellesforbundet.
+
+**Bildevarianter: 400 / 640 / 768 / 900 / 1200 / 1400.** 768 og 1200 kom til
+fordi spranget var for grovt for mobil. `sizes` regner nå med containerens
+padding (`.container` har 16 px under 600 px), så et «fullbredde»-bilde er 380
+CSS-px i et 412 px vindu — ikke `100vw`. Måling framfor øyemål:
+
+| Enhet | Behov | Før | Nå |
+|-------|-------|-----|-----|
+| DPR 2 (iPhone SE/8, mange Android) | 760 px | 900 | **768** |
+| DPR 3 (iPhone 13–16, Pixel Pro) | 1140 px | 1400 | **1200** |
+
+Breddelista står to steder — `Bilde.astro` og `scripts/gen-bilder.mjs` — og
+**må** være identisk, ellers peker `srcset` på varianter som ikke finnes.
+
+**Lighthouse mobil: 99** etter dette (LCP 1,7 s, TBT 0 ms, CLS 0, ingen
+opptegningsblokkering, ingen konsollfeil).
+
+**Påskedatoer sperres nå to steder.** Se § 4, integrasjon 2. Kort: kalenderen
+kan bare hindre klikk — datofeltene er vanlige `<input type="date">` og ble
+validert kun mot `availability.json`. En påskedato skrevet rett inn gikk
+gjennom. Regelen håndheves nå i begge komponentene.
+
+**Alle sju språk er komplette** (807/807 strenger × 5 ordbøker). Kontrollert i
+nettleser på 18 sider × 7 språk: ingen konsollfeil, riktig `<html lang>`.
 
 ---
 

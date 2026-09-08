@@ -1,16 +1,17 @@
 # Legge til et nytt språk
 
-Nettsida er i dag på **norsk, engelsk og polsk**. Mekanikken håndterer i tillegg
-**rumensk, spansk, litauisk og latvisk** — de er bygd inn, men vises ikke før
-noen har oversatt dem.
+Nettsida er i dag på **sju språk**: norsk, engelsk, polsk, rumensk, spansk,
+litauisk og latvisk. Alle fem tilleggsspråkene er komplette og aktive i
+velgeren. Denne fila beskriver hvordan du legger til det åttende.
 
-> **Om den polske utgaven:** den er oversatt av Claude, ikke av et menneske med
-> polsk som morsmål. Besøkende ser en notis om at norsk er den offisielle
-> versjonen. Før språket markedsføres aktivt bør minst `/lonn-tariff` og
-> `/vilkar` leses gjennom av noen som kan polsk — det er sidene som forklarer
-> lønn, rettigheter og bindende vilkår.
+> **Om oversettelsene:** alle fem er laget av Claude, ikke av mennesker med
+> språket som morsmål. Besøkende ser en notis om at norsk er den offisielle
+> versjonen. Før et språk markedsføres aktivt bør minst `/lonn-tariff` og
+> `/vilkar` leses gjennom av noen som kan det — det er sidene som forklarer
+> lønn, rettigheter og bindende vilkår, der en feil kan gi gale råd i en reell
+> sak. Dette står også som åpent punkt i [PLACEHOLDERS.md](PLACEHOLDERS.md).
 
-## Hvorfor de ikke vises ennå
+## Når et språk vises
 
 Et språk dukker opp i språkvelgeren først når **85 % av tekstene er oversatt**
 (`MIN_DEKNING` i `src/i18n/sprak.ts`). Et halvoversatt språk er verre enn

@@ -15,7 +15,7 @@ Avdelingens nettside: **avdelingens hjemmeside** (forside, medlemskap, aktuelt, 
 | `/personvern`, `/cookies`, `/tilgjengelighet` | Personvern, cookies, tilgjengelighetserklæring |
 
 - Avdelingens hovedside er **fronten** på rot. Hytteutleia er en seksjon under «Hytteutleie ▾» i menyen. Én felles meny + footer for hele sida.
-- **Domene:** **`ffh143.no`** er live (navnetjenere hos Cloudflare → GitHub Pages, HTTPS). Fram til offentlig lansering ligger siden bak en passord-gate (Cloudflare Access) — se seksjon 5.
+- **Domene:** **`ffh143.no`** er live og **offentlig** (navnetjenere hos Cloudflare → GitHub Pages, HTTPS). Passord-gaten ble fjernet 7. sep. 2026 — se seksjon 5.
 
 ### Egne rutiner i egne filer
 
@@ -151,14 +151,15 @@ Domenet **`ffh143.no`** er registrert hos domene.no og **live**. Navnetjenerne e
 - [public/robots.txt](public/robots.txt): sitemap-URL på `ffh143.no`
 - GitHub → Settings → Pages → Custom domain = `ffh143.no`, **Enforce HTTPS** på (Let's Encrypt-cert utstedt)
 
-### Passord-gate før lansering (Cloudflare Access)
+### Lansering — gjennomført
 
-Fram til avdelingen gir klarsignal ligger hele siden bak en **Cloudflare Access**-innlogging (self-hosted app på `ffh143.no` + `www`, engangskode på e-post). Kun styret + admin slipper inn, og Google kan ikke indeksere siden så lenge gaten står.
+Siden lå fram til **7. sep. 2026** bak en **Cloudflare Access**-innlogging fram
+til avdelingen hadde godkjent den. Gaten er nå fjernet, siden er offentlig, og
+den er meldt inn i Google Search Console (se seksjon 10).
 
-**På lanseringsdagen:**
-
-1. Cloudflare → Zero Trust → Access → Applications → **deaktiver/slett** appen → siden blir offentlig.
-2. Sett opp Google Search Console (se seksjon 10).
+Skal siden midlertidig stenges igjen — for eksempel under en større omlegging —
+settes en ny self-hosted app på `ffh143.no` + `www` under Cloudflare →
+Zero Trust → Access → Applications. Husk at Google da ikke kan crawle siden.
 
 ---
 
@@ -351,14 +352,16 @@ npm run preview
 CALENDAR_ICS_URL="<ics-lenken>" node scripts/update-availability.js
 ```
 
-### Legg til siden i Google Search Console (ved offentlig lansering)
+### Google Search Console — gjort
 
-Gjøres **først når passord-gaten (Cloudflare Access) er slått av** — så lenge gaten står, kan ikke Google crawle siden.
+Satt opp 7.–8. sep. 2026: domene-eiendom `ffh143.no`, verifisert med DNS
+TXT-post hos Cloudflare, og sitemapet meldt inn som
+`https://ffh143.no/sitemap-index.xml`.
 
-1. Gå til [Google Search Console](https://search.google.com/search-console)
-2. Legg til eiendom: **domenet** `ffh143.no` (Domain-property, ikke URL-prefiks)
-3. Verifiser eierskap via **DNS TXT-post** (legges hos Cloudflare)
-4. Send inn sitemap: `https://ffh143.no/sitemap-index.xml`
+**Merk:** meld inn `sitemap-index.xml`, ikke `sitemap.xml`. Sistnevnte finnes
+ikke og gir «Ugyldig adresse i nettstedskart». `sitemap-0.xml` fungerer også,
+men indeksfila er den riktige å oppgi — da følger Google med hvis det senere
+kommer flere sitemap-filer.
 
 ---
 

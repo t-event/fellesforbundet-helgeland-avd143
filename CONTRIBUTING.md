@@ -45,7 +45,12 @@ npm run build                 # produksjonsbygg
 - **Åpne sida i en nettleser etterpå.** Bygget typesjekker ikke `<script>`-blokker
   i .astro-filer, så en feil der gir grønt bygg og ødelagt side. Det har skjedd.
 - **Endrer du tekst:** skriv `data-en` samtidig, og kjør `npm run tekster` så de
-  nye strengene havner i oversettelsesmalen.
+  nye strengene havner i oversettelsesmalen. **Fyll deretter inn de fem
+  ordbøkene** (`src/i18n/ordbok/*.json`) og kjør `npm run tekster` igjen til alle
+  står på 100 %. Gjør du det ikke, faller dekningen — og et språk som havner
+  under 85 % forsvinner ut av velgeren for alle besøkende.
+- **Ny tekst som lages i JavaScript** må gjennom `oversett('norsk', 'english')`,
+  ikke skrives rett inn. Uttrekket plukker opp literalene derfra.
 - Følg eksisterende kodestil, komponentmønster og designprofil
   (Fellesforbundets profilhåndbok — ikke fjern merkefarger på smaksbasis).
 - Hold endringer fokuserte, og beskriv hva og hvorfor i commit/PR.
