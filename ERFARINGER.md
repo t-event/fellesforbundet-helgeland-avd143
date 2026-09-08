@@ -49,6 +49,24 @@ oversatt. Bruk `(?<![-\w])placeholder=` i stedet.
 Motsatt vei: «Kontakt» og «Telefon» ble rapportert som uoversatte, men er
 identiske ord på polsk. En diff finner likhet, ikke feil — resultatet må leses.
 
+### Testriggen skrev til feil localStorage-nøkkel
+
+**Hva skjedde:** Regresjonssveipet lastet hver side i en iframe og satte
+språket med `localStorage.setItem('ffh-sprak', …)`. Siden lagrer under `lang`.
+Alle sider ble derfor stående på norsk, og riggen rapporterte 90 «feil» —
+`html lang="no"` på hver side og uoversatt tekst overalt.
+
+**Hvorfor kontrollen ikke fanget det:** riggen sjekket aldri at oppsettet
+virket. Den antok at et vellykket `setItem` betydde at siden hadde lest verdien.
+
+**Hva som avslørte det:** resultatlistene var *identiske* for engelsk, spansk,
+litauisk og rumensk. Ekte oversettelseshull ville variert mellom språk.
+
+**Hva som gjøres i stedet:** en testrigg som setter opp en tilstand må først
+bekrefte at tilstanden traff — her: at `document.documentElement.lang` faktisk
+endret seg — og avbryte hvis ikke. Ellers måler den bare seg selv. Slå alltid
+opp nøkkelnavnet i kildekoden framfor å skrive det etter hukommelsen.
+
 ### Mellomrom som forsvant i oversettelsen
 
 **Hva skjedde:** På polsk sto det «Zadzwoń do nas pod75 15 12 28» — telefon og
@@ -241,6 +259,8 @@ Før noe meldes ferdig:
    bredde, i iframe hvis mobil.
 4. **Målt det som faktisk betyr noe**, ikke en indikator som ligner. Spør:
    *kan denne målingen i det hele tatt oppdage feilen jeg leter etter?*
+   Bruker målingen et oppsett — innlogging, et språkvalg, en lagret verdi —
+   skal riggen bekrefte at oppsettet traff før den rapporterer noe.
 5. **Sjekket eksterne fakta** — lenker, at integrasjoner kjører, hva notatene
    allerede sier.
 6. **Sagt hva som ikke er verifisert.** Den polske oversettelsen er ikke lest
