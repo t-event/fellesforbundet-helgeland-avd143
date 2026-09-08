@@ -1,15 +1,8 @@
 {
-  "oppdatert": "2026-09-07T10:46:15.147Z",
+  "oppdatert": "2026-09-08T10:07:07.210Z",
   "kilde": "fellesforbundet.no — kurs og konferanser (Nordland)",
   "kildeUrl": "https://www.fellesforbundet.no/aktuelt/kurs-og-arrangementer/?county=Nordland%20-%20Nordl%C3%A1nnda",
   "arrangementer": [
-    {
-      "tittel": "Kurs i bedriftsdemokrati i konsern - høst",
-      "type": "Kurs",
-      "dato": "2026-09-07T00:00:00",
-      "sted": "Quality Airport Hotel Gardermoen",
-      "url": "https://www.fellesforbundet.no/aktuelt/kurs-og-arrangementer/2026/kurs-i-bedriftsdemokrati-i-konsern---host/"
-    },
     {
       "tittel": "Bransjekonferanse Logistikk, Havn og Spedisjon",
       "type": "Konferanse",
@@ -86,6 +79,13 @@
       "dato": "2026-10-06T00:00:00",
       "sted": "Quality Airport Hotel Gardermoen",
       "url": "https://www.fellesforbundet.no/aktuelt/kurs-og-arrangementer/2026/ewc-konferansen/"
+    },
+    {
+      "tittel": "Bransjekonferanse Forsvaret",
+      "type": "Konferanse",
+      "dato": "2026-10-06T00:00:00",
+      "sted": "Quality Airport Hotel Gardermoen",
+      "url": "https://www.fellesforbundet.no/aktuelt/kurs-og-arrangementer/2026/bransjekonferanse-forsvaret/"
     }
   ]
 }
