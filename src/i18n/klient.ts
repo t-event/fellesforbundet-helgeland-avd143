@@ -14,7 +14,7 @@
 // `npm run tekster` plukker opp disse kallene fra kildekoden, så de havner i
 // oversettelsesmalen sammen med resten.
 
-import { ORDBOKER, AKTIVE_SPRAK, type Sprakkode } from './sprak';
+import { ordbok, AKTIVE_SPRAK, type Sprakkode } from './sprak';
 
 // Locale for dato- og tallformatering per språk.
 const LOCALE: Record<string, string> = {
@@ -65,7 +65,7 @@ export function oversett(
   if (lang === 'nb') ut = norsk;
   else if (lang === 'en') ut = engelsk ?? norsk;
   else {
-    const treff = ORDBOKER[lang]?.[nokkel(norsk)];
+    const treff = ordbok(lang)[nokkel(norsk)];
     ut = treff && treff.trim() !== '' ? treff : norsk;
   }
   if (!verdier) return ut;

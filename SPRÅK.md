@@ -145,6 +145,18 @@ ved rendring. Den settes fra `data-hl` av et lite inline-skript i `<head>`, som
 må kjøre før Web3Forms-scriptet. Bytter man språk etter at widgeten er tegnet,
 lastes sida på nytt — hCaptcha kan ikke bytte språk uten å rendres på nytt.
 
+## Hvordan ordbøkene lastes
+
+Ordbøkene ligger i to versjoner:
+
+- `src/i18n/ordbok/<kode>.json` — kilden, det oversetteren fyller ut
+- `public/i18n/<kode>.json` — kopien som sendes til nettleseren, laget av
+  `npm run tekster`. Utdaterte nøkler renskes bort her.
+
+Nettleseren henter **kun** ordboka for det språket som velges, og bare når det
+velges. Norske og engelske brukere henter ingenting. Kjører du `npm run tekster`
+etter å ha endret en ordbok, oppdateres kopien og dekningstallet automatisk.
+
 ## For utviklere
 
 - Norsk ligger i HTML-en. Engelsk ligger ved siden av, i `data-en`-attributter.

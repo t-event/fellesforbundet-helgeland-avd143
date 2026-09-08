@@ -82,6 +82,10 @@ av dem — hva som skjedde og hvorfor det ikke ble oppdaget — står i
   hvert nytt språk: rendre hver side på norsk og på det nye språket og
   sammenlign synlig tekst. Se «Sjekk at ALT faktisk er oversettbart» i
   [SPRÅK.md](SPRÅK.md).
+- **Ordbøkene skal ALDRI importeres i `sprak.ts`.** Da havner alle i JS-bunten
+  og lastes på hver sidevisning — det var 410 KB. De ligger i `public/i18n/` og
+  hentes med `fetch` kun for valgt språk. `npm run tekster` kopierer dem dit og
+  baker inn dekningstallene.
 - **Attributter er ikke tekstnoder.** `placeholder`, `aria-label`, `title` og
   `alt` må merkes med `data-en-ph` / `-aria` / `-title` / `-alt`. En diff av
   synlig tekst finner dem aldri — sjekken må lese attributtene.

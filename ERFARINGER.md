@@ -78,6 +78,27 @@ første føles som om den løser problemet.
 **Etter dette:** når et nytt attributt eller en ny prop innføres, søkes det opp
 alle stedene som *burde* bruke den — ikke bare de som utløste endringen.
 
+### Sendte 410 KB til alle uten å måle
+
+**Hva skjedde:** Avdelingen meldte at sida var treg på eldre maskiner. Målingen
+viste at `klient.js` var **410 KB**. Alle sju ordbøkene ble importert i
+`sprak.ts`, så de havnet i JS-bunten og ble lastet — og parset — på hver eneste
+sidevisning. Også for norske brukere, som aldri trenger en eneste av dem.
+
+**Hvorfor:** En vanlig `import` ser uskyldig ut. Jeg hadde aldri sett på hvor
+stor bunten var blitt mens jeg la til språk ett for ett.
+
+**Løsningen:** ordbøkene ligger nå i `public/i18n/` og hentes med `fetch`, kun
+for det språket den besøkende faktisk velger. Dekningstallene bakes inn som
+tall, ikke som tekst. 437 KB → 29 KB, og norske brukere henter ingenting.
+
+I samme slengen: språkskriptet skrev `innerHTML` på over hundre elementer ved
+hver sidelasting, også når sida allerede var norsk og ingenting skulle endres.
+Det passet hoppes nå over.
+
+**Lærdom:** mål størrelsen på det som sendes ut, ikke bare at det virker. En
+funksjon som er riktig kan likevel være dyr.
+
 ---
 
 ## 2. Verktøy som ga falsk trygghet

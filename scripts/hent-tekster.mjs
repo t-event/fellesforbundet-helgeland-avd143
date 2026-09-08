@@ -18,7 +18,7 @@
 //
 // Scriptet oppdaterer også ANTALL_TEKSTER i sprak.ts, som dekningen regnes ut fra.
 
-import { readFileSync, writeFileSync, readdirSync, existsSync, statSync } from 'fs';
+import { readFileSync, writeFileSync, readdirSync, existsSync, statSync, mkdirSync } from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 
@@ -216,14 +216,43 @@ const alle = [...tekster.keys()].sort((a, b) => a.localeCompare(b, 'nb'));
 const mal = Object.fromEntries(alle.map(t => [t, '']));
 writeFileSync(join(ORDBOK, '_mal.json'), JSON.stringify(mal, null, 2) + '\n', 'utf8');
 
-// ── Oppdater ANTALL_TEKSTER i sprak.ts ───────────────────────────────
+// ── Kopier ordbøkene til public/i18n/ ────────────────────────────────
+// Ordbøkene hentes med fetch i nettleseren, ikke via import. Importerte vi dem
+// i sprak.ts, havnet alle sju i JS-bunten og ble lastet på hver sidevisning —
+// det var 410 KB, også for norske brukere.
+const PUBLIC_I18N = join(ROT, 'public', 'i18n');
+mkdirSync(PUBLIC_I18N, { recursive: true });
+
+const dekning = {};
+for (const fil of readdirSync(ORDBOK).filter(f => f.endsWith('.json') && !f.startsWith('_'))) {
+  const kode = fil.replace('.json', '');
+  const ordbok = JSON.parse(readFileSync(join(ORDBOK, fil), 'utf8'));
+  const fylt = Object.entries(ordbok)
+    .filter(([k, v]) => typeof v === 'string' && v.trim() !== '' && tekster.has(k)).length;
+  dekning[kode] = alle.length ? fylt / alle.length : 0;
+  // Bare nøkler som fortsatt finnes på siden — utdaterte oversettelser er
+  // dødvekt over nettet.
+  const rensket = Object.fromEntries(
+    Object.entries(ordbok).filter(([k, v]) => tekster.has(k) && typeof v === 'string' && v.trim() !== ''),
+  );
+  writeFileSync(join(PUBLIC_I18N, fil), JSON.stringify(rensket), 'utf8');
+}
+
+// ── Oppdater ANTALL_TEKSTER og DEKNING i sprak.ts ────────────────────
 const sprakSti = join(ROT, 'src', 'i18n', 'sprak.ts');
-const sprakKilde = readFileSync(sprakSti, 'utf8');
-const oppdatert = sprakKilde.replace(
+let sprakKilde = readFileSync(sprakSti, 'utf8');
+const før = sprakKilde;
+sprakKilde = sprakKilde.replace(
   /export const ANTALL_TEKSTER = \d+;/,
   `export const ANTALL_TEKSTER = ${alle.length};`,
 );
-if (oppdatert !== sprakKilde) writeFileSync(sprakSti, oppdatert, 'utf8');
+sprakKilde = sprakKilde.replace(
+  /export const DEKNING: Record<string, number> = \{[^}]*\};/,
+  'export const DEKNING: Record<string, number> = {\n' +
+    Object.entries(dekning).sort().map(([k, v]) => `  ${k}: ${v.toFixed(4)},`).join('\n') +
+    '\n};',
+);
+if (sprakKilde !== før) writeFileSync(sprakSti, sprakKilde, 'utf8');
 
 // ── Rapport ──────────────────────────────────────────────────────────
 console.log(`\n✓ ${alle.length} tekster fra ${filer.length} sider skrevet til src/i18n/ordbok/_mal.json\n`);
