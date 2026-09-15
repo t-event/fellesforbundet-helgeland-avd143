@@ -1,15 +1,8 @@
 {
-  "oppdatert": "2026-09-14T11:00:13.279Z",
+  "oppdatert": "2026-09-15T10:30:15.362Z",
   "kilde": "fellesforbundet.no — kurs og konferanser (Nordland)",
   "kildeUrl": "https://www.fellesforbundet.no/aktuelt/kurs-og-arrangementer/?county=Nordland%20-%20Nordl%C3%A1nnda",
   "arrangementer": [
-    {
-      "tittel": "Bransjekonferanse Logistikk, Havn og Spedisjon",
-      "type": "Konferanse",
-      "dato": "2026-09-14T00:00:00",
-      "sted": "Quality Airport Hotel Gardermoen",
-      "url": "https://www.fellesforbundet.no/aktuelt/kurs-og-arrangementer/2026/bransjekonferanse-logistikk-havn-og-spedisjon/"
-    },
     {
       "tittel": "AVLYST - Bransjekonferanse Budtjenester",
       "type": "Konferanse",
@@ -86,6 +79,13 @@
       "dato": "2026-10-06T00:00:00",
       "sted": "Quality Airport Hotel Gardermoen",
       "url": "https://www.fellesforbundet.no/aktuelt/kurs-og-arrangementer/2026/bransjekonferanse-forsvaret/"
+    },
+    {
+      "tittel": "Bransjekonferanse VTA/AIB",
+      "type": "Konferanse",
+      "dato": "2026-10-13T00:00:00",
+      "sted": "Radisson Hotel & Conference Centre Oslo Airport (Radisson RED)",
+      "url": "https://www.fellesforbundet.no/aktuelt/kurs-og-arrangementer/2026/bransjekonferanse-vtaaib/"
     }
   ]
 }
