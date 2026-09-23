@@ -1,15 +1,8 @@
 {
-  "oppdatert": "2026-09-22T10:23:20.753Z",
+  "oppdatert": "2026-09-23T10:18:51.256Z",
   "kilde": "fellesforbundet.no — kurs og konferanser (Nordland)",
   "kildeUrl": "https://www.fellesforbundet.no/aktuelt/kurs-og-arrangementer/?county=Nordland%20-%20Nordl%C3%A1nnda",
   "arrangementer": [
-    {
-      "tittel": "Baskurs byggfagene",
-      "type": "Kurs",
-      "dato": "2026-09-22T00:00:00",
-      "sted": "Quality Airport Hotel Gardermoen",
-      "url": "https://www.fellesforbundet.no/aktuelt/kurs-og-arrangementer/2026/baskurs-byggfagene/"
-    },
     {
       "tittel": "Tillitsvalgt 4 - alle fylker",
       "type": "Kurs",
@@ -86,6 +79,13 @@
       "dato": "2026-10-13T00:00:00",
       "sted": "Quality Airport Hotel Gardermoen",
       "url": "https://www.fellesforbundet.no/aktuelt/kurs-og-arrangementer/2026/bransjekonferanse-fly/"
+    },
+    {
+      "tittel": "Organiseringskurs – Region Nord – Avd 32  Transport Nord",
+      "type": "Kurs",
+      "dato": "2026-10-15T00:00:00",
+      "sted": "Thon Hotel Skagen, Bodø",
+      "url": "https://www.fellesforbundet.no/aktuelt/kurs-og-arrangementer/2026/ungdomskurs---organiseringagitering--region--nord/"
     }
   ]
 }
