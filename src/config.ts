@@ -9,7 +9,7 @@ export const PRISER = {
 
 export type Prisgruppe = keyof typeof PRISER;
 
-export const KONTONUMMER = '451635821274';
+export const KONTONUMMER = '45163582124';
 
 export const KONTAKT = {
   telefon: '75151228',

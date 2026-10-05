@@ -108,7 +108,7 @@ Avdelingens hovedside er nå **den offentlige fronten** (rot `/`), bygget fra de
 
 **Kvittering til bestiller:** Vises umiddelbart på `/takk`-siden (ikke e-post — Web3Forms' autosvar er en betalt funksjon som ikke er aktivert):
 - Valgte datoer, antall døgn, prisgruppe, totalpris
-- Kontonummer `451635821274`
+- Kontonummer `45163582124`
 - Betalingsreferanse (`UMB-ÅÅÅÅMMDD-INITIALER`, f.eks. `UMB-20260718-ON`)
 - «Datoen er ikke reservert før avdelingen bekrefter. Dørkoden sendes på SMS/e-post fra avdelingen når betalingen er registrert.»
 - Web3Forms-skjemaene sender `email`-feltet (bestillerens adresse) slik at kontoret kan svare direkte (Reply-To).
@@ -229,7 +229,7 @@ Turkortene er tekstbaserte (ingen bilder — avdelingen har ikke bilderettighete
 
 ```ts
 export const PRISER = { FFH: 700, FF: 1050, ANNET_LO: 1200 } as const;
-export const KONTONUMMER = "451635821274";
+export const KONTONUMMER = "45163582124";
 export const KONTAKT = {
   telefon: "75151228",
   epost: "avd143@fellesforbundet.org",
@@ -415,7 +415,7 @@ Nettsiden har ingen admin-del. Etter mottatt e-postforespørsel:
 | 6 sengeplasser, 2 soverom | 12 sengeplasser, 2 soverom + sovealkove + romslig hems | **Spec** |
 | 4 turtips (Umbukta-basert) | 6 turtips: Sauvasshytta, Kvitstindalstunet, Virvasshytta, Kjenvasshytta, Oksskolten, Uman | **Spec** |
 | Plassholder-tlf. 75 00 00 00 | 75151228 | **Spec** |
-| Plassholder-konto 1503.27.44871 | 451635821274 | **Spec** |
+| Plassholder-konto 1503.27.44871 | 45163582124 | **Spec** |
 
 CSS-variabler, komponent-stilene og layout følger design-HTML nøyaktig.
 

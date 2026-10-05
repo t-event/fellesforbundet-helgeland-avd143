@@ -173,6 +173,30 @@ sjekkPerson('ungdomssekretar', data.ungdomssekretar, {
   krever: ['navn', 'rolle', 'rolle_en', 'merknad', 'merknad_en'],
 });
 
+// ── Kontonummeret i src/config.ts ────────────────────────────────────
+// Norske kontonummer har 11 siffer der det siste er et MOD11-kontrollsiffer.
+// Høsten 2026 lå et nummer med tolv siffer ute på siden i flere måneder —
+// en feil denne sjekken hadde fanget ved første bygg. Se ERFARINGER.md.
+const KONFIG = join(__dirname, '..', 'src', 'config.ts');
+const konfigTekst = readFileSync(KONFIG, 'utf8');
+const kontoMatch = konfigTekst.match(/KONTONUMMER\s*=\s*'([^']*)'/);
+if (!kontoMatch) {
+  meld('src/config.ts', 'fant ikke KONTONUMMER — er konstanten omdøpt eller flyttet?');
+} else {
+  const konto = kontoMatch[1];
+  if (!/^\d{11}$/.test(konto)) {
+    meld('src/config.ts', `KONTONUMMER «${konto}» skal være nøyaktig 11 siffer uten mellomrom.`);
+  } else {
+    const vekter = [5, 4, 3, 2, 7, 6, 5, 4, 3, 2];
+    const sum = vekter.reduce((s, v, i) => s + v * Number(konto[i]), 0);
+    const rest = sum % 11;
+    const kontroll = rest === 0 ? 0 : 11 - rest;
+    if (kontroll === 10 || kontroll !== Number(konto[10])) {
+      meld('src/config.ts', `KONTONUMMER «${konto}» har feil kontrollsiffer (MOD11) — et siffer er trolig feil. Sjekk mot kontoutskrift/nettbank.`);
+    }
+  }
+}
+
 // ── Rapport ──────────────────────────────────────────────────────────
 const tell = (n, ord) => `${n} ${ord}`;
 

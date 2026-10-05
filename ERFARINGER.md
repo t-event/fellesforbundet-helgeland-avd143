@@ -307,6 +307,19 @@ Jeg flagget Cloudflare Access som en kritisk blokker foran en demo. Notatene
 sa allerede at gaten var bevisst, i påvente av lederens godkjenning. Fem
 minutters lesing hadde spart en unødig alarm.
 
+### Kontonummeret var aldri validert
+
+Kontonummeret for hyttebetalingen lå på nettsiden som `451635821274` —
+**tolv** siffer. Norske kontonummer har elleve, og det siste er et
+MOD11-kontrollsiffer, så feilen var maskinelt oppdagbar hele tiden. Ingen
+sjekket, verken jeg eller noe script, før avdelingen selv meldte fra
+(oktober 2026). Riktig nummer er `45163582124`, som validerer mot MOD11.
+Nummeret lå dessuten hardkodet på flere steder (config.ts, hjelp.astro,
+ordbok-nøklene, README, SPEC og gamle designutkast), så én rettelse måtte
+gjentas atten steder. **Data med kjent format — kontonummer, orgnr,
+telefonnummer — skal valideres maskinelt, og fakta som kan betales til
+feil konto skal bekreftes mot kilden, ikke kopieres fra et utkast.**
+
 ---
 
 ## 4. Nesten-tabber, fanget i tide

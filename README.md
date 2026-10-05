@@ -200,7 +200,7 @@ Kontoret mottar en e-post fra `noreply@web3forms.com` med:
 - Ønsket periode (fra–til)
 - Antall gjester, gruppe (FFH / FF / annet LO-forbund)
 - Beregnet pris og betalingsreferanse (f.eks. `UMB-2026 0712-JNH`)
-- Kontonummer `451635821274`
+- Kontonummer `45163582124`
 
 Den som booker ser samme info på kvitteringssiden (`/takk`) umiddelbart. (Automatisk e-postkvittering krever Web3Forms' betalte autosvar og er ikke aktivert.)
 
