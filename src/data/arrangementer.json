@@ -1,22 +1,8 @@
 {
-  "oppdatert": "2026-10-05T12:43:55.599Z",
+  "oppdatert": "2026-10-06T12:15:10.979Z",
   "kilde": "fellesforbundet.no — kurs og konferanser (Nordland)",
   "kildeUrl": "https://www.fellesforbundet.no/aktuelt/kurs-og-arrangementer/?county=Nordland%20-%20Nordl%C3%A1nnda",
   "arrangementer": [
-    {
-      "tittel": "Tillitsvalgt 2 - Region Nord",
-      "type": "Kurs",
-      "dato": "2026-10-05T00:00:00",
-      "sted": "Thon Hotel Polar Tromsø",
-      "url": "https://www.fellesforbundet.no/aktuelt/kurs-og-arrangementer/2026/tillitsvalgt-2-nordland-tromsfinnmark-tromso-ftv2/"
-    },
-    {
-      "tittel": "Bransjekonferanse Buss",
-      "type": "Konferanse",
-      "dato": "2026-10-05T00:00:00",
-      "sted": "Quality Airport Hotel Gardermoen",
-      "url": "https://www.fellesforbundet.no/aktuelt/kurs-og-arrangementer/2026/bransjekonferanse-buss/"
-    },
     {
       "tittel": "EWC-konferansen",
       "type": "Konferanse",
@@ -57,7 +43,7 @@
       "type": "Kurs",
       "dato": "2026-10-17T00:00:00",
       "sted": "Thon Hotel Skagen, Bodø",
-      "url": "https://www.fellesforbundet.no/aktuelt/kurs-og-arrangementer/2026/arkiv-2026/ungdomskurs---region-nord-med-avd.-32-transport-nord/"
+      "url": "https://www.fellesforbundet.no/aktuelt/kurs-og-arrangementer/2026/ungdomskurs---region-nord-med-avd.-32-transport-nord/"
     },
     {
       "tittel": "Bransjekonferanse Byggeindustri og Glass",
@@ -86,6 +72,20 @@
       "dato": "2026-10-28T00:00:00",
       "sted": "Quality Airport Hotel Gardermoen",
       "url": "https://www.fellesforbundet.no/aktuelt/kurs-og-arrangementer/2026/konsernkurs-bil/"
+    },
+    {
+      "tittel": "Likestillings- og likeverdskonferanse 2026",
+      "type": "Konferanse",
+      "dato": "2026-10-28T00:00:00",
+      "sted": "Quality Airport Gardermoen",
+      "url": "https://www.fellesforbundet.no/aktuelt/kurs-og-arrangementer/2026/likestillings--og-likeverdskonferanse-2026/"
+    },
+    {
+      "tittel": "Lokale forhandlinger - Region Nord med avd. 32 Transport Nord",
+      "type": "Kurs",
+      "dato": "2026-10-29T00:00:00",
+      "sted": "Thon Hotel Skagen, Bodø",
+      "url": "https://www.fellesforbundet.no/aktuelt/kurs-og-arrangementer/2026/lokale-forhandlinger---region-nord-med-avd.-32-transport-nord/"
     }
   ]
 }
