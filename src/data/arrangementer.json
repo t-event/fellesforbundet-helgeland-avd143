@@ -1,22 +1,8 @@
 {
-  "oppdatert": "2026-10-06T12:15:10.979Z",
+  "oppdatert": "2026-10-07T12:06:14.957Z",
   "kilde": "fellesforbundet.no — kurs og konferanser (Nordland)",
   "kildeUrl": "https://www.fellesforbundet.no/aktuelt/kurs-og-arrangementer/?county=Nordland%20-%20Nordl%C3%A1nnda",
   "arrangementer": [
-    {
-      "tittel": "EWC-konferansen",
-      "type": "Konferanse",
-      "dato": "2026-10-06T00:00:00",
-      "sted": "Quality Airport Hotel Gardermoen",
-      "url": "https://www.fellesforbundet.no/aktuelt/kurs-og-arrangementer/2026/ewc-konferansen/"
-    },
-    {
-      "tittel": "Bransjekonferanse Forsvaret",
-      "type": "Konferanse",
-      "dato": "2026-10-06T00:00:00",
-      "sted": "Quality Airport Hotel Gardermoen",
-      "url": "https://www.fellesforbundet.no/aktuelt/kurs-og-arrangementer/2026/bransjekonferanse-forsvaret/"
-    },
     {
       "tittel": "Bransjekonferanse VTA/AIB",
       "type": "Konferanse",
@@ -86,6 +72,20 @@
       "dato": "2026-10-29T00:00:00",
       "sted": "Thon Hotel Skagen, Bodø",
       "url": "https://www.fellesforbundet.no/aktuelt/kurs-og-arrangementer/2026/lokale-forhandlinger---region-nord-med-avd.-32-transport-nord/"
+    },
+    {
+      "tittel": "Bransjekonferanse Havbruk",
+      "type": "Konferanse",
+      "dato": "2026-11-02T00:00:00",
+      "sted": "Radisson Hotel & Conference Centre Oslo Airport (Radisson RED)",
+      "url": "https://www.fellesforbundet.no/aktuelt/kurs-og-arrangementer/2026/bransjekonferanse-havbruk/"
+    },
+    {
+      "tittel": "Regionkonferanse – Region Nord – Fellesforbundet",
+      "type": "Konferanse",
+      "dato": "2026-11-02T00:00:00",
+      "sted": "Clarion Hotel The Edge I Tromsø",
+      "url": "https://www.fellesforbundet.no/aktuelt/kurs-og-arrangementer/2026/arkiv-2026/regionkonferanse--region-nord--fellesforbundet/"
     }
   ]
 }
