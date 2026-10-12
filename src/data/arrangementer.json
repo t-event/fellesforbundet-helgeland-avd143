@@ -1,5 +1,5 @@
 {
-  "oppdatert": "2026-10-11T11:38:45.012Z",
+  "oppdatert": "2026-10-12T13:35:14.131Z",
   "kilde": "fellesforbundet.no — kurs og konferanser (Nordland)",
   "kildeUrl": "https://www.fellesforbundet.no/aktuelt/kurs-og-arrangementer/?county=Nordland%20-%20Nordl%C3%A1nnda",
   "arrangementer": [
@@ -23,13 +23,6 @@
       "dato": "2026-10-15T00:00:00",
       "sted": "Thon Hotel Skagen, Bodø",
       "url": "https://www.fellesforbundet.no/aktuelt/kurs-og-arrangementer/2026/ungdomskurs---organiseringagitering--region--nord/"
-    },
-    {
-      "tittel": "Ungdomskurs - Region Nord med avd. 32 Transport Nord",
-      "type": "Kurs",
-      "dato": "2026-10-17T00:00:00",
-      "sted": "Thon Hotel Skagen, Bodø",
-      "url": "https://www.fellesforbundet.no/aktuelt/kurs-og-arrangementer/2026/arkiv-2026/ungdomskurs---region-nord-med-avd.-32-transport-nord/"
     },
     {
       "tittel": "Bransjekonferanse Byggeindustri og Glass",
@@ -86,6 +79,13 @@
       "dato": "2026-11-02T00:00:00",
       "sted": "Clarion Hotel The Edge I Tromsø",
       "url": "https://www.fellesforbundet.no/aktuelt/kurs-og-arrangementer/2026/arkiv-2026/regionkonferanse--region-nord--fellesforbundet/"
+    },
+    {
+      "tittel": "Bransjekonferanse Hotell/Restaurant/Kantine og Reiseliv",
+      "type": "Konferanse",
+      "dato": "2026-11-10T00:00:00",
+      "sted": "Radisson Blu Airport Hotel, Gardermoen",
+      "url": "https://www.fellesforbundet.no/aktuelt/kurs-og-arrangementer/2026/bransjekonferanse-hotellrestaurantkantine-og-reiseliv/"
     }
   ]
 }
