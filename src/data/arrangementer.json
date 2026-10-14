@@ -1,22 +1,8 @@
 {
-  "oppdatert": "2026-10-13T12:59:07.833Z",
+  "oppdatert": "2026-10-14T10:39:46.679Z",
   "kilde": "fellesforbundet.no — kurs og konferanser (Nordland)",
   "kildeUrl": "https://www.fellesforbundet.no/aktuelt/kurs-og-arrangementer/?county=Nordland%20-%20Nordl%C3%A1nnda",
   "arrangementer": [
-    {
-      "tittel": "Bransjekonferanse VTA/AIB",
-      "type": "Konferanse",
-      "dato": "2026-10-13T00:00:00",
-      "sted": "Radisson Hotel & Conference Centre Oslo Airport (Radisson RED)",
-      "url": "https://www.fellesforbundet.no/aktuelt/kurs-og-arrangementer/2026/bransjekonferanse-vtaaib/"
-    },
-    {
-      "tittel": "Bransjekonferanse Fly",
-      "type": "Konferanse",
-      "dato": "2026-10-13T00:00:00",
-      "sted": "Quality Airport Hotel Gardermoen",
-      "url": "https://www.fellesforbundet.no/aktuelt/kurs-og-arrangementer/2026/bransjekonferanse-fly/"
-    },
     {
       "tittel": "Organiseringskurs – Region Nord – Avd 32  Transport Nord",
       "type": "Kurs",
@@ -86,6 +72,20 @@
       "dato": "2026-11-10T00:00:00",
       "sted": "Radisson Blu Airport Hotel, Gardermoen",
       "url": "https://www.fellesforbundet.no/aktuelt/kurs-og-arrangementer/2026/bransjekonferanse-hotellrestaurantkantine-og-reiseliv/"
+    },
+    {
+      "tittel": "Tillitsvalgt 3 - Region Nord",
+      "type": "Kurs",
+      "dato": "2026-11-16T00:00:00",
+      "sted": "Thon hotell Nordlys,Bodø",
+      "url": "https://www.fellesforbundet.no/aktuelt/kurs-og-arrangementer/2026/tillitsvalgt-3--nordland/"
+    },
+    {
+      "tittel": "Lærlingskonferanse høst 2026",
+      "type": "Konferanse",
+      "dato": "2026-11-18T00:00:00",
+      "sted": "Sørmarka hotell",
+      "url": "https://www.fellesforbundet.no/aktuelt/kurs-og-arrangementer/2026/larlingskonferanse-host-2026/"
     }
   ]
 }
