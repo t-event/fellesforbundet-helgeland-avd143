@@ -1,15 +1,8 @@
 {
-  "oppdatert": "2026-10-20T10:27:58.760Z",
+  "oppdatert": "2026-10-21T10:38:51.679Z",
   "kilde": "fellesforbundet.no — kurs og konferanser (Nordland)",
   "kildeUrl": "https://www.fellesforbundet.no/aktuelt/kurs-og-arrangementer/?county=Nordland%20-%20Nordl%C3%A1nnda",
   "arrangementer": [
-    {
-      "tittel": "Bransjekonferanse Byggeindustri og Glass",
-      "type": "Konferanse",
-      "dato": "2026-10-20T00:00:00",
-      "sted": "Quality Hotel River Station Drammen",
-      "url": "https://www.fellesforbundet.no/aktuelt/kurs-og-arrangementer/2026/bransjekonferanse-byggeindustri-og-glass/"
-    },
     {
       "tittel": "Ungdomsleder konferanse 2026",
       "type": "Konferanse",
@@ -86,6 +79,13 @@
       "dato": "2026-11-25T00:00:00",
       "sted": "Quality Airport Hotel Gardermoen",
       "url": "https://www.fellesforbundet.no/aktuelt/kurs-og-arrangementer/2026/styrekurs---konsern-2026/"
+    },
+    {
+      "tittel": "Bransjekonferanse Byggfag",
+      "type": "Konferanse",
+      "dato": "2026-11-26T00:00:00",
+      "sted": "Clarion Hotel Oslo Airport",
+      "url": "https://www.fellesforbundet.no/aktuelt/kurs-og-arrangementer/2026/bransjekonferanse-byggfag/"
     }
   ]
 }
