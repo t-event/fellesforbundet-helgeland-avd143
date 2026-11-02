@@ -9,7 +9,7 @@
 Statisk nettside for Fellesforbundet Helgeland (avd. 143): **avdelingens hjemmeside** og **hyttebooking** for de to hyttene. Ingen database, ingen backend, ingen betalingsløsning på nettsiden. Alt hostes på GitHub Pages i **ett repo / ett Astro-prosjekt**.
 
 **GitHub-repo:** `https://github.com/t-event/fellesforbundet-helgeland-avd143`  
-**Domene:** `ffh143.no` — live og offentlig (registrert hos domene.no, navnetjenere hos Cloudflare → GitHub Pages, HTTPS). Passord-gaten (Cloudflare Access) ble fjernet 7. sep. 2026.  
+**Domene:** `ffh143.no` — live og offentlig (registrert hos domene.no, navnetjenere hos Cloudflare, kun DNS — trafikk og HTTPS går rett til GitHub Pages). Passord-gaten (Cloudflare Access) ble fjernet 7. sep. 2026.  
 **Gammel Pages-URL:** `t-event.github.io/fellesforbundet-helgeland-avd143` (videresender 301 til ffh143.no)  
 **Status:** Avdelingens hovedside er **fronten** (rot `/`). Hytteutleia er en seksjon under «Hytteutleie ▾» i menyen (`/hytter`, `/umbukta`, `/turtips`, `/hjelp`). Én felles meny/footer for hele sida (ingen variant-splitt). MERK: gjenstående plassholder = portrettbilder av folk (valgfritt, se [PLACEHOLDERS.md](PLACEHOLDERS.md)). Sida er offentlig og indekseres av Google.
 
@@ -60,7 +60,7 @@ Avdelingens hovedside er nå **den offentlige fronten** (rot `/`), bygget fra de
 - **Én felles footer** (`Footer.astro`): Avdelingen, Hyttene, Kontakt + juridisk bunnlinje.
 - Tidligere skjult `/forhandsvisning`-struktur er fjernet (sidene flyttet til rot, `noindex` + sitemap-filter borte).
 
-**Gjenstår (plassholdere/ekstern):** portrettbilder av folk (valgfritt — initial-avatarer brukes ellers, se [PLACEHOLDERS.md](PLACEHOLDERS.md)), lokal kontingentsats — **avklart**: 1,5 % + 0,1 % lokalt = 1,6 %. Domenet `ffh143.no` er live og offentlig (Cloudflare → GitHub Pages).
+**Gjenstår (plassholdere/ekstern):** portrettbilder av folk (valgfritt — initial-avatarer brukes ellers, se [PLACEHOLDERS.md](PLACEHOLDERS.md)), lokal kontingentsats — **avklart**: 1,5 % + 0,1 % lokalt = 1,6 %. Domenet `ffh143.no` er live og offentlig (Cloudflare DNS → GitHub Pages).
 
 ---
 
@@ -331,7 +331,7 @@ for rutinen med å legge til et språk.
 - `og:site_name` = «Fellesforbundet Helgeland avd. 143» (het tidligere
   «… — Hytteutleie», som var feil for avdelingssidene)
 - `robots.txt` — tillater indeksering, peker til `sitemap-index.xml`.
-  **Merk:** Cloudflare skyter inn sin egen «managed robots.txt» øverst i fila,
+  **Merk (gjaldt til 2. nov. 2026, mens proxy var på):** Cloudflare skjøt inn sin egen «managed robots.txt» øverst i fila,
   som stenger ute AI-crawlere (GPTBot, ClaudeBot, Google-Extended m.fl.).
   Googlebot for vanlig søk er ikke berørt, og vår egen `Sitemap:`-linje står
   under og når ut — verifisert 8. sep. 2026.
@@ -518,6 +518,12 @@ tabell som manglet alle byge-variantene. Regn bruker alltid `cloud-rain` —
 ---
 
 ## 21. As-built — drift, ytelse og bookingregler (8. september 2026)
+
+> **Endret 2. nov. 2026:** Cloudflare-proxy er slått av (alle DNS-poster grå sky),
+> fordi den hindret GitHub Pages i å fornye HTTPS-sertifikatet og ga feil 526.
+> Det som står under om Web Analytics, cache-regler, Scrape Shield og «managed
+> robots.txt» gjelder derfor **ikke** lenger — ingenting injiseres ved kanten.
+> Se README § 5.
 
 **Cloudflare Web Analytics er på.** Beaconen skytes inn ved kanten, ikke fra
 repoet — den kan altså slås av og på uten at noe her endrer seg. CSP-en er åpen

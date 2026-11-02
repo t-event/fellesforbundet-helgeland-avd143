@@ -15,7 +15,7 @@ Avdelingens nettside: **avdelingens hjemmeside** (forside, medlemskap, aktuelt, 
 | `/personvern`, `/cookies`, `/tilgjengelighet` | Personvern, cookies, tilgjengelighetserklæring |
 
 - Avdelingens hovedside er **fronten** på rot. Hytteutleia er en seksjon under «Hytteutleie ▾» i menyen. Én felles meny + footer for hele sida.
-- **Domene:** **`ffh143.no`** er live og **offentlig** (navnetjenere hos Cloudflare → GitHub Pages, HTTPS). Passord-gaten ble fjernet 7. sep. 2026 — se seksjon 5.
+- **Domene:** **`ffh143.no`** er live og **offentlig** (navnetjenere hos Cloudflare, men **ikke proxet** — trafikken går rett til GitHub Pages, som også står for HTTPS). Passord-gaten ble fjernet 7. sep. 2026 — se seksjon 5.
 
 ### Egne rutiner i egne filer
 
@@ -135,21 +135,38 @@ Siden vil nå bygges og publiseres automatisk ved hvert push til `main`-grenen. 
 
 ## 5. Eget domene
 
-Domenet **`ffh143.no`** er registrert hos domene.no og **live**. Navnetjenerne er flyttet til **Cloudflare**, som står foran GitHub Pages (DNS + proxy + HTTPS). Slik er det satt opp som as-built — og hva du gjør hvis noe må endres:
+Domenet **`ffh143.no`** er registrert hos domene.no og **live**. Navnetjenerne er flyttet til **Cloudflare**, men Cloudflare brukes **bare som DNS** for nettsida. Siden 2. nov. 2026 er det GitHub Pages som tar imot trafikken og står for HTTPS-sertifikatet. Slik er det satt opp som as-built — og hva du gjør hvis noe må endres:
 
 ### DNS (hos Cloudflare)
 
 - Apex `ffh143.no` → fire A-poster mot GitHub Pages: `185.199.108.153`, `.109.153`, `.110.153`, `.111.153`
 - `www` → CNAME `t-event.github.io`
 - **E-post @ffh143.no beholdes:** MX (`mail.ffh143.no`), `mail`/`webmail`/`autodiscover`/`autoconfig` m.fl. + SPF/DKIM/DMARC peker fortsatt på domene.no. **Disse må stå «DNS only» (grå sky)** — Cloudflare-proxy ødelegger e-post.
-- Kun `ffh143.no` + `www` er proxet (oransje sky), med SSL-modus **Full (strict)**. Alt annet er grått.
+- **Alle poster står «DNS only» (grå sky) — også `ffh143.no` og `www`.** Ikke slå på proxy (oransje sky) igjen.
+
+> ### ⚠️ Hvorfor skyene skal være grå
+>
+> GitHub Pages bruker et Let's Encrypt-sertifikat som varer i 90 dager og fornyes
+> automatisk — **men bare hvis domenet peker rett på GitHub sine IP-er**. Med
+> oransje sky ser GitHub bare Cloudflare sine IP-er, fornyelsen feiler stille,
+> og når sertifikatet går ut svarer Cloudflare (i modus Full (strict)) med
+> **feil 526** til alle besøkende. Det skjedde 2. nov. 2026, se
+> [ERFARINGER.md](ERFARINGER.md).
+>
+> Med grå sky fornyer GitHub sertifikatet selv, og ingen trenger å gjøre noe.
+> Prisen er at det Cloudflare gjorde *ved kanten* ikke lenger kjører: cache-reglene,
+> Web Analytics-beaconen og Cloudflares «managed robots.txt». GitHub Pages har sin
+> egen CDN og sender `max-age=600`, så for besøkende merkes ingen forskjell.
+>
+> **Sjekk:** GitHub → Settings → Pages skal vise «DNS check successful». Står det
+> «DNS check unsuccessful / NotServedByPagesError», er noe proxet igjen.
 
 ### Kode (allerede satt)
 
 - [public/CNAME](public/CNAME) = `ffh143.no`
 - [astro.config.mjs](astro.config.mjs) + [.github/workflows/deploy.yml](.github/workflows/deploy.yml): `SITE=https://ffh143.no`, `BASE=/`
 - [public/robots.txt](public/robots.txt): sitemap-URL på `ffh143.no`
-- GitHub → Settings → Pages → Custom domain = `ffh143.no`, **Enforce HTTPS** på (Let's Encrypt-cert utstedt)
+- GitHub → Settings → Pages → Custom domain = `ffh143.no`, **Enforce HTTPS** på (Let's Encrypt-cert, fornyes automatisk av GitHub — nytt utstedt 2. nov. 2026)
 
 ### Lansering — gjennomført
 
@@ -160,6 +177,8 @@ den er meldt inn i Google Search Console (se seksjon 10).
 Skal siden midlertidig stenges igjen — for eksempel under en større omlegging —
 settes en ny self-hosted app på `ffh143.no` + `www` under Cloudflare →
 Zero Trust → Access → Applications. Husk at Google da ikke kan crawle siden.
+Access krever at `ffh143.no` + `www` er proxet (oransje sky) — slå proxy av igjen
+etterpå, ellers kommer sertifikatproblemet over tilbake.
 
 ---
 

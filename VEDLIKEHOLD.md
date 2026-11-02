@@ -120,7 +120,15 @@ av dem — hva som skjedde og hvorfor det ikke ble oppdaget — står i
   `100vw`. Oppgir du for mye, henter mobilen en større variant enn nødvendig.
   Mål med `getBoundingClientRect()` i et emulert mobilvindu framfor å anslå.
   Breddelista i `Bilde.astro` og `scripts/gen-bilder.mjs` **må** være identisk.
-- **Cloudflare kan legge til scripts uten at vi deployer.** Web Analytics-beaconen
+- **Oransje sky i Cloudflare tar ned sida etter ≤ 90 dager.** GitHub Pages kan
+  bare fornye Let's Encrypt-sertifikatet når `ffh143.no` peker rett på GitHub sine
+  IP-er (`185.199.108–111.153`). Med proxy på feiler fornyelsen stille, og når
+  sertifikatet går ut viser Cloudflare **feil 526** («Invalid SSL certificate»).
+  Alle poster skal derfor stå **DNS only**. Ser du 526: slå av proxy på `@`
+  (fire A-poster) og `www`, vent 5–15 min og trykk «Check again» under
+  GitHub → Settings → Pages. Ikke trykk *Remove* først.
+- **Cloudflare kan legge til scripts uten at vi deployer.** (Gjelder bare med
+  proxy på.) Web Analytics-beaconen
   dukket opp ved kanten og ble blokkert av CSP-en, med konsollfeil på hver
   sidelast. Ser du en CSP-feil for en host vi ikke har lagt inn: sjekk hva
   Cloudflare injiserer før du leter i koden. En ekstern host kan trenge **to**
@@ -158,12 +166,19 @@ Disse styres i andres kontrollpanel og kan ikke fikses i koden.
 
 | Hva | Hvor | Status |
 |-----|------|--------|
-| DNS, proxy, cache | Cloudflare | Global buffer-TTL 4 t. To **cache-regler** overstyrer den: `/_astro/` → 1 år (trygt, hash i filnavnet) og `/images/` → 30 dager. Se advarselen under tabellen. |
-| `email-decode.min.js` | Cloudflare → Scrape Shield | **Slått av** 8. sep. 2026. Blokkerte opptegningen ~490 ms på mobil. E-postadressene står nå i klartekst i HTML-en — et bevisst bytte, siden de allerede er offentlige hos Fellesforbundet. |
+| DNS | Cloudflare | **Kun DNS — alle poster grå sky («DNS only»)** siden 2. nov. 2026. Proxy av gjør at GitHub Pages fornyer HTTPS-sertifikatet selv. **Ikke slå på oransje sky** — se «Kjente fallgruver». Cache-reglene (`/_astro/` 1 år, `/images/` 30 dager) ligger fortsatt i Cloudflare, men virker ikke uten proxy; GitHub Pages sender `max-age=600` på alt. |
+| `email-decode.min.js` | Cloudflare → Scrape Shield | Uten virkning så lenge proxy er av. **Slått av** 8. sep. 2026. Blokkerte opptegningen ~490 ms på mobil. E-postadressene står nå i klartekst i HTML-en — et bevisst bytte, siden de allerede er offentlige hos Fellesforbundet. |
 | Sikkerhetsheadere (HSTS, X-Frame-Options m.m.) | Cloudflare → Transform Rules | **Bevisst utelatt** per 7. sep. 2026. |
-| Web Analytics | Cloudflare | **På** per 8. sep. 2026. Beaconen injiseres ved kanten, ikke fra dette repoet. CSP-en er åpen for den, og den er beskrevet på /personvern og /cookies på alle sju språk. Skrus den av, skal de to sidene rettes tilbake. |
+| Web Analytics | Cloudflare | **Kjører ikke** siden 2. nov. 2026: beaconen injiseres ved kanten og forsvinner når proxy er av (verifisert). /personvern og /cookies beskriver den fortsatt — se ⚠️ under. Beaconen injiseres ved kanten, ikke fra dette repoet. CSP-en er åpen for den, og den er beskrevet på /personvern og /cookies på alle sju språk. Skrus den av, skal de to sidene rettes tilbake. |
 | Mottaker for skjema-e-post | Web3Forms-dashbordet | `avd143@fellesforbundet.no`. **Ikke det samme** som den offentlige adressen på sida, `avd143@fellesforbundet.org` — forskjellen er tilsiktet. |
 | Outlook-kalenderen | Avdelingens Microsoft-konto | ICS-lenka ligger som GitHub-secret `CALENDAR_ICS_URL`. Aldri i koden. |
+
+> ### ⚠️ Web Analytics står fortsatt beskrevet på /personvern og /cookies
+>
+> Etter at proxy ble slått av 2. nov. 2026 samler sida ikke inn noe via Cloudflare.
+> Enten rettes de to sidene (alle sju språk), eller så legges beaconen inn manuelt
+> som et `<script>` i layouten (Cloudflare → Web Analytics → «Manage site» gir
+> snutten) — da stemmer teksten igjen og CSP-en er allerede åpen for den.
 
 > ### ⚠️ Aldri en cache-regel som treffer bredt
 >
@@ -183,8 +198,10 @@ Disse styres i andres kontrollpanel og kan ikke fikses i koden.
 
 ## Hvis noe haster
 
-- **Sida er nede:** sjekk **Actions** først, deretter Cloudflare, deretter
-  GitHub Pages-status. Sida er statisk — det er sjelden koden.
+- **Sida er nede:** sjekk **Actions** først, deretter GitHub → Settings → Pages
+  (står det «DNS check unsuccessful» eller en sertifikatfeil?), deretter at
+  ingen poster i Cloudflare DNS har fått oransje sky. **Feil 526 = sertifikat,
+  se «Kjente fallgruver».** Sida er statisk — det er sjelden koden.
 - **Feil innhold ute:** `git revert` på siste commit og push. Ny utrulling tar
   under ett minutt.
 - **Teknisk kontakt:** T-Event v/ Mathias — mathias@t-event.no · 929 63 907.

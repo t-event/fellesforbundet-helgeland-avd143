@@ -320,6 +320,29 @@ gjentas atten steder. **Data med kjent format — kontonummer, orgnr,
 telefonnummer — skal valideres maskinelt, og fakta som kan betales til
 feil konto skal bekreftes mot kilden, ikke kopieres fra et utkast.**
 
+### Oransje sky foran GitHub Pages — sida nede med feil 526
+
+**Hva skjedde:** 2. nov. 2026 svarte både `ffh143.no` og `www` med **526**
+(«Invalid SSL certificate») fra Cloudflare. Bygg og deploy var grønne hele tida.
+
+**Hvorfor:** Oppsettet var dokumentert som «proxet (oransje sky), Full (strict)»
+og så riktig ut. Men GitHub Pages fornyer Let's Encrypt-sertifikatet (90 dager)
+bare når domenet peker rett på GitHub sine IP-er. Bak Cloudflare-proxy så GitHub
+bare Cloudflare sine IP-er, fornyelsen feilet stille, og da det gamle
+sertifikatet gikk ut, nektet Full (strict) å snakke med GitHub. Ingen sjekk i
+repoet ser på sertifikatet, så ingenting varslet. Cloudflare-panelet viste noe
+som ble lest som «Full» — sannsynligvis automatisk modus som i praksis kjørte
+strict, for 526 oppstår ikke i vanlig Full.
+
+**Løsningen:** proxy av (grå sky) på `@` og `www`. GitHub utstedte nytt
+sertifikat (gyldig til 31. jan. 2027) og fornyer selv heretter. Vi lar skyene
+stå grå permanent, og tar konsekvensen: Web Analytics, cache-reglene og
+Cloudflares «managed robots.txt» virker ikke lenger (verifisert samme dag).
+
+**Lærdom:** et oppsett som virker på lanseringsdagen kan ha en innebygd
+utløpsdato. Spør «hva skjer om 90 dager?» for alt med sertifikater eller
+tokens, og dokumenter *hvorfor* en innstilling er som den er — ikke bare hva.
+
 ---
 
 ## 4. Nesten-tabber, fanget i tide
