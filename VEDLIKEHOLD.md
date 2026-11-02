@@ -169,16 +169,9 @@ Disse styres i andres kontrollpanel og kan ikke fikses i koden.
 | DNS | Cloudflare | **Kun DNS — alle poster grå sky («DNS only»)** siden 2. nov. 2026. Proxy av gjør at GitHub Pages fornyer HTTPS-sertifikatet selv. **Ikke slå på oransje sky** — se «Kjente fallgruver». Cache-reglene (`/_astro/` 1 år, `/images/` 30 dager) ligger fortsatt i Cloudflare, men virker ikke uten proxy; GitHub Pages sender `max-age=600` på alt. |
 | `email-decode.min.js` | Cloudflare → Scrape Shield | Uten virkning så lenge proxy er av. **Slått av** 8. sep. 2026. Blokkerte opptegningen ~490 ms på mobil. E-postadressene står nå i klartekst i HTML-en — et bevisst bytte, siden de allerede er offentlige hos Fellesforbundet. |
 | Sikkerhetsheadere (HSTS, X-Frame-Options m.m.) | Cloudflare → Transform Rules | **Bevisst utelatt** per 7. sep. 2026. |
-| Web Analytics | Cloudflare | **Kjører ikke** siden 2. nov. 2026: beaconen injiseres ved kanten og forsvinner når proxy er av (verifisert). /personvern og /cookies beskriver den fortsatt — se ⚠️ under. Beaconen injiseres ved kanten, ikke fra dette repoet. CSP-en er åpen for den, og den er beskrevet på /personvern og /cookies på alle sju språk. Skrus den av, skal de to sidene rettes tilbake. |
+| Web Analytics | Cloudflare | **Fjernet** 2. nov. 2026. Kjører ikke uten proxy, omtalen er tatt bort fra /personvern og /cookies (alle språk), og `cloudflareinsights.com` er tatt ut av CSP-en. Skal den inn igjen: legg beacon-snutten manuelt i layouten, åpne CSP-en (`script-src` + `connect-src`) og skriv omtalen inn igjen på begge sidene. |
 | Mottaker for skjema-e-post | Web3Forms-dashbordet | `avd143@fellesforbundet.no`. **Ikke det samme** som den offentlige adressen på sida, `avd143@fellesforbundet.org` — forskjellen er tilsiktet. |
 | Outlook-kalenderen | Avdelingens Microsoft-konto | ICS-lenka ligger som GitHub-secret `CALENDAR_ICS_URL`. Aldri i koden. |
-
-> ### ⚠️ Web Analytics står fortsatt beskrevet på /personvern og /cookies
->
-> Etter at proxy ble slått av 2. nov. 2026 samler sida ikke inn noe via Cloudflare.
-> Enten rettes de to sidene (alle sju språk), eller så legges beaconen inn manuelt
-> som et `<script>` i layouten (Cloudflare → Web Analytics → «Manage site» gir
-> snutten) — da stemmer teksten igjen og CSP-en er allerede åpen for den.
 
 > ### ⚠️ Aldri en cache-regel som treffer bredt
 >

@@ -362,7 +362,7 @@ Vises tydelig på Umbukta-siden og kvitteringssiden:
 - ICS-URL kun i GitHub Actions-secret, aldri i kildekode
 - Web3Forms access-key er public/trygg — OK i frontend
 - Ingen server-hemmeligheter i drift
-- GDPR: Nettsiden lagrer ingenting i nettleseren utover `lang` og `samtykke` — skjemadata finnes kun hos avdelingen og Web3Forms. **Cloudflare Web Analytics** kjører i tillegg (se § 21): cookiefri, ingen lagring på enheten, aggregerte tall til Cloudflare. Beskrevet på /personvern og /cookies.
+- GDPR: Nettsiden lagrer ingenting i nettleseren utover `lang` og `samtykke` — skjemadata finnes kun hos avdelingen og Web3Forms. Ingen besøksstatistikk: Cloudflare Web Analytics ble fjernet 2. nov. 2026 (se § 21).
 - **CSP** leveres via `<meta>` (GitHub Pages kan ikke sette headere). Eksterne kilder er begrenset til det siden faktisk bruker. `frame-ancestors` og `sandbox` virker ikke i meta-CSP og settes ikke. Legger du til en tjeneste, husk at én host kan trenge **flere** direktiver — beaconen krevde både `script-src` og `connect-src`.
 - Samtykketekst vises i booking- og kontaktskjema
 - Dørkode: håndteres utelukkende av avdelingen, ALDRI i kode, e-poster eller nettsted
@@ -523,6 +523,8 @@ tabell som manglet alle byge-variantene. Regn bruker alltid `cloud-rain` —
 > fordi den hindret GitHub Pages i å fornye HTTPS-sertifikatet og ga feil 526.
 > Det som står under om Web Analytics, cache-regler, Scrape Shield og «managed
 > robots.txt» gjelder derfor **ikke** lenger — ingenting injiseres ved kanten.
+> Web Analytics er fjernet helt: omtalen er tatt bort fra /personvern og /cookies,
+> og `cloudflareinsights.com` er ute av CSP-en.
 > Se README § 5.
 
 **Cloudflare Web Analytics er på.** Beaconen skytes inn ved kanten, ikke fra

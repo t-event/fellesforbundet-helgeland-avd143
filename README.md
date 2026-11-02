@@ -155,7 +155,8 @@ Domenet **`ffh143.no`** er registrert hos domene.no og **live**. Navnetjenerne e
 >
 > Med grå sky fornyer GitHub sertifikatet selv, og ingen trenger å gjøre noe.
 > Prisen er at det Cloudflare gjorde *ved kanten* ikke lenger kjører: cache-reglene,
-> Web Analytics-beaconen og Cloudflares «managed robots.txt». GitHub Pages har sin
+> Web Analytics (nå fjernet fra personvern-/cookie-sidene og CSP-en) og Cloudflares
+> «managed robots.txt». GitHub Pages har sin
 > egen CDN og sender `max-age=600`, så for besøkende merkes ingen forskjell.
 >
 > **Sjekk:** GitHub → Settings → Pages skal vise «DNS check successful». Står det

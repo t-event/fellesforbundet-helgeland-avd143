@@ -34,7 +34,7 @@ jobs:
         run: npm run build
         env:
           # SITE = kun origin (uten understi). Eget domene aktivt (ffh143.no via
-          # Cloudflare → GitHub Pages), så BASE er rot. Gammel github.io-adresse:
+          # Cloudflare DNS → GitHub Pages), så BASE er rot. Gammel github.io-adresse:
           #   SITE: https://t-event.github.io
           #   BASE: /fellesforbundet-helgeland-avd143
           SITE: https://ffh143.no
