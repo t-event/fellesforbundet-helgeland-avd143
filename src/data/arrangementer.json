@@ -1,22 +1,8 @@
 {
-  "oppdatert": "2026-11-02T13:53:44.974Z",
+  "oppdatert": "2026-11-03T13:02:16.812Z",
   "kilde": "fellesforbundet.no — kurs og konferanser (Nordland)",
   "kildeUrl": "https://www.fellesforbundet.no/aktuelt/kurs-og-arrangementer/?county=Nordland%20-%20Nordl%C3%A1nnda",
   "arrangementer": [
-    {
-      "tittel": "Bransjekonferanse Havbruk",
-      "type": "Konferanse",
-      "dato": "2026-11-02T00:00:00",
-      "sted": "Radisson Hotel & Conference Centre Oslo Airport (Radisson RED)",
-      "url": "https://www.fellesforbundet.no/aktuelt/kurs-og-arrangementer/2026/bransjekonferanse-havbruk/"
-    },
-    {
-      "tittel": "Regionkonferanse – Region Nord – Fellesforbundet",
-      "type": "Konferanse",
-      "dato": "2026-11-02T00:00:00",
-      "sted": "Clarion Hotel The Edge I Tromsø",
-      "url": "https://www.fellesforbundet.no/aktuelt/kurs-og-arrangementer/2026/arkiv-2026/regionkonferanse--region-nord--fellesforbundet/"
-    },
     {
       "tittel": "Bransjekonferanse Hotell/Restaurant/Kantine og Reiseliv",
       "type": "Konferanse",
