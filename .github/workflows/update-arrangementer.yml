@@ -9,6 +9,7 @@ on:
 permissions:
   contents: write  # Nødvendig for å committe src/data/arrangementer.json
   actions: write   # Nødvendig for å utløse deploy-workflowen etter push
+  issues: write    # Nødvendig for å åpne/lukke varselsak ved feil
 
 jobs:
   update:
@@ -50,3 +51,35 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: gh workflow run deploy.yml --ref main
+
+      # Varsel: en feilet kjøring åpner ÉN sak (e-post til t-event), og saken
+      # lukkes av seg selv når jobben virker igjen. Ingen ny kommentar per
+      # feilet kjøring, så en jobb som feiler hver time ikke gir e-post hver time.
+      # Jobben feilet før stille — i nov. 2026 gikk det 10 dager uoppdaget.
+      - name: Varsle om feil (åpne sak)
+        if: failure()
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          TITTEL='Automatisk jobb feiler: Oppdater arrangementer'
+          nr=$(gh issue list --state open --limit 100 --json number,title --jq ".[] | select(.title == \"$TITTEL\") | .number" | head -1)
+          if [ -z "$nr" ]; then
+            gh issue create --title "$TITTEL" --assignee t-event --body "Jobben «Oppdater arrangementer» feilet: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+
+          Kurs og konferanser på /aktuelt blir stående som de var ved siste vellykkede kjøring. Ofte skyldes det at fellesforbundet.no har endret seg.
+
+          Saken lukkes automatisk når jobben går grønt igjen. Se VEDLIKEHOLD.md for feilsøking."
+          fi
+
+      - name: Lukk varsel når jobben virker igjen
+        if: success()
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          TITTEL='Automatisk jobb feiler: Oppdater arrangementer'
+          nr=$(gh issue list --state open --limit 100 --json number,title --jq ".[] | select(.title == \"$TITTEL\") | .number" | head -1)
+          if [ -n "$nr" ]; then
+            gh issue close "$nr" --comment "Virker igjen: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          fi

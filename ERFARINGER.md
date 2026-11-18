@@ -244,6 +244,34 @@ Jeg gikk i den samme fella igjen senere, og da avbrøt den en kommandokjede som
 også skulle skrive til denne fila — så endringen forsvant stille. Bruk
 `find dist -maxdepth 1 -name '_*.html' -delete`, som ikke bryr seg om treff.
 
+### Hytte-dataene til Google ble aldri skrevet ut
+
+**Hva skjedde:** `/umbukta` hadde en `LodgingBusiness`-blokk (adresse,
+koordinater, pris, fasiliteter) merket `slot="head"`. Layout hadde ingen slot
+med det navnet, så Astro kastet blokken uten å si fra. Den gikk live ved
+lanseringen og var borte i over fire måneder. Oppdaget 18. nov. 2026 ved et
+tilfelle, under kontroll av Astro 7-oppgraderingen.
+
+**Hvorfor:** Bygget feiler ikke på innhold til en slot som ikke finnes. Ingen
+sjekk så etter at de strukturerte dataene faktisk sto i den ferdige HTML-en —
+koden *så* riktig ut i kildefila.
+
+**Etter dette:** `<slot name="head" />` i Layout. Strukturerte data kontrolleres
+i `dist/`, ikke i kilden: `grep -c '"@type":"LodgingBusiness"' dist/umbukta/index.html` (søk på typen, ikke bare ordet — det kan stå i en kommentar).
+
+### «Skriv ikke ved feil» gjorde feilen usynlig
+
+**Hva skjedde:** Arrangement-jobben var bevisst laget slik at den beholder
+forrige data når kilden svikter. Da fellesforbundet.no flyttet til WordPress,
+feilet den hver dag i ti dager. /aktuelt så normal ut, og ingen fikk beskjed.
+
+**Hvorfor:** Vernet mot dårlige data hadde ikke noe tilsvarende vern mot at
+feilen ble oversett. En rød kjøring i Actions er bare synlig for den som
+ser etter.
+
+**Etter dette:** begge cron-jobbene åpner en GitHub-sak (tildelt `t-event`)
+når de feiler, og lukker den selv når de virker igjen.
+
 ---
 
 ## 3. Antakelser jeg ikke sjekket
@@ -364,6 +392,12 @@ tokens, og dokumenter *hvorfor* en innstilling er som den er — ikke bare hva.
   brukeren så en gyldig dato, sto påskemeldinga igjen under et helt greit felt.
   Fanget av et kontrolltilfelle som gjorde nettopp det — avvist valg, deretter
   gyldig valg. **Enhver melding som settes, må også ha en vei ut.**
+
+- **Astro 7 limte sammen ord og fjernet mobiloppsett på eldre iPhoner.** Den
+  nye standarden for mellomrom ga «hyttedøra —se turtips», og Vite 8 skrev
+  media-spørringer i en syntaks iOS før 16.4 ikke forstår. Bygget var grønt i
+  begge tilfeller. Fanget fordi `npm run tekster` falt fra 804 til 800 treff og
+  fordi utdataene ble sammenlignet linje for linje med Astro 6-bygget.
 
 ---
 

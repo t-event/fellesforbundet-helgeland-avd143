@@ -12,8 +12,8 @@ eller utvikler (T-Event) som gjør jobben.
 
 | Hva | Hvordan | Hvis det ryker |
 |-----|---------|----------------|
-| Ledige hyttedatoer | `update-availability.yml`, hver time. Leser avdelingens Outlook-kalender. | Kalenderen på sida fryser på gamle datoer. Se **Actions** på github.com. |
-| Kurs og konferanser | `update-arrangementer.yml`, daglig 06:00 UTC (kjører i praksis 09:30–10:00). Henter fra fellesforbundet.no. | /aktuelt viser gamle arrangementer. Scriptet skriver ikke noe hvis kilden endrer seg — da beholdes forrige gode data med vilje. Det betyr også at feilen er **stille**: i nov. 2026 feilet jobben daglig i ~10 dager (kilden flyttet til WordPress, gammel URL ga 404) uten at noen merket det. Se etter røde «Oppdater arrangementer»-kjøringer i Actions. |
+| Ledige hyttedatoer | `update-availability.yml`, hver time. Leser avdelingens Outlook-kalender. | Kalenderen på sida fryser på gamle datoer. Jobben åpner en GitHub-sak («Automatisk jobb feiler: …», tildelt t-event) ved feil og lukker den når den virker igjen. |
+| Kurs og konferanser | `update-arrangementer.yml`, daglig 06:00 UTC (kjører i praksis 09:30–10:00). Henter fra fellesforbundet.no. | /aktuelt viser gamle arrangementer. Scriptet skriver ikke noe hvis kilden endrer seg — da beholdes forrige gode data med vilje. Det betyr også at feilen er **stille**: i nov. 2026 feilet jobben daglig i ~10 dager (kilden flyttet til WordPress, gammel URL ga 404) uten at noen merket det. Nå åpner jobben en GitHub-sak ved feil og lukker den når den virker igjen. |
 | Påskeseksjonen | Datoen regnes ut for alle år (Meeus/Jones/Butcher). Vises 1. okt. → 2. påskedag. | — |
 | Årstall i bunnteksten | Settes av JavaScript. | — |
 | Vær og webkamera | Hentes live fra MET og Statens vegvesen. | Widgeten viser «Vær ikke tilgjengelig». Som regel forbigående hos kilden. |

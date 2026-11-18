@@ -209,6 +209,9 @@ const brodsmuleMork = morkeHero.has(sti);
     })} />
   )}
 
+  <!-- Sidespesifikke head-elementer (slot="head", brukt av /umbukta) -->
+  <slot name="head" />
+
   <!-- Favicon og web app manifest -->
   <link rel="icon" type="image/svg+xml" href={`${base}/favicon.svg`} />
   <link rel="apple-touch-icon" href={`${base}/apple-touch-icon.png`} />
