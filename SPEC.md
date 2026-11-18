@@ -450,8 +450,11 @@ Endringer og tillegg utover opprinnelig spec:
 - **Integrasjon 4 — Arrangementer (auto-henting)**: planlagt GitHub-jobb
   ([.github/workflows/update-arrangementer.yml](.github/workflows/update-arrangementer.yml))
   kjører [scripts/update-arrangementer.mjs](scripts/update-arrangementer.mjs) daglig.
-  Scriptet henter Fellesforbundets kurs + konferanser for Nordland (samme filter
-  som fellesforbundet.no; strukturert JSON innebygd i kildesidens HTML), skriver
+  Scriptet henter Fellesforbundets kurs + konferanser fra WordPress-API-ene på
+  fellesforbundet.no (`tribe/events/v1` + fylkesmerkingen `ff_event_county`):
+  alt merket Nordland eller Troms og Finnmark (Region Nord), pluss landsdekkende
+  arrangementer (tittel uten «Region»). Byttet fra HTML-skraping i nov. 2026 da
+  Fellesforbundet flyttet til WordPress og den gamle lista ga 404. Skriver
   `src/data/arrangementer.json`, og committer. Bygges statisk. På /aktuelt vises
   det **side ved side** med Facebook-feeden (Facebook til venstre, kurs/konferanser
   til høyre, kompakt liste). Forsidens Aktuelt-seksjon har et teaser-kort som lenker

@@ -340,7 +340,7 @@ behov, ikke som del av bygget.
 | `deploy.yml` | Push til `main` | Validerer navnelistene, bygger (Node 22) og deployer til GitHub Pages |
 | `build-check.yml` | Push til andre brancher + PR-er | Samme validering og bygg **uten** å deploye — fanger feil før merge til `main` |
 | `update-availability.yml` | Cron (hver time) | Synker Outlook-kalenderen → `availability.json` (deployer kun ved reell endring) |
-| `update-arrangementer.yml` | Cron (daglig) | Henter Fellesforbundets kurs + konferanser (Nordland) → `src/data/arrangementer.json`; vises på /aktuelt (commit trigger deploy) |
+| `update-arrangementer.yml` | Cron (daglig) | Henter Fellesforbundets kurs + konferanser (Region Nord + landsdekkende, via WordPress-API) → `src/data/arrangementer.json`; vises på /aktuelt (commit trigger deploy) |
 
 > Astro 7 krever Node ≥ 22, så begge bygge-workflowene bruker Node 22. Datahenting-
 > workflowene (`update-availability`, `update-arrangementer`) kjører rene Node-skript
