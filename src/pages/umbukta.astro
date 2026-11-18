@@ -10,6 +10,7 @@ import MapEmbed from '../components/MapEmbed.astro';
 import { PRISER, KONTAKT, UMBUKTA } from '../config.ts';
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const site = Astro.site?.toString().replace(/\/$/, '');
 
 const bilder = [
   { src: 'umbukta-eksterior-terrasse.jpg', alt: 'Hytte i Umbukta — eksteriør med terrasse i solskinn og blå himmel', alt_en: 'Umbukta cabin — exterior with terrace in sunshine and blue sky' },
@@ -105,9 +106,9 @@ const faq = [
     "@type": "LodgingBusiness",
     "name": "Hytte i Umbukta — Fellesforbundet Helgeland",
     "description": "Fjellhytte i Umbukta, Rana, eid av Fellesforbundet Helgeland avd. 143. Inntil 12 sengeplasser, fullt utstyrt. Kun for LO-medlemmer.",
-    "url": Astro.site?.toString().replace(/\/$/, '') + base + '/umbukta',
+    "url": site + base + '/umbukta',
     "image": [
-      Astro.site?.toString().replace(/\/$/, '') + base + '/images/umbukta/umbukta-eksterior-terrasse.jpg',
+      site + base + '/images/umbukta/umbukta-eksterior-terrasse.jpg',
     ],
     "geo": { "@type": "GeoCoordinates", "latitude": UMBUKTA.lat, "longitude": UMBUKTA.lon },
     "address": {

@@ -65,6 +65,13 @@ av dem — hva som skjedde og hvorfor det ikke ble oppdaget — står i
 - **Bygget typesjekker ikke `<script>`-blokker i .astro-filer.** En `ReferenceError`
   der gir grønt bygg og ødelagt side. Kalenderen forsvant slik. Åpne sida i en
   nettleser etter endringer i skript.
+- **Ikke fjern `compressHTML: true` eller `vite.build.cssTarget` i `astro.config.mjs`.**
+  Astro 7 sin standard fjerner mellomrom mellom tekst og lenker («hyttedøra —se
+  turtips») og endrer dermed oppslagsnøklene i ordbøkene. Vite 8 skriver ellers
+  media-spørringer som `(width>=560px)`, som iOS før 16.4 ikke forstår. Bygget er
+  grønt i begge tilfeller — sjekk at `npm run tekster` fortsatt viser full dekning.
+- **`Astro.*` kan bare brukes i frontmatter** (Astro 7). Brukt i malen gir det
+  `Astro is not defined` ved bygg. Regn ut verdien i `---`-blokken.
 - **`define:vars`-skript kan ikke `import`-ere.** De blir klassiske inline-skript.
   Bruker `window.ffhI18n`, satt av Layout. Gjelder BookingForm, WeatherWidget og takk.
 - **`import.meta.env` virker ikke i `define:vars`-skript.** Les env i frontmatter

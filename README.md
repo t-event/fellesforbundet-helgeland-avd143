@@ -1,6 +1,6 @@
 # Fellesforbundet Helgeland avd. 143 — Nettside
 
-Avdelingens nettside: **avdelingens hjemmeside** (forside, medlemskap, aktuelt, kontakt) **og hyttebooking** for Umbukta- og Elsvatn-hyttene. Bygget med Astro 6 (egen CSS, Node ≥ 22), publisert på GitHub Pages. Ingen backend, ingen database — alt er statisk HTML med GitHub Actions for kalendersynkronisering.
+Avdelingens nettside: **avdelingens hjemmeside** (forside, medlemskap, aktuelt, kontakt) **og hyttebooking** for Umbukta- og Elsvatn-hyttene. Bygget med Astro 7 (egen CSS, Node ≥ 22), publisert på GitHub Pages. Ingen backend, ingen database — alt er statisk HTML med GitHub Actions for kalendersynkronisering.
 
 ### Struktur (ett repo, ett Astro-prosjekt)
 
@@ -49,7 +49,7 @@ Avdelingens nettside: **avdelingens hjemmeside** (forside, medlemskap, aktuelt, 
 
 ### Forutsetninger
 - Git installert på maskinen
-- Node.js 22+ installert (Astro 6 krever Node ≥ 22.12)
+- Node.js 22+ installert (Astro 7 krever Node ≥ 22.23)
 - GitHub-konto med tilgang til organisasjonen `t-event`
 
 ### Klone og installere
@@ -342,7 +342,7 @@ behov, ikke som del av bygget.
 | `update-availability.yml` | Cron (hver time) | Synker Outlook-kalenderen → `availability.json` (deployer kun ved reell endring) |
 | `update-arrangementer.yml` | Cron (daglig) | Henter Fellesforbundets kurs + konferanser (Nordland) → `src/data/arrangementer.json`; vises på /aktuelt (commit trigger deploy) |
 
-> Astro 6 krever Node ≥ 22, så begge bygge-workflowene bruker Node 22. Datahenting-
+> Astro 7 krever Node ≥ 22, så begge bygge-workflowene bruker Node 22. Datahenting-
 > workflowene (`update-availability`, `update-arrangementer`) kjører rene Node-skript
 > og bruker Node 20.
 
@@ -389,7 +389,7 @@ kommer flere sitemap-filer.
 
 | Komponent | Teknologi |
 |-----------|-----------|
-| Rammeverk | [Astro 6](https://astro.build) (statisk, Node ≥ 22) |
+| Rammeverk | [Astro 7](https://astro.build) (statisk, Node ≥ 22) |
 | Styling | Egen CSS + CSS-variabler (Tailwind fjernet — var ubrukt) |
 | Skrift | **Inter** (brødtekst) + **Space Grotesk** (overskrifter) — begge **selv-hostet** woff2 (`src/fonts/`), ingen Google Fonts. Space Grotesk er fri erstatning for merkevarefonten Monument Grotesk |
 | Ikoner | [Lucide](https://lucide.dev) — vendret inn som SVG (`src/icons/`), inlines via `Icon.astro` (ingen emoji, ingen CDN) |

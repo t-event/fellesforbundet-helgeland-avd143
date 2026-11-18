@@ -19,7 +19,7 @@ Statisk nettside for Fellesforbundet Helgeland (avd. 143): **avdelingens hjemmes
 
 | Lag | Teknologi | Begrunnelse |
 |---|---|---|
-| Framework | **Astro 6** (statisk eksport, Node ≥ 22) | Fleksibel SSG, glimrende for innholdsside med komponenter, støttes av GitHub Pages |
+| Framework | **Astro 7** (statisk eksport, Node ≥ 22) | Fleksibel SSG, glimrende for innholdsside med komponenter, støttes av GitHub Pages |
 | Styling | **Egen CSS + CSS-variabler** fra designfilen (Tailwind fjernet — ingen utility-klasser i bruk, kun preflight) | Mobil-først, designsystemet følges nøyaktig |
 | Skrift | **Inter** (brødtekst) + **Space Grotesk** (overskrifter) — begge **selv-hostet woff2** (`src/fonts/`) | Ingen ekstern Google Fonts (personvern). Space Grotesk = fri erstatning for merkevarefonten Monument Grotesk (som aldri lastet) |
 | Ikoner | **Lucide** vendret inn som SVG (`src/icons/`), inlines via `Icon.astro` | Erstatter emoji (rendret ulikt per OS); `currentColor` gir merkefarge. Ingen CDN/dependency |

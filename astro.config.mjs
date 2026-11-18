@@ -15,6 +15,11 @@ export default defineConfig({
   // «uformatert side» (FOUC) når GitHub Pages sin CDN ikke har propagert den nye
   // CSS-fila ennå rett etter en deploy. CSS-en er liten (~12 KB / 4 KB gzip).
   build: { inlineStylesheets: 'always' },
+  // Astro 7 bruker JSX-regler for mellomrom som standard og fjerner mellomrom
+  // mellom tekst og lenker over linjeskift («hyttedøra —se turtips»). Det
+  // endrer også de norske oppslagsnøklene i ordbøkene. `true` er den tapsfrie
+  // komprimeringen Astro 6 brukte.
+  compressHTML: true,
   integrations: [
     sitemap({
       // /takk er kvitteringssiden etter en bookingforespørsel — den har ingen
@@ -24,6 +29,16 @@ export default defineConfig({
       filter: (side) => !side.endsWith('/takk/'),
     }),
   ],
+  // Vite 8 (Astro 7) løftet standard byggemål til «baseline widely available»
+  // og skrev om media-spørringer til range-syntaks `(width>=560px)`, som iOS
+  // før 16.4 ikke forstår — da faller hele mobiloppsettet bort. Hold samme mål
+  // som Vite 7 brukte (CSS og JS), så eldre telefoner får det samme som før.
+  vite: {
+    build: {
+      target: ['edge88', 'firefox78', 'chrome87', 'safari14'], // es2020 er allerede med — dobbel oppføring gir byggefeil
+      cssTarget: ['es2020', 'edge88', 'firefox78', 'chrome87', 'safari14'],
+    },
+  },
   image: {
     // Astro-bildeoptimasjon bruker sharp (installert som dep)
     remotePatterns: [],
