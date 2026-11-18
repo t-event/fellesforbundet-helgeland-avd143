@@ -342,9 +342,9 @@ behov, ikke som del av bygget.
 | `update-availability.yml` | Cron (hver time) | Synker Outlook-kalenderen → `availability.json` (deployer kun ved reell endring) |
 | `update-arrangementer.yml` | Cron (daglig) | Henter Fellesforbundets kurs + konferanser (Region Nord + landsdekkende, via WordPress-API) → `src/data/arrangementer.json`; vises på /aktuelt (commit trigger deploy) |
 
-> Astro 7 krever Node ≥ 22, så begge bygge-workflowene bruker Node 22. Datahenting-
-> workflowene (`update-availability`, `update-arrangementer`) kjører rene Node-skript
-> og bruker Node 20.
+> Alle workflowene bruker Node 22. Astro 7 krever det for byggene, og
+> datahentingen (`update-availability`, `update-arrangementer`) ble flyttet fra
+> Node 20 da den nådde end-of-life (30. april 2026).
 
 ---
 
