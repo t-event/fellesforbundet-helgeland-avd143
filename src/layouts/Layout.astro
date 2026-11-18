@@ -92,12 +92,23 @@ const brodsmuleMork = morkeHero.has(sti);
       var hl = kart[valgt] || 'no';
       document.documentElement.setAttribute('data-hcaptcha-hl', hl);
       document.addEventListener('DOMContentLoaded', function () {
-        document.querySelectorAll('.h-captcha').forEach(function (el) {
+        var captchaer = document.querySelectorAll('.h-captcha');
+        captchaer.forEach(function (el) {
           el.setAttribute('data-hl', hl);
           // Vanlig hCaptcha er 302 px bred og stikker ut av smale skjemaer
           // (f.eks. påske-skjemaet på mobil). Da brukes den kompakte varianten.
           if (el.clientWidth && el.clientWidth < 302) el.setAttribute('data-size', 'compact');
         });
+        // Web3Forms-klienten (som laster hCaptcha) hentes FØRST NÅ, etter at
+        // språk og størrelse er satt. Lå den som en async <script>-tagg i sida,
+        // kunne den tegne opp widgeten før dette, og da gjaldt ikke innstillingene.
+        // Modulskriptene (som viser påske-seksjonen) har kjørt før DOMContentLoaded.
+        if (captchaer.length) {
+          var w3f = document.createElement('script');
+          w3f.src = 'https://web3forms.com/client/script.js';
+          w3f.async = true;
+          document.body.appendChild(w3f);
+        }
       });
     })();
   </script>
