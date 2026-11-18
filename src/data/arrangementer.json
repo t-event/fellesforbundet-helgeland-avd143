@@ -1,5 +1,5 @@
 {
-  "oppdatert": "2026-11-18T13:02:51.652Z",
+  "oppdatert": "2026-11-18T14:37:13.521Z",
   "kilde": "fellesforbundet.no — kurs og konferanser (Region Nord + landsdekkende)",
   "kildeUrl": "https://www.fellesforbundet.no/events/",
   "arrangementer": [
@@ -37,6 +37,13 @@
       "dato": "2026-12-01T00:00:00",
       "sted": "",
       "url": "https://www.fellesforbundet.no/event/skipsverftskonferansen/"
+    },
+    {
+      "tittel": "Webinar: Hvordan bruke Industriens kompetansefond",
+      "type": "Kurs",
+      "dato": "2026-12-16T00:00:00",
+      "sted": "",
+      "url": "https://www.fellesforbundet.no/event/webinar-hvordan-bruke-industriens-kompetansefond/"
     },
     {
       "tittel": "Organisasjonskonferanse 2026",
@@ -79,13 +86,6 @@
       "dato": "2027-09-06T00:00:00",
       "sted": "Thon Hotel Polar",
       "url": "https://www.fellesforbundet.no/event/tillitsvalgt-1-region-nord/"
-    },
-    {
-      "tittel": "Tillitsvalgt 2 – Region Nord",
-      "type": "Kurs",
-      "dato": "2027-10-04T00:00:00",
-      "sted": "Thon Hotel Polar, Tromsø",
-      "url": "https://www.fellesforbundet.no/event/tillitsvalgt-2-region-nord-2/"
     }
   ]
 }
