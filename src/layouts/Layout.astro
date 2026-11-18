@@ -94,6 +94,9 @@ const brodsmuleMork = morkeHero.has(sti);
       document.addEventListener('DOMContentLoaded', function () {
         document.querySelectorAll('.h-captcha').forEach(function (el) {
           el.setAttribute('data-hl', hl);
+          // Vanlig hCaptcha er 302 px bred og stikker ut av smale skjemaer
+          // (f.eks. påske-skjemaet på mobil). Da brukes den kompakte varianten.
+          if (el.clientWidth && el.clientWidth < 302) el.setAttribute('data-size', 'compact');
         });
       });
     })();

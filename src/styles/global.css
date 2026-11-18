@@ -533,8 +533,9 @@ textarea.input { resize: vertical; min-height: 110px; }
 @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: .3; } }
 
 /* ── Påske / Loddtrekning ────────────────────────────────────── */
-.lodd-wrap { background: var(--beige); border: 1px solid #f3d9a8; border-radius: 4px; padding: clamp(26px, 4vw, 40px); display: grid; grid-template-columns: 1fr 1fr; gap: clamp(28px, 4vw, 44px); align-items: start; }
-.lodd-frist { display: inline-flex; align-items: center; gap: 12px; background: #fff; border-radius: 4px; padding: 14px 18px; }
+.lodd-wrap { background: var(--beige); border: 1px solid #f3d9a8; border-radius: 4px; padding: clamp(26px, 4vw, 40px); display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(28px, 4vw, 44px); align-items: start; }
+.lodd-wrap > * { min-width: 0; }
+.lodd-frist { display: inline-flex; max-width: 100%; align-items: center; gap: 12px; background: #fff; border-radius: 4px; padding: 14px 18px; }
 .lodd-frist .ic { flex: none; width: 38px; height: 38px; border-radius: 4px; background: var(--rod); color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 18px; }
 .lodd-frist .k { font-size: 12.5px; color: var(--tekst-svak); font-weight: 600; }
 .lodd-frist .v { font-size: 17px; font-weight: 800; }
@@ -598,7 +599,7 @@ textarea.input { resize: vertical; min-height: 110px; }
 @media (max-width: 900px) {
   .hero-grid   { grid-template-columns: 1fr; }
   .footer-cols { grid-template-columns: 1fr 1fr; }
-  .lodd-wrap   { grid-template-columns: 1fr; }
+  .lodd-wrap   { grid-template-columns: minmax(0, 1fr); }
 }
 
 /* «Meny»-knappen vises alltid (åpner full meny). Synlige snarveier skjules på
