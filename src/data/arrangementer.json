@@ -1,15 +1,8 @@
 {
-  "oppdatert": "2026-11-18T14:37:13.521Z",
+  "oppdatert": "2026-11-19T14:43:18.536Z",
   "kilde": "fellesforbundet.no — kurs og konferanser (Region Nord + landsdekkende)",
   "kildeUrl": "https://www.fellesforbundet.no/events/",
   "arrangementer": [
-    {
-      "tittel": "Lærlingskonferanse høst 2026",
-      "type": "Konferanse",
-      "dato": "2026-11-18T00:00:00",
-      "sted": "Sørmarka hotell",
-      "url": "https://www.fellesforbundet.no/event/laerlingskonferanse-host-2026/"
-    },
     {
       "tittel": "Styrekurs – konsern 2026",
       "type": "Kurs",
@@ -86,6 +79,13 @@
       "dato": "2027-09-06T00:00:00",
       "sted": "Thon Hotel Polar",
       "url": "https://www.fellesforbundet.no/event/tillitsvalgt-1-region-nord/"
+    },
+    {
+      "tittel": "Tillitsvalgt 2 – Region Nord",
+      "type": "Kurs",
+      "dato": "2027-10-04T00:00:00",
+      "sted": "Thon Hotel Polar, Tromsø",
+      "url": "https://www.fellesforbundet.no/event/tillitsvalgt-2-region-nord-2/"
     }
   ]
 }
