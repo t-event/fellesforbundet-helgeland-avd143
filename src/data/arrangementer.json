@@ -1,5 +1,5 @@
 {
-  "oppdatert": "2026-11-22T13:38:29.859Z",
+  "oppdatert": "2026-11-23T16:32:19.219Z",
   "kilde": "fellesforbundet.no — kurs og konferanser (Region Nord + landsdekkende)",
   "kildeUrl": "https://www.fellesforbundet.no/events/",
   "arrangementer": [
@@ -46,11 +46,32 @@
       "url": "https://www.fellesforbundet.no/event/organisasjonskonferanse-2026/"
     },
     {
+      "tittel": "Konsernkurs (Pilot)",
+      "type": "Kurs",
+      "dato": "2027-01-25T00:00:00",
+      "sted": "Quality Airport Hotel Gardermoen",
+      "url": "https://www.fellesforbundet.no/event/konsernkurs-pilot/"
+    },
+    {
+      "tittel": "Styrekurs – Ansatterepresentasjon i selskapsstyre",
+      "type": "Kurs",
+      "dato": "2027-01-27T00:00:00",
+      "sted": "Quality Airport Hotel Gardermoen",
+      "url": "https://www.fellesforbundet.no/event/styrekurs-ansatterepresentasjon-i-selskapsstyre/"
+    },
+    {
       "tittel": "Regional Ungdomskonferansen Nord",
       "type": "Konferanse",
       "dato": "2027-01-27T00:00:00",
       "sted": "Saltstraumen Hotell",
       "url": "https://www.fellesforbundet.no/event/den-regionale-ungdomskonferansen-nord/"
+    },
+    {
+      "tittel": "Konsernkonferanse for Havbruk",
+      "type": "Konferanse",
+      "dato": "2027-02-16T00:00:00",
+      "sted": "Radisson Hotel & Conference Centre Oslo Airport (Radisson RED)",
+      "url": "https://www.fellesforbundet.no/event/konsernkonferanse-for-havbruk/"
     },
     {
       "tittel": "Tillitsvalgt 2 – Region Nord",
@@ -65,27 +86,6 @@
       "dato": "2027-04-26T00:00:00",
       "sted": "Thon Hotel Polar, Tromsø",
       "url": "https://www.fellesforbundet.no/event/tillitsvalgt-3-region-nord/"
-    },
-    {
-      "tittel": "Tillitsvalgt 3 – Region Nord",
-      "type": "Kurs",
-      "dato": "2027-04-26T00:00:00",
-      "sted": "Thon Hotel Polar, Troms",
-      "url": "https://www.fellesforbundet.no/event/tillitsvalgt-3-region-nord-2/"
-    },
-    {
-      "tittel": "Tillitsvalgt 1 – Region Nord",
-      "type": "Kurs",
-      "dato": "2027-09-06T00:00:00",
-      "sted": "Thon Hotel Polar",
-      "url": "https://www.fellesforbundet.no/event/tillitsvalgt-1-region-nord/"
-    },
-    {
-      "tittel": "Tillitsvalgt 2 – Region Nord",
-      "type": "Kurs",
-      "dato": "2027-10-04T00:00:00",
-      "sted": "Thon Hotel Polar, Tromsø",
-      "url": "https://www.fellesforbundet.no/event/tillitsvalgt-2-region-nord-2/"
     }
   ]
 }
