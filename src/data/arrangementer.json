@@ -1,5 +1,5 @@
 {
-  "oppdatert": "2026-11-24T16:31:10.731Z",
+  "oppdatert": "2026-11-25T16:11:24.015Z",
   "kilde": "fellesforbundet.no — kurs og konferanser (Region Nord + landsdekkende)",
   "kildeUrl": "https://www.fellesforbundet.no/events/",
   "arrangementer": [
@@ -67,6 +67,13 @@
       "url": "https://www.fellesforbundet.no/event/den-regionale-ungdomskonferansen-nord/"
     },
     {
+      "tittel": "LO havenergi konferanse",
+      "type": "Konferanse",
+      "dato": "2027-02-02T00:00:00",
+      "sted": "Scandic Bergen City",
+      "url": "https://www.fellesforbundet.no/event/lo-havenergi-konferanse/"
+    },
+    {
       "tittel": "Konsernkonferanse for Havbruk",
       "type": "Konferanse",
       "dato": "2027-02-16T00:00:00",
@@ -79,13 +86,6 @@
       "dato": "2027-03-15T00:00:00",
       "sted": "Thon Hotel Nordlys",
       "url": "https://www.fellesforbundet.no/event/tillitsvalgt-2-region-nord/"
-    },
-    {
-      "tittel": "Tillitsvalgt 3 – Region Nord",
-      "type": "Kurs",
-      "dato": "2027-04-26T00:00:00",
-      "sted": "Thon Hotel Polar, Tromsø",
-      "url": "https://www.fellesforbundet.no/event/tillitsvalgt-3-region-nord/"
     }
   ]
 }
