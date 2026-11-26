@@ -1,15 +1,8 @@
 {
-  "oppdatert": "2026-11-25T16:11:24.015Z",
+  "oppdatert": "2026-11-26T15:50:59.201Z",
   "kilde": "fellesforbundet.no — kurs og konferanser (Region Nord + landsdekkende)",
   "kildeUrl": "https://www.fellesforbundet.no/events/",
   "arrangementer": [
-    {
-      "tittel": "Styrekurs – konsern 2026",
-      "type": "Kurs",
-      "dato": "2026-11-25T00:00:00",
-      "sted": "Quality Airport Hotel Gardermoen",
-      "url": "https://www.fellesforbundet.no/event/styrekurs-konsern-2026/"
-    },
     {
       "tittel": "Bransjekonferanse Byggfag",
       "type": "Konferanse",
@@ -86,6 +79,13 @@
       "dato": "2027-03-15T00:00:00",
       "sted": "Thon Hotel Nordlys",
       "url": "https://www.fellesforbundet.no/event/tillitsvalgt-2-region-nord/"
+    },
+    {
+      "tittel": "Tillitsvalgt 3 – Region Nord",
+      "type": "Kurs",
+      "dato": "2027-04-26T00:00:00",
+      "sted": "Thon Hotel Polar, Tromsø",
+      "url": "https://www.fellesforbundet.no/event/tillitsvalgt-3-region-nord/"
     }
   ]
 }
