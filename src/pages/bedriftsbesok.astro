@@ -1,0 +1,39 @@
+---
+// Intern side for avdelingens ansatte: lenke til skjemaet for bedriftsbesøk
+// (Microsoft Forms → Excel i Rikkes OneDrive). Siden er noindex, står ikke i
+// sitemapet (se astro.config.mjs), og lenkes ikke fra menyen eller andre sider.
+// Den står med vilje IKKE i robots.txt — det ville vist adressen offentlig.
+// Selve låsen er skjemaet: det krever innlogging med jobbkonto i Fellesforbundet.
+import Layout from '../layouts/Layout.astro';
+
+const SKJEMA = 'https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=vAvJBHH_9USh78ncQ89lAhA5zEZ9suZHuf38nLTUV5ZUNVVCRDRKVkk5TkVLRDhIUVI3TFdGQ1VTUC4u';
+---
+
+<Layout
+  title="Bedriftsbesøk — for ansatte"
+  titleEn="Company visits — for staff"
+  description="Intern side for avdelingens ansatte."
+  noindex
+>
+  <div class="container section" style="max-width:560px; margin:0 auto;">
+    <h1 class="h1" style="font-size:clamp(28px,4vw,40px); margin-bottom:12px;">Bedriftsbesøk</h1>
+    <p class="lead" style="margin-bottom:28px;">
+      Registrer et besøk hos en medlemsbedrift. Det tar under ett minutt.
+    </p>
+
+    <a class="btn btn-primary btn-block" href={SKJEMA} target="_blank" rel="noopener noreferrer"
+       style="font-size:18px; padding:18px 24px;">
+      Registrer bedriftsbesøk →
+    </a>
+
+    <div class="card card-pad" style="margin-top:32px;">
+      <h2 class="h3" style="font-size:18px; margin-bottom:12px;">Godt å vite</h2>
+      <ul style="margin:0; padding-left:1.2em; display:flex; flex-direction:column; gap:8px; font-size:15px; line-height:1.6; color:var(--tekst-dempet);">
+        <li>Du logger inn med jobbkontoen din i Fellesforbundet. Andre kommer ikke inn i skjemaet.</li>
+        <li>Besøksdato kan stå tom hvis besøket var i dag.</li>
+        <li>Svarer du <b>Ja</b> på oppfølging, settes fristen til 14 dager hvis du ikke velger en selv.</li>
+        <li>Lagre siden på hjemskjermen: i Safari trykker du Del → «Legg til på Hjem-skjerm», i Chrome ⋮ → «Legg til på startskjermen».</li>
+      </ul>
+    </div>
+  </div>
+</Layout>

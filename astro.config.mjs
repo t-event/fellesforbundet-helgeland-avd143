@@ -26,7 +26,8 @@ export default defineConfig({
       // verdi i søk, og innholdet bygges fra URL-parametere. Den er merket
       // noindex, og skal derfor heller ikke ligge i sitemapet. (404-siden
       // kommer uansett ikke med, siden Astro ikke regner den som en rute.)
-      filter: (side) => !side.endsWith('/takk/'),
+      // /bedriftsbesok er en intern side for de ansatte (også noindex).
+      filter: (side) => !side.endsWith('/takk/') && !side.endsWith('/bedriftsbesok/'),
     }),
   ],
   // Vite 8 (Astro 7) løftet standard byggemål til «baseline widely available»
